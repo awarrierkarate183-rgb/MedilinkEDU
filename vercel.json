@@ -13,6 +13,8 @@
     { "source": "/competition-college", "destination": "/competition", "permanent": true },
     { "source": "/competition-college.html", "destination": "/competition", "permanent": true },
     { "source": "/competition-high", "destination": "/competition-nationals", "permanent": true },
-    { "source": "/competition-high.html", "destination": "/competition-nationals", "permanent": true }
+    { "source": "/competition-high.html", "destination": "/competition-nationals", "permanent": true },
+    { "source": "/conferences", "destination": "/competition#ladder", "permanent": true },
+    { "source": "/conferences.html", "destination": "/competition#ladder", "permanent": true }
   ]
 }

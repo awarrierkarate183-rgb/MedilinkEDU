@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <!--
-  COMPETITIONS HUB
+  COMPETITIONS & EVENTS HUB
 
+  This page merges competitions and the conference/event ladder into one place.
   Four national competitions and where their pages live:
     1. MediLink Nationals (flagship)  → competition-nationals.html
     2. MediLink Innovation Challenge  → competition-innovation.html
     3. MediLink Policy Cup            → competition-policy.html
     4. MediLink Research Symposium    → competition-research.html
 
-  This page is the overview. Edit the flagship banner and the three .comp-card
-  blocks below to change how competitions are described on the hub.
-  The three-tier ladder (Regional → State → National) is explained on conferences.html.
+  The #ladder section is the evergreen Regional → State → National structure.
+  Do NOT put year-specific dates there — those go out through chapter leaders.
+  Old conferences.html URLs redirect here.
 -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="MediLink national competitions for high school students in grades 9–12." />
-    <title>MediLink | Competition</title>
+    <meta name="description" content="MediLink competitions and events for high school students — four national competitions on a Regional, State, and National ladder." />
+    <title>MediLink | Competitions &amp; Events</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body data-page="competition">
@@ -28,9 +29,9 @@
       <!-- PAGE HERO: keep this high-school-only. Do not add middle school or college language. -->
       <section class="page-hero">
         <div class="container">
-          <p class="eyebrow">Competition · Grades 9–12</p>
-          <h1>Four National Competitions</h1>
-          <p class="lead">MediLink competitions help high school students apply research and strategy to real health and economic problems. Every competition feeds a shared national brand and runs on the same Regional → State → National ladder.</p>
+          <p class="eyebrow">Competitions &amp; Events · Grades 9–12</p>
+          <h1>Four Competitions. One Event Ladder.</h1>
+          <p class="lead">MediLink competitions help high school students apply Care, Cost, and Code to real health and economic problems. Every competition feeds a shared national brand and runs Regional → State → National.</p>
         </div>
       </section>
 
@@ -74,32 +75,36 @@
         </div>
       </section>
 
-      <!-- LADDER PREVIEW: structure only — no dates. Full explanation lives on conferences.html. -->
-      <section class="section section--gray">
+      <!--
+        CONFERENCES & EVENTS LADDER
+        This used to be its own page (conferences.html). It lives here so competitions
+        and the event structure stay in one section. Do NOT add year-specific dates.
+      -->
+      <section class="section section--gray" id="ladder">
         <div class="container">
           <div class="section-header">
-            <p class="section-eyebrow">How Advancement Works</p>
+            <p class="section-eyebrow">Conferences &amp; Events</p>
             <h2 class="section-title">Regional → State → National</h2>
-            <p class="section-lead">Every competition uses the same three-tier ladder. What happens at each level is set by the state chapter board each year.</p>
+            <p class="section-lead">Every competition uses the same three-tier ladder. This describes the structure — not a specific year’s calendar.</p>
           </div>
-          <div class="ladder-grid">
+          <p class="notice-callout">The specific dates, formats, and requirements for each level are set each year by the state chapter board and communicated to members through their individual chapter leaders. This page describes the structure — check with your chapter leader for what's happening this year.</p>
+          <div class="ladder-grid" style="margin-top:1.75rem;">
             <article class="ladder-step">
               <span class="ladder-step__level">Level 1</span>
-              <h3>Regional</h3>
-              <p>The first competitive level, run at or near individual chapters and open to all active members.</p>
+              <h3>Regional Events</h3>
+              <p>The first competitive level, run at or near individual chapters, open to all active members. This is where most students compete for the first time.</p>
             </article>
             <article class="ladder-step">
               <span class="ladder-step__level">Level 2</span>
-              <h3>State</h3>
-              <p>Top performers from regional events advance. Coordinated by the state chapter board.</p>
+              <h3>State Events</h3>
+              <p>Top performers from regional events advance. State events are run at the state level and coordinated by the state chapter board.</p>
             </article>
             <article class="ladder-step">
               <span class="ladder-step__level">Level 3</span>
-              <h3>National</h3>
-              <p>Top state qualifiers compete nationally — for Nationals, this includes the awards gala.</p>
+              <h3>National Events</h3>
+              <p>The top state qualifiers compete nationally. For MediLink Nationals, this culminates in the awards gala — the signature gathering of the year.</p>
             </article>
           </div>
-          <p style="margin-top:1.75rem;"><a class="btn btn--outline" href="conferences.html">Read the full event structure</a></p>
         </div>
       </section>
 
