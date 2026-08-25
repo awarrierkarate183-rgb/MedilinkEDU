@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Current chapters and chapter opportunities." />
+    <title>MediLink | Current Chapters</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  </head>
+  <body data-page="chapters">
+
+    <div id="site-header"></div>
+
+    <main>
+
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Current Chapters</p>
+          <h1>Growing a Student Network</h1>
+          <p class="lead">
+            MediLink chapters bring students together to learn Care / Cost / Code, lead, and serve in their own
+            communities. Chapters grow from Founding to Established to Flagship-Eligible as they run meetings, host events, and compete.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="chapters-explorer">
+            <div class="chapters-explorer__list-panel">
+              <label class="chapters-search" for="chapters-search">
+                <span class="visually-hidden">Search chapters</span>
+                <input type="search" id="chapters-search" placeholder="Search by state, city, or chapter name…" autocomplete="off" />
+              </label>
+              <div class="chapters-list" id="chapters-list" aria-label="State and chapter list"></div>
+            </div>
+            <div class="chapters-explorer__map-panel">
+              <div class="chapters-map" id="chapters-map" role="application" aria-label="Interactive chapter map"></div>
+            </div>
+          </div>
+          <article class="chapters-detail card" id="chapters-detail" aria-live="polite">
+            <p class="chapters-detail__placeholder">Select a state or chapter from the list or map to view contact details.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- CHAPTER GROWTH PHASES: same three statuses as start-chapter.html. Do not fake a school's status in chapters.json until it has actually earned it. -->
+      <section class="section section--gray">
+        <div class="container">
+          <div class="section-header">
+            <p class="section-eyebrow">Chapter Status</p>
+            <h2 class="section-title">Founding · Established · Flagship-Eligible</h2>
+            <p class="section-lead">This is how we talk about chapter progress instead of empty placeholder listings.</p>
+          </div>
+          <div class="ladder-grid">
+            <article class="ladder-step">
+              <span class="ladder-step__level">Status 1</span>
+              <h3>Founding Chapter</h3>
+              <p>Chartered, has officers, and is running meetings.</p>
+            </article>
+            <article class="ladder-step">
+              <span class="ladder-step__level">Status 2</span>
+              <h3>Established Chapter</h3>
+              <p>Has run at least one internal event or case challenge, and has 10+ active members.</p>
+            </article>
+            <article class="ladder-step">
+              <span class="ladder-step__level">Status 3</span>
+              <h3>Flagship-Eligible Chapter</h3>
+              <p>Has participated in a regional competition and may send teams to Nationals.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="card-grid card-grid--3">
+            <article class="card">
+              <div class="card__icon">🏆</div>
+              <h3>Chapter Spotlight</h3>
+              <p>Our chapter network is expanding. If you would like your chapter featured here, contact the MediLink team.</p>
+              <p style="margin-top:.75rem;"><a class="btn btn--outline btn--sm" data-form="submitChapter" href="#">Submit Your Chapter</a></p>
+            </article>
+            <article class="card">
+              <div class="card__icon">🏫</div>
+              <h3>Start a Chapter</h3>
+              <p>Interested in launching a chapter at your school? We can help with setup, planning, and resources to get you started.</p>
+              <p style="margin-top:.75rem;"><a class="btn btn--outline btn--sm" data-form="startChapter" href="#">Start a Chapter</a></p>
+            </article>
+            <article class="card">
+              <div class="card__icon">💬</div>
+              <h3>Chapter Support</h3>
+              <p>Existing chapters can request guidance for competitions and outreach events from the MediLink leadership team.</p>
+              <p style="margin-top:.75rem;"><a class="btn btn--outline btn--sm" data-form="chapterSupport" href="#">Request Support</a></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--blue">
+        <div class="container" style="text-align:center;">
+          <p class="section-eyebrow">Join the Network</p>
+          <h2 class="section-title" style="color:#fff;">Bring MediLink to Your School</h2>
+          <p class="section-lead" style="margin-inline:auto;margin-bottom:2rem;">
+            Starting a chapter is simple. Apply and we will walk you through every step.
+          </p>
+          <div class="btn-row btn-row--center">
+            <a class="btn btn--primary" data-form="startChapter" href="#">Start a Chapter</a>
+            <a class="btn btn--secondary" href="start-chapter.html#reactivate">Reactivate a Chapter</a>
+            <a class="btn btn--secondary" href="involved.html">More Ways to Help</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="/data/forms.config.js"></script>
+    <script src="/nav.js"></script>
+    <script src="/layout.js"></script>
+    <script src="/chapters.js"></script>
+  </body>
+</html>

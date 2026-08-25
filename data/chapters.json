@@ -1,0 +1,27 @@
+{
+  "_note": "Real chapter entries should be added here as chapters launch. Do not leave fake or example school names live. Each state needs: id, name, location, address, email, phone, lat, lng, and a chapters array. Each school chapter inside that array needs: id, name, location, address, email, phone, lat, lng. Optional later: a status field using Founding, Established, or Flagship-Eligible — only after the chapter has actually earned that status. Use unique lowercase hyphenated ids (example: north-carolina). lat and lng must be numbers, not quoted strings. Validate this file at jsonlint.com if the map breaks.",
+  "states": [
+    {
+      "id": "north-carolina",
+      "name": "North Carolina",
+      "location": "Charlotte, NC",
+      "address": "Charlotte, North Carolina",
+      "email": "medi.link.edu@gmail.com",
+      "phone": "",
+      "lat": 35.2271,
+      "lng": -80.8431,
+      "chapters": []
+    },
+    {
+      "id": "georgia",
+      "name": "Georgia",
+      "location": "Atlanta, GA",
+      "address": "Atlanta, Georgia",
+      "email": "medi.link.edu@gmail.com",
+      "phone": "",
+      "lat": 33.749,
+      "lng": -84.388,
+      "chapters": []
+    }
+  ]
+}

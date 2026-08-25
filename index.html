@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--
+  MEDILINK SITE MAP — start here if you are a new student editor
+
+  Homepage layout is modeled on a large student-org site (hero, cluster
+  shortcuts, two program panels, curriculum band, get involved, news) —
+  not a copy of another brand. Colors stay blue + gold.
+
+  The differentiator:
+    Care / Cost / Code — every activity looks at one health issue through
+    clinical, financial, and systems/tech lenses at the same time.
+
+  Four national competitions (High School, grades 9–12):
+    1. MediLink Nationals (flagship)  → competition-nationals.html
+    2. MediLink Innovation Challenge  → competition-innovation.html
+    3. MediLink Policy Cup            → competition-policy.html
+    4. MediLink Research Symposium    → competition-research.html
+    Hub: competition.html
+
+  Event ladder: conferences.html
+  Curriculum: curriculum.html
+  Chapter model: start-chapter.html
+  Sponsor tiers: data/sponsor-tiers.json
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="MediLink trains high school students to solve healthcare problems through Care, Cost, and Code — clinical understanding, financial reasoning, and technology." />
+    <title>MediLink | Home</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="home">
+
+    <div id="site-header"></div>
+
+    <main>
+
+      <!-- HOMEPAGE HERO: edit the headline, buttons, and cluster pills. Pills are shortcuts — copy an <a class="cluster-pill"> to add another. -->
+      <section class="hero">
+        <div class="container hero__inner">
+          <p class="eyebrow">Care · Cost · Code</p>
+          <h1>We train students to solve healthcare the way real systems are solved.</h1>
+          <p class="hero-copy">
+            Healthcare isn’t just a science problem — it’s a money problem and a systems problem too.
+            MediLink brings all three lenses together for high school members, chapters, and competitions.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href="involved.html">Join MediLink</a>
+            <a class="btn btn--secondary" href="about.html">Learn more</a>
+          </div>
+          <div class="cluster-row" aria-label="Quick links">
+            <a class="cluster-pill" href="about.html">Care</a>
+            <a class="cluster-pill" href="about.html">Cost</a>
+            <a class="cluster-pill" href="about.html">Code</a>
+            <a class="cluster-pill" href="competition-nationals.html">Nationals</a>
+            <a class="cluster-pill" href="competition-innovation.html">Innovation Challenge</a>
+            <a class="cluster-pill" href="competition-policy.html">Policy Cup</a>
+            <a class="cluster-pill" href="competition-research.html">Research Symposium</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUR PROGRAMS: two large panels like a “High School / College” split — here it is Competitions / Chapters because MediLink is high-school only. -->
+      <section class="section">
+        <div class="container">
+          <div class="programs-intro">
+            <p class="section-eyebrow">Our Programs</p>
+            <h2 class="section-title">A high school network for Care, Cost, and Code.</h2>
+            <p class="section-lead">Chapters run a shared curriculum. Competitions run Regional → State → National. Both use the same three-lens framework.</p>
+          </div>
+          <div class="programs-split">
+            <a class="programs-panel programs-panel--compete" href="competition.html">
+              <span class="programs-panel__tag">Compete</span>
+              <h3>Competitions</h3>
+              <p>Four national events, led by MediLink Nationals — the flagship case, pitch, and gala.</p>
+              <span class="card-link">See competitions</span>
+            </a>
+            <a class="programs-panel programs-panel--chapters" href="chapters.html">
+              <span class="programs-panel__tag">Belong</span>
+              <h3>Chapters</h3>
+              <p>Start or join a high school chapter, grow from Founding to Flagship-Eligible, and compete with a team.</p>
+              <span class="card-link">Find a chapter</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURRICULUM BAND: full-width block. Edit the headline and button. Module list lives on curriculum.html. -->
+      <section class="band-feature">
+        <div class="container">
+          <p class="eyebrow">Curriculum</p>
+          <h2>Bring the classroom into the chapter meeting.</h2>
+          <p>Five semester modules any chapter can run — from health economics and health tech to a hands-on budget lab and competition prep.</p>
+          <a class="btn btn--primary" href="curriculum.html">See the curriculum</a>
+        </div>
+      </section>
+
+      <!-- CARE / COST / CODE: the three lenses. To rename a lens, change the word, heading, and paragraph in that card. -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <p class="section-eyebrow">The Framework</p>
+            <h2 class="section-title">Every activity uses three lenses at once</h2>
+            <p class="section-lead">That is what makes MediLink different from a medicine-only club or a business-only club. Clinical understanding, financial reasoning, and technology land on the same problem.</p>
+          </div>
+          <div class="lens-grid">
+            <article class="lens-card">
+              <span class="lens-card__word">Care</span>
+              <h3>Clinical lens</h3>
+              <p>What’s the actual health problem? Who’s affected? This is the medicine side — the patient, the condition, and the clinical need.</p>
+            </article>
+            <article class="lens-card">
+              <span class="lens-card__word">Cost</span>
+              <h3>Financial lens</h3>
+              <p>Who pays for it? What does it cost? Is a solution sustainable, insurable, or fundable? This is the money side of healthcare.</p>
+            </article>
+            <article class="lens-card">
+              <span class="lens-card__word">Code</span>
+              <h3>Systems lens</h3>
+              <p>How could data, software, devices, or infrastructure change access or delivery? This is the technology and systems side.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats section intentionally removed. Add back here once we have real numbers to show. -->
+
+      <!-- GET INVOLVED: four large tiles. Copy an .involve-tile to add another path. Labels: Join, Start, Volunteer, Partner. -->
+      <section class="section section--gray">
+        <div class="container">
+          <div class="section-header section-header--center">
+            <p class="section-eyebrow">Get Involved</p>
+            <h2 class="section-title">Together, we can train the next health-system problem solvers.</h2>
+            <p class="section-lead" style="margin-inline:auto;">Students, advisors, volunteers, and partners each have a lane.</p>
+          </div>
+          <div class="involve-grid">
+            <a class="involve-tile" href="start-chapter.html">
+              <span class="involve-tile__step">Join</span>
+              <h3>Become a member</h3>
+              <p>Find a chapter or start one at your high school and compete through Care, Cost, and Code.</p>
+              <span class="card-link">Join a chapter</span>
+            </a>
+            <a class="involve-tile" href="start-chapter.html">
+              <span class="involve-tile__step">Start</span>
+              <h3>Start a chapter</h3>
+              <p>Bring MediLink to your school with a starter kit, officer roles, and a first-semester case challenge.</p>
+              <span class="card-link">Start a chapter</span>
+            </a>
+            <a class="involve-tile" href="volunteer.html">
+              <span class="involve-tile__step">Volunteer</span>
+              <h3>Mentor &amp; judge</h3>
+              <p>Share clinical, finance, or tech expertise with chapters and competition judge panels.</p>
+              <span class="card-link">Volunteer</span>
+            </a>
+            <a class="involve-tile" href="partner.html">
+              <span class="involve-tile__step">Partner</span>
+              <h3>Partner with us</h3>
+              <p>Hospitals, insurers, and health-tech firms — host shadowing, workshops, internships, or a Nationals award.</p>
+              <span class="card-link">Partner</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEWS TEASER: replace these three cards with real highlights as members submit news. Do not invent fake headlines. -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <p class="section-eyebrow">Member News</p>
+            <h2 class="section-title">Latest highlights</h2>
+            <p class="section-lead">Chapter wins, service projects, and research can be featured here, on social, or at a conference. Until listings arrive, these cards explain how to submit.</p>
+          </div>
+          <div class="news-grid">
+            <article class="news-card">
+              <span class="news-card__tag">Submit</span>
+              <h3>Share a chapter win</h3>
+              <p>Use Submit News in the top bar to email a highlight. Leadership will place it here when it is ready to publish.</p>
+            </article>
+            <article class="news-card">
+              <span class="news-card__tag">Social</span>
+              <h3>Shown beyond the site</h3>
+              <p>The same submissions can be used on MediLink social channels so member work travels farther than one page.</p>
+            </article>
+            <article class="news-card">
+              <span class="news-card__tag">Conferences</span>
+              <h3>Featured at events</h3>
+              <p>Strong submissions can be shown at Regional, State, or National gatherings — ask your chapter leader.</p>
+            </article>
+          </div>
+          <p style="margin-top:1.75rem;"><a class="btn btn--outline" href="involved.html#submit-news">Submit news</a></p>
+        </div>
+      </section>
+
+      <!-- CONTACT STRIP: DECA-style email capture stand-in. We use mailto until a real list exists. -->
+      <section class="signup-band">
+        <div class="container signup-band__inner">
+          <div>
+            <h2>Stay in the loop</h2>
+            <p>Chapter questions, partnership interest, or news — write the MediLink team. A newsletter signup can replace this later.</p>
+          </div>
+          <a class="btn btn--blue" href="mailto:medi.link.edu@gmail.com">Email MediLink</a>
+        </div>
+      </section>
+
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/data/forms.config.js"></script>
+    <script src="/nav.js"></script>
+    <script src="/layout.js"></script>
+  </body>
+</html>

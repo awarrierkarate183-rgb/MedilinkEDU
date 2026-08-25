@@ -1,0 +1,57 @@
+{
+  "tiers": [
+    {
+      "id": "community-ally",
+      "name": "Community Ally",
+      "amount": "$500 / year",
+      "description": "Local businesses and community groups getting started with MediLink.",
+      "benefits": [
+        "Logo on MediLink website",
+        "Social media thank-you post",
+        "Recognition in chapter newsletter"
+      ],
+      "highlight": false
+    },
+    {
+      "id": "health-advocate",
+      "name": "Health Advocate",
+      "amount": "$2,500 / year",
+      "description": "Growing organizations investing in student-led health and economics programs.",
+      "benefits": [
+        "Everything in Community Ally",
+        "Featured partner spotlight on website",
+        "Invitation to annual sponsor appreciation event",
+        "Co-branded outreach materials"
+      ],
+      "highlight": false
+    },
+    {
+      "id": "impact-partner",
+      "name": "Impact Partner",
+      "amount": "$5,000 / year",
+      "description": "Regional partners funding chapters, competitions, and community outreach.",
+      "benefits": [
+        "Everything in Health Advocate",
+        "Named sponsorship of a competition event",
+        "Attend and be recognized at State and National MediLink competitions in person",
+        "Quarterly impact report from MediLink leadership",
+        "Dedicated chapter liaison contact"
+      ],
+      "highlight": true
+    },
+    {
+      "id": "visionary-sponsor",
+      "name": "Visionary Sponsor",
+      "amount": "$10,000 / year",
+      "description": "Lead partners shaping national chapter expansion and student leadership.",
+      "benefits": [
+        "Everything in Impact Partner",
+        "Attend and be recognized at State and National MediLink competitions in person",
+        "Premier logo placement across MediLink platforms",
+        "Custom partnership activation with chapters",
+        "Advisory input on annual program priorities"
+      ],
+      "highlight": false
+    }
+  ]
+}

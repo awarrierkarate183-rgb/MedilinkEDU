@@ -1,0 +1,18 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/programs.html", "destination": "/", "permanent": true },
+    { "source": "/podcast.html", "destination": "/", "permanent": true },
+    { "source": "/blog.html", "destination": "/", "permanent": true },
+    { "source": "/toys-books.html", "destination": "/", "permanent": true },
+    { "source": "/arts-crafts-cards.html", "destination": "/", "permanent": true },
+    { "source": "/donate.html", "destination": "/sponsor-individual", "permanent": true },
+    { "source": "/competition-middle", "destination": "/competition", "permanent": true },
+    { "source": "/competition-middle.html", "destination": "/competition", "permanent": true },
+    { "source": "/competition-college", "destination": "/competition", "permanent": true },
+    { "source": "/competition-college.html", "destination": "/competition", "permanent": true },
+    { "source": "/competition-high", "destination": "/competition-nationals", "permanent": true },
+    { "source": "/competition-high.html", "destination": "/competition-nationals", "permanent": true }
+  ]
+}
