@@ -2,6 +2,7 @@
   let map = null;
   let markers = {};
   let data = { states: [] };
+  let apexById = {};
   let selected = { type: null, stateId: null, chapterId: null };
   let suppressMapSync = false;
 
@@ -47,7 +48,15 @@
         (item.address ? '<div><dt>Address</dt><dd>' + escapeHtml(item.address) + '</dd></div>' : "") +
         '<div><dt>Email</dt><dd><a href="mailto:' + escapeHtml(item.email) + '">' + escapeHtml(item.email) + '</a></dd></div>' +
         '<div><dt>Phone</dt><dd><a href="tel:' + escapeHtml((item.phone || "").replace(/\D/g, "")) + '">' + escapeHtml(item.phone || "—") + '</a></dd></div>' +
-      '</dl>';
+      '</dl>' +
+      apexLine(item.id);
+  }
+
+  function apexLine(chapterId) {
+    const row = apexById[chapterId];
+    const total = row ? row.cycleTotal : 0;
+    return '<p class="chapters-detail__apex">Road to Apex cycle total: <strong>' + total +
+      '</strong> · <a href="competition-apex.html#road-to-apex">Full standings</a></p>';
   }
 
   function highlightListItem(type, stateId, chapterId) {
@@ -210,9 +219,11 @@
           btn.className = "chapters-list__chapter";
           btn.dataset.stateId = state.id;
           btn.dataset.chapterId = chapter.id;
+          const pts = apexById[chapter.id] ? apexById[chapter.id].cycleTotal : 0;
           btn.innerHTML =
             '<span class="chapters-list__chapter-name">' + escapeHtml(chapter.name) + '</span>' +
-            '<span class="chapters-list__chapter-meta">' + escapeHtml(chapter.location || "") + '</span>';
+            '<span class="chapters-list__chapter-meta">' + escapeHtml(chapter.location || "") +
+            ' · ' + pts + ' Apex pts</span>';
           chaptersEl.appendChild(btn);
         });
       }
@@ -238,6 +249,18 @@
       $("chapters-list").innerHTML = '<p class="chapters-list__empty">Unable to load chapter data.</p>';
       console.error(err);
       return;
+    }
+
+    try {
+      const pointsRes = await fetch("/data/apex-points.json");
+      const points = await pointsRes.json();
+      if (window.MediLinkApex) {
+        window.MediLinkApex.computeStandings(points, data).forEach((row) => {
+          apexById[row.id] = row;
+        });
+      }
+    } catch (err) {
+      console.error("Apex points ledger could not load.", err);
     }
 
     initMap();

@@ -60,11 +60,27 @@
           </div>
         </div>
       </section>
+
+      <!--
+        ROAD TO APEX
+        Rankings are rendered from data/apex-points.json by apex-points.js.
+        The board updates that JSON by hand. Nothing here is hardcoded points.
+      -->
+      <section class="section section--gray" id="road-to-apex">
+        <div class="container">
+          <h2 class="section-title">Road to Apex — Current Standings</h2>
+          <div id="apex-standings">
+            <p>Loading standings…</p>
+          </div>
+        </div>
+      </section>
     </main>
 
     <div id="site-footer"></div>
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/apex-points.js"></script>
+    <script src="/apex-standings.js"></script>
   </body>
 </html>

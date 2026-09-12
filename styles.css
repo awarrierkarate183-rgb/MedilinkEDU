@@ -2051,6 +2051,116 @@ a.nav-cta.is-active { background: var(--gala-dark) !important; color: var(--ink)
   background: var(--white);
 }
 
+/* ============================================================
+   ROAD TO APEX  (standings from data/apex-points.json)
+   ============================================================ */
+.apex-schedules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.apex-schedule {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 1.5rem 1.35rem;
+}
+
+.apex-schedule h3 { margin: 0 0 .5rem; font-size: 1.25rem; }
+.apex-schedule p { margin: 0 0 1rem; color: var(--ledger); font-size: .95rem; }
+
+.apex-schedule__list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.apex-schedule__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .45rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .92rem;
+}
+
+.apex-schedule__max { margin: 0; font-size: .92rem; }
+
+.apex-board {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: .85rem;
+}
+
+.apex-board__card {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 1.15rem 1.25rem;
+}
+
+.apex-board__card.is-qualified { border-color: var(--drape); }
+
+.apex-board__rank {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--drape);
+}
+
+.apex-board__body h3 { margin: 0 0 .2rem; font-size: 1.2rem; }
+.apex-board__meta { margin: 0 0 .45rem; font-size: .88rem; color: var(--ledger); }
+
+.apex-badge {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ledger);
+}
+
+.apex-badge--rank { color: var(--drape); }
+.apex-badge--region { color: var(--gala-dark); }
+
+.apex-board__pts {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: .85rem 1.25rem;
+  margin: 0;
+  text-align: right;
+}
+
+.apex-board__pts dt {
+  font-size: .7rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ledger);
+}
+
+.apex-board__pts dd {
+  margin: .1rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.apex-empty { margin-top: 1.5rem; }
+
+.chapters-detail__apex {
+  margin-top: 1.15rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border);
+}
+
+.chapters-detail__apex a { color: var(--drape); font-weight: 700; }
+
 @media (max-width: 900px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .mega-dropdown__inner--3col,
@@ -2061,7 +2171,10 @@ a.nav-cta.is-active { background: var(--gala-dark) !important; color: var(--ink)
   .comp-spread,
   .close-split,
   .path-row,
-  .portal-panel { grid-template-columns: 1fr 1fr; }
+  .portal-panel,
+  .apex-schedules { grid-template-columns: 1fr 1fr; }
+  .apex-board__card { grid-template-columns: 2.5rem 1fr; }
+  .apex-board__pts { grid-column: 1 / -1; text-align: left; }
   .qr-flow { grid-template-columns: 1fr 1fr; }
   .qr-flow__step { border-right: none; border-bottom: 1px solid var(--border); padding: 1rem 0; }
   .programs-panel { min-height: 260px; }
@@ -2103,7 +2216,8 @@ a.nav-cta.is-active { background: var(--gala-dark) !important; color: var(--ink)
   .close-split,
   .path-row,
   .portal-panel,
-  .qr-flow { grid-template-columns: 1fr; }
+  .qr-flow,
+  .apex-schedules { grid-template-columns: 1fr; }
   .path-row a { border-right: none; border-bottom: 1px solid var(--border); }
   .close-split a:first-child { border-right: none; border-bottom: 1px solid var(--border); }
   .legend__row { grid-template-columns: 1fr; }
