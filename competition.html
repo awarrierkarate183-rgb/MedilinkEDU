@@ -2,22 +2,24 @@
 <!--
   COMPETITIONS & EVENTS HUB
 
-  This page merges competitions and the conference/event ladder into one place.
-  Four national competitions and where their pages live:
-    1. MediLink Nationals (flagship)  → competition-nationals.html
-    2. MediLink Innovation Challenge  → competition-innovation.html
-    3. MediLink Policy Cup            → competition-policy.html
-    4. MediLink Research Symposium    → competition-research.html
+  Five competitions:
+    1. MediLink Nationals (annual flagship) → competition-nationals.html
+    2. Innovation Challenge                 → competition-innovation.html
+    3. Policy Cup                           → competition-policy.html
+    4. Research Symposium                   → competition-research.html
+    5. The MediLink Apex (biennial)         → competition-apex.html
 
-  The #ladder section is the evergreen Regional → State → National structure.
-  Do NOT put year-specific dates there — those go out through chapter leaders.
-  Old conferences.html URLs redirect here.
+  The Apex upgrades that cycle’s National round every other year.
+  It is not a sixth annual event.
+
+  #ladder is the evergreen Regional → State → National structure.
+  Do NOT put year-specific dates there.
 -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="MediLink competitions and events for high school students — four national competitions on a Regional, State, and National ladder." />
+    <meta name="description" content="MediLink competitions — four annual events plus a biennial Apex, on a Regional, State, and National ladder." />
     <title>MediLink | Competitions &amp; Events</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
@@ -26,97 +28,81 @@
     <div id="site-header"></div>
 
     <main>
-      <!-- PAGE HERO: keep this high-school-only. Do not add middle school or college language. -->
       <section class="page-hero">
         <div class="container">
-          <p class="eyebrow">Competitions &amp; Events · Grades 9–12</p>
-          <h1>Four Competitions. One Event Ladder.</h1>
-          <p class="lead">MediLink competitions help high school students apply Care, Cost, and Code to real health and economic problems. Every competition feeds a shared national brand and runs Regional → State → National.</p>
+          <h1>Five competitions. One ladder.</h1>
+          <p class="lead">Four annual events run Regional → State → National every year. Nationals is the yearly flagship. Every other year, that cycle’s National round is upgraded into the MediLink Apex.</p>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <!-- FLAGSHIP BANNER: MediLink Nationals gets a larger treatment than the other three. Edit headline and description here. -->
-          <article class="flagship-card">
-            <span class="flagship-card__badge">Flagship Competition</span>
-            <h2>MediLink Nationals</h2>
-            <p>The signature event. Teams of 3–4 — covering Care, Cost, and Code — tackle a real health-system case in three phases: remote prelims, regional presentations, and a national final plus awards gala. This is the event where sponsors receive top billing.</p>
-            <a class="btn btn--primary" href="competition-nationals.html">Explore Nationals</a>
-          </article>
-
-          <!-- COMPETITIONS GRID: each .comp-card below is one competition. To add a new one, copy a whole .comp-card block and edit the text inside. -->
-          <div class="program-cards" style="margin-top:1.75rem;">
-            <article class="comp-card">
-              <div class="comp-card__strip comp-card__strip--blue"></div>
-              <div class="comp-card__body">
-                <h3>MediLink Innovation Challenge</h3>
-                <p>A pitch competition for a health-tech product or digital-health concept — an app, device concept, or platform idea. Judged on feasibility, impact, and a basic business case. The entry point for tech-minded members.</p>
-                <a class="btn btn--outline" href="competition-innovation.html">View Challenge</a>
-              </div>
+          <div class="comp-spread">
+            <article class="nationals-feature">
+              <h3>MediLink Nationals</h3>
+              <p>The annual centerpiece. Teams of 3–4 cover the clinical, financial, and technology lenses on a real health-system case drawn from that year’s Track 4 capstone. Regional → State → National, ending in a national round and awards gala.</p>
+              <a class="btn btn--primary" href="competition-nationals.html">Explore Nationals</a>
             </article>
-            <article class="comp-card">
-              <div class="comp-card__strip comp-card__strip--gold"></div>
-              <div class="comp-card__body">
-                <h3>MediLink Policy Cup</h3>
-                <p>A policy brief and advocacy competition where students argue for a real fix to a health-economics problem — insurance access, rural care deserts, drug pricing, and more. Debate and presentation format.</p>
-                <a class="btn btn--outline" href="competition-policy.html">View Policy Cup</a>
-              </div>
-            </article>
-            <article class="comp-card">
-              <div class="comp-card__strip comp-card__strip--teal"></div>
-              <div class="comp-card__body">
-                <h3>MediLink Research Symposium</h3>
-                <p>A poster-and-presentation competition for members already doing independent research on a health-economics or health-tech topic. Lower barrier to entry — a strong path for newer members.</p>
-                <a class="btn btn--outline" href="competition-research.html">View Symposium</a>
-              </div>
-            </article>
+            <ul class="comp-list">
+              <li>
+                <a href="competition-innovation.html">Innovation Challenge</a>
+                <p>Pitch a health-tech product or digital-health concept. Individual or teams of up to 3. Fits right after Track 2.</p>
+              </li>
+              <li>
+                <a href="competition-policy.html">Policy Cup</a>
+                <p>Policy brief and live debate. Individual or pairs. Ties to Track 1 and Track 3.</p>
+              </li>
+              <li>
+                <a href="competition-research.html">Research Symposium</a>
+                <p>Poster and presentation. Lowest barrier to entry — an on-ramp for newer members.</p>
+              </li>
+              <li>
+                <a href="competition-apex.html">The MediLink Apex</a>
+                <p>Biennial champions summit. Invites top performers from the four annual tracks into that cycle’s upgraded National round.</p>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <!--
-        CONFERENCES & EVENTS LADDER
-        This used to be its own page (conferences.html). It lives here so competitions
-        and the event structure stay in one section. Do NOT add year-specific dates.
-      -->
-      <section class="section section--gray" id="ladder">
+      <section class="section section--gray" id="apex">
         <div class="container">
-          <div class="section-header">
-            <p class="section-eyebrow">Conferences &amp; Events</p>
-            <h2 class="section-title">Regional → State → National</h2>
-            <p class="section-lead">Every competition uses the same three-tier ladder. This describes the structure — not a specific year’s calendar.</p>
-          </div>
-          <p class="notice-callout">The specific dates, formats, and requirements for each level are set each year by the state chapter board and communicated to members through their individual chapter leaders. This page describes the structure — check with your chapter leader for what's happening this year.</p>
+          <h2 class="section-title">Nationals and the Apex</h2>
+          <p class="section-lead">Nationals happens every year. The Apex happens every two years by upgrading that cycle’s National round — same qualification pipeline, larger gathering. Sponsors get a dedicated networking fair at the Apex, not only a logo placement.</p>
+          <p style="margin-top:1.5rem;"><a class="btn btn--outline" href="competition-apex.html">How the Apex works</a></p>
+        </div>
+      </section>
+
+      <section class="section" id="ladder">
+        <div class="container">
+          <h2 class="section-title">Regional → State → National</h2>
+          <p class="section-lead">Every annual competition uses the same three-tier ladder. This describes the structure — not a specific year’s calendar.</p>
+          <p class="notice-callout">Dates, formats, and requirements are set each year by the state chapter board and shared through chapter leaders.</p>
           <div class="ladder-grid" style="margin-top:1.75rem;">
             <article class="ladder-step">
               <span class="ladder-step__level">Level 1</span>
               <h3>Regional Events</h3>
-              <p>The first competitive level, run at or near individual chapters, open to all active members. This is where most students compete for the first time.</p>
+              <p>The first competitive level, run at or near individual chapters, open to all active members.</p>
             </article>
             <article class="ladder-step">
               <span class="ladder-step__level">Level 2</span>
               <h3>State Events</h3>
-              <p>Top performers from regional events advance. State events are run at the state level and coordinated by the state chapter board.</p>
+              <p>Top regional performers advance. State events are coordinated by the state chapter board.</p>
             </article>
             <article class="ladder-step">
               <span class="ladder-step__level">Level 3</span>
               <h3>National Events</h3>
-              <p>The top state qualifiers compete nationally. For MediLink Nationals, this culminates in the awards gala — the signature gathering of the year.</p>
+              <p>State qualifiers compete nationally. In an Apex year, this level is the multi-day summit.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- EVENTS EXPLORER: listings come from competition-events.js. Filters are Competition, Format, and Level — not school division. -->
-      <section class="section">
+      <section class="section section--gray">
         <div class="container" id="events-explorer">
-          <div class="section-header">
-            <p class="section-eyebrow">Browse</p>
-            <h2 class="section-title">Competition Listings</h2>
-            <p class="section-lead">Filter the four national competitions by name, format, and ladder level. Listings describe structure, not this year’s dates.</p>
-          </div>
-          <div class="events-controls" aria-label="Event filters">
+          <h2 class="section-title">Competition listings</h2>
+          <p class="section-lead">Filter by name, format, and ladder level. Listings describe structure, not this year’s dates.</p>
+          <div class="events-controls" aria-label="Event filters" style="margin-top:1.75rem;">
             <label for="competition-filter">Competition <select id="competition-filter"><option value="all">All competitions</option></select></label>
             <label for="format-filter">Format <select id="format-filter"><option value="all">All formats</option></select></label>
             <label for="level-filter">Level <select id="level-filter"><option value="all">All levels</option></select></label>
@@ -128,9 +114,8 @@
 
       <section class="section section--blue">
         <div class="container" style="text-align:center;">
-          <p class="section-eyebrow">Compete</p>
-          <h2 class="section-title" style="color:#fff;">Ready to Compete?</h2>
-          <p class="section-lead" style="margin-inline:auto;margin-bottom:2rem;">Participation is through a MediLink high school chapter. Start or join a chapter to compete.</p>
+          <h2 class="section-title" style="color:#fff;">Ready to compete?</h2>
+          <p class="section-lead" style="margin-inline:auto;margin-bottom:2rem;">Participation is through a MediLink high school chapter.</p>
           <div class="btn-row btn-row--center">
             <a class="btn btn--primary" data-form="startChapter" href="#">Start a Chapter</a>
             <a class="btn btn--secondary" href="chapters.html">Find a Chapter</a>

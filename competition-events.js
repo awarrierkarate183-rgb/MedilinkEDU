@@ -7,7 +7,8 @@
 // title, competition, format, level, description, deliverables, and judgingCriteria.
 //
 // Filters:
-//   competition — one of the four national competitions
+//   competition — Nationals, Innovation Challenge, Policy Cup,
+//                 Research Symposium, or The MediLink Apex
 //   format — Team, Pitch, Debate, Poster, etc.
 //   level — Regional, State, or National
 //
@@ -229,6 +230,23 @@ document.addEventListener("DOMContentLoaded", () => {
         "Originality and rigor",
         "Clarity of findings",
         "Professional delivery",
+      ],
+    },
+    {
+      title: "The MediLink Apex — Biennial Summit",
+      competition: "The MediLink Apex",
+      format: "Summit",
+      level: "National",
+      description:
+        "Every other year, that cycle’s National round is upgraded into a champions-of-champions summit. Top performers from Nationals, Innovation Challenge, Policy Cup, and Research Symposium are invited. Same qualification pipeline — larger gathering.",
+      deliverables: [
+        "Invitation earned through that cycle’s annual competitions",
+        "Championship-round materials, set by the state / national board",
+      ],
+      judgingCriteria: [
+        "Excellence across the four annual disciplines",
+        "Professional delivery",
+        "Contribution to the summit program",
       ],
     },
   ];

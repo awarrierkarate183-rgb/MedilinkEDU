@@ -5,7 +5,7 @@
   let selected = { type: null, stateId: null, chapterId: null };
   let suppressMapSync = false;
 
-  const STATE_COLOR = "#1D3C8A";
+  const STATE_COLOR = "#1B5470";
   const CHAPTER_COLOR = "#E8A020";
 
   function $(id) { return document.getElementById(id); }

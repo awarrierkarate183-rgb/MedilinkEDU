@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <!--
-  CURRICULUM — five-module semester sequence any chapter can run.
+  PUBLIC CURRICULUM — syllabus only.
 
-  Edit each .module-card below (title + paragraph). Keep the numbering 1–5
-  unless you add a module — then copy a whole .module-card block.
+  Four tracks, twelve modules. Titles and one-line descriptions are public.
+  Full lessons and labs live behind the Member Portal (portal.html).
+  A real login system is a later backend phase — do not fake one here.
 
-  Module 1 is also part of the Chapter Starter Kit on start-chapter.html.
-  Module 5 is competition prep for Care / Cost / Code and the four tracks.
+  Track 4's yearly capstone case becomes the basis for that year's
+  MediLink Nationals case.
 
-  Do not put year-specific dates here. Chapters run this over a semester
-  on their own calendar.
+  Internal method name in the modules: Care, Cost, Code.
 -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="MediLink chapter curriculum — five modules covering health economics, health tech, access, planning, and competition prep." />
+    <meta name="description" content="MediLink public syllabus — four tracks and twelve modules covering health economics, health tech, financial modeling, and competition prep." />
     <title>MediLink | Curriculum</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
@@ -26,66 +26,137 @@
     <main>
       <section class="page-hero">
         <div class="container">
-          <p class="eyebrow">For Chapters</p>
-          <h1>Semester Curriculum</h1>
-          <p class="lead">A five-module base sequence any high school chapter can run. Finance Lead and Technology Lead officers own the content for their pillars so the work is not only on the founding team.</p>
+          <h1>Semester curriculum</h1>
+          <p class="lead">A four-track, twelve-module syllabus any high school chapter can run. This page is the public overview — titles and one-line descriptions only. Full lessons and labs unlock after a chapter approves you.</p>
         </div>
       </section>
 
-      <!-- MODULE LIST: copy a .module-card to add a sixth module. Change the number in .module-card__num to match. -->
       <section class="section">
         <div class="container">
-          <div class="module-list">
-            <article class="module-card">
-              <span class="module-card__num">1</span>
-              <div>
-                <h3>What Is Health Economics?</h3>
-                <p>Intro to how healthcare gets paid for: insurance basics, out-of-pocket cost, and why care is expensive. This module ships with the Chapter Starter Kit.</p>
-              </div>
-            </article>
-            <article class="module-card">
-              <span class="module-card__num">2</span>
-              <div>
-                <h3>Health Tech 101</h3>
-                <p>Telehealth, digital health records, wearables, and AI in diagnostics — what’s actually being used today. Technology Lead typically owns this module.</p>
-              </div>
-            </article>
-            <article class="module-card">
-              <span class="module-card__num">3</span>
-              <div>
-                <h3>Access &amp; Disparities</h3>
-                <p>Case studies on who lacks access and why — rural areas, uninsured populations, and global health gaps.</p>
-              </div>
-            </article>
-            <article class="module-card">
-              <span class="module-card__num">4</span>
-              <div>
-                <h3>Build a Plan</h3>
-                <p>Hands-on lab: teams design a mini clinic or program and build a basic budget and funding plan. This is where finance becomes tangible. Finance/Treasury Lead typically owns this module.</p>
-              </div>
-            </article>
-            <article class="module-card">
-              <span class="module-card__num">5</span>
-              <div>
-                <h3>Competition Prep</h3>
-                <p>Teaches the Care / Cost / Code framework directly and preps students for Nationals, the Innovation Challenge, Policy Cup, and Research Symposium.</p>
-              </div>
-            </article>
-          </div>
+
+          <article class="track">
+            <h2 class="section-title">Track 1 — Foundations of Health Economics</h2>
+            <div class="module-list" style="margin-top:1.25rem;">
+              <article class="module-card">
+                <span class="module-card__num">1.1</span>
+                <div>
+                  <h3>How Healthcare Gets Paid For</h3>
+                  <p>Insurance basics, premiums, deductibles, and employer vs. government coverage.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">1.2</span>
+                <div>
+                  <h3>The Cost of Care</h3>
+                  <p>Why healthcare is expensive: administrative costs, drug pricing, and hospital billing.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">1.3</span>
+                <div>
+                  <h3>Access &amp; Disparities</h3>
+                  <p>Rural care deserts, uninsured populations, and global health gaps.</p>
+                </div>
+              </article>
+            </div>
+            <p class="track__lab"><strong>Hands-on lab:</strong> Build a basic insurance-comparison worksheet for a hypothetical family.</p>
+          </article>
+
+          <article class="track">
+            <h2 class="section-title">Track 2 — Health Technology &amp; Systems</h2>
+            <div class="module-list" style="margin-top:1.25rem;">
+              <article class="module-card">
+                <span class="module-card__num">2.1</span>
+                <div>
+                  <h3>Digital Health 101</h3>
+                  <p>Electronic health records, telehealth, and patient portals.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">2.2</span>
+                <div>
+                  <h3>Data &amp; AI in Medicine</h3>
+                  <p>Diagnostics, imaging, and predictive tools — explained conceptually. No coding background required.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">2.3</span>
+                <div>
+                  <h3>Medical Devices &amp; Wearables</h3>
+                  <p>How monitoring technology is changing care delivery.</p>
+                </div>
+              </article>
+            </div>
+            <p class="track__lab"><strong>Hands-on lab:</strong> Wireframe one feature of a telehealth app.</p>
+          </article>
+
+          <article class="track">
+            <h2 class="section-title">Track 3 — Financial Modeling for Health Ventures</h2>
+            <div class="module-list" style="margin-top:1.25rem;">
+              <article class="module-card">
+                <span class="module-card__num">3.1</span>
+                <div>
+                  <h3>Reading a Budget</h3>
+                  <p>Revenue, expenses, and break-even basics.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">3.2</span>
+                <div>
+                  <h3>Funding a Health Idea</h3>
+                  <p>Grants, investors, and nonprofit vs. for-profit funding paths.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">3.3</span>
+                <div>
+                  <h3>Measuring Impact &amp; ROI</h3>
+                  <p>Why return on investment is measured differently in health than in typical business.</p>
+                </div>
+              </article>
+            </div>
+            <p class="track__lab"><strong>Hands-on lab:</strong> Build a one-page budget and funding plan for a mock community health program.</p>
+          </article>
+
+          <article class="track">
+            <h2 class="section-title">Track 4 — Applied Capstone &amp; Competition Prep</h2>
+            <div class="module-list" style="margin-top:1.25rem;">
+              <article class="module-card">
+                <span class="module-card__num">4.1</span>
+                <div>
+                  <h3>Applying the Framework</h3>
+                  <p>A synthesis lesson running one case through all three lenses at once. Case materials use the internal name Care, Cost, Code.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">4.2</span>
+                <div>
+                  <h3>Case Analysis Practice</h3>
+                  <p>Guided practice on past-style cases.</p>
+                </div>
+              </article>
+              <article class="module-card">
+                <span class="module-card__num">4.3</span>
+                <div>
+                  <h3>Competition-Specific Prep</h3>
+                  <p>Pitch prep (Innovation Challenge), brief-writing (Policy Cup), poster prep (Research Symposium), and case-team prep (Nationals).</p>
+                </div>
+              </article>
+            </div>
+            <p class="track__lab"><strong>Hands-on lab:</strong> A full mock case run-through, in teams. Each year’s Track 4 capstone becomes the basis for that year’s MediLink Nationals case.</p>
+          </article>
+
         </div>
       </section>
 
       <section class="section section--gray">
         <div class="container">
-          <div class="section-header">
-            <p class="section-eyebrow">How Chapters Use This</p>
-            <h2 class="section-title">Built to run locally first</h2>
-            <p class="section-lead">New chapters receive Module 1 in the starter kit. Established chapters work through the full sequence and use Module 5 before sending teams to Regional events. Slide decks and agendas are part of the kit — request them through Chapter Support if your files are missing.</p>
-          </div>
-          <div class="btn-row">
-            <a class="btn btn--blue" href="start-chapter.html">Chapter Starter Kit</a>
+          <h2 class="section-title">Members: log in for full lessons and labs</h2>
+          <p class="section-lead">The public syllabus is meant to look substantial to a recruit. Full slide decks, worksheets, and competition packets unlock after your chapter officers approve your roster and you receive a MediLink login.</p>
+          <div class="btn-row" style="margin-top:1.5rem;">
+            <a class="btn btn--primary" href="portal.html">Member Portal</a>
+            <a class="btn btn--outline" href="start-chapter.html">Start a Chapter</a>
             <a class="btn btn--outline" href="chapter-support.html">Chapter Support</a>
-            <a class="btn btn--outline" href="competition.html">Competition Tracks</a>
           </div>
         </div>
       </section>

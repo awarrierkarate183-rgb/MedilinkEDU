@@ -37,39 +37,4 @@ window.initMediLinkNav = function initMediLinkNav() {
       }
     });
   }
-
-  const revealSelectors = [
-    '.card', '.action-card', '.program-card', '.comp-card', '.flagship-card',
-    '.sponsor-tier', '.stat-item', '.section-header', '.goals-list li',
-    '.stats-row', '.footer-brand', '.footer-col',
-    '.chapters-explorer', '.chapters-detail', '.fund-use-card',
-    '.ladder-step', '.notice-callout', '.lens-card', '.module-card',
-    '.programs-panel', '.involve-tile', '.news-card',
-  ];
-
-  const revealEls = document.querySelectorAll(revealSelectors.join(','));
-  const staggered = new Set();
-
-  revealEls.forEach(el => {
-    if (el.classList.contains('reveal')) return;
-    el.classList.add('reveal');
-    const parent = el.parentElement;
-    if (!staggered.has(parent)) {
-      staggered.add(parent);
-      parent.querySelectorAll(revealSelectors.join(',')).forEach((sib, i) => {
-        sib.style.transitionDelay = `${i * 80}ms`;
-      });
-    }
-  });
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  revealEls.forEach(el => observer.observe(el));
 };
