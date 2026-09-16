@@ -7,10 +7,13 @@
 // title, competition, format, level, description, deliverables, and judgingCriteria.
 //
 // Filters:
-//   competition — Nationals, Innovation Challenge, Policy Cup,
+//   competition: Nationals, Innovation Challenge, Policy Cup,
 //                 Research Symposium, or The MediLink Apex
-//   format — Team, Pitch, Debate, Poster, etc.
-//   level — Regional, State, or National
+//   format: Team, Pitch, Debate, Poster, Summit
+//   level: Regional, State, National, or Annual
+//
+// Only Nationals uses Regional / State / National.
+// Innovation, Policy Cup, and Research Symposium are one Annual listing each.
 //
 // Do NOT add year-specific dates here. Dates are set by state chapter
 // boards and shared through chapter leaders.
@@ -29,32 +32,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const events = [
     {
-      title: "MediLink Nationals — Regional Round",
+      title: "MediLink Nationals, Regional Round",
       competition: "MediLink Nationals",
       format: "Team",
       level: "Regional",
       description:
-        "Teams of 3–4 submit a case brief using the Care / Cost / Code framework. Regional rounds are run at or near chapters and are open to all active high school members.",
+        "Teams of 3-4 submit a case brief using the three-lens framework (Care, Cost, Code in the packet). Regional rounds run at or near chapters and are open to active high school members.",
       deliverables: [
-        "Written case brief covering clinical need, financial model, and tech solution",
-        "Team roster of 3–4 high school members",
+        "Written case brief covering the clinical need, the financial model, and the tech solution",
+        "Team roster of 3-4 high school members",
       ],
       judgingCriteria: [
         "Clarity of the health-system problem",
-        "Strength of the Care / Cost / Code analysis",
+        "Strength of the three-lens analysis",
         "Feasibility of the proposed solution",
       ],
     },
     {
-      title: "MediLink Nationals — State Round",
+      title: "MediLink Nationals, State Round",
       competition: "MediLink Nationals",
       format: "Team",
       level: "State",
       description:
-        "Top regional teams advance to a state presentation round coordinated by the state chapter board. Format details are set each year and shared through chapter leaders.",
+        "Top regional teams advance to a state presentation coordinated by the state chapter board. Format details are set each year and shared through chapter leaders.",
       deliverables: [
         "Live or virtual presentation of the case solution",
-        "Updated Care / Cost / Code brief",
+        "Updated three-lens brief",
       ],
       judgingCriteria: [
         "Presentation quality and teamwork",
@@ -63,15 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
     },
     {
-      title: "MediLink Nationals — National Final & Gala",
+      title: "MediLink Nationals, National Final and Gala",
       competition: "MediLink Nationals",
       format: "Team",
       level: "National",
       description:
-        "The signature event. State qualifiers compete nationally, culminating in an awards gala. This is MediLink’s flagship competition and the event where sponsors receive top billing.",
+        "State qualifiers compete nationally, ending in an awards gala. This is the yearly flagship and the event where sponsors receive top billing.",
       deliverables: [
         "National final presentation",
-        "Final Care / Cost / Code case package",
+        "Final three-lens case package",
       ],
       judgingCriteria: [
         "Overall case excellence",
@@ -80,12 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
     },
     {
-      title: "Innovation Challenge — Regional",
+      title: "Innovation Challenge",
       competition: "Innovation Challenge",
       format: "Pitch",
-      level: "Regional",
+      level: "Annual",
       description:
-        "The entry point for tech-minded members. Teams pitch a health-tech product or digital-health concept — an app, device concept, or platform idea — at the regional level.",
+        "One annual pitch. An app, device concept, or platform idea. Individual or teams of up to 3. No regional or state qualifier.",
       deliverables: [
         "Pitch deck for a health-tech or digital-health concept",
         "Basic feasibility and impact notes",
@@ -97,151 +100,49 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
     },
     {
-      title: "Innovation Challenge — State",
-      competition: "Innovation Challenge",
-      format: "Pitch",
-      level: "State",
-      description:
-        "Regional winners advance to a state pitch round. State boards set presentation length and materials each year.",
-      deliverables: [
-        "Refined pitch deck",
-        "Live pitch to state judges",
-      ],
-      judgingCriteria: [
-        "Product-market fit",
-        "Clarity of the pitch",
-        "Implementation realism",
-      ],
-    },
-    {
-      title: "Innovation Challenge — National",
-      competition: "Innovation Challenge",
-      format: "Pitch",
-      level: "National",
-      description:
-        "State qualifiers compete nationally with a polished health-tech pitch judged on feasibility, impact, and a basic business case.",
-      deliverables: [
-        "National pitch presentation",
-        "One-page concept summary",
-      ],
-      judgingCriteria: [
-        "Feasibility",
-        "Impact",
-        "Business case strength",
-      ],
-    },
-    {
-      title: "Policy Cup — Regional",
+      title: "Policy Cup",
       competition: "Policy Cup",
       format: "Debate",
-      level: "Regional",
+      level: "Annual",
       description:
-        "Students argue for a real fix to a health-economics problem such as insurance access, rural care deserts, or drug pricing. Regional rounds introduce the brief and advocacy format.",
+        "One annual brief and debate. Individual or pairs. Topics come from the state chapter board. No regional or state qualifier.",
       deliverables: [
-        "Short policy brief",
-        "Opening advocacy statement",
+        "Policy brief",
+        "Live debate or advocacy presentation",
       ],
       judgingCriteria: [
         "Problem definition",
         "Evidence quality",
-        "Clarity of the proposed fix",
-      ],
-    },
-    {
-      title: "Policy Cup — State",
-      competition: "Policy Cup",
-      format: "Debate",
-      level: "State",
-      description:
-        "Top regional advocates advance to a state debate or presentation round coordinated by the state chapter board.",
-      deliverables: [
-        "Full policy brief",
-        "Live debate or advocacy presentation",
-      ],
-      judgingCriteria: [
-        "Argument quality",
-        "Use of evidence",
-        "Rebuttal and advocacy skill",
-      ],
-    },
-    {
-      title: "Policy Cup — National",
-      competition: "Policy Cup",
-      format: "Debate",
-      level: "National",
-      description:
-        "State qualifiers compete nationally, presenting a policy brief and arguing for a concrete health-economics reform.",
-      deliverables: [
-        "National policy brief",
-        "Advocacy presentation or debate round",
-      ],
-      judgingCriteria: [
-        "Policy rigor",
-        "Persuasion",
         "Practicality of the proposed reform",
       ],
     },
     {
-      title: "Research Symposium — Regional",
+      title: "Research Symposium",
       competition: "Research Symposium",
       format: "Poster",
-      level: "Regional",
+      level: "Annual",
       description:
-        "A lower-barrier entry point for newer members already doing independent research on a health-economics or health-tech topic. Regional rounds are poster-focused.",
+        "One annual poster and talk. Built for members who already have a research question. No regional or state qualifier.",
       deliverables: [
         "Research poster",
-        "Short oral overview",
+        "Short oral presentation",
       ],
       judgingCriteria: [
         "Research question clarity",
         "Method and evidence",
-        "Poster communication",
+        "Poster and talk communication",
       ],
     },
     {
-      title: "Research Symposium — State",
-      competition: "Research Symposium",
-      format: "Poster",
-      level: "State",
-      description:
-        "Regional poster presenters advance to a state symposium with poster and presentation components.",
-      deliverables: [
-        "Updated research poster",
-        "State-level oral presentation",
-      ],
-      judgingCriteria: [
-        "Depth of analysis",
-        "Presentation quality",
-        "Contribution to the topic",
-      ],
-    },
-    {
-      title: "Research Symposium — National",
-      competition: "Research Symposium",
-      format: "Presentation",
-      level: "National",
-      description:
-        "State qualifiers present independent research to a national audience in poster and presentation format.",
-      deliverables: [
-        "National poster",
-        "Formal research presentation",
-      ],
-      judgingCriteria: [
-        "Originality and rigor",
-        "Clarity of findings",
-        "Professional delivery",
-      ],
-    },
-    {
-      title: "The MediLink Apex — Biennial Summit",
+      title: "The MediLink Apex",
       competition: "The MediLink Apex",
       format: "Summit",
       level: "National",
       description:
-        "Every other year, that cycle’s National round is upgraded into a champions-of-champions summit. Top performers from Nationals, Innovation Challenge, Policy Cup, and Research Symposium are invited. Same qualification pipeline — larger gathering.",
+        "Every other year, that cycle's National round becomes a champions summit. Top performers from Nationals, Innovation Challenge, Policy Cup, and Research Symposium are invited. Same Nationals qualification path. A larger gathering.",
       deliverables: [
-        "Invitation earned through that cycle’s annual competitions",
-        "Championship-round materials, set by the state / national board",
+        "Invitation earned through that cycle's other four competitions",
+        "Championship-round materials, set by the state or national board",
       ],
       judgingCriteria: [
         "Excellence across the four annual disciplines",

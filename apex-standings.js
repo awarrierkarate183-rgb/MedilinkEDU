@@ -36,9 +36,9 @@
   function qualifyBadge(row) {
     if (!row.qualifies) return '<span class="apex-badge">Not yet qualified</span>';
     if (row.qualifyVia === "regional-guarantee") {
-      return '<span class="apex-badge apex-badge--region">Qualified — regional guarantee</span>';
+      return '<span class="apex-badge apex-badge--region">Qualified: regional guarantee</span>';
     }
-    return '<span class="apex-badge apex-badge--rank">Qualified — ranking</span>';
+    return '<span class="apex-badge apex-badge--rank">Qualified: ranking</span>';
   }
 
   function render(root, points, catalog) {
@@ -57,18 +57,18 @@
       "Top-ranked chapters by cycle total qualify, with at least " +
       escapeHtml(spots.minSpotsPerRegion) + " guaranteed spot(s) per active region, " +
       "up to " + escapeHtml(spots.totalApexSpots) + " Apex seats. " +
-      "The board updates the ledger after each event — these numbers are not live scores.</p>" +
+      "The board updates the ledger after each event. These numbers are not live scores.</p>" +
 
       '<div class="apex-schedules">' +
         '<article class="apex-schedule">' +
           "<h3>One-time events</h3>" +
-          "<p>Innovation Challenge, Policy Cup, and Research Symposium. Each is one event per year. The board records a single placement — not a ladder.</p>" +
+          "<p>Innovation Challenge, Policy Cup, and Research Symposium. Each is one event per year. The board records a single placement, not a ladder.</p>" +
           '<ul class="apex-schedule__list">' + scheduleList(oneTime, ONE_TIME_LABELS) + "</ul>" +
           "<p class=\"apex-schedule__max\">Maximum from one of these events: <strong>" + oneTimeMax + " pts</strong></p>" +
         "</article>" +
         '<article class="apex-schedule">' +
           "<h3>Nationals ladder</h3>" +
-          "<p>Nationals is the only multi-stage climb. Points add up as a team advances Regional → State → National. That is why Nationals is worth more — not an extra multiplier.</p>" +
+          "<p>Nationals is the only multi-stage climb. Points add up as a team advances Regional to State to National. That is why Nationals is worth more. There is no extra multiplier.</p>" +
           '<ul class="apex-schedule__list">' + scheduleList(nationals, NATIONALS_LABELS) + "</ul>" +
           "<p class=\"apex-schedule__max\">Maximum from a full Nationals sweep: <strong>" + nationalsMax + " pts</strong></p>" +
         "</article>" +

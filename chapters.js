@@ -44,10 +44,11 @@
       parent +
       '<h3 class="chapters-detail__name">' + escapeHtml(item.name) + '</h3>' +
       '<dl class="chapters-detail__meta">' +
-        '<div><dt>Location</dt><dd>' + escapeHtml(item.location || "—") + '</dd></div>' +
+        '<div><dt>Location</dt><dd>' + escapeHtml(item.location || "Not listed") + '</dd></div>' +
         (item.address ? '<div><dt>Address</dt><dd>' + escapeHtml(item.address) + '</dd></div>' : "") +
+        (item.status ? '<div><dt>Status</dt><dd>' + escapeHtml(item.status) + '</dd></div>' : "") +
         '<div><dt>Email</dt><dd><a href="mailto:' + escapeHtml(item.email) + '">' + escapeHtml(item.email) + '</a></dd></div>' +
-        '<div><dt>Phone</dt><dd><a href="tel:' + escapeHtml((item.phone || "").replace(/\D/g, "")) + '">' + escapeHtml(item.phone || "—") + '</a></dd></div>' +
+        '<div><dt>Phone</dt><dd><a href="tel:' + escapeHtml((item.phone || "").replace(/\D/g, "")) + '">' + escapeHtml(item.phone || "Not listed") + '</a></dd></div>' +
       '</dl>' +
       apexLine(item.id);
   }
@@ -194,11 +195,14 @@
 
       const chapterCount = state.chapters.length;
       const countLabel = chapterCount === 1 ? "1 chapter" : chapterCount + " chapters";
+      const statePts = apexById[state.id] ? apexById[state.id].cycleTotal : 0;
+      const statusBit = state.status ? escapeHtml(state.status) + ' · ' : '';
 
       group.innerHTML =
         '<button type="button" class="chapters-list__state" data-state-id="' + escapeHtml(state.id) + '">' +
           '<span class="chapters-list__state-name">' + escapeHtml(state.name) + '</span>' +
-          '<span class="chapters-list__state-meta">' + escapeHtml(state.location || "") + ' · ' + countLabel + '</span>' +
+          '<span class="chapters-list__state-meta">' + statusBit + escapeHtml(state.location || "") +
+          ' · ' + countLabel + ' · ' + statePts + ' Apex pts</span>' +
         '</button>' +
         '<div class="chapters-list__chapters"></div>';
 
@@ -220,9 +224,10 @@
           btn.dataset.stateId = state.id;
           btn.dataset.chapterId = chapter.id;
           const pts = apexById[chapter.id] ? apexById[chapter.id].cycleTotal : 0;
+          const statusBit = chapter.status ? escapeHtml(chapter.status) + ' · ' : '';
           btn.innerHTML =
             '<span class="chapters-list__chapter-name">' + escapeHtml(chapter.name) + '</span>' +
-            '<span class="chapters-list__chapter-meta">' + escapeHtml(chapter.location || "") +
+            '<span class="chapters-list__chapter-meta">' + statusBit + escapeHtml(chapter.location || "") +
             ' · ' + pts + ' Apex pts</span>';
           chaptersEl.appendChild(btn);
         });

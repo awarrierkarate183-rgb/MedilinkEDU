@@ -5,7 +5,7 @@
     const card = document.createElement("article");
     card.className = "sponsor-tier card" + (tier.highlight ? " sponsor-tier--highlight" : "");
 
-    const subject = encodeURIComponent("Corporate Sponsorship — " + tier.name);
+    const subject = encodeURIComponent("Corporate Sponsorship: " + tier.name);
     const mailto = "mailto:" + EMAIL + "?subject=" + subject;
 
     card.innerHTML =

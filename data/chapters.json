@@ -1,5 +1,5 @@
 {
-  "_note": "Real chapter entries should be added here as chapters launch. Do not leave fake or example school names live. Each state needs: id, name, location, address, email, phone, lat, lng, and a chapters array. Each school chapter inside that array needs: id, name, location, address, email, phone, lat, lng. Optional later: a status field using Founding, Established, or Flagship-Eligible — only after the chapter has actually earned that status. Use unique lowercase hyphenated ids (example: north-carolina). lat and lng must be numbers, not quoted strings. Validate this file at jsonlint.com if the map breaks.",
+  "_note": "Real chapter entries should be added here as chapters launch. Do not leave fake or example school names live. Each state needs: id, name, location, address, email, phone, lat, lng, and a chapters array. Each school chapter inside that array needs: id, name, location, address, email, phone, lat, lng. Optional later: a status field using Founding, Established, or Flagship-Eligible, only after the chapter has actually earned that status. Use unique lowercase hyphenated ids (example: north-carolina). lat and lng must be numbers, not quoted strings. Validate this file at jsonlint.com if the map breaks.",
   "states": [
     {
       "id": "north-carolina",
