@@ -3,10 +3,6 @@
   MEMBER PORTAL. Public face of a login-gated system that does not exist yet.
 
   Do NOT build fake authentication, a password checker, or a hidden lessons dump.
-  A real portal needs an auth provider and a database. That is its own project phase.
-
-  This page explains how access works (QR, approval, login) and holds a
-  non-working login box so the path is visible on the public site.
 -->
 <html lang="en">
   <head>
@@ -21,109 +17,56 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="page-mast">
-        <div class="container">
-          <h1>Member Portal</h1>
-          <p class="lead">Approved members use a registered MediLink login to open full lessons, labs, and competition resources. The public syllabus stays on the Curriculum page.</p>
+      <section class="stage stage--photo" style="background-image:url('img/tech.png');">
+        <div class="container stage__inner">
+          <p class="kicker anim">Members  /  Portal</p>
+          <span class="rule anim" aria-hidden="true"></span>
+          <h1 class="display anim">Member Portal</h1>
+          <p class="segue anim">Approved members use a registered MediLink login to open full lessons, labs, and competition resources. The public syllabus stays on the Curriculum page. Login is not live yet.</p>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="deck" id="portal-deck">
-
-            <article class="slab slab--8 reveal" id="access">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Access</span>
-                  <div class="slab__top">
-                    <h2>How you get in</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Access is scoped to a real chapter roster, not a generic sign-up on this website.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>01 Founding</h3>
-                    <p>Your school chapter reaches Founding status (chartered, officers in place).</p>
-                  </div>
-                  <div>
-                    <h3>02 Chapter QR</h3>
-                    <p>The chapter receives a unique QR code for flyers, emails, and the school.</p>
-                  </div>
-                  <div>
-                    <h3>03 Scan and register</h3>
-                    <p>You scan that code and complete a short form already tied to that chapter.</p>
-                  </div>
-                  <div>
-                    <h3>04 Approval and login</h3>
-                    <p>Chapter officers or the advisor approve the roster. You receive a MediLink login that opens this portal.</p>
-                    <p><a class="btn btn--outline btn--sm" href="start-chapter.html#qr">See the QR path</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-1" id="login">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Login</span>
-                  <div class="slab__top">
-                    <h2>Member login</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Login is not live yet. This is where members will sign in when the portal is built.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>Until then</h3>
-                    <p>Ask your chapter leader for curriculum files. Do not expect a working password box on this page.</p>
-                    <p><a class="btn btn--primary btn--sm" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email MediLink about access</a></p>
-                    <p><a class="btn btn--outline btn--sm" href="curriculum.html">Open the syllabus</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--12 reveal" id="holds">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Contents</span>
-                  <div class="slab__top">
-                    <h2>What the portal will hold</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Lessons, labs, packets, and chapter-only notes. None of that is public on this site.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Lessons</h3>
-                    <p>Full Track 1-4 lessons and slide decks.</p>
-                  </div>
-                  <div>
-                    <h3>Labs</h3>
-                    <p>Hands-on lab worksheets.</p>
-                  </div>
-                  <div>
-                    <h3>Packets</h3>
-                    <p>Competition prep packets for Nationals, Innovation Challenge, Policy Cup, and Research Symposium.</p>
-                  </div>
-                  <div>
-                    <h3>Chapter notes</h3>
-                    <p>Chapter-only announcements from officers.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
+      <section class="scene scene--split reveal" id="access">
+        <figure class="scene__media">
+          <img src="img/chapter.png" alt="Students" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">Access</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">How you get in</h2>
+          <p class="scene__sub">Access is scoped to a real chapter roster, not a generic sign-up on this website.</p>
+          <div class="scene__prose">
+            <p>Your school chapter reaches Founding status (chartered, officers in place). The chapter receives a unique QR code. You scan that code and complete a short form already tied to that chapter. Officers or the advisor approve the roster. You receive a MediLink login that opens this portal.</p>
+            <div class="btn-row">
+              <a class="btn btn--outline" href="start-chapter.html#qr">See the QR path</a>
+            </div>
           </div>
         </div>
+      </section>
+
+      <section class="scene scene--split scene--flip reveal" id="login">
+        <figure class="scene__media">
+          <img src="img/case.png" alt="Files" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">Login</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Member login is not live yet</h2>
+          <p class="scene__sub">When the portal is built, this is where members will sign in.</p>
+          <div class="scene__prose">
+            <p>Until then, ask your chapter leader for curriculum files. Do not expect a working password box on this page. A real portal needs an auth provider and a database. That is its own project phase.</p>
+            <div class="btn-row">
+              <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email MediLink about access</a>
+              <a class="btn btn--secondary" href="curriculum.html">Open the syllabus</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="finale reveal">
+        <p class="kicker">Contents</p>
+        <h2>What the portal will hold</h2>
+        <p>Full Track 1-4 lessons and slide decks. Hands-on lab worksheets. Competition prep packets for Nationals, Innovation Challenge, Policy Cup, and Research Symposium. Chapter-only announcements from officers. None of that is public on this site.</p>
       </section>
     </main>
 
@@ -131,7 +74,6 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
-    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

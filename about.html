@@ -4,8 +4,6 @@
   Everywhere else should name it and link here.
 
   Mission and vision also live on goals.html. If you change one, change both.
-
-  DECK: edit the .slab blocks. widgets.js opens one at a time.
 -->
 <html lang="en">
   <head>
@@ -20,236 +18,117 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="page-mast">
-        <div class="container">
-          <h1>Who we are</h1>
-          <p class="lead">Two high school students in Charlotte, North Carolina started MediLink because existing clubs split the work. One club trains clinical skill. Another trains business. A third treats technology as a side interest. Health systems do not work that way. We ask students to hold all three on one case.</p>
+      <section class="stage stage--photo" style="background-image:url('img/city.png');">
+        <div class="container stage__inner">
+          <p class="kicker anim">About  /  Identity</p>
+          <span class="rule anim" aria-hidden="true"></span>
+          <h1 class="display anim">Who we are</h1>
+          <p class="segue anim">Two high school students in Charlotte, North Carolina started MediLink because existing clubs split the work. One club trains clinical skill. Another trains business. A third treats technology as a side interest. Health systems do not work that way. We ask students to hold all three on one case.</p>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="deck" id="about-deck">
-
-            <article class="slab slab--8 reveal" id="identity">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">01 / Identity</span>
-                  <div class="slab__top">
-                    <h2>What we are</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">A student-founded nonprofit network of high school chapters. Not a hospital foundation and not a career-club franchise.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>The work</h3>
-                    <p>Members learn how real health systems work: a clinical problem, a money problem, and a technology problem at once. Chapters share one officer structure, one public syllabus, and one competition calendar.</p>
-                  </div>
-                  <div>
-                    <h3>What it is not</h3>
-                    <p>The work is chapter meetings, four tracks, twelve modules, and five competitions. Nationals is the yearly flagship. The Apex is the biennial upgrade of that National round.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-1" id="mission">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">02 / Mission</span>
-                  <div class="slab__top">
-                    <h2>Our mission</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Train the next generation of healthcare problem-solvers.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>The sentence we keep</h3>
-                    <p>To train the next generation of healthcare problem-solvers by combining clinical understanding, financial reasoning, and technological literacy through chapters, curriculum, and competition.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal" id="vision">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">03 / Vision</span>
-                  <div class="slab__top">
-                    <h2>Our vision</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">A nationwide network that already understands how the three worlds connect.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>The sentence we keep</h3>
-                    <p>A nationwide student network where every chapter graduate can walk into a hospital, an insurance company, or a health-tech startup and already understand how those three worlds connect.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--8 reveal reveal-delay-1" id="method">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">04 / Method</span>
-                  <div class="slab__top">
-                    <h2>The framework</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Every module, case, and chapter project runs through three lenses. Open one tile at a time below, or open this overview first.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>How to read it</h3>
-                    <p>Clinical, Financial, and Technology are the three rooms of the method. Case packets still use the internal name Care, Cost, Code. Chapters teach this across four tracks and twelve modules.</p>
-                    <p><a class="btn btn--outline btn--sm" href="curriculum.html">See the public syllabus</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal" id="clinical">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Lens</span>
-                  <div class="slab__top">
-                    <h2>Clinical</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">What is the actual health problem, and who is affected?</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>Name the gap</h3>
-                    <p>Name the condition, the patients or communities, and the gap in care. A team that skips this step writes a business plan for a problem it cannot describe.</p>
-                  </div>
-                  <div>
-                    <h3>Who is left out</h3>
-                    <p>Rural distance, uninsured families, and delayed diagnosis are clinical facts, not background color.</p>
-                  </div>
-                  <div>
-                    <h3>In Nationals</h3>
-                    <p>This lens is the Care award: Best Clinical Insight.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-1" id="financial">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Lens</span>
-                  <div class="slab__top">
-                    <h2>Financial</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Who pays for it, what does it cost, and is a solution sustainable?</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>The money path</h3>
-                    <p>Insurance, hospital billing, grants, premiums, and unit economics sit here. If the money path fails, the clinical idea does not leave the page.</p>
-                  </div>
-                  <div>
-                    <h3>Chapter owner</h3>
-                    <p>A chapter Finance Lead owns this lens in meetings: Track 3 labs, budgets, and who actually pays.</p>
-                  </div>
-                  <div>
-                    <h3>In Nationals</h3>
-                    <p>This lens is the Cost award: Best Financial Model.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-2" id="technology">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Lens</span>
-                  <div class="slab__top">
-                    <h2>Technology</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">How could data, software, or infrastructure change access or delivery?</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>What counts</h3>
-                    <p>Records, telehealth, devices, and simple tools count. The test is whether the tech changes the clinical or financial outcome, not whether it looks new.</p>
-                  </div>
-                  <div>
-                    <h3>Chapter owner</h3>
-                    <p>A chapter Technology Lead owns this lens: Track 2 modules and any digital project the chapter runs.</p>
-                  </div>
-                  <div>
-                    <h3>In Nationals</h3>
-                    <p>This lens is the Code award: Best Tech Innovation.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--12 reveal" id="aims">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">05 / Aims</span>
-                  <div class="slab__top">
-                    <h2>What we aim to achieve</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Six aims. The same list lives on the Goals page.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Train</h3>
-                    <p>Train high school students to apply the three-lens framework to real health-system problems.</p>
-                  </div>
-                  <div>
-                    <h3>Grow</h3>
-                    <p>Grow a nationwide chapter network with a shared officer structure, curriculum, and starter kit.</p>
-                  </div>
-                  <div>
-                    <h3>Compete</h3>
-                    <p>Run four annual competitions plus a biennial Apex, with Nationals as the yearly flagship.</p>
-                  </div>
-                  <div>
-                    <h3>Connect</h3>
-                    <p>Connect members with clinical, finance, and health-tech partners for shadowing, internships, and research.</p>
-                  </div>
-                  <div>
-                    <h3>Transfer</h3>
-                    <p>Give students titles, projects, and competition experience that transfer to college and career.</p>
-                  </div>
-                  <div>
-                    <h3>Give back</h3>
-                    <p>Give back to the community through chapter service and outreach.</p>
-                    <p><a class="btn btn--outline btn--sm" href="goals.html">Read the full goals</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
+      <section class="scene scene--split reveal" id="identity">
+        <figure class="scene__media">
+          <img src="img/hero.png" alt="A quiet hospital corridor at dusk" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">01  /  What we are</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">A student-founded network of high school chapters.</h2>
+          <p class="scene__sub">Not a hospital foundation. Not a career-club franchise.</p>
+          <div class="scene__prose">
+            <p>Members learn how real health systems work: a clinical problem, a money problem, and a technology problem at once. Chapters share one officer structure, one public syllabus, and one competition calendar.</p>
+            <p>The work is chapter meetings, four tracks, twelve modules, and five competitions. Nationals is the yearly flagship. The Apex is the biennial upgrade of that National round.</p>
           </div>
+        </div>
+      </section>
+
+      <section class="scene scene--split scene--flip reveal" id="mission">
+        <figure class="scene__media">
+          <img src="img/case.png" alt="Open case folders on a navy desk" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">02  /  Mission</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Train the next generation of healthcare problem-solvers.</h2>
+          <p class="scene__sub">Clinical understanding, financial reasoning, and technological literacy in one program.</p>
+          <div class="scene__prose">
+            <p>To train the next generation of healthcare problem-solvers by combining clinical understanding, financial reasoning, and technological literacy through chapters, curriculum, and competition.</p>
+            <p>Keep this sentence in sync with the Goals page. If you change it here, change it there.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--full reveal" id="vision" style="background-image:url('img/compete.png');">
+        <div class="container">
+          <p class="kicker">03  /  Vision</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Walk into any of the three worlds already fluent.</h2>
+          <p class="scene__sub">Hospital. Insurance company. Health-tech startup.</p>
+          <div class="scene__prose" style="max-width:40rem;">
+            <p>A nationwide student network where every chapter graduate can walk into a hospital, an insurance company, or a health-tech startup and already understand how those three worlds connect.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--split reveal" id="clinical">
+        <figure class="scene__media">
+          <img src="img/clinical.png" alt="A quiet exam room lit in gold" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">04  /  Clinical lens</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">What is the actual health problem, and who is affected?</h2>
+          <p class="scene__sub">Name the condition, the patients or communities, and the gap in care.</p>
+          <div class="scene__prose">
+            <p>A team that skips this step writes a business plan for a problem it cannot describe. Rural distance, uninsured families, and delayed diagnosis are clinical facts, not background color.</p>
+            <p>In Nationals, this lens is the Care award: Best Clinical Insight.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--split scene--flip reveal" id="financial">
+        <figure class="scene__media">
+          <img src="img/finance.png" alt="Ledgers and a gold lamp on a dark desk" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">05  /  Financial lens</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Who pays for it, what does it cost, and is it sustainable?</h2>
+          <p class="scene__sub">Insurance, hospital billing, grants, premiums, and unit economics sit here.</p>
+          <div class="scene__prose">
+            <p>If the money path fails, the clinical idea does not leave the page. A chapter Finance Lead owns this lens in meetings: Track 3 labs, budgets, and who actually pays.</p>
+            <p>In Nationals, this lens is the Cost award: Best Financial Model.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--split reveal" id="technology">
+        <figure class="scene__media">
+          <img src="img/tech.png" alt="Monitors glowing in a dark room" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">06  /  Technology lens</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">How could data, software, or infrastructure change access or delivery?</h2>
+          <p class="scene__sub">Records, telehealth, devices, and simple tools count.</p>
+          <div class="scene__prose">
+            <p>The test is whether the tech changes the clinical or financial outcome, not whether it looks new. A chapter Technology Lead owns this lens: Track 2 modules and any digital project the chapter runs.</p>
+            <p>In Nationals, this lens is the Code award: Best Tech Innovation. Case packets still use the internal name Care, Cost, Code.</p>
+            <div class="btn-row">
+              <a class="btn btn--outline" href="curriculum.html">See the public syllabus</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="finale reveal" id="aims">
+        <p class="kicker">07  /  Aims</p>
+        <h2>What we aim to achieve</h2>
+        <p>Train students on the three-lens framework. Grow a nationwide chapter network with a shared officer structure, curriculum, and starter kit. Run four annual competitions plus a biennial Apex, with Nationals as the yearly flagship. Connect members with clinical, finance, and health-tech partners for shadowing, internships, and research. Give students titles, projects, and competition experience that transfer to college and career. Give back through chapter service and outreach.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="goals.html">Read the full goals</a>
+          <a class="btn btn--secondary" href="involved.html">Get involved</a>
         </div>
       </section>
     </main>
@@ -258,7 +137,6 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
-    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

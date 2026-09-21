@@ -2,7 +2,7 @@
 <!--
   MEDILINK SITE MAP. Start here if you are a new student editor.
 
-  Homepage: one navy field, a centered title, then expandable slabs.
+  Homepage: huge title, then scroll scenes with pictures.
   Current hero line: We train students to solve healthcare the way real systems are solved.
   Do not put Care, Cost, Code in the hero.
 
@@ -22,158 +22,133 @@
 
     <main>
 
-      <section class="page-mast page-mast--home">
-        <div class="container">
-          <h1>We train students to solve healthcare the way real systems are solved.</h1>
-          <p class="lead">A student-founded high school network in Charlotte. Members learn through chapters, a four-track syllabus, and five competitions that treat medicine, money, and technology as one problem.</p>
-          <div class="hero-actions">
+      <section class="stage stage--photo stage--center" style="background-image:url('img/hero.png');">
+        <div class="container stage__inner">
+          <p class="kicker anim">MediLink  /  Charlotte</p>
+          <span class="rule anim" aria-hidden="true"></span>
+          <h1 class="display anim">We train students to solve healthcare the way real systems are solved.</h1>
+          <p class="segue anim">A student-founded high school network. Members learn through chapters, a four-track syllabus, and five competitions that treat medicine, money, and technology as one problem.</p>
+          <div class="hero-actions anim">
             <a class="btn btn--primary" href="involved.html">Get involved</a>
             <a class="btn btn--secondary" href="about.html">Who we are</a>
+          </div>
+          <p class="scroll-cue anim">Scroll the story</p>
+        </div>
+      </section>
+
+      <section class="scene scene--split reveal" id="framework">
+        <figure class="scene__media">
+          <img src="img/case.png" alt="Case files on a desk under gold light" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">01  /  Method</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">One problem. Three lenses.</h2>
+          <p class="scene__sub">A hospital bill, a coverage rule, and a records system sit on the same case.</p>
+          <div class="scene__prose">
+            <p>Real health systems do not split into a clinic track, a finance track, and a tech track. MediLink trains chapters to hold all three from the first meeting.</p>
+            <p>The three-lens framework is the method. About is the page that opens each lens and shows how they lock together. Case packets still use the internal name Care, Cost, Code.</p>
+            <div class="btn-row">
+              <a class="btn btn--outline" href="about.html">Open the framework</a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="deck" id="home-deck">
-
-            <article class="slab slab--8 slab--tall reveal" id="framework">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">01 / Framework</span>
-                  <div class="slab__top">
-                    <h2>One problem. Three lenses.</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Real health systems do not split clinic, finance, and tech. Open this tile for how MediLink holds all three on one case.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>How the work sits</h3>
-                    <p>A hospital bill, a coverage rule, and a records system belong to the same case. Chapters train that way from the first meeting.</p>
-                  </div>
-                  <div>
-                    <h3>Where it is taught</h3>
-                    <p>The three-lens framework is the method. About is the page that opens each lens. Case packets still use the internal name Care, Cost, Code.</p>
-                  </div>
-                  <div>
-                    <h3>Open the full page</h3>
-                    <p>Who we are, mission, vision, and the three lenses live together on About.</p>
-                    <p><a class="btn btn--outline btn--sm" href="about.html">Open the framework</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 slab--tall reveal reveal-delay-1" id="compete">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">02 / Compete</span>
-                  <div class="slab__top">
-                    <h2>Five events</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Three annual events, Nationals on a ladder, and a biennial Apex.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Two structures</h3>
-                    <p>Innovation Challenge, Policy Cup, and Research Symposium each run once a year. Only Nationals climbs Regional to State to National. The Apex is the biennial upgrade of that National round.</p>
-                  </div>
-                  <div>
-                    <h3>Open the board</h3>
-                    <p>Format, who can enter, and the Road to Apex standings sit on one competitions page.</p>
-                    <p><a class="btn btn--outline btn--sm" href="competition.html">See competitions</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal" id="belong">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">03 / Belong</span>
-                  <div class="slab__top">
-                    <h2>Chapters</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Find a chapter or start one. Status is earned, not assigned.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Find or found</h3>
-                    <p>Listings currently cover North Carolina and Georgia. Founding chapters get a QR code tied to their roster, then a path from Founding to Flagship-Eligible.</p>
-                  </div>
-                  <div>
-                    <h3>Next step</h3>
-                    <p><a class="btn btn--outline btn--sm" href="chapters.html">Find a chapter</a> <a class="btn btn--outline btn--sm" href="start-chapter.html">Start a chapter</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-1" id="support">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">04 / Support</span>
-                  <div class="slab__top">
-                    <h2>Get involved</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Sponsor, partner, volunteer, or send news leadership can place.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Who this is for</h3>
-                    <p>Companies, hospitals, judges, and families. Impact Partner and above can attend State and National events in person.</p>
-                  </div>
-                  <div>
-                    <h3>Open the paths</h3>
-                    <p><a class="btn btn--outline btn--sm" href="involved.html">Work with MediLink</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-2" id="news">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">05 / News</span>
-                  <div class="slab__top">
-                    <h2>Member news</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">These tiles stay empty of invented stats until real listings arrive.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>Site</h3>
-                    <p>Chapter wins appear on the homepage after leadership reviews them.</p>
-                  </div>
-                  <div>
-                    <h3>Social</h3>
-                    <p>The same email can run on MediLink social if leadership chooses it.</p>
-                  </div>
-                  <div>
-                    <h3>Events</h3>
-                    <p>Ask your chapter leader if a submission can be shown at a gathering this year.</p>
-                    <p><a class="btn btn--outline btn--sm" href="involved.html#submit-news">Submit news</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
+      <section class="scene scene--split scene--flip reveal" id="compete">
+        <figure class="scene__media">
+          <img src="img/compete.png" alt="Navy stage with a single gold spotlight" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">02  /  Compete</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Five events. Two structures.</h2>
+          <p class="scene__sub">Only Nationals climbs a ladder. The Apex is the biennial summit of the other four.</p>
+          <div class="scene__prose">
+            <p>Innovation Challenge, Policy Cup, and Research Symposium each run once a year, with no regional or state qualifier. Nationals is the yearly flagship: Regional to State to National, on a case drawn from that year's Track 4 capstone.</p>
+            <p>Every other year that National round becomes the Apex. It is not a sixth standalone case. Top performers from the other four events are invited into an enlarged National summit.</p>
+            <div class="btn-row">
+              <a class="btn btn--outline" href="competition.html">See competitions</a>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <section class="scene scene--split reveal" id="belong">
+        <figure class="scene__media">
+          <img src="img/chapter.png" alt="Students working together at a table at night" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">03  /  Belong</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Chapters earn their status.</h2>
+          <p class="scene__sub">Founding, Established, then Flagship-Eligible. Labels follow work that actually happened.</p>
+          <div class="scene__prose">
+            <p>Find a chapter or start one. Founding chapters get a QR code tied to their roster, then a path from first meetings to Nationals eligibility. Listings currently cover North Carolina and Georgia. School arrays stay empty until the board records real chapters. Do not invent names to fill the map.</p>
+            <div class="btn-row">
+              <a class="btn btn--outline" href="chapters.html">Find a chapter</a>
+              <a class="btn btn--secondary" href="start-chapter.html">Start a chapter</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--full reveal" style="background-image:url('img/city.png');" id="place">
+        <div class="container">
+          <p class="kicker">04  /  Place</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Started in Charlotte. Built to travel.</h2>
+          <p class="scene__sub">Two high school students founded MediLink because existing clubs split the work.</p>
+          <div class="scene__prose" style="max-width:38rem;">
+            <p>One club trains clinical skill. Another trains business. A third treats technology as a side interest. Health systems do not work that way. The network is still young. What is public is the method, the syllabus, and the competition calendar, not a catalog of invented wins.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--plain" style="padding-bottom:2rem;">
+        <div class="container reveal">
+          <p class="kicker">05  /  News</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Member news waits for real work.</h2>
+          <p class="scene__sub">Send a chapter win, service project, or research highlight. Do not invent stats to fill a card.</p>
+        </div>
+      </section>
+
+      <div class="trio">
+        <article class="trio__card reveal">
+          <img src="img/case.png" alt="Open case files" />
+          <div>
+            <p class="kicker">Site</p>
+            <h3>Featured on MediLink</h3>
+            <p>Chapter wins appear here after leadership reviews them. A first-time visitor should see work, not filler.</p>
+          </div>
+        </article>
+        <article class="trio__card reveal reveal-delay-1">
+          <img src="img/tech.png" alt="Screens in a dark room" />
+          <div>
+            <p class="kicker">Social</p>
+            <h3>Shown on our channels</h3>
+            <p>The same email can run on MediLink social if leadership chooses it.</p>
+          </div>
+        </article>
+        <article class="trio__card reveal reveal-delay-2">
+          <img src="img/compete.png" alt="Gold spotlight on a navy stage" />
+          <div>
+            <p class="kicker">Events</p>
+            <h3>Shown at competitions</h3>
+            <p>Ask your chapter leader if a submission can be shown at a gathering this year.</p>
+          </div>
+        </article>
+      </div>
+
+      <section class="finale reveal" id="close">
+        <p class="kicker">Next</p>
+        <h2>Sponsor, volunteer, or start the chapter that is missing.</h2>
+        <p>Impact Partner and above can attend State and National events in person. Students launching a school should use Start a Chapter, not the sponsor page.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="involved.html">Get involved</a>
+          <a class="btn btn--secondary" href="start-chapter.html">Start a chapter</a>
+          <a class="btn btn--outline" href="involved.html#submit-news">Submit news</a>
         </div>
       </section>
 
@@ -184,7 +159,6 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
-    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

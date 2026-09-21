@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <!--
-  COMPETITIONS. One page. All five events live here as expandable slabs.
-
-  Click a tile to open its chamber. widgets.js keeps only one open at a time.
-  Nationals and Apex use the larger slab sizes.
+  COMPETITIONS. One scrolling page. All five events live here as scenes.
 
   Only Nationals uses Regional to State to National. That ladder sits inside
-  the Nationals slab (id="ladder") so old #ladder links still work.
+  the Nationals scene (id="ladder") so old #ladder links still work.
 
-  Road to Apex standings render from data/apex-points.json inside the Apex slab.
+  Road to Apex standings render from data/apex-points.json inside the Apex scene.
 -->
 <html lang="en">
   <head>
@@ -23,241 +20,147 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="page-mast">
-        <div class="container">
-          <h1>Five competitions. Two structures.</h1>
-          <p class="lead">Innovation Challenge, Policy Cup, and Research Symposium each run once a year, with no regional or state qualifier. Nationals is the only event that climbs Regional to State to National. Every other year, that National round becomes the Apex, a summit built from top performers across the other four. Open a tile for format, who can enter, and what a year actually looks like.</p>
+      <section class="stage stage--photo stage--center" style="background-image:url('img/compete.png');">
+        <div class="container stage__inner">
+          <p class="kicker anim">Compete  /  Five events</p>
+          <span class="rule anim" aria-hidden="true"></span>
+          <h1 class="display anim">Five competitions. Two structures.</h1>
+          <p class="segue anim">Innovation Challenge, Policy Cup, and Research Symposium each run once a year, with no regional or state qualifier. Nationals is the only event that climbs Regional to State to National. Every other year, that National round becomes the Apex. Dates come from state chapter boards through chapter leaders. This page is the structure, not a calendar.</p>
+          <p class="scroll-cue anim">Scroll the five</p>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="deck" id="comp-deck">
-
-            <article class="slab slab--8 slab--tall slab--flag reveal" id="nationals">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Yearly flagship</span>
-                  <div class="slab__top">
-                    <h2>MediLink Nationals</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Teams of 3 to 4 take a health-system case from that year's Track 4 capstone and climb Regional to State to National.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>What it is</h3>
-                    <p>The yearly flagship. Same case for every team. Curriculum and competition stay connected because the case comes from Track 4.</p>
-                  </div>
-                  <div>
-                    <h3>Who can participate</h3>
-                    <p>Grades 9-12 in a Flagship-Eligible chapter, or a chapter on that path. Teams of 3 to 4 must cover all three lenses.</p>
-                  </div>
-                  <div>
-                    <h3>What to expect</h3>
-                    <p>Written brief and video pitch, then live regional rounds, then a national final and awards gala. State boards set dates.</p>
-                  </div>
-                </div>
-                <div class="chamber" style="margin-top:1.25rem;">
-                  <div>
-                    <h3>Phase 1. Case Release</h3>
-                    <p>Remote brief plus a short video pitch. Packets use the internal name Care, Cost, Code.</p>
-                  </div>
-                  <div>
-                    <h3>Phase 2. Regional Rounds</h3>
-                    <p>Top teams present live to judges from hospitals, finance firms, and health-tech companies.</p>
-                  </div>
-                  <div>
-                    <h3>Phase 3. National Finals</h3>
-                    <p>Live final and awards evening. The intended home is Charlotte.</p>
-                  </div>
-                </div>
-                <div class="chamber chamber--1" style="margin-top:1.25rem;">
-                  <div>
-                    <h3>Awards</h3>
-                    <p>Best Clinical Insight, Best Financial Model, Best Tech Innovation, and a Grand Prize for strength across the three-lens framework. Sponsors can name a track or award.</p>
-                  </div>
-                </div>
-                <div class="chamber" id="ladder" style="margin-top:1.25rem;">
-                  <div>
-                    <h3>Level 1. Regional</h3>
-                    <p>First Nationals round, run at or near chapters. Only Nationals uses this ladder.</p>
-                  </div>
-                  <div>
-                    <h3>Level 2. State</h3>
-                    <p>Top regional teams advance. The state board coordinates this round.</p>
-                  </div>
-                  <div>
-                    <h3>Level 3. National</h3>
-                    <p>State qualifiers compete nationally. In an Apex year, this level is the summit.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 slab--tall reveal reveal-delay-1" id="innovation">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">One annual event</span>
-                  <div class="slab__top">
-                    <h2>Innovation Challenge</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">A pitch for an app, device concept, or platform idea. No qualifier rounds.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>What it is</h3>
-                    <p>Students pitch a health-tech idea that addresses a gap in care, access, or operations. Judges score feasibility, impact, and a basic business case. A finished product is not required.</p>
-                  </div>
-                  <div>
-                    <h3>Who can participate</h3>
-                    <p>Grades 9-12 in an active MediLink chapter. Individual or teams of up to 3.</p>
-                  </div>
-                  <div>
-                    <h3>What to expect</h3>
-                    <p>One annual pitch deck and live presentation. Top finishers earn Apex points on the one-time schedule.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal" id="policy">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">One annual event</span>
-                  <div class="slab__top">
-                    <h2>Policy Cup</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">A brief and debate. Topics come from the state chapter board.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>What it is</h3>
-                    <p>Competitors research a live issue, write a brief, and argue for a concrete reform. Debate and presentation, not a written exam.</p>
-                  </div>
-                  <div>
-                    <h3>Who can participate</h3>
-                    <p>Grades 9-12 in an active MediLink chapter. Individual or pairs.</p>
-                  </div>
-                  <div>
-                    <h3>What to expect</h3>
-                    <p>One annual brief plus live advocacy. Top finishers earn Apex points on the one-time schedule.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-1" id="research">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">One annual event</span>
-                  <div class="slab__top">
-                    <h2>Research Symposium</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">A poster and talk. Lowest barrier of the five.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber">
-                  <div>
-                    <h3>What it is</h3>
-                    <p>Students share independent research through a poster and a short presentation.</p>
-                  </div>
-                  <div>
-                    <h3>Who can participate</h3>
-                    <p>Grades 9-12 in an active chapter, working on or finished with research in health economics or health tech.</p>
-                  </div>
-                  <div>
-                    <h3>What to expect</h3>
-                    <p>One annual poster display plus an oral presentation. Top finishers earn Apex points on the one-time schedule.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-2" id="chapter-entry">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Entry</span>
-                  <div class="slab__top">
-                    <h2>You compete through a chapter</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Start one at your high school, or find a chapter that is already running.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Start</h3>
-                    <p>Officers, a starter kit, and a chapter QR code.</p>
-                    <p><a class="btn btn--primary btn--sm" data-form="startChapter" href="#">Start a Chapter</a></p>
-                  </div>
-                  <div>
-                    <h3>Find</h3>
-                    <p>Current listings and the map live on the Chapters page.</p>
-                    <p><a class="btn btn--outline btn--sm" href="chapters.html">Find a Chapter</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--12 slab--flag reveal" id="apex">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Biennial culmination</span>
-                  <div class="slab__top">
-                    <h2>The MediLink Apex</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Every two years, that cycle's National round becomes a summit for top performers from the other four events.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>Not a sixth case</h3>
-                    <p>Nationals stays the yearly flagship. In an Apex year the National round is enlarged, and champions from Innovation Challenge, Policy Cup, and Research Symposium are invited.</p>
-                  </div>
-                </div>
-                <div class="chamber chamber--2" style="margin-top:1.25rem;">
-                  <div>
-                    <h3>Championship round</h3>
-                    <p>A championship round that pulls from all four annual disciplines.</p>
-                  </div>
-                  <div>
-                    <h3>Sponsor fair</h3>
-                    <p>A sponsor networking fair. Face time with students, not only a logo on a banner.</p>
-                  </div>
-                  <div>
-                    <h3>Keynotes</h3>
-                    <p>Keynote speakers from medicine, finance, and health-tech.</p>
-                  </div>
-                  <div>
-                    <h3>Awards gala</h3>
-                    <p>A grand awards gala closing the event.</p>
-                  </div>
-                </div>
-                <div id="road-to-apex" style="margin-top:1.5rem;">
-                  <h3 style="margin:0 0 .4rem;font-family:var(--font-display);font-weight:500;color:#fff;">Road to Apex. Current standings</h3>
-                  <p style="margin:0 0 1rem;color:rgba(244,246,248,.72);">Points come from a board-maintained ledger. Nationals uses its own ladder values. The other three share a one-time event schedule.</p>
-                  <div id="apex-standings">
-                    <p>Loading standings...</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
+      <section class="scene scene--split reveal" id="nationals">
+        <figure class="scene__media">
+          <img src="img/hero.png" alt="A long hospital corridor" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">Yearly flagship</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">MediLink Nationals</h2>
+          <p class="scene__sub">Teams of 3 to 4 take a health-system case from that year's Track 4 capstone.</p>
+          <div class="scene__prose">
+            <p>The yearly flagship. Same case for every team. Curriculum and competition stay connected because the case comes from Track 4. Grades 9-12 in a Flagship-Eligible chapter, or a chapter on that path, enter in teams of 3 to 4 that must cover all three lenses.</p>
+            <p>Expect a written brief and video pitch, then live regional rounds, then a national final and awards gala. The intended home of the final is Charlotte. Packets use the internal name Care, Cost, Code.</p>
+            <p>Awards: Best Clinical Insight, Best Financial Model, Best Tech Innovation, and a Grand Prize for strength across the three-lens framework. Sponsors can name a track or award.</p>
           </div>
+        </div>
+      </section>
+
+      <section class="scene scene--plain reveal" id="ladder">
+        <div class="container">
+          <p class="kicker">The Nationals ladder</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Regional. State. National.</h2>
+          <p class="scene__sub">Only Nationals uses this climb. The other three annual events do not have sub-levels.</p>
+        </div>
+        <div class="trio" style="padding-top:2.5rem;padding-bottom:0;">
+          <article class="trio__card">
+            <img src="img/chapter.png" alt="Students around a table" />
+            <div>
+              <p class="kicker">Level 1</p>
+              <h3>Regional</h3>
+              <p>First Nationals round, run at or near chapters. Phase 1 of the year is a remote brief plus a short video pitch. Phase 2 is live regional presentation to judges from hospitals, finance firms, and health-tech companies.</p>
+            </div>
+          </article>
+          <article class="trio__card">
+            <img src="img/city.png" alt="City skyline at dusk" />
+            <div>
+              <p class="kicker">Level 2</p>
+              <h3>State</h3>
+              <p>Top regional teams advance. The state board coordinates this round.</p>
+            </div>
+          </article>
+          <article class="trio__card">
+            <img src="img/compete.png" alt="Awards stage" />
+            <div>
+              <p class="kicker">Level 3</p>
+              <h3>National</h3>
+              <p>State qualifiers compete nationally. Live final and awards evening. In an Apex year, this level is the summit.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="scene scene--split scene--flip reveal" id="innovation">
+        <figure class="scene__media">
+          <img src="img/tech.png" alt="Glowing screens in a dark room" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">One annual event</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Innovation Challenge</h2>
+          <p class="scene__sub">A pitch for an app, device concept, or platform idea. No qualifier rounds.</p>
+          <div class="scene__prose">
+            <p>Students pitch a health-tech idea that addresses a gap in care, access, or operations. Judges score feasibility, impact, and a basic business case. A finished product is not required.</p>
+            <p>Grades 9-12 in an active MediLink chapter. Individual or teams of up to 3. One annual pitch deck and live presentation. Top finishers earn Apex points on the one-time schedule.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--split reveal" id="policy">
+        <figure class="scene__media">
+          <img src="img/finance.png" alt="Papers under a gold lamp" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">One annual event</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Policy Cup</h2>
+          <p class="scene__sub">A brief and debate. Topics come from the state chapter board.</p>
+          <div class="scene__prose">
+            <p>Competitors research a live issue, write a brief, and argue for a concrete reform. Debate and presentation, not a written exam.</p>
+            <p>Grades 9-12 in an active MediLink chapter. Individual or pairs. One annual brief plus live advocacy. Top finishers earn Apex points on the one-time schedule.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--split scene--flip reveal" id="research">
+        <figure class="scene__media">
+          <img src="img/clinical.png" alt="A quiet clinical room" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">One annual event</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Research Symposium</h2>
+          <p class="scene__sub">A poster and talk. Lowest barrier of the five.</p>
+          <div class="scene__prose">
+            <p>Students share independent research through a poster and a short presentation. Grades 9-12 in an active chapter, working on or finished with research in health economics or health tech.</p>
+            <p>One annual poster display plus an oral presentation. Top finishers earn Apex points on the one-time schedule.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--full reveal" id="apex" style="background-image:url('img/compete.png');">
+        <div class="container">
+          <p class="kicker">Biennial culmination</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">The MediLink Apex</h2>
+          <p class="scene__sub">Not a sixth standalone case. Nationals stays the yearly flagship.</p>
+          <div class="scene__prose" style="max-width:42rem;">
+            <p>Every two years, that cycle's National round becomes a summit for top performers from the other four events. Champions from Innovation Challenge, Policy Cup, and Research Symposium are invited. The summit includes a championship round that pulls from all four annual disciplines, a sponsor networking fair, keynotes from medicine, finance, and health-tech, and a grand awards gala.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--plain" id="road-to-apex">
+        <div class="container reveal">
+          <p class="kicker">Road to Apex</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Current standings</h2>
+          <p class="scene__sub">Points come from a board-maintained ledger. These numbers are not live scores.</p>
+          <div id="apex-standings" style="margin-top:2rem;">
+            <p>Loading standings...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="finale reveal">
+        <p class="kicker">Entry</p>
+        <h2>You compete through a chapter</h2>
+        <p>Start one at your high school, or find a chapter that is already running.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" data-form="startChapter" href="#">Start a Chapter</a>
+          <a class="btn btn--secondary" href="chapters.html">Find a Chapter</a>
         </div>
       </section>
     </main>
@@ -266,7 +169,6 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
-    <script src="/widgets.js"></script>
     <script src="/apex-points.js"></script>
     <script src="/apex-standings.js"></script>
     <script src="/motion.js"></script>

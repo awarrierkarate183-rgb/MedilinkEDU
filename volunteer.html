@@ -12,123 +12,84 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="page-mast">
-        <div class="container">
-          <h1>Become a Volunteer</h1>
-          <p class="lead">Mentor students, sit on a judge panel, or help a chapter run meetings. Tell us your field so we can match you.</p>
+      <section class="stage stage--photo" style="background-image:url('img/chapter.png');">
+        <div class="container stage__inner">
+          <p class="kicker anim">Volunteer  /  Mentors</p>
+          <span class="rule anim" aria-hidden="true"></span>
+          <h1 class="display anim">Become a Volunteer</h1>
+          <p class="segue anim">Mentor students, sit on a judge panel, or help a chapter run meetings. Tell us your field so we can match you.</p>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="deck" id="volunteer-deck">
+      <section class="scene scene--split reveal">
+        <figure class="scene__media">
+          <img src="img/case.png" alt="Case files" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">Mentor</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Guide researchers and chapter officers</h2>
+          <p class="scene__sub">Healthcare, economics, policy, or health tech.</p>
+        </div>
+      </section>
 
-            <article class="slab slab--4 reveal">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Mentor</span>
-                  <div class="slab__top">
-                    <h2>Mentor students</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Guide researchers and chapter officers in your field.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>Who this fits</h3>
-                    <p>Guide researchers and chapter officers with experience in healthcare, economics, policy, or health tech.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-1">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Chapter</span>
-                  <div class="slab__top">
-                    <h2>Support chapters</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Most chapters need one reliable adult besides the school advisor.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>What the work looks like</h3>
-                    <p>Help chapters plan events, organize drives, and enter competitions.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--4 reveal reveal-delay-2">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Teach</span>
-                  <div class="slab__top">
-                    <h2>Share your expertise</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">A two-hour workshop mapped to a syllabus module beats a generic pep talk.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>What helps</h3>
-                    <p>Give a guest talk or advise on outreach. Map the session to a curriculum module when you can.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="slab slab--12 reveal" id="roles">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Roles</span>
-                  <div class="slab__top">
-                    <h2>Ways to contribute</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Five named roles. Pick the one that matches how you want to help.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Academic mentor</h3>
-                    <p>Guide research projects and student publications.</p>
-                  </div>
-                  <div>
-                    <h3>Competition advisor</h3>
-                    <p>Help chapters prepare for Nationals or one of the three one-time annual events.</p>
-                  </div>
-                  <div>
-                    <h3>Outreach coordinator</h3>
-                    <p>Assist with community service drives.</p>
-                  </div>
-                  <div>
-                    <h3>Guest speaker</h3>
-                    <p>Share your professional perspective with students.</p>
-                  </div>
-                  <div>
-                    <h3>Community liaison</h3>
-                    <p>Connect MediLink chapters with local organizations and resources.</p>
-                  </div>
-                  <div>
-                    <h3>Apply</h3>
-                    <p>Fill out the volunteer form. Tell us your background and how you want to help.</p>
-                    <p><a class="btn btn--primary btn--sm" data-form="volunteer" href="#">Apply to Volunteer</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
+      <section class="scene scene--split scene--flip reveal">
+        <figure class="scene__media">
+          <img src="img/compete.png" alt="Stage" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">Chapter</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Support chapters</h2>
+          <p class="scene__sub">Most chapters need one reliable adult besides the school advisor.</p>
+          <div class="scene__prose">
+            <p>Help chapters plan events, organize drives, and enter competitions. A two-hour workshop mapped to a syllabus module is more useful than a generic pep talk.</p>
           </div>
+        </div>
+      </section>
+
+      <section class="scene scene--plain reveal">
+        <div class="container">
+          <p class="kicker">Roles</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Ways to contribute</h2>
+        </div>
+        <div class="trio">
+          <article class="trio__card">
+            <h3>Academic mentor</h3>
+            <p>Guide research projects and student publications.</p>
+          </article>
+          <article class="trio__card">
+            <h3>Competition advisor</h3>
+            <p>Help chapters prepare for Nationals or one of the three one-time annual events.</p>
+          </article>
+          <article class="trio__card">
+            <h3>Outreach coordinator</h3>
+            <p>Assist with community service drives.</p>
+          </article>
+        </div>
+        <div class="trio" style="padding-top:0;">
+          <article class="trio__card">
+            <h3>Guest speaker</h3>
+            <p>Share your professional perspective with students.</p>
+          </article>
+          <article class="trio__card">
+            <h3>Community liaison</h3>
+            <p>Connect MediLink chapters with local organizations and resources.</p>
+          </article>
+          <article class="trio__card">
+            <h3>Apply</h3>
+            <p>Fill out the volunteer form. Tell us your background and how you want to help.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="finale reveal">
+        <p class="kicker">Next</p>
+        <h2>Ready to volunteer?</h2>
+        <p>Tell us your field so we can match you to a chapter, a panel, or a workshop.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" data-form="volunteer" href="#">Apply to Volunteer</a>
         </div>
       </section>
     </main>
@@ -137,7 +98,6 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
-    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

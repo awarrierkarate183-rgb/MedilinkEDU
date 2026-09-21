@@ -12,101 +12,52 @@
     <div id="site-header"></div>
 
     <main>
-
-      <section class="page-mast">
-        <div class="container">
-          <h1>Corporate sponsorship</h1>
-          <p class="lead">
-            Named tiers for companies and organizations. The benefits on this page are the official corporate list.
-          </p>
-          <div class="hero-actions">
+      <section class="stage stage--photo" style="background-image:url('img/compete.png');">
+        <div class="container stage__inner">
+          <p class="kicker anim">Sponsors  /  Companies</p>
+          <span class="rule anim" aria-hidden="true"></span>
+          <h1 class="display anim">Corporate sponsorship</h1>
+          <p class="segue anim">Named tiers for companies and organizations. The benefits on this page are the official corporate list. Impact Partner and above can attend State and National events. In an Apex year that includes the biennial sponsor networking fair. Amounts and extras can be customized with leadership.</p>
+          <div class="hero-actions anim">
             <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Corporate%20Sponsorship%20Inquiry">Inquire via Email</a>
             <a class="btn btn--secondary" href="involved.html#sponsorship">How Funds Are Used</a>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="section-header section-header--center">
-            <h2 class="section-title">Named tiers</h2>
-            <p class="section-lead" style="margin-inline:auto;">
-              Impact Partner and above can attend State and National events. In an Apex year that includes the biennial sponsor networking fair. Amounts and extras can be customized with leadership.
-            </p>
-          </div>
+      <section class="scene scene--plain">
+        <div class="container reveal">
+          <p class="kicker">Named tiers</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Choose a company level</h2>
           <div class="sponsor-tiers-grid" id="sponsor-tiers-grid"></div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="deck" id="corporate-deck">
-            <article class="slab slab--6 reveal">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Use</span>
-                  <div class="slab__top">
-                    <h2>Where corporate sponsorship goes</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Chapters, competitions, outreach, and the work of keeping the network online.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--2">
-                  <div>
-                    <h3>Chapter growth</h3>
-                    <p>Startup resources, advisor support, and student leadership training for new and existing chapters.</p>
-                  </div>
-                  <div>
-                    <h3>Competition and learning</h3>
-                    <p>Event materials, research tools, and student awards across four annual competitions and the biennial Apex.</p>
-                  </div>
-                  <div>
-                    <h3>Community outreach</h3>
-                    <p>Service drives and local health-economics initiatives led by student chapters.</p>
-                  </div>
-                  <div>
-                    <h3>Operations and reach</h3>
-                    <p>Website, communications, and network expansion so MediLink can grow sustainably.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slab slab--6 reveal reveal-delay-1">
-              <button class="slab__face" type="button" aria-expanded="false">
-                <div>
-                  <span class="slab__kicker">Individual</span>
-                  <div class="slab__top">
-                    <h2>Giving as a person</h2>
-                    <span class="slab__plus" aria-hidden="true">+</span>
-                  </div>
-                </div>
-                <p class="slab__tease">Families, alumni, and students use the individual page. Named tiers stay here.</p>
-              </button>
-              <div class="slab__chamber">
-                <div class="chamber chamber--1">
-                  <div>
-                    <h3>The other path</h3>
-                    <p>Giving as an individual, family, or student? Visit our individual sponsorship page.</p>
-                    <p><a class="btn btn--outline btn--sm" href="sponsor-individual.html">Individual Sponsorship</a></p>
-                  </div>
-                </div>
-              </div>
-            </article>
+      <section class="scene scene--split reveal">
+        <figure class="scene__media">
+          <img src="img/city.png" alt="Skyline" />
+        </figure>
+        <div class="scene__body">
+          <p class="kicker">Use</p>
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="scene__title">Where corporate sponsorship goes</h2>
+          <p class="scene__sub">Chapters, competitions, outreach, and the work of keeping the network online.</p>
+          <div class="scene__prose">
+            <p>Chapter growth: startup resources, advisor support, and student leadership training. Competition and learning: event materials, research tools, and student awards across four annual competitions and the biennial Apex. Community outreach: service drives and local health-economics initiatives. Operations and reach: website, communications, and network expansion.</p>
+            <div class="btn-row">
+              <a class="btn btn--outline" href="sponsor-individual.html">Individual Sponsorship</a>
+            </div>
           </div>
         </div>
       </section>
-
     </main>
 
     <div id="site-footer"></div>
-
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
     <script src="/motion.js"></script>
-    <script src="/widgets.js"></script>
     <script src="/sponsor-tiers.js"></script>
   </body>
 </html>
