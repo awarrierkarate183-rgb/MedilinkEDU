@@ -17,53 +17,38 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="stage stage--photo" style="background-image:url('img/tech.png');">
-        <div class="container stage__inner">
-          <p class="kicker anim">Members  /  Portal</p>
-          <span class="rule anim" aria-hidden="true"></span>
-          <h1 class="display anim">Member Portal</h1>
-          <p class="segue anim">Approved members use a registered MediLink login to open full lessons, labs, and competition resources. The public syllabus stays on the Curriculum page. Login is not live yet.</p>
+      <section class="stage">
+        <div class="container">
+          <p class="kicker">Members</p>
+          <h1 class="display">Member Portal</h1>
+          <p class="segue">Approved members use a registered MediLink login to open full lessons, labs, and competition resources. The public syllabus stays on the Curriculum page. Login is not live yet.</p>
         </div>
       </section>
 
-      <section class="scene scene--split reveal" id="access">
-        <figure class="scene__media">
-          <img src="img/chapter.png" alt="Students" />
-        </figure>
-        <div class="scene__body">
+      <section class="scene" id="access">
+        <div class="container">
           <p class="kicker">Access</p>
-          <span class="rule" aria-hidden="true"></span>
           <h2 class="scene__title">How you get in</h2>
           <p class="scene__sub">Access is scoped to a real chapter roster, not a generic sign-up on this website.</p>
-          <div class="scene__prose">
-            <p>Your school chapter reaches Founding status (chartered, officers in place). The chapter receives a unique QR code. You scan that code and complete a short form already tied to that chapter. Officers or the advisor approve the roster. You receive a MediLink login that opens this portal.</p>
-            <div class="btn-row">
-              <a class="btn btn--outline" href="start-chapter.html#qr">See the QR path</a>
+          <div class="facts">
+            <div>
+              <h3>Path</h3>
+              <p>Your school chapter reaches Founding status (chartered, officers in place). The chapter receives a unique QR code. You scan that code and complete a short form already tied to that chapter. Officers or the advisor approve the roster. You receive a MediLink login that opens this portal.</p>
             </div>
+            <div>
+              <h3>Login is not live yet</h3>
+              <p>When the portal is built, this is where members will sign in. Until then, ask your chapter leader for curriculum files. Do not expect a working password box on this page. A real portal needs an auth provider and a database. That is its own project phase.</p>
+            </div>
+          </div>
+          <div class="btn-row" style="margin-top:1rem;">
+            <a class="btn btn--outline" href="start-chapter.html#qr">See the QR path</a>
+            <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email MediLink about access</a>
+            <a class="btn btn--secondary" href="curriculum.html">Open the syllabus</a>
           </div>
         </div>
       </section>
 
-      <section class="scene scene--split scene--flip reveal" id="login">
-        <figure class="scene__media">
-          <img src="img/case.png" alt="Files" />
-        </figure>
-        <div class="scene__body">
-          <p class="kicker">Login</p>
-          <span class="rule" aria-hidden="true"></span>
-          <h2 class="scene__title">Member login is not live yet</h2>
-          <p class="scene__sub">When the portal is built, this is where members will sign in.</p>
-          <div class="scene__prose">
-            <p>Until then, ask your chapter leader for curriculum files. Do not expect a working password box on this page. A real portal needs an auth provider and a database. That is its own project phase.</p>
-            <div class="btn-row">
-              <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email MediLink about access</a>
-              <a class="btn btn--secondary" href="curriculum.html">Open the syllabus</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="finale reveal">
+      <section class="finale">
         <p class="kicker">Contents</p>
         <h2>What the portal will hold</h2>
         <p>Full Track 1-4 lessons and slide decks. Hands-on lab worksheets. Competition prep packets for Nationals, Innovation Challenge, Policy Cup, and Research Symposium. Chapter-only announcements from officers. None of that is public on this site.</p>
