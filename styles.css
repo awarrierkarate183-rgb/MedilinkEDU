@@ -118,7 +118,7 @@ summary:focus-visible {
 /* Flat navy bar. Submit News is gold text. Nav links are white. */
 .site-header {
   background: var(--navy);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  border-bottom: 2px solid var(--gold);
 }
 
 .nav-wrap {
@@ -235,11 +235,13 @@ summary:focus-visible {
   font-style: normal;
   letter-spacing: -.04em;
   line-height: 1.08;
-  margin: 0 0 1.5rem;
+  margin: 0;
   max-width: 20ch;
   text-align: left;
   color: var(--white);
 }
+
+.hero .word-frame { margin-bottom: 1.5rem; }
 
 /* ── Page-hero (inner pages) entrance ── */
 .page-hero .container > *,
@@ -422,8 +424,13 @@ summary:focus-visible {
   font-weight: 600;
   font-style: normal;
   letter-spacing: -.03em;
-  margin: 0 0 1rem;
-  color: var(--navy);
+  margin: 0 0 1.25rem;
+  color: #fff;
+  display: inline-block;
+  padding: 1.05rem 1.3rem;
+  border: 2px solid var(--gold);
+  background: linear-gradient(180deg, rgba(22,49,82,.5), rgba(8,22,39,.82));
+  box-shadow: 0 0 0 10px rgba(8,22,39,.28), 0 0 40px rgba(201,162,39,.16);
 }
 
 /* Blue inner page hero (Donate) */
@@ -2215,12 +2222,269 @@ summary:focus-visible {
   .signup-band__inner { flex-direction: column; align-items: flex-start; }
 }
 
+/* ============================================================
+   SPARK LAYER
+   Navy field, white type, gold frames. Color surrounds the words.
+   Gold buttons still use navy text. Do not put white type on a gold fill.
+   ============================================================ */
+
+body {
+  background:
+    radial-gradient(1200px 700px at 8% -10%, rgba(201,162,39,.16), transparent 55%),
+    radial-gradient(900px 600px at 110% 20%, rgba(22,49,82,.9), transparent 50%),
+    #081627;
+  color: #F6F1E4;
+}
+
+.section {
+  position: relative;
+}
+
+.section--gray {
+  background: linear-gradient(180deg, rgba(11,31,58,.55), rgba(22,49,82,.72));
+  border-top: 1px solid rgba(201,162,39,.22);
+  border-bottom: 1px solid rgba(201,162,39,.22);
+}
+
+.section-title,
+.page-hero h1,
+.card h2,
+.card h3,
+.action-card h3,
+.news-card h3,
+.involve-tile h3 {
+  color: #fff;
+}
+
+.section-lead,
+.lead,
+.card p,
+.action-card p,
+.news-card p,
+.involve-tile p,
+.goals-list li,
+.lens-item__panel p,
+.comp-widget__btn p,
+.comp-widget__body p,
+.comp-widget__body li {
+  color: rgba(246,241,228,.78);
+}
+
+.folio-mark,
+.news-card__tag,
+.comp-widget__kicker,
+.card-link {
+  color: var(--gold);
+}
+
+.btn--outline {
+  color: #fff;
+  border-color: var(--gold);
+}
+.btn--outline:hover {
+  background: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+}
+
+.word-frame {
+  display: inline-block;
+  max-width: 100%;
+  padding: 1.15rem 1.45rem;
+  border: 2px solid var(--gold);
+  background: linear-gradient(180deg, rgba(22,49,82,.5), rgba(8,22,39,.82));
+  box-shadow: 0 0 0 10px rgba(8,22,39,.35), 0 0 48px rgba(201,162,39,.18);
+  animation: frameIn .9s ease both;
+}
+
+.word-frame h1,
+.word-frame h2 {
+  color: #fff;
+  margin: 0;
+}
+
+@keyframes frameIn {
+  from { opacity: 0; transform: translateY(18px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 0 0 10px rgba(8,22,39,.35), 0 0 36px rgba(201,162,39,.14); }
+  50% { box-shadow: 0 0 0 10px rgba(8,22,39,.35), 0 0 64px rgba(201,162,39,.32); }
+}
+
+.word-frame--live { animation: frameIn .9s ease both, goldPulse 4.5s ease-in-out 1s infinite; }
+
+.hero {
+  background:
+    radial-gradient(900px 480px at 20% 20%, rgba(201,162,39,.2), transparent 58%),
+    linear-gradient(165deg, #0B1F3A 0%, #122844 48%, #081627 100%);
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.hero { position: relative; }
+
+.page-hero,
+.page-hero--blue {
+  background:
+    radial-gradient(700px 360px at 80% 0%, rgba(201,162,39,.16), transparent 60%),
+    linear-gradient(180deg, #0B1F3A, #10243F);
+  border-bottom: 1px solid rgba(201,162,39,.28);
+  color: #fff;
+}
+
+.page-hero .lead,
+.page-hero--blue .lead { color: rgba(246,241,228,.82); }
+
+.card,
+.action-card,
+.news-card,
+.involve-tile,
+.goals-list li,
+.stats-row,
+.program-card {
+  background: rgba(18,38,63,.86);
+  border: 1px solid rgba(201,162,39,.28);
+  color: #fff;
+}
+
+.card:hover,
+.action-card:hover,
+.news-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 10px 36px rgba(201,162,39,.12);
+  transform: translateY(-4px);
+}
+
+.card__icon,
+.action-card__icon {
+  background: rgba(201,162,39,.12);
+}
+
+.goals-list li::before {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.path-row {
+  background: #0B1F3A;
+  border-top: 1px solid rgba(201,162,39,.25);
+  border-bottom: 1px solid rgba(201,162,39,.25);
+}
+
+.path-row a {
+  color: #fff;
+  background: transparent;
+}
+
+.path-row a:nth-child(2) { background: rgba(201,162,39,.08); }
+.path-row a:hover { background: rgba(201,162,39,.14); }
+.path-row h2 { color: #fff; }
+.path-row p { color: rgba(246,241,228,.72); }
+.path-row a:hover h2 { color: var(--gold); }
+.path-row__n { color: var(--gold); }
+
+.close-split a {
+  background: #10243F;
+  color: #fff;
+}
+.close-split a:hover { background: #163152; }
+.close-split h2 { color: #fff; }
+.close-split p { color: rgba(246,241,228,.72); }
+.close-split a:hover h2 { color: var(--gold); }
+
+.lens-widget { border-top-color: rgba(201,162,39,.28); }
+.lens-item { border-bottom-color: rgba(201,162,39,.22); }
+.lens-item__btn { color: #fff; }
+.lens-item__btn:hover,
+.lens-item.is-open .lens-item__btn { color: var(--gold); }
+.lens-item__mark {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.comp-widget {
+  background: rgba(18,38,63,.92);
+  border-color: rgba(201,162,39,.28);
+}
+.comp-widget--flagship {
+  border-color: var(--gold);
+  box-shadow: 0 0 32px rgba(201,162,39,.12);
+}
+.comp-widget__btn { color: #fff; }
+.comp-widget__btn:hover,
+.comp-widget--flagship .comp-widget__btn,
+.comp-widget--flagship .comp-widget__btn:hover {
+  background: rgba(201,162,39,.1);
+}
+.comp-widget__btn h2 { color: #fff; }
+.comp-widget__icon {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.comp-widget__body { border-top-color: rgba(201,162,39,.22); }
+.comp-widget__body h3 { color: var(--gold); }
+.comp-widget.is-open .comp-widget__body {
+  animation: panelIn .4s ease;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.ladder-step,
+.module-card,
+.track,
+.chapters-detail,
+.chapters-list__state,
+.chapters-list__chapter,
+.apex-board__card,
+.apex-schedule,
+.event-card,
+.portal-box {
+  background: rgba(18,38,63,.86) !important;
+  border-color: rgba(201,162,39,.25) !important;
+  color: #fff;
+}
+
+.ladder-step h3,
+.module-card h3,
+.chapters-detail__name,
+.apex-board__body h3 { color: #fff; }
+
+.ladder-step p,
+.module-card p,
+.apex-board__meta { color: rgba(246,241,228,.72); }
+
+.apex-board__rank,
+.chapters-detail__apex a { color: var(--gold); }
+
+.reveal {
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.is-visible { transition-delay: var(--delay, 0s); }
+
+.reveal-delay-1 { --delay: .08s; }
+.reveal-delay-2 { --delay: .16s; }
+.reveal-delay-3 { --delay: .24s; }
+
 @media (prefers-reduced-motion: reduce) {
   .hero__inner > *,
   .page-hero .container > *,
   .page-hero--blue .container > *,
   .reveal,
-  .reveal.is-visible {
+  .reveal.is-visible,
+  .word-frame,
+  .word-frame--live {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;

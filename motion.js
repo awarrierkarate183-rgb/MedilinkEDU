@@ -1,6 +1,6 @@
-// Scroll reveal for section headlines and marked blocks.
-// Add class="reveal" to any element that should fade up once.
-// Homepage hero already animates on load in CSS. Do not also mark the hero.
+// Scroll reveal for marked blocks. Add class="reveal" to fade a block up.
+// Optional: reveal-delay-1, reveal-delay-2, reveal-delay-3 for stagger.
+// Homepage hero already animates on load. Do not also mark the hero.
 
 (function () {
   const nodes = document.querySelectorAll(".reveal");
@@ -20,7 +20,7 @@
         }
       });
     },
-    { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+    { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
   );
 
   nodes.forEach((el) => io.observe(el));
