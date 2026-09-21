@@ -13,15 +13,15 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="stage">
+      <section class="hero">
         <div class="container">
-          <p class="kicker">Network</p>
-          <h1 class="display">Growing a Student Network</h1>
-          <p class="segue">Find a state or school chapter. Each listing shows status when the board has recorded one, plus this cycle's Road to Apex point total. Listings currently cover North Carolina and Georgia. School chapters appear when the board records them. This page does not invent school names. If your school is not on the map, it has not been recorded yet. Start a Chapter if you are launching. Reactivate if the chapter went dark. Chapter Support if officers already exist and need the kit.</p>
+          <p class="kicker anim">Network</p>
+          <h1 class="display anim">Growing a Student Network</h1>
+          <p class="lead anim">Find a state or school chapter. Each listing shows status when the board has recorded one, plus this cycle's Road to Apex point total. Listings currently cover North Carolina and Georgia. School chapters appear when the board records them. This page does not invent school names.</p>
         </div>
       </section>
 
-      <section class="scene">
+      <section class="band">
         <div class="container">
           <div class="chapters-explorer">
             <div class="chapters-explorer__list-panel">
@@ -41,31 +41,27 @@
         </div>
       </section>
 
-      <section class="scene">
-        <div class="container aside">
-          <figure class="aside__photo">
-            <img src="img/chapter.png" alt="Students in a chapter meeting" />
-          </figure>
-          <div class="aside__copy">
-            <p class="kicker">Status</p>
-            <h2 class="scene__title">Status and standings</h2>
-            <div class="scene__prose">
-              <p>This page only shows a recorded status and this cycle's Apex points. Founding, Established, and Flagship-Eligible are defined on the Start a Chapter page. Founding means chartered, officers in place, meetings running. Established means at least one internal event or case challenge and 10 or more active members. Flagship-Eligible means the chapter has participated in a Nationals regional round and may send teams to Nationals.</p>
-            </div>
-            <div class="facts">
-              <div>
-                <h3>Labels</h3>
-                <p>Earned by work already done. Not marketing badges. Full definitions live on Start a Chapter, including the QR roster path.</p>
-              </div>
-              <div>
-                <h3>Rankings</h3>
-                <p>Full rankings live on the Road to Apex. Points come from a board-maintained ledger. These numbers are not live scores. Nationals is the only ladder. The other three annual events use the one-time schedule.</p>
-              </div>
-            </div>
-            <div class="btn-row" style="margin-top:1rem;">
-              <a class="btn btn--outline" href="start-chapter.html">How chapters level up</a>
-              <a class="btn btn--secondary" href="competition.html#road-to-apex">Road to Apex standings</a>
-            </div>
+      <section class="band band--paper">
+        <div class="container reveal">
+          <div class="tiles tiles--1">
+            <article class="tile">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/chapter.png" alt="" />
+                <div>
+                  <p class="kicker">Status</p>
+                  <h3>Status and standings</h3>
+                  <p>This page only shows a recorded status and this cycle's Apex points.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <p>Founding means chartered, officers in place, meetings running. Established means at least one internal event or case challenge and 10 or more active members. Flagship-Eligible means the chapter has participated in a Nationals regional round and may send teams to Nationals. Full rankings live on the Road to Apex. Points come from a board-maintained ledger. These numbers are not live scores.</p>
+                <div class="btn-row">
+                  <a class="btn btn--outline btn--sm" href="start-chapter.html">How chapters level up</a>
+                  <a class="btn btn--secondary btn--sm" href="competition.html#road-to-apex">Road to Apex standings</a>
+                </div>
+              </div></div></div>
+            </article>
           </div>
         </div>
       </section>
@@ -73,7 +69,7 @@
       <section class="finale">
         <p class="kicker">Next</p>
         <h2>Bring MediLink to your school</h2>
-        <p>Apply and we will walk you through starting a chapter. Inactive chapters can be reactivated and keep their history and name. Existing chapters can request the starter kit or coaching. Students use this path. Companies and volunteers use Get Involved.</p>
+        <p>Apply and we will walk you through starting a chapter. Inactive chapters can be reactivated. Existing chapters can request support. Companies and volunteers use Get Involved.</p>
         <div class="btn-row">
           <a class="btn btn--primary" data-form="startChapter" href="#">Start a Chapter</a>
           <a class="btn btn--secondary" href="start-chapter.html#reactivate">Reactivate a Chapter</a>
@@ -83,11 +79,11 @@
     </main>
 
     <div id="site-footer"></div>
-
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
     <script src="/apex-points.js"></script>
     <script src="/chapters.js"></script>

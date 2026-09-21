@@ -12,151 +12,123 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="stage">
+      <section class="hero">
         <div class="container">
-          <p class="kicker">Chapters</p>
-          <h1 class="display">Start a Chapter</h1>
-          <p class="segue">Bring MediLink to your high school. New chapters get a consistent officer structure, a starter kit, and a path from Founding to Flagship-Eligible. The first semester is not invented from scratch. You receive a charter template, the first three meeting agendas and decks, Track 1 Module 1.1 ready to teach, and a sample local case challenge. Inactive chapters can be reactivated rather than started over. This page is for students launching a school. Sponsors and volunteers should use Get Involved.</p>
+          <p class="kicker anim">Chapters</p>
+          <h1 class="display anim">Start a Chapter</h1>
+          <p class="lead anim">Bring MediLink to your high school. New chapters get five offices, a starter kit, and a path from Founding to Flagship-Eligible. Sponsors and volunteers should use Get Involved. Open a file for steps, officers, the QR roster, and status.</p>
         </div>
       </section>
 
-      <section class="scene" id="apply">
-        <div class="container aside">
-          <figure class="aside__photo">
-            <img src="img/case.png" alt="Case files ready for a first meeting" />
-          </figure>
-          <div class="aside__copy">
-            <p class="kicker">Three steps</p>
-            <h2 class="scene__title">Apply. Set up. Make an impact.</h2>
-            <div class="scene__prose">
-              <p>Submit the chapter application with your school name and why you want to start. We reply with the next steps. Then fill the five officer roles, receive the starter kit, and plan your first meetings from the pre-built agendas. In the first semester, run Track 1, host a local case challenge, and work toward Established and Flagship-Eligible status.</p>
-              <p>The form link is set in data/forms.config.js when it is ready. If the button alerts you, the URL has not been pasted yet. Email medi.link.edu@gmail.com if you need a path while the form is offline.</p>
-            </div>
-            <div class="facts">
-              <div>
-                <h3>01 Apply</h3>
-                <p>School name, why you want to start, and who is ready to serve as officers. We do not invent school listings on the map until the board records the chapter.</p>
-              </div>
-              <div>
-                <h3>02 Set up</h3>
-                <p>Five offices filled. Starter kit in hand. First meetings run from the agendas, not from a blank calendar.</p>
-              </div>
-              <div>
-                <h3>03 Make an impact</h3>
-                <p>Track 1, a local case challenge, then the climb toward Established (10+ active members and at least one internal event) and Flagship-Eligible (Nationals regional participation).</p>
-              </div>
-              <div>
-                <h3>Form</h3>
-                <p>Use the start-chapter form. We walk you through launching at your high school. Get Involved is the wrong door for this.</p>
-              </div>
-            </div>
-            <div class="btn-row" style="margin-top:1rem;">
-              <a class="btn btn--primary" data-form="startChapter" href="#">Start a Chapter</a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section class="band">
+        <div class="container reveal">
+          <div class="tiles">
+            <article class="tile" id="apply">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/case.png" alt="" />
+                <div>
+                  <p class="kicker">Three steps</p>
+                  <h3>Apply. Set up. Make an impact.</h3>
+                  <p>The first semester is not invented from scratch.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <p>Submit the chapter application with your school name and why you want to start. Fill the five officer roles, receive the starter kit, and plan first meetings from the pre-built agendas. Run Track 1, host a local case challenge, and work toward Established and Flagship-Eligible. We do not invent school listings on the map until the board records the chapter.</p>
+                <div class="btn-row"><a class="btn btn--primary btn--sm" data-form="startChapter" href="#">Start a Chapter</a></div>
+              </div></div></div>
+            </article>
 
-      <section class="scene" id="officers">
-        <div class="container">
-          <p class="kicker">Officers</p>
-          <h2 class="scene__title">The same five offices in every chapter</h2>
-          <p class="scene__sub">So the three-lens framework has owners besides the two people who founded MediLink. Every chapter uses this structure. Do not invent extra officer titles that hide the work. The Finance Lead owns money. The Technology Lead owns systems. Outreach owns service. President and VP of Operations keep the chapter running.</p>
-          <div class="trio">
-            <article class="trio__card">
-              <h3>President</h3>
-              <p>Sets the chapter agenda, represents the chapter, and keeps officers aligned. The President does not replace the other four offices. The method needs owners, not a single founder doing every lens.</p>
+            <article class="tile" id="officers">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/chapter.png" alt="" />
+                <div>
+                  <p class="kicker">Officers</p>
+                  <h3>The same five offices in every chapter</h3>
+                  <p>So the three-lens framework has owners besides the founders.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <div class="facts">
+                  <div>
+                    <h3>President</h3>
+                    <p>Sets the agenda, represents the chapter, and keeps officers aligned.</p>
+                  </div>
+                  <div>
+                    <h3>VP of Operations</h3>
+                    <p>Runs meetings, logistics, and the day-to-day calendar from the starter agendas.</p>
+                  </div>
+                  <div>
+                    <h3>Finance / Treasury Lead</h3>
+                    <p>Owns the financial lens: budgets, Track 3 labs, finance workshops.</p>
+                  </div>
+                  <div>
+                    <h3>Technology Lead</h3>
+                    <p>Owns the technology lens: Track 2 and digital projects.</p>
+                  </div>
+                  <div>
+                    <h3>Outreach and Service Lead</h3>
+                    <p>Service, recruiting, and local partnerships. Homepage news goes through this office.</p>
+                  </div>
+                  <div>
+                    <h3>Starter kit</h3>
+                    <p>Charter template. First 3 meeting agendas and decks. Track 1 Module 1.1. Sample local case challenge.</p>
+                  </div>
+                </div>
+              </div></div></div>
             </article>
-            <article class="trio__card">
-              <h3>VP of Operations</h3>
-              <p>Runs meetings, logistics, and the day-to-day calendar. First-semester agendas come in the starter kit. The VP's job is to run them, then build the rest of the year on that rhythm.</p>
-            </article>
-            <article class="trio__card">
-              <h3>Finance / Treasury Lead</h3>
-              <p>Owns the financial lens: budgets, Track 3 labs, and finance workshops. In Nationals this maps to the Cost award, Best Financial Model.</p>
-            </article>
-            <article class="trio__card">
-              <h3>Technology Lead</h3>
-              <p>Owns the technology lens: Track 2 content and the chapter's digital projects. In Nationals this maps to the Code award, Best Tech Innovation. Innovation Challenge is a separate annual pitch.</p>
-            </article>
-            <article class="trio__card">
-              <h3>Outreach and Service Lead</h3>
-              <p>Runs service, recruiting, and local partnerships. Homepage news and community work go through this office. Give-back is a stated aim, not an extra club.</p>
-            </article>
-            <article class="trio__card">
-              <h3>Starter kit</h3>
-              <p>Charter template. First 3 meeting agendas and decks. Track 1 Module 1.1 ready to teach. A sample local case challenge for the first semester. Chapter Support can resend the kit if it is lost.</p>
-            </article>
-          </div>
-        </div>
-      </section>
 
-      <section class="scene" id="qr">
-        <div class="container aside aside--flip">
-          <figure class="aside__photo">
-            <img src="img/tech.png" alt="Interface glow on glass" />
-          </figure>
-          <div class="aside__copy">
-            <p class="kicker">Roster</p>
-            <h2 class="scene__title">How members join your chapter</h2>
-            <div class="scene__prose">
-              <p>Once a chapter is Founding, it receives a unique QR code tied to that roster. Members do not create a generic account on this website. They scan the chapter code, complete a short form already linked to that school, and wait for officer or advisor approval. Approved members are supposed to receive a MediLink login that opens the Member Portal. Login is not live yet. Until it is, officers share curriculum files directly.</p>
-            </div>
-            <div class="facts">
-              <div>
-                <h3>01 Founding status</h3>
-                <p>Officers are in place and the chapter is chartered. The board can record the chapter on the map. School names appear when that record exists, not before.</p>
-              </div>
-              <div>
-                <h3>02 Chapter QR</h3>
-                <p>A unique code for flyers, emails, and the school. It is tied to this roster. Do not reuse another chapter's code.</p>
-              </div>
-              <div>
-                <h3>03 Scan and register</h3>
-                <p>The form is already linked to this chapter's roster. Students at that school complete it. This is not a public join button on the homepage.</p>
-              </div>
-              <div>
-                <h3>04 Approval, then portal</h3>
-                <p>Officers or the advisor confirm real students at that school. Full lessons, labs, and competition prep wait behind that approval. The public syllabus stays open to everyone.</p>
-              </div>
-            </div>
-            <div class="btn-row" style="margin-top:1rem;">
-              <a class="btn btn--outline" href="portal.html">Member Portal</a>
-              <a class="btn btn--secondary" href="curriculum.html">Public syllabus</a>
-            </div>
-          </div>
-        </div>
-      </section>
+            <article class="tile" id="qr">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/tech.png" alt="" />
+                <div>
+                  <p class="kicker">Roster</p>
+                  <h3>How members join your chapter</h3>
+                  <p>A unique QR code, tied to that school's roster. Login is not live yet.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <p>Founding status, then a unique QR, then scan and register, then officer or advisor approval. Members do not create a generic account on this website. Until the portal is built, officers share curriculum files directly. The public syllabus stays open to everyone.</p>
+                <div class="btn-row">
+                  <a class="btn btn--outline btn--sm" href="portal.html">Member Portal</a>
+                  <a class="btn btn--secondary btn--sm" href="curriculum.html">Public syllabus</a>
+                </div>
+              </div></div></div>
+            </article>
 
-      <section class="scene" id="levels">
-        <div class="container aside">
-          <figure class="aside__photo">
-            <img src="img/compete.png" alt="Stage lights for Flagship-Eligible chapters" />
-          </figure>
-          <div class="aside__copy">
-            <p class="kicker">Status</p>
-            <h2 class="scene__title">How chapters level up</h2>
-            <div class="scene__prose">
-              <p>Status is earned by what the chapter has actually done. The Chapters page shows a recorded status and this cycle's Apex points when the board has entered them. Full rankings live on Road to Apex. Labels are not assigned for marketing.</p>
-            </div>
-            <div class="facts">
-              <div>
-                <h3>Founding Chapter</h3>
-                <p>Chartered, has officers, and is running meetings. Receives the QR code. Can appear on the map once the board records the school.</p>
-              </div>
-              <div>
-                <h3>Established Chapter</h3>
-                <p>Has run at least one internal event or case challenge, and has 10 or more active members. Still not automatically Flagship-Eligible.</p>
-              </div>
-              <div>
-                <h3>Flagship-Eligible Chapter</h3>
-                <p>Has participated in a Nationals regional round and may send teams to Nationals. This is the path to the yearly flagship. The three one-time annual events do not require this label.</p>
-              </div>
-              <div>
-                <h3>Earned, not assigned</h3>
-                <p>Labels track work already done. A chapter that goes inactive can be reactivated and keep its history and name if new student leadership steps up.</p>
-              </div>
-            </div>
+            <article class="tile" id="levels">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/compete.png" alt="" />
+                <div>
+                  <p class="kicker">Status</p>
+                  <h3>How chapters level up</h3>
+                  <p>Founding, Established, Flagship-Eligible. Earned, not assigned.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <div class="facts">
+                  <div>
+                    <h3>Founding</h3>
+                    <p>Chartered, officers in place, meetings running. Receives the QR code.</p>
+                  </div>
+                  <div>
+                    <h3>Established</h3>
+                    <p>At least one internal event or case challenge, and 10 or more active members.</p>
+                  </div>
+                  <div>
+                    <h3>Flagship-Eligible</h3>
+                    <p>Has participated in a Nationals regional round and may send teams to Nationals.</p>
+                  </div>
+                  <div>
+                    <h3>Labels</h3>
+                    <p>Track work already done. The three one-time annual events do not require Flagship-Eligible.</p>
+                  </div>
+                </div>
+              </div></div></div>
+            </article>
           </div>
         </div>
       </section>
@@ -164,7 +136,7 @@
       <section class="finale" id="reactivate">
         <p class="kicker">Return</p>
         <h2>Reactivate a chapter</h2>
-        <p>Chapters that have gone inactive (no officers, no meetings, or lapsed membership) can be reactivated rather than started from scratch. Reactivation keeps the chapter's history and name. What you need is new student leadership ready to step up. Email medi.link.edu@gmail.com with the subject Chapter Reactivation. Existing chapters that need the kit or coaching should use Chapter Support instead.</p>
+        <p>Chapters that have gone inactive can be reactivated rather than started from scratch. Reactivation keeps the chapter's history and name. What you need is new student leadership ready to step up. Existing officers who need the kit should use Chapter Support.</p>
         <div class="btn-row">
           <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Chapter%20Reactivation">Reactivate This Chapter</a>
           <a class="btn btn--secondary" href="chapters.html">See existing chapters</a>
@@ -176,6 +148,7 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

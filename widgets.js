@@ -1,67 +1,70 @@
-// Shared open-one-at-a-time widgets.
-// Decks: any .deck of .slab tiles. Click the face to expand a chamber.
-// Leftover support: #lens-widget and #comp-widgets if those blocks still exist.
-// A non-developer editor only needs to edit the HTML inside a slab.
+// Expandable case-file widgets.
+// Any .tiles group of .tile cards. Click .tile__face to open one at a time.
+// Hash links (#nationals) open the matching tile.
+// A non-developer editor only needs to edit the HTML inside a tile.
 
 (function () {
-  function bindExclusive(root, itemSelector, buttonSelector, openClass) {
+  function bindExclusive(root) {
     if (!root) return;
-    const items = Array.from(root.querySelectorAll(itemSelector));
+    const items = Array.from(root.querySelectorAll(":scope > .tile"));
 
-    function openItem(target) {
+    function setOpen(target, on) {
       items.forEach((item) => {
-        const isTarget = item === target;
-        item.classList.toggle(openClass, isTarget);
-        const btn = item.querySelector(buttonSelector);
+        const isTarget = item === target && on;
+        item.classList.toggle("is-open", isTarget);
+        const btn = item.querySelector(".tile__face");
         if (btn) btn.setAttribute("aria-expanded", isTarget ? "true" : "false");
       });
     }
 
     items.forEach((item) => {
-      const btn = item.querySelector(buttonSelector);
+      const btn = item.querySelector(".tile__face");
       if (!btn || btn._widgetBound) return;
       btn._widgetBound = true;
+      if (!btn.getAttribute("aria-expanded")) btn.setAttribute("aria-expanded", "false");
       btn.addEventListener("click", () => {
-        if (item.classList.contains(openClass)) {
-          item.classList.remove(openClass);
-          btn.setAttribute("aria-expanded", "false");
-          return;
-        }
-        openItem(item);
-        item.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        const open = item.classList.contains("is-open");
+        setOpen(item, !open);
       });
     });
   }
 
-  function openFromHash(root, itemSelector, openClass) {
-    if (!root || !location.hash) return;
+  function openFromHash() {
+    if (!location.hash) return;
     const id = location.hash.slice(1);
-    const match = root.querySelector("#" + CSS.escape(id));
+    let match;
+    try {
+      match = document.getElementById(id);
+    } catch (err) {
+      return;
+    }
     if (!match) return;
-    const item = match.closest(itemSelector) || (match.matches(itemSelector) ? match : null);
-    if (!item) return;
-    Array.from(root.querySelectorAll(itemSelector)).forEach((el) => {
-      const on = el === item;
-      el.classList.toggle(openClass, on);
-      const btn = el.querySelector("button");
-      if (btn) btn.setAttribute("aria-expanded", on ? "true" : "false");
-    });
-    match.scrollIntoView({ block: "start", behavior: "smooth" });
+    const tile = match.classList.contains("tile") ? match : match.closest(".tile");
+    if (!tile) return;
+    const group = tile.parentElement;
+    if (group && group.classList.contains("tiles")) {
+      group.querySelectorAll(":scope > .tile").forEach((item) => {
+        const on = item === tile;
+        item.classList.toggle("is-open", on);
+        const btn = item.querySelector(".tile__face");
+        if (btn) btn.setAttribute("aria-expanded", on ? "true" : "false");
+      });
+    } else {
+      tile.classList.add("is-open");
+    }
+    tile.scrollIntoView({ block: "start", behavior: "smooth" });
   }
 
-  document.querySelectorAll(".deck").forEach((deck) => {
-    bindExclusive(deck, ".slab", ".slab__face", "is-open");
-    openFromHash(deck, ".slab", "is-open");
-  });
+  function init() {
+    document.querySelectorAll(".tiles").forEach(bindExclusive);
+    openFromHash();
+  }
 
-  bindExclusive(document.getElementById("lens-widget"), ".lens-item", ".lens-item__btn", "is-open");
-  bindExclusive(document.getElementById("comp-widgets"), ".comp-widget", ".comp-widget__btn", "is-open");
-  openFromHash(document.getElementById("comp-widgets"), ".comp-widget", "is-open");
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 
-  window.addEventListener("hashchange", () => {
-    document.querySelectorAll(".deck").forEach((deck) => {
-      openFromHash(deck, ".slab", "is-open");
-    });
-    openFromHash(document.getElementById("comp-widgets"), ".comp-widget", "is-open");
-  });
+  window.addEventListener("hashchange", openFromHash);
 })();

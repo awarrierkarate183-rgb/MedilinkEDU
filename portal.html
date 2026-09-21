@@ -17,48 +17,52 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="stage">
+      <section class="hero">
         <div class="container">
-          <p class="kicker">Members</p>
-          <h1 class="display">Member Portal</h1>
-          <p class="segue">Approved members use a registered MediLink login to open full lessons, labs, and competition resources. The public syllabus stays on the Curriculum page. Login is not live yet. Do not expect a working password box on this page. A real portal needs an auth provider and a database. That is its own project phase. Until then, ask your chapter leader for curriculum files.</p>
+          <p class="kicker anim">Members</p>
+          <h1 class="display anim">Member Portal</h1>
+          <p class="lead anim">Approved members use a registered MediLink login to open full lessons, labs, and competition resources. The public syllabus stays on the Curriculum page. Login is not live yet. Do not expect a working password box on this page.</p>
         </div>
       </section>
 
-      <section class="scene" id="access">
-        <div class="container aside">
-          <figure class="aside__photo">
-            <img src="img/tech.png" alt="Screens standing in for a future member login" />
-          </figure>
-          <div class="aside__copy">
-            <p class="kicker">Access</p>
-            <h2 class="scene__title">How you get in</h2>
-            <div class="scene__prose">
-              <p>Access is scoped to a real chapter roster, not a generic sign-up on this website. Your school chapter reaches Founding status (chartered, officers in place). The chapter receives a unique QR code. You scan that code and complete a short form already tied to that chapter. Officers or the advisor approve the roster. You receive a MediLink login that opens this portal. That last step is the part that is not built yet.</p>
-            </div>
-            <div class="facts">
-              <div>
-                <h3>Path</h3>
-                <p>Founding chapter, unique QR, roster form, officer or advisor approval, then a login. Start a Chapter explains the QR path in order. This page does not skip to a public register button.</p>
-              </div>
-              <div>
-                <h3>Login is not live yet</h3>
-                <p>When the portal is built, this is where members will sign in. Until then, ask your chapter leader for curriculum files. Email MediLink about access if your officers need a path while the system is offline.</p>
-              </div>
-            </div>
-            <div class="btn-row" style="margin-top:1rem;">
-              <a class="btn btn--outline" href="start-chapter.html#qr">See the QR path</a>
-              <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email MediLink about access</a>
-              <a class="btn btn--secondary" href="curriculum.html">Open the syllabus</a>
-            </div>
+      <section class="band">
+        <div class="container reveal">
+          <div class="tiles">
+            <article class="tile" id="access">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/tech.png" alt="" />
+                <div>
+                  <p class="kicker">Access</p>
+                  <h3>How you get in</h3>
+                  <p>Scoped to a real chapter roster. Not a generic sign-up on this website.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <p>Your school chapter reaches Founding status. The chapter receives a unique QR code. You scan that code and complete a short form already tied to that chapter. Officers or the advisor approve the roster. You receive a MediLink login that opens this portal. That last step is not built yet. A real portal needs an auth provider and a database. That is its own project phase.</p>
+                <div class="btn-row">
+                  <a class="btn btn--outline btn--sm" href="start-chapter.html#qr">See the QR path</a>
+                  <a class="btn btn--primary btn--sm" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email about access</a>
+                  <a class="btn btn--secondary btn--sm" href="curriculum.html">Open the syllabus</a>
+                </div>
+              </div></div></div>
+            </article>
+            <article class="tile">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/case.png" alt="" />
+                <div>
+                  <p class="kicker">Contents</p>
+                  <h3>What the portal will hold</h3>
+                  <p>Lessons, labs, packets. None of that is public on this site.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <p>Full Track 1-4 lessons and slide decks. Hands-on lab worksheets. Competition prep packets for Nationals, Innovation Challenge, Policy Cup, and Research Symposium. Chapter-only announcements from officers. Until login is live, ask your chapter leader for curriculum files.</p>
+              </div></div></div>
+            </article>
           </div>
         </div>
-      </section>
-
-      <section class="finale">
-        <p class="kicker">Contents</p>
-        <h2>What the portal will hold</h2>
-        <p>Full Track 1-4 lessons and slide decks. Hands-on lab worksheets. Competition prep packets for Nationals, Innovation Challenge, Policy Cup, and Research Symposium. Chapter-only announcements from officers. None of that is public on this site. The Curriculum page keeps the public titles and one-line descriptions so a visitor can see the map without receiving the files.</p>
       </section>
     </main>
 
@@ -66,6 +70,7 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

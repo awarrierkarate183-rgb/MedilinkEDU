@@ -12,58 +12,66 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="stage">
+      <section class="hero">
         <div class="container">
-          <p class="kicker">Sponsors</p>
-          <h1 class="display">Corporate sponsorship</h1>
-          <p class="segue">Named tiers for companies and organizations. The benefits on this page are the official corporate list. Impact Partner and above can attend State and National events. In an Apex year that includes the biennial sponsor networking fair. Amounts and extras can be customized with leadership. Individual gifts do not buy a named company tier. Those gifts live on the individual page. This page does not invent extra perks beyond the official list loaded from data/sponsor-tiers.json.</p>
-          <div class="hero-actions">
+          <p class="kicker anim">Sponsors</p>
+          <h1 class="display anim">Corporate sponsorship</h1>
+          <p class="lead anim">Named tiers for companies and organizations. The benefits on this page are the official corporate list loaded from data/sponsor-tiers.json. Impact Partner and above can attend State and National events. In an Apex year that includes the biennial sponsor networking fair. Amounts and extras can be customized with leadership. Individual gifts do not buy a named company tier.</p>
+          <div class="hero-actions anim">
             <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Corporate%20Sponsorship%20Inquiry">Inquire via Email</a>
-            <a class="btn btn--secondary" href="involved.html#sponsorship">How Funds Are Used</a>
+            <a class="btn btn--secondary" href="involved.html#sponsorship">How funds are used</a>
           </div>
         </div>
       </section>
 
-      <section class="scene">
-        <div class="container">
-          <p class="kicker">Named tiers</p>
-          <h2 class="scene__title">Choose a company level</h2>
+      <section class="band">
+        <div class="container reveal">
+          <div class="section-head">
+            <p class="kicker">Named tiers</p>
+            <h2>Choose a company level</h2>
+            <p>Community Ally, Health Advocate, Impact Partner, and Visionary Sponsor. Gold primary buttons keep navy text.</p>
+          </div>
           <div class="sponsor-tiers-grid" id="sponsor-tiers-grid"></div>
         </div>
       </section>
 
-      <section class="scene">
-        <div class="container aside">
-          <figure class="aside__photo">
-            <img src="img/compete.png" alt="Competition stage that Impact Partner and above can attend" />
-          </figure>
-          <div class="aside__copy">
-            <p class="kicker">Use</p>
-            <h2 class="scene__title">Where corporate sponsorship goes</h2>
-            <div class="scene__prose">
-              <p>Corporate gifts fund chapter growth, competitions, outreach, and the work of keeping the network online. A named tier can also name a Nationals track or award. Naming does not change the three-lens method judges use. Community Ally and Health Advocate do not receive the in-person attend perk. Impact Partner and Visionary Sponsor do, including the Apex networking fair in an Apex year.</p>
-            </div>
-            <div class="facts">
-              <div>
-                <h3>Chapter growth</h3>
-                <p>Startup resources, advisor support, and student leadership training. Starter kits and first-semester agendas are part of this work.</p>
-              </div>
-              <div>
-                <h3>Competition and learning</h3>
-                <p>Event materials, research tools, and student awards across four annual competitions and the biennial Apex. Nationals remains the yearly flagship.</p>
-              </div>
-              <div>
-                <h3>Community outreach</h3>
-                <p>Service drives and local health-economics initiatives owned inside chapters by the Outreach and Service Lead.</p>
-              </div>
-              <div>
-                <h3>Operations and reach</h3>
-                <p>Website, communications, and network expansion. A two-founder network stays online because this work is funded.</p>
-              </div>
-            </div>
-            <div class="btn-row" style="margin-top:1rem;">
-              <a class="btn btn--outline" href="sponsor-individual.html">Individual Sponsorship</a>
-            </div>
+      <section class="band band--paper">
+        <div class="container reveal">
+          <div class="tiles tiles--1">
+            <article class="tile">
+              <button class="tile__face" type="button">
+                <img class="tile__thumb" src="img/compete.png" alt="" />
+                <div>
+                  <p class="kicker">Use</p>
+                  <h3>Where corporate sponsorship goes</h3>
+                  <p>Chapters, competitions, outreach, and operations. Open for the four buckets.</p>
+                  <span class="tile__more">Open file</span>
+                </div>
+              </button>
+              <div class="tile__panel"><div class="tile__panel-inner"><div class="tile__body">
+                <div class="facts">
+                  <div>
+                    <h3>Chapter growth</h3>
+                    <p>Startup resources, advisor support, and student leadership training. Starter kits and first-semester agendas.</p>
+                  </div>
+                  <div>
+                    <h3>Competition and learning</h3>
+                    <p>Event materials, research tools, and student awards across four annual competitions and the biennial Apex.</p>
+                  </div>
+                  <div>
+                    <h3>Community outreach</h3>
+                    <p>Service drives and local health-economics initiatives owned by the Outreach and Service Lead.</p>
+                  </div>
+                  <div>
+                    <h3>Operations and reach</h3>
+                    <p>Website, communications, and network expansion. A two-founder network stays online because this work is funded.</p>
+                  </div>
+                </div>
+                <div class="btn-row" style="margin-top:1rem;">
+                  <a class="btn btn--outline btn--sm" href="sponsor-individual.html">Individual Sponsorship</a>
+                </div>
+              </div></div></div>
+            </article>
           </div>
         </div>
       </section>
@@ -73,6 +81,7 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
     <script src="/sponsor-tiers.js"></script>
   </body>
