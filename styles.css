@@ -2,7 +2,8 @@
    MEDILINK  /  CLEAN FIELD
    Navy, gold, white. White type. Gold for labels and fills.
    Gold fills always use navy text. Never white on gold.
-   No photographs. One container width. One grid.
+   Side photos sit in a column, never as backgrounds.
+   One container width. One grid.
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap");
@@ -34,7 +35,7 @@
   --gray-200: rgba(255,255,255,.14);
   --gray-600: var(--ledger);
   --gray-800: #fff;
-  --page: 1080px;
+  --page: 1140px;
   --gutter: 1.5rem;
   --gap: 1rem;
   --max-w: var(--page);
@@ -67,8 +68,8 @@ body {
 }
 main { position: relative; z-index: 1; }
 
-img,
-.scene__media { display: none !important; }
+img { max-width: 100%; height: auto; display: block; }
+.scene__media { display: none; }
 
 a { color: inherit; }
 h1, h2, h3, h4 {
@@ -289,8 +290,8 @@ input:focus-visible {
   font-size: clamp(1.05rem, 2vw, 1.28rem);
   font-weight: 400;
   color: rgba(255,255,255,.94);
-  max-width: 34rem;
-  margin: 0 auto 1.6rem;
+  max-width: 36rem;
+  margin: 0 auto .85rem;
   line-height: 1.5;
 }
 
@@ -320,9 +321,13 @@ input:focus-visible {
   font-size: 1.02rem;
   font-weight: 400;
   color: var(--muted);
-  max-width: 46rem;
+  max-width: 52rem;
   margin: 0 0 1.35rem;
-  line-height: 1.55;
+  line-height: 1.6;
+}
+.stage--home .segue {
+  margin-inline: auto;
+  margin-bottom: 1.6rem;
 }
 
 .rule {
@@ -379,18 +384,46 @@ input:focus-visible {
   font-weight: 400;
   color: var(--muted);
   margin: 0 0 .9rem;
-  max-width: 62ch;
-  line-height: 1.45;
+  max-width: none;
+  line-height: 1.55;
 }
 
 .scene__prose p {
-  margin: 0 0 .55rem;
-  color: rgba(255,255,255,.9);
+  margin: 0 0 .8rem;
+  color: rgba(255,255,255,.92);
   font-size: var(--fs-body);
-  line-height: 1.5;
+  line-height: 1.62;
 }
 .scene__prose p:last-child { margin-bottom: 0; }
 .scene__prose .btn-row { margin-top: .95rem; }
+
+.aside {
+  display: grid;
+  grid-template-columns: minmax(210px, 290px) minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: stretch;
+}
+.aside--flip {
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 290px);
+}
+.aside--flip .aside__photo { order: 2; }
+.aside--flip .aside__copy { order: 1; }
+.aside__photo {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  min-height: 240px;
+}
+.aside__photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(.92) contrast(1.02);
+}
+.aside__copy { min-width: 0; }
 
 .facts {
   display: grid;
@@ -417,7 +450,7 @@ input:focus-visible {
 .facts p {
   margin: 0;
   font-size: .95rem;
-  line-height: 1.45;
+  line-height: 1.55;
   color: rgba(255,255,255,.9);
 }
 
@@ -483,7 +516,7 @@ input:focus-visible {
 }
 .finale p {
   color: var(--muted);
-  max-width: 42rem;
+  max-width: 48rem;
   margin: 0 auto 1.35rem;
 }
 .finale .btn-row { justify-content: center; }
@@ -729,7 +762,14 @@ input:focus-visible {
   .apex-schedules,
   .portal-panel,
   .chapters-explorer,
-  .sponsor-tiers-grid { grid-template-columns: 1fr; }
+  .sponsor-tiers-grid,
+  .aside,
+  .aside--flip { grid-template-columns: 1fr; }
+  .aside--flip .aside__photo,
+  .aside__photo { order: 0; max-height: 220px; }
+  .aside--flip .aside__copy,
+  .aside__copy { order: 1; }
+  .aside__photo img { min-height: 220px; max-height: 220px; }
 }
 
 @media (max-width: 760px) {
