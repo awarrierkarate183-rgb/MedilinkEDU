@@ -28,7 +28,8 @@
   function setActiveNav(page) {
     if (!page) return;
     document.querySelectorAll("[data-nav]").forEach(el => {
-      el.classList.toggle("is-active", el.getAttribute("data-nav") === page);
+      const keys = (el.getAttribute("data-nav") || "").split(/\s+/);
+      el.classList.toggle("is-active", keys.includes(page));
     });
   }
 

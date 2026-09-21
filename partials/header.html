@@ -1,23 +1,197 @@
 <!--
   SITE HEADER. Loaded on every page by layout.js.
-  White bar. Six primary links. No dropdowns. Detail lives in page widgets.
+  White bar. Home and Contact are direct links.
+  About, Competitions, Chapters, and Get Involved open a roomy two-column menu.
+  First click opens the menu. Second click on the same label goes to that page.
 
-  Main links: Home, About, Competitions, Chapters, Get Involved, Contact.
-  Submit News stays in the bar as a gold action, not a nav item.
-
-  To add a page to the bar, copy an existing <a> and change href, data-nav, and label.
-  data-nav must match the page's <body data-page="..."> value.
+  Submit News stays a gold action, not a nav item.
+  data-nav must include the page's <body data-page="..."> value.
 -->
+<div class="nav-overlay" id="nav-overlay"></div>
+
 <div class="header-wrapper">
   <header class="site-header" id="top">
     <div class="container nav-wrap">
       <a class="brand" href="index.html">MediLink</a>
       <nav class="main-nav" id="site-nav" aria-label="Primary">
         <a href="index.html" data-nav="home">Home</a>
-        <a href="about.html" data-nav="about">About</a>
-        <a href="competition.html" data-nav="competition">Competitions</a>
-        <a href="chapters.html" data-nav="chapters">Chapters</a>
-        <a href="involved.html" data-nav="involved">Get Involved</a>
+
+        <div class="nav-item has-dropdown">
+          <a href="about.html" data-nav="about">About</a>
+          <div class="mega-dropdown">
+            <div class="container mega-dropdown__inner">
+              <div class="mega-col">
+                <span class="mega-heading">Organization</span>
+                <a class="mega-link" href="about.html">
+                  <span class="mega-link__title">Mission and identity</span>
+                  <span class="mega-link__desc">What MediLink is as a nonprofit chapter network. The three lenses. What we are not: not a hospital foundation, not a franchise, not a public job board.</span>
+                </a>
+                <a class="mega-link" href="goals.html">
+                  <span class="mega-link__title">Goals, mission, and vision</span>
+                  <span class="mega-link__desc">Six aims for training, growth, competition, partners, transfer, and service. The mission and vision sentences live here and on About. If you change one, change both.</span>
+                </a>
+              </div>
+              <div class="mega-col">
+                <span class="mega-heading">Learn</span>
+                <a class="mega-link" href="curriculum.html">
+                  <span class="mega-link__title">Public syllabus</span>
+                  <span class="mega-link__desc">Four tracks and twelve modules. Titles and one-line descriptions are public. Track 4's capstone becomes that year's Nationals case. Full lessons wait behind roster approval.</span>
+                </a>
+                <a class="mega-link" href="portal.html">
+                  <span class="mega-link__title">Member Portal</span>
+                  <span class="mega-link__desc">How approved members will open lessons, labs, and packets. Login is not live yet. Access is scoped to a real chapter roster, not a generic sign-up.</span>
+                </a>
+              </div>
+            </div>
+            <div class="mega-banner">
+              <div class="container mega-banner__inner">
+                <div class="mega-banner__body">
+                  <span class="mega-banner__tag">Mission</span>
+                  <span class="mega-banner__title">Train healthcare problem-solvers the way real systems are solved.</span>
+                  <span class="mega-banner__desc">Clinical understanding, financial reasoning, and technological literacy through chapters, curriculum, and competition.</span>
+                </div>
+                <a class="mega-banner__cta" href="about.html">Open About</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item has-dropdown">
+          <a href="competition.html" data-nav="competition">Competitions</a>
+          <div class="mega-dropdown">
+            <div class="container mega-dropdown__inner">
+              <div class="mega-col">
+                <span class="mega-heading">Flagship and summit</span>
+                <a class="mega-link" href="competition.html#nationals">
+                  <span class="mega-link__title">MediLink Nationals</span>
+                  <span class="mega-link__desc">Yearly flagship. Teams of 3 to 4. Same Track 4 capstone case. Only event that climbs Regional to State to National. Intended National home: Charlotte.</span>
+                </a>
+                <a class="mega-link" href="competition.html#ladder">
+                  <span class="mega-link__title">Nationals ladder</span>
+                  <span class="mega-link__desc">Regional, then State, then National. The other three annual events do not have qualifier rounds. Dates come from state chapter boards.</span>
+                </a>
+                <a class="mega-link" href="competition.html#apex">
+                  <span class="mega-link__title">The MediLink Apex</span>
+                  <span class="mega-link__desc">Every other year the National round is enlarged. Not a sixth case. Champions from the other four events are invited. Road to Apex standings live on this page.</span>
+                </a>
+              </div>
+              <div class="mega-col">
+                <span class="mega-heading">One-time annual events</span>
+                <a class="mega-link" href="competition.html#innovation">
+                  <span class="mega-link__title">Innovation Challenge</span>
+                  <span class="mega-link__desc">One pitch per year. App, device concept, or platform idea. No regional or state qualifier. Individual or teams of up to 3.</span>
+                </a>
+                <a class="mega-link" href="competition.html#policy">
+                  <span class="mega-link__title">Policy Cup</span>
+                  <span class="mega-link__desc">One brief and debate per year. Topics from the state chapter board. Individual or pairs. No ladder.</span>
+                </a>
+                <a class="mega-link" href="competition.html#research">
+                  <span class="mega-link__title">Research Symposium</span>
+                  <span class="mega-link__desc">One poster and talk per year. Lowest barrier of the five. Health economics or health tech. No ladder.</span>
+                </a>
+              </div>
+            </div>
+            <div class="mega-banner">
+              <div class="container mega-banner__inner">
+                <div class="mega-banner__body">
+                  <span class="mega-banner__tag">Structure</span>
+                  <span class="mega-banner__title">Five competitions. Two structures.</span>
+                  <span class="mega-banner__desc">Three one-time annuals. Nationals on a ladder. Apex is a biennial enlargement of Nationals, not a sixth prompt. You compete through a chapter.</span>
+                </div>
+                <a class="mega-banner__cta" href="competition.html">Open Competitions</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item has-dropdown">
+          <a href="chapters.html" data-nav="chapters">Chapters</a>
+          <div class="mega-dropdown">
+            <div class="container mega-dropdown__inner">
+              <div class="mega-col">
+                <span class="mega-heading">Find</span>
+                <a class="mega-link" href="chapters.html">
+                  <span class="mega-link__title">Current chapters</span>
+                  <span class="mega-link__desc">Map and list for North Carolina and Georgia. School names appear when the board records them. This site does not invent listings. Status and Apex points show when they are on the ledger.</span>
+                </a>
+                <a class="mega-link" href="chapter-support.html">
+                  <span class="mega-link__title">Chapter support</span>
+                  <span class="mega-link__desc">For chapters that already exist. Resend the starter kit, competition prep, or coaching on Flagship-Eligible. New schools should start a chapter instead.</span>
+                </a>
+              </div>
+              <div class="mega-col">
+                <span class="mega-heading">Launch</span>
+                <a class="mega-link" href="start-chapter.html">
+                  <span class="mega-link__title">Start a chapter</span>
+                  <span class="mega-link__desc">Five officer roles, starter kit, QR roster, and the path from Founding to Established to Flagship-Eligible. The first semester is not invented from scratch.</span>
+                </a>
+                <a class="mega-link" href="start-chapter.html#reactivate">
+                  <span class="mega-link__title">Reactivate a chapter</span>
+                  <span class="mega-link__desc">Bring back a chapter that went dark. Keeps the history and name. Needs new student leadership. Different from starting over, and different from Chapter Support.</span>
+                </a>
+              </div>
+            </div>
+            <div class="mega-banner">
+              <div class="container mega-banner__inner">
+                <div class="mega-banner__body">
+                  <span class="mega-banner__tag">Network</span>
+                  <span class="mega-banner__title">Same kit. Earned status.</span>
+                  <span class="mega-banner__desc">Founding, Established, then Flagship-Eligible. Labels track work already done. They are not marketing badges.</span>
+                </div>
+                <a class="mega-banner__cta" href="chapters.html">Open the map</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item has-dropdown">
+          <a href="involved.html" data-nav="involved sponsor">Get Involved</a>
+          <div class="mega-dropdown">
+            <div class="container mega-dropdown__inner">
+              <div class="mega-col">
+                <span class="mega-heading">Give</span>
+                <a class="mega-link" href="involved.html#sponsorship">
+                  <span class="mega-link__title">How to sponsor</span>
+                  <span class="mega-link__desc">Individual gifts and company gifts both go to kits, events, outreach, and operations. No individual tier list. Impact Partner and above attend State and National in person.</span>
+                </a>
+                <a class="mega-link" href="sponsor-individual.html">
+                  <span class="mega-link__title">Give as an individual</span>
+                  <span class="mega-link__desc">Families, alumni, and students. This page does not list individual donor dollar amounts. Named company levels live on the corporate page.</span>
+                </a>
+                <a class="mega-link" href="sponsor-corporate.html">
+                  <span class="mega-link__title">Corporate tiers</span>
+                  <span class="mega-link__desc">Community Ally, Health Advocate, Impact Partner, and Visionary Sponsor. Official benefits load from the board list. Amounts can be customized with leadership.</span>
+                </a>
+              </div>
+              <div class="mega-col">
+                <span class="mega-heading">Work with us</span>
+                <a class="mega-link" href="partner.html">
+                  <span class="mega-link__title">Partner</span>
+                  <span class="mega-link__desc">Hospitals, insurers, and health-tech firms sit in the same three-lens framework. Leadership sets up each relationship before students are placed. Not a public job board.</span>
+                </a>
+                <a class="mega-link" href="volunteer.html">
+                  <span class="mega-link__title">Volunteer</span>
+                  <span class="mega-link__desc">Mentor, judge, or teach a module. Tell us your field. A two-hour workshop mapped to the syllabus is more useful than a generic pep talk.</span>
+                </a>
+                <a class="mega-link" href="involved.html#submit-news">
+                  <span class="mega-link__title">Submit news</span>
+                  <span class="mega-link__desc">Send a chapter win that actually happened. Leadership decides whether it runs on the homepage, on MediLink social, or at an event. This site does not invent news.</span>
+                </a>
+              </div>
+            </div>
+            <div class="mega-banner">
+              <div class="container mega-banner__inner">
+                <div class="mega-banner__body">
+                  <span class="mega-banner__tag">Support</span>
+                  <span class="mega-banner__title">Sponsor, partner, or volunteer.</span>
+                  <span class="mega-banner__desc">Students launching a school should use Start a Chapter, not this menu.</span>
+                </div>
+                <a class="mega-banner__cta" href="involved.html">Open Get Involved</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <a href="contact.html" data-nav="contact">Contact</a>
       </nav>
       <div class="header-actions">
