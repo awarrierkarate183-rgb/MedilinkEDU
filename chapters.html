@@ -14,7 +14,7 @@
 
     <main>
 
-      <section class="page-hero">
+      <section class="page-mast">
         <div class="container">
           <h1>Growing a Student Network</h1>
           <p class="lead">
@@ -43,49 +43,121 @@
         </div>
       </section>
 
-      <section class="section section--gray">
-        <div class="container">
-          <h2 class="section-title">Status and standings</h2>
-          <p class="section-lead">Founding, Established, and Flagship-Eligible are defined on the Start a Chapter page. This page only shows a chapter's recorded status and its current-cycle Apex points. Full rankings live on the Road to Apex.</p>
-          <p style="margin-top:1.5rem;"><a class="btn btn--outline" href="start-chapter.html">How chapters level up</a> <a class="btn btn--outline" href="competition.html#road-to-apex">Road to Apex standings</a></p>
-        </div>
-      </section>
-
       <section class="section">
         <div class="container">
-          <div class="card-grid card-grid--3">
-            <article class="card">
-              <div class="card__icon">🏆</div>
-              <h3>Chapter Spotlight</h3>
-              <p>Our chapter network is expanding. If you would like your chapter featured here, contact the MediLink team.</p>
-              <p style="margin-top:.75rem;"><a class="btn btn--outline btn--sm" data-form="submitChapter" href="#">Submit Your Chapter</a></p>
+          <div class="deck" id="chapters-deck">
+            <article class="slab slab--6 reveal">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Status</span>
+                  <div class="slab__top">
+                    <h2>Status and standings</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">This page only shows a recorded status and this cycle's Apex points.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--2">
+                  <div>
+                    <h3>How status works</h3>
+                    <p>Founding, Established, and Flagship-Eligible are defined on the Start a Chapter page. Full rankings live on the Road to Apex.</p>
+                    <p><a class="btn btn--outline btn--sm" href="start-chapter.html">How chapters level up</a></p>
+                  </div>
+                  <div>
+                    <h3>Road to Apex</h3>
+                    <p>Point totals on this page come from the same ledger as the competitions page.</p>
+                    <p><a class="btn btn--outline btn--sm" href="competition.html#road-to-apex">Road to Apex standings</a></p>
+                  </div>
+                </div>
+              </div>
             </article>
-            <article class="card">
-              <div class="card__icon">🏫</div>
-              <h3>Start a Chapter</h3>
-              <p>Want MediLink at your school? Officers, a starter kit, and a chapter QR code are on the Start a Chapter page.</p>
-              <p style="margin-top:.75rem;"><a class="btn btn--outline btn--sm" data-form="startChapter" href="#">Start a Chapter</a></p>
+            <article class="slab slab--6 reveal reveal-delay-1">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Spotlight</span>
+                  <div class="slab__top">
+                    <h2>Chapter spotlight</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">The network is expanding. Featured write-ups wait for real submissions.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Ask to be featured</h3>
+                    <p>If you would like your chapter featured here, contact the MediLink team.</p>
+                    <p><a class="btn btn--outline btn--sm" data-form="submitChapter" href="#">Submit Your Chapter</a></p>
+                  </div>
+                </div>
+              </div>
             </article>
-            <article class="card">
-              <div class="card__icon">💬</div>
-              <h3>Chapter Support</h3>
-              <p>Existing chapters can request guidance for competitions and outreach events from the MediLink leadership team.</p>
-              <p style="margin-top:.75rem;"><a class="btn btn--outline btn--sm" data-form="chapterSupport" href="#">Request Support</a></p>
+            <article class="slab slab--4 reveal">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Start</span>
+                  <div class="slab__top">
+                    <h2>Start a chapter</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Officers, a starter kit, and a chapter QR code.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>New schools</h3>
+                    <p>Want MediLink at your school? The launch path lives on Start a Chapter.</p>
+                    <p><a class="btn btn--primary btn--sm" data-form="startChapter" href="#">Start a Chapter</a></p>
+                  </div>
+                </div>
+              </div>
             </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--blue">
-        <div class="container" style="text-align:center;">
-          <h2 class="section-title" style="color:#fff;">Bring MediLink to Your School</h2>
-          <p class="section-lead" style="margin-inline:auto;margin-bottom:2rem;">
-            Apply and we will walk you through starting a chapter at your high school.
-          </p>
-          <div class="btn-row btn-row--center">
-            <a class="btn btn--primary" data-form="startChapter" href="#">Start a Chapter</a>
-            <a class="btn btn--secondary" href="start-chapter.html#reactivate">Reactivate a Chapter</a>
-            <a class="btn btn--secondary" href="involved.html">More Ways to Help</a>
+            <article class="slab slab--4 reveal reveal-delay-1">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Help</span>
+                  <div class="slab__top">
+                    <h2>Chapter support</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Existing chapters can request guidance for competitions and outreach.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Ask leadership</h3>
+                    <p><a class="btn btn--outline btn--sm" data-form="chapterSupport" href="#">Request Support</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="slab slab--4 reveal reveal-delay-2">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Return</span>
+                  <div class="slab__top">
+                    <h2>Reactivate or help</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Bring an inactive chapter back, or support the network another way.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--2">
+                  <div>
+                    <h3>Reactivate</h3>
+                    <p><a class="btn btn--outline btn--sm" href="start-chapter.html#reactivate">Reactivate a Chapter</a></p>
+                  </div>
+                  <div>
+                    <h3>Other paths</h3>
+                    <p><a class="btn btn--outline btn--sm" href="involved.html">More Ways to Help</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
@@ -99,6 +171,7 @@
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
     <script src="/motion.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/apex-points.js"></script>
     <script src="/chapters.js"></script>
   </body>

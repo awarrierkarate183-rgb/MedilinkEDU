@@ -21,7 +21,7 @@
     <div id="site-header"></div>
 
     <main>
-      <section class="page-hero">
+      <section class="page-mast">
         <div class="container">
           <h1>Member Portal</h1>
           <p class="lead">Approved members use a registered MediLink login to open full lessons, labs, and competition resources. The public syllabus stays on the Curriculum page.</p>
@@ -29,37 +29,100 @@
       </section>
 
       <section class="section">
-        <div class="container portal-panel">
-          <div>
-            <h2 class="section-title">How you get in</h2>
-            <p class="section-lead">Access is scoped to a real chapter roster, not a generic sign-up on this website.</p>
-            <ol class="goals-list" style="margin-top:1.5rem;">
-              <li>Your school chapter reaches Founding status (chartered, officers in place).</li>
-              <li>The chapter receives a unique QR code for flyers, emails, and the school.</li>
-              <li>You scan that code and complete a short form already tied to that chapter.</li>
-              <li>Chapter officers or the advisor approve the roster.</li>
-              <li>You receive a MediLink login that opens this portal.</li>
-            </ol>
-            <p class="ladder-line">Starting a chapter? The QR flow is illustrated on the Start a Chapter page. <a href="start-chapter.html#qr" style="color:var(--drape);font-weight:700;">See the QR path</a></p>
-          </div>
-          <aside class="portal-box" aria-labelledby="portal-login-title">
-            <h2 id="portal-login-title" class="section-title" style="font-size:1.4rem;">Member login</h2>
-            <p class="section-lead" style="margin-bottom:1rem;">Login is not live yet. When the portal is built, this is where members will sign in. Until then, ask your chapter leader for curriculum files.</p>
-            <p><a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email MediLink about access</a></p>
-            <p class="ladder-line">Need the public overview? <a href="curriculum.html" style="color:var(--drape);font-weight:700;">Open the syllabus</a></p>
-          </aside>
-        </div>
-      </section>
-
-      <section class="section section--gray">
         <div class="container">
-          <h2 class="section-title">What the portal will hold</h2>
-          <ul class="goals-list">
-            <li>Full Track 1-4 lessons and slide decks</li>
-            <li>Hands-on lab worksheets</li>
-            <li>Competition prep packets for Nationals, Innovation Challenge, Policy Cup, and Research Symposium</li>
-            <li>Chapter-only announcements from officers</li>
-          </ul>
+          <div class="deck" id="portal-deck">
+
+            <article class="slab slab--8 reveal" id="access">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Access</span>
+                  <div class="slab__top">
+                    <h2>How you get in</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Access is scoped to a real chapter roster, not a generic sign-up on this website.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--2">
+                  <div>
+                    <h3>01 Founding</h3>
+                    <p>Your school chapter reaches Founding status (chartered, officers in place).</p>
+                  </div>
+                  <div>
+                    <h3>02 Chapter QR</h3>
+                    <p>The chapter receives a unique QR code for flyers, emails, and the school.</p>
+                  </div>
+                  <div>
+                    <h3>03 Scan and register</h3>
+                    <p>You scan that code and complete a short form already tied to that chapter.</p>
+                  </div>
+                  <div>
+                    <h3>04 Approval and login</h3>
+                    <p>Chapter officers or the advisor approve the roster. You receive a MediLink login that opens this portal.</p>
+                    <p><a class="btn btn--outline btn--sm" href="start-chapter.html#qr">See the QR path</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slab slab--4 reveal reveal-delay-1" id="login">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Login</span>
+                  <div class="slab__top">
+                    <h2>Member login</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Login is not live yet. This is where members will sign in when the portal is built.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Until then</h3>
+                    <p>Ask your chapter leader for curriculum files. Do not expect a working password box on this page.</p>
+                    <p><a class="btn btn--primary btn--sm" href="mailto:medi.link.edu@gmail.com?subject=Member%20Portal%20Access">Email MediLink about access</a></p>
+                    <p><a class="btn btn--outline btn--sm" href="curriculum.html">Open the syllabus</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slab slab--12 reveal" id="holds">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Contents</span>
+                  <div class="slab__top">
+                    <h2>What the portal will hold</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Lessons, labs, packets, and chapter-only notes. None of that is public on this site.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--2">
+                  <div>
+                    <h3>Lessons</h3>
+                    <p>Full Track 1-4 lessons and slide decks.</p>
+                  </div>
+                  <div>
+                    <h3>Labs</h3>
+                    <p>Hands-on lab worksheets.</p>
+                  </div>
+                  <div>
+                    <h3>Packets</h3>
+                    <p>Competition prep packets for Nationals, Innovation Challenge, Policy Cup, and Research Symposium.</p>
+                  </div>
+                  <div>
+                    <h3>Chapter notes</h3>
+                    <p>Chapter-only announcements from officers.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
         </div>
       </section>
     </main>
@@ -68,6 +131,7 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

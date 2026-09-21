@@ -1,7 +1,7 @@
 // Shared open-one-at-a-time widgets.
-// About: #lens-widget
-// Competitions: #comp-widgets
-// A non-developer editor only needs to edit the HTML inside those blocks.
+// Decks: any .deck of .slab tiles. Click the face to expand a chamber.
+// Leftover support: #lens-widget and #comp-widgets if those blocks still exist.
+// A non-developer editor only needs to edit the HTML inside a slab.
 
 (function () {
   function bindExclusive(root, itemSelector, buttonSelector, openClass) {
@@ -49,11 +49,19 @@
     match.scrollIntoView({ block: "start", behavior: "smooth" });
   }
 
+  document.querySelectorAll(".deck").forEach((deck) => {
+    bindExclusive(deck, ".slab", ".slab__face", "is-open");
+    openFromHash(deck, ".slab", "is-open");
+  });
+
   bindExclusive(document.getElementById("lens-widget"), ".lens-item", ".lens-item__btn", "is-open");
   bindExclusive(document.getElementById("comp-widgets"), ".comp-widget", ".comp-widget__btn", "is-open");
   openFromHash(document.getElementById("comp-widgets"), ".comp-widget", "is-open");
 
   window.addEventListener("hashchange", () => {
+    document.querySelectorAll(".deck").forEach((deck) => {
+      openFromHash(deck, ".slab", "is-open");
+    });
     openFromHash(document.getElementById("comp-widgets"), ".comp-widget", "is-open");
   });
 })();

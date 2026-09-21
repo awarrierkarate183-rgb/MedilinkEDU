@@ -13,13 +13,13 @@
 
     <main>
 
-      <section class="page-hero--blue">
+      <section class="page-mast">
         <div class="container">
           <h1>Corporate sponsorship</h1>
           <p class="lead">
             Named tiers for companies and organizations. The benefits on this page are the official corporate list.
           </p>
-          <div class="hero-actions" style="margin-top:1.75rem;">
+          <div class="hero-actions">
             <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Corporate%20Sponsorship%20Inquiry">Inquire via Email</a>
             <a class="btn btn--secondary" href="involved.html#sponsorship">How Funds Are Used</a>
           </div>
@@ -38,42 +38,63 @@
         </div>
       </section>
 
-      <section class="section section--gray">
+      <section class="section">
         <div class="container">
-          <div class="section-header section-header--center">
-            <h2 class="section-title">Where Corporate Sponsorship Goes</h2>
+          <div class="deck" id="corporate-deck">
+            <article class="slab slab--6 reveal">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Use</span>
+                  <div class="slab__top">
+                    <h2>Where corporate sponsorship goes</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Chapters, competitions, outreach, and the work of keeping the network online.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--2">
+                  <div>
+                    <h3>Chapter growth</h3>
+                    <p>Startup resources, advisor support, and student leadership training for new and existing chapters.</p>
+                  </div>
+                  <div>
+                    <h3>Competition and learning</h3>
+                    <p>Event materials, research tools, and student awards across four annual competitions and the biennial Apex.</p>
+                  </div>
+                  <div>
+                    <h3>Community outreach</h3>
+                    <p>Service drives and local health-economics initiatives led by student chapters.</p>
+                  </div>
+                  <div>
+                    <h3>Operations and reach</h3>
+                    <p>Website, communications, and network expansion so MediLink can grow sustainably.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="slab slab--6 reveal reveal-delay-1">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Individual</span>
+                  <div class="slab__top">
+                    <h2>Giving as a person</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Families, alumni, and students use the individual page. Named tiers stay here.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>The other path</h3>
+                    <p>Giving as an individual, family, or student? Visit our individual sponsorship page.</p>
+                    <p><a class="btn btn--outline btn--sm" href="sponsor-individual.html">Individual Sponsorship</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
-          <div class="card-grid card-grid--4" style="margin-top:2rem;">
-            <article class="card fund-use-card">
-              <div class="card__icon">🏫</div>
-              <h3>Chapter Growth</h3>
-              <p>Startup resources, advisor support, and student leadership training for new and existing chapters.</p>
-            </article>
-            <article class="card fund-use-card">
-              <div class="card__icon">🏆</div>
-              <h3>Competition &amp; Learning</h3>
-              <p>Event materials, research tools, and student awards across four annual competitions and the biennial Apex.</p>
-            </article>
-            <article class="card fund-use-card">
-              <div class="card__icon">🌍</div>
-              <h3>Community Outreach</h3>
-              <p>Service drives and local health-economics initiatives led by student chapters.</p>
-            </article>
-            <article class="card fund-use-card">
-              <div class="card__icon">📡</div>
-              <h3>Operations &amp; Reach</h3>
-              <p>Website, communications, and network expansion so MediLink can grow sustainably.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--blue">
-        <div class="container" style="text-align:center;">
-          <p class="section-lead" style="margin-inline:auto;margin-bottom:1.5rem;color:rgba(255,255,255,.9);">
-            Giving as an individual, family, or student? Visit our individual sponsorship page.
-          </p>
-          <a class="btn btn--secondary" href="sponsor-individual.html">Individual Sponsorship</a>
         </div>
       </section>
 
@@ -85,6 +106,7 @@
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
     <script src="/motion.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/sponsor-tiers.js"></script>
   </body>
 </html>

@@ -13,13 +13,13 @@
 
     <main>
 
-      <section class="page-hero--blue">
+      <section class="page-mast">
         <div class="container">
           <h1>Give as an individual</h1>
           <p class="lead">
             One-time or recurring gifts from families, alumni, and students fund chapter activities, competition materials, and outreach.
           </p>
-          <div class="hero-actions" style="margin-top:1.75rem;">
+          <div class="hero-actions">
             <a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Individual%20Sponsorship">Sponsor via Email</a>
             <a class="btn btn--secondary" href="sponsor-corporate.html">Explore Corporate Sponsorship</a>
           </div>
@@ -28,61 +28,78 @@
 
       <section class="section">
         <div class="container">
-          <div class="card-grid card-grid--3">
-            <article class="card">
-              <div class="card__icon">🎯</div>
-              <h3>Where Your Support Goes</h3>
-              <p>Chapter growth, competition events, community outreach, and student leadership training.</p>
-            </article>
-            <article class="card">
-              <div class="card__icon">🤝</div>
-              <h3>Fundraising Partnerships</h3>
-              <p>School and community groups can run a fundraiser with MediLink. Email us to set one up.</p>
-            </article>
-            <article class="card">
-              <div class="card__icon">📬</div>
-              <h3>Contact for Details</h3>
-              <p>Sponsorship questions: <a href="mailto:medi.link.edu@gmail.com" style="color:var(--blue);font-weight:600;">medi.link.edu@gmail.com</a></p>
-            </article>
-          </div>
-        </div>
-      </section>
+          <div class="deck" id="individual-deck">
 
-      <section class="section section--gray">
-        <div class="container">
-          <div class="section-header section-header--center">
-            <h2 class="section-title">Named tiers live on the corporate page</h2>
-            <p class="section-lead" style="margin-inline:auto;">
-              Community Ally, Health Advocate, Impact Partner, and Visionary Sponsor are the named company levels. This page is for individual gifts. There is no separate individual tier list.
-            </p>
-          </div>
-          <div class="stats-row" style="margin-top:2rem;">
-            <div class="stat-item">
-              <span class="stat-number">🏫</span>
-              <span class="stat-label">Chapters Growing</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">🏆</span>
-              <span class="stat-label">Competition Events</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">🌍</span>
-              <span class="stat-label">Community Outreach</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">📈</span>
-              <span class="stat-label">Student Leadership</span>
-            </div>
-          </div>
-        </div>
-      </section>
+            <article class="slab slab--4 reveal">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Use</span>
+                  <div class="slab__top">
+                    <h2>Where your support goes</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Chapters, competitions, outreach, and student leadership training.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--2">
+                  <div>
+                    <h3>Chapters</h3>
+                    <p>Chapter growth and student leadership training.</p>
+                  </div>
+                  <div>
+                    <h3>Events and outreach</h3>
+                    <p>Competition events and community outreach.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
 
-      <section class="section">
-        <div class="container" style="text-align:center;">
-          <p class="section-lead" style="margin-inline:auto;margin-bottom:1.5rem;">
-            Representing a company? See the named corporate tiers and their benefits.
-          </p>
-          <a class="btn btn--outline" href="sponsor-corporate.html">View Corporate Sponsorship</a>
+            <article class="slab slab--4 reveal reveal-delay-1">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Schools</span>
+                  <div class="slab__top">
+                    <h2>Fundraising partnerships</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">School and community groups can run a fundraiser with MediLink.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Set one up</h3>
+                    <p>Email us to set one up.</p>
+                    <p><a class="btn btn--outline btn--sm" href="mailto:medi.link.edu@gmail.com?subject=Fundraising%20Partnership">Email MediLink</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slab slab--4 reveal reveal-delay-2">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Tiers</span>
+                  <div class="slab__top">
+                    <h2>No individual tier list</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Named levels live on the corporate page. This page is for individual gifts.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Company levels</h3>
+                    <p>Community Ally, Health Advocate, Impact Partner, and Visionary Sponsor are the named company levels. There is no separate individual tier list.</p>
+                    <p><a class="btn btn--outline btn--sm" href="sponsor-corporate.html">View Corporate Sponsorship</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
         </div>
       </section>
 
@@ -93,6 +110,7 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>

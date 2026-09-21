@@ -22,7 +22,7 @@
 
     <main>
 
-      <section class="page-hero">
+      <section class="page-mast">
         <div class="container">
           <h1>Work with MediLink</h1>
           <p class="lead">This page is for sponsors, partners, and volunteers. A company should leave knowing how to give, which tier attends events, and how to offer shadowing. A volunteer should leave knowing how to sit on a panel or mentor a chapter. Students starting a school should use Start a Chapter, not this page.</p>
@@ -31,57 +31,145 @@
 
       <section class="section" id="sponsorship">
         <div class="container">
-          <p class="folio-mark reveal">01</p>
-          <h2 class="section-title reveal">How to sponsor</h2>
-          <p class="section-lead reveal">Individual gifts and company gifts both go to chapters, competitions, and outreach. You should know where the money goes before you give: starter kits, event materials, service drives, and the work of keeping a two-founder network online. Named corporate tiers live on the corporate page.</p>
+          <div class="deck" id="involved-deck">
 
-          <div class="card-grid card-grid--2" style="margin-top:2rem;">
-            <a class="action-card" href="sponsor-individual.html">
-              <h3>Individual sponsorship</h3>
-              <p>Give as a family, alum, or student. One-time or recurring.</p>
-              <span class="card-link">Sponsor as an individual</span>
-            </a>
-            <a class="action-card" href="sponsor-corporate.html">
-              <h3>Corporate sponsorship</h3>
-              <p>Choose a named tier. Impact Partner and above can attend State and National events.</p>
-              <span class="card-link">See corporate tiers</span>
-            </a>
-          </div>
-
-          <article class="card" style="margin-top:2rem;">
-            <h3>Attend National and State competitions</h3>
-            <p>This perk is available only at the <strong>Impact Partner</strong> tier and above. Those sponsors can attend and be recognized in person, including the Apex networking fair in an Apex year. Community Ally and Health Advocate sponsors get the perk by moving to Impact Partner or Visionary Sponsor.</p>
-            <p style="margin-top:.9rem;"><a class="btn btn--outline btn--sm" href="sponsor-corporate.html">View corporate tiers</a></p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section section--gray">
-        <div class="container">
-          <p class="folio-mark reveal">02</p>
-          <h2 class="section-title reveal">Partner or volunteer</h2>
-          <p class="section-lead reveal">Hospitals, insurers, and health-tech firms can offer shadowing, internships, judges, and workshops. Individuals can mentor or sit on a panel.</p>
-          <div class="card-grid card-grid--2" style="margin-top:2rem;">
-            <article class="card">
-              <h3>Partner with us</h3>
-              <p>Clinical, finance, and tech partners. Leadership sets up each relationship before students are placed.</p>
-              <p style="margin-top:.9rem;"><a class="btn btn--outline btn--sm" href="partner.html">Partnership info</a></p>
+            <article class="slab slab--6 reveal" id="individual">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">01 / Give</span>
+                  <div class="slab__top">
+                    <h2>Individual sponsorship</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Give as a family, alum, or student. One-time or recurring.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Where it goes</h3>
+                    <p>Individual gifts fund chapters, competitions, and outreach. You should know where the money goes before you give: starter kits, event materials, service drives, and the work of keeping a two-founder network online. There is no separate individual tier list.</p>
+                    <p><a class="btn btn--outline btn--sm" href="sponsor-individual.html">Sponsor as an individual</a></p>
+                  </div>
+                </div>
+              </div>
             </article>
-            <article class="card" id="volunteer">
-              <h3>Become a volunteer</h3>
-              <p>Mentor students, sit on a judge panel, or help a chapter run meetings. Tell us your field so we can match you.</p>
-              <p style="margin-top:.9rem;"><a class="btn btn--outline btn--sm" data-form="volunteer" href="#">Apply to volunteer</a></p>
-            </article>
-          </div>
-        </div>
-      </section>
 
-      <section class="section" id="submit-news">
-        <div class="container">
-          <p class="folio-mark reveal">03</p>
-          <h2 class="section-title reveal">Submit news</h2>
-          <p class="section-lead reveal">Send a chapter win, service project, or research highlight. Leadership can place it on the homepage, on MediLink social, or at an event.</p>
-          <p style="margin-top:1.5rem;"><a class="btn btn--primary" href="mailto:medi.link.edu@gmail.com?subject=Submit%20News%20Chapter%20Highlight">Email your news</a></p>
+            <article class="slab slab--6 reveal reveal-delay-1" id="corporate">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">02 / Company</span>
+                  <div class="slab__top">
+                    <h2>Corporate sponsorship</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Choose a named tier. Impact Partner and above can attend events.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Named company levels</h3>
+                    <p>Community Ally, Health Advocate, Impact Partner, and Visionary Sponsor live on the corporate page. Amounts and extras can be customized with leadership.</p>
+                    <p><a class="btn btn--outline btn--sm" href="sponsor-corporate.html">See corporate tiers</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slab slab--12 reveal" id="attend">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">Perk</span>
+                  <div class="slab__top">
+                    <h2>Attend National and State competitions</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">This perk is available only at Impact Partner and above.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--2">
+                  <div>
+                    <h3>Who attends</h3>
+                    <p>Impact Partner and Visionary Sponsor can attend and be recognized in person, including the Apex networking fair in an Apex year.</p>
+                  </div>
+                  <div>
+                    <h3>Who does not, yet</h3>
+                    <p>Community Ally and Health Advocate sponsors get the perk by moving to Impact Partner or Visionary Sponsor.</p>
+                    <p><a class="btn btn--outline btn--sm" href="sponsor-corporate.html">View corporate tiers</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slab slab--6 reveal" id="partner-path">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">03 / Partner</span>
+                  <div class="slab__top">
+                    <h2>Partner with us</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Hospitals, insurers, and health-tech firms. Leadership sets up each relationship first.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>What partners offer</h3>
+                    <p>Shadowing, internships, judges, and workshops. Clinical, finance, and tech partners sit in the same three-lens framework students use.</p>
+                    <p><a class="btn btn--outline btn--sm" href="partner.html">Partnership info</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slab slab--6 reveal reveal-delay-1" id="volunteer">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">04 / Volunteer</span>
+                  <div class="slab__top">
+                    <h2>Become a volunteer</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Mentor students, sit on a judge panel, or help a chapter run meetings.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>How we match you</h3>
+                    <p>Tell us your field so we can match you. A two-hour workshop mapped to a syllabus module is more useful than a generic pep talk.</p>
+                    <p><a class="btn btn--outline btn--sm" data-form="volunteer" href="#">Apply to volunteer</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="slab slab--12 reveal" id="submit-news">
+              <button class="slab__face" type="button" aria-expanded="false">
+                <div>
+                  <span class="slab__kicker">05 / News</span>
+                  <div class="slab__top">
+                    <h2>Submit news</h2>
+                    <span class="slab__plus" aria-hidden="true">+</span>
+                  </div>
+                </div>
+                <p class="slab__tease">Send a chapter win, service project, or research highlight.</p>
+              </button>
+              <div class="slab__chamber">
+                <div class="chamber chamber--1">
+                  <div>
+                    <h3>Where it can go</h3>
+                    <p>Leadership can place it on the homepage, on MediLink social, or at an event. Do not invent stats to fill a card.</p>
+                    <p><a class="btn btn--primary btn--sm" href="mailto:medi.link.edu@gmail.com?subject=Submit%20News%20Chapter%20Highlight">Email your news</a></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
         </div>
       </section>
 
@@ -91,6 +179,7 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
     <script src="/motion.js"></script>
   </body>
 </html>
