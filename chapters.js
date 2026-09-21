@@ -57,7 +57,7 @@
     const row = apexById[chapterId];
     const total = row ? row.cycleTotal : 0;
     return '<p class="chapters-detail__apex">Road to Apex cycle total: <strong>' + total +
-      '</strong> · <a href="competition-apex.html#road-to-apex">Full standings</a></p>';
+      '</strong> · <a href="competition.html#road-to-apex">Full standings</a></p>';
   }
 
   function highlightListItem(type, stateId, chapterId) {

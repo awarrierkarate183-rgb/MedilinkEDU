@@ -6,7 +6,8 @@
   Mission and vision also live on goals.html. If you change one, change both.
 
   Care, Cost, Code is the internal name in curriculum and case materials.
-  Do not put it in the homepage hero.
+
+  LENS WIDGET: edit the three .lens-item blocks. widgets.js opens one at a time.
 -->
 <html lang="en">
   <head>
@@ -25,23 +26,23 @@
         <div class="container">
           <h1>Who we are</h1>
           <p class="lead">
-            Two high school students in Charlotte, North Carolina started MediLink because no existing club asked students to work across medicine, finance, and technology on the same problem. HOSA trains clinical skill. DECA and FBLA train business. We ask for all three on one case.
+            Two high school students in Charlotte, North Carolina started MediLink because no existing club asked students to work across medicine, finance, and technology on the same problem. We ask for all three on one case.
           </p>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <h2 class="section-title">What we are</h2>
-          <p class="section-lead">
-            A national, student-founded nonprofit network of high school chapters. Members learn how real health systems work: a clinical problem, a money problem, and a technology problem at once.
+          <h2 class="section-title reveal">What we are</h2>
+          <p class="section-lead reveal">
+            A student-founded nonprofit network of high school chapters. Members learn how real health systems work: a clinical problem, a money problem, and a technology problem at once.
           </p>
         </div>
       </section>
 
       <section class="section section--gray">
         <div class="container">
-          <h2 class="section-title">Mission &amp; Vision</h2>
+          <h2 class="section-title reveal">Mission and vision</h2>
           <div class="card-grid" style="margin-top:2rem;">
             <article class="card">
               <h2>Our Mission</h2>
@@ -57,29 +58,49 @@
 
       <section class="section">
         <div class="container">
-          <h2 class="section-title">The framework</h2>
-          <p class="section-lead">Every curriculum module, competition case, and chapter project runs through three lenses. Case packets still use the internal name Care, Cost, Code.</p>
-          <dl class="legend" style="margin-top:2rem;">
-            <div class="legend__row">
-              <dt>Clinical</dt>
-              <dd>What’s the actual health problem, and who’s affected?</dd>
-            </div>
-            <div class="legend__row">
-              <dt>Financial</dt>
-              <dd>Who pays for it, what does it cost, and is a solution sustainable?</dd>
-            </div>
-            <div class="legend__row">
-              <dt>Technology</dt>
-              <dd>How could data, software, or infrastructure change access or delivery?</dd>
-            </div>
-          </dl>
-          <p class="ladder-line">Chapters teach this across four tracks and twelve modules. <a href="curriculum.html" style="color:var(--drape);font-weight:700;">See the public syllabus</a></p>
+          <h2 class="section-title reveal">The framework</h2>
+          <p class="section-lead reveal">Every module, case, and chapter project runs through three lenses. Open one to read it. Case packets still use the internal name Care, Cost, Code.</p>
+
+          <div class="lens-widget" id="lens-widget">
+            <article class="lens-item is-open">
+              <button class="lens-item__btn" type="button" aria-expanded="true">
+                <span>Clinical</span>
+                <span class="lens-item__mark" aria-hidden="true">+</span>
+              </button>
+              <div class="lens-item__panel">
+                <p>What is the actual health problem, and who is affected?</p>
+                <p>This lens names the condition, the patients or communities, and the gap in care. A case that skips this step solves a spreadsheet, not a person.</p>
+              </div>
+            </article>
+            <article class="lens-item">
+              <button class="lens-item__btn" type="button" aria-expanded="false">
+                <span>Financial</span>
+                <span class="lens-item__mark" aria-hidden="true">+</span>
+              </button>
+              <div class="lens-item__panel">
+                <p>Who pays for it, what does it cost, and is a solution sustainable?</p>
+                <p>Insurance, hospital billing, grants, and unit economics sit here. If the money path fails, the clinical idea does not leave the page.</p>
+              </div>
+            </article>
+            <article class="lens-item">
+              <button class="lens-item__btn" type="button" aria-expanded="false">
+                <span>Technology</span>
+                <span class="lens-item__mark" aria-hidden="true">+</span>
+              </button>
+              <div class="lens-item__panel">
+                <p>How could data, software, or infrastructure change access or delivery?</p>
+                <p>Records, telehealth, devices, and simple tools count. The test is whether the tech changes the clinical or financial outcome, not whether it looks new.</p>
+              </div>
+            </article>
+          </div>
+
+          <p class="ladder-line">Chapters teach this across four tracks and twelve modules. <a href="curriculum.html" style="color:var(--navy);font-weight:700;">See the public syllabus</a></p>
         </div>
       </section>
 
       <section class="section section--gray">
         <div class="container">
-          <h2 class="section-title">What we aim to achieve</h2>
+          <h2 class="section-title reveal">What we aim to achieve</h2>
           <ul class="goals-list">
             <li>Train high school students to apply the three-lens framework to real health-system problems.</li>
             <li>Grow a nationwide chapter network with a shared officer structure, curriculum, and starter kit.</li>
@@ -97,5 +118,7 @@
     <script src="/data/forms.config.js"></script>
     <script src="/nav.js"></script>
     <script src="/layout.js"></script>
+    <script src="/widgets.js"></script>
+    <script src="/motion.js"></script>
   </body>
 </html>

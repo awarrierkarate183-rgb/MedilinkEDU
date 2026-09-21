@@ -1,238 +1,30 @@
 <!--
-  SITE HEADER. This is the one place to change the site name/logo everywhere at once.
-  layout.js loads this file into every page, so editing the brand text or nav links here
-  updates the whole site. Visible wordmark should read "MediLink" (not "MediLink Edu").
--->
-<div class="nav-overlay" id="nav-overlay"></div>
+  SITE HEADER. Loaded on every page by layout.js.
+  Flat navy bar. Direct links only. No dropdown menus.
 
+  Main links: Home, About, Competitions, Chapters, Get Involved, Contact.
+  Submit News stays in the bar as a gold action, not a nav item.
+
+  To add a page to the bar, copy an existing <a> and change href, data-nav, and label.
+  data-nav must match the page's <body data-page="..."> value.
+-->
 <div class="header-wrapper">
-  <!-- TOP UTILITY BAR: thin blue strip above the main nav. Add or remove links here. -->
-  <div class="util-bar">
-    <div class="container util-bar__inner">
-      <!-- SUBMIT NEWS: currently an email-based flow. To upgrade later, point this at a Google Form URL in data/forms.config.js (key: submitNews) and add data-form="submitNews" to this link. -->
-      <a class="util-bar__news" href="involved.html#submit-news">Submit News</a>
-      <div class="util-bar__links">
-        <a href="chapters.html">Chapters</a>
-        <span class="util-bar__divider">|</span>
-        <a href="sponsor-individual.html">Sponsor</a>
-      </div>
-    </div>
-  </div>
   <header class="site-header" id="top">
     <div class="container nav-wrap">
       <a class="brand" href="index.html">MediLink</a>
-      <nav class="main-nav" aria-label="Primary">
+      <nav class="main-nav" id="site-nav" aria-label="Primary">
         <a href="index.html" data-nav="home">Home</a>
-
-        <div class="nav-item has-dropdown">
-          <a href="about.html" data-nav="about">About</a>
-          <div class="mega-dropdown">
-            <div class="container mega-dropdown__inner mega-dropdown__inner--2col">
-              <div class="mega-col">
-                <span class="mega-heading">About MediLink</span>
-                <a class="mega-link" href="about.html">
-                  <span class="mega-link__title">About MediLink</span>
-                  <span class="mega-link__desc">Who we are and our story</span>
-                </a>
-                <a class="mega-link" href="goals.html">
-                  <span class="mega-link__title">Our Goals</span>
-                  <span class="mega-link__desc">What we're working toward</span>
-                </a>
-                <a class="mega-link" href="curriculum.html">
-                  <span class="mega-link__title">Curriculum</span>
-                  <span class="mega-link__desc">Four tracks and twelve modules. Public syllabus</span>
-                </a>
-                <a class="mega-link" href="portal.html">
-                  <span class="mega-link__title">Member Portal</span>
-                  <span class="mega-link__desc">Approved members get full lessons and labs</span>
-                </a>
-              </div>
-              <div class="mega-col">
-                <span class="mega-heading">Connect</span>
-                <a class="mega-link" href="contact.html">
-                  <span class="mega-link__title">Contact Us</span>
-                  <span class="mega-link__desc">Reach the MediLink team</span>
-                </a>
-                <a class="mega-link" href="involved.html#sponsorship">
-                  <span class="mega-link__title">Support Our Mission</span>
-                  <span class="mega-link__desc">Learn how to sponsor MediLink</span>
-                </a>
-              </div>
-            </div>
-            <div class="mega-banner">
-              <div class="container mega-banner__inner">
-                <div class="mega-banner__body">
-                  <span class="mega-banner__tag">About MediLink</span>
-                  <span class="mega-banner__title">Who we are, and the three-lens framework.</span>
-                  <span class="mega-banner__desc">The only place the three-lens framework is explained in full.</span>
-                </div>
-                <a class="mega-banner__cta" href="about.html">Learn More</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- COMPETITIONS & EVENTS MENU: five competitions. Only Nationals uses the Regional to State to National ladder. -->
-        <div class="nav-item has-dropdown">
-          <a href="competition.html" data-nav="competition">Competitions &amp; Events</a>
-          <div class="mega-dropdown">
-            <div class="container mega-dropdown__inner mega-dropdown__inner--2col">
-              <div class="mega-col">
-                <span class="mega-heading">Competitions</span>
-                <a class="mega-link" href="competition-nationals.html">
-                  <span class="mega-link__title">MediLink Nationals</span>
-                  <span class="mega-link__desc">Annual flagship case drawn from the Track 4 capstone</span>
-                </a>
-                <a class="mega-link" href="competition-innovation.html">
-                  <span class="mega-link__title">Innovation Challenge</span>
-                  <span class="mega-link__desc">Pitch a health-tech product or digital-health concept</span>
-                </a>
-                <a class="mega-link" href="competition-policy.html">
-                  <span class="mega-link__title">Policy Cup</span>
-                  <span class="mega-link__desc">Argue for a real fix to a health-economics problem</span>
-                </a>
-                <a class="mega-link" href="competition-research.html">
-                  <span class="mega-link__title">Research Symposium</span>
-                  <span class="mega-link__desc">Present independent health-economics or health-tech research</span>
-                </a>
-                <a class="mega-link" href="competition-apex.html">
-                  <span class="mega-link__title">The MediLink Apex</span>
-                  <span class="mega-link__desc">Biennial champions summit. An upgraded National round</span>
-                </a>
-              </div>
-              <div class="mega-col">
-                <span class="mega-heading">Conferences &amp; Events</span>
-                <a class="mega-link" href="competition.html#ladder">
-                  <span class="mega-link__title">Regional Events</span>
-                  <span class="mega-link__desc">First Nationals level, run at or near chapters</span>
-                </a>
-                <a class="mega-link" href="competition.html#ladder">
-                  <span class="mega-link__title">State Events</span>
-                  <span class="mega-link__desc">Top Nationals regional teams advance at the state level</span>
-                </a>
-                <a class="mega-link" href="competition.html#ladder">
-                  <span class="mega-link__title">National Events</span>
-                  <span class="mega-link__desc">State Nationals qualifiers compete nationally, including the gala</span>
-                </a>
-              </div>
-            </div>
-            <div class="mega-banner">
-              <div class="container mega-banner__inner">
-                <div class="mega-banner__body">
-                  <span class="mega-banner__tag">High School</span>
-                  <span class="mega-banner__title">Five competitions. Two structures.</span>
-                  <span class="mega-banner__desc">Three one-time annual events. Nationals on a ladder. A biennial Apex. Dates come from state chapter boards.</span>
-                </div>
-                <a class="mega-banner__cta" href="competition.html">See Competitions &amp; Events</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="nav-item has-dropdown">
-          <a href="involved.html" data-nav="involved">Get Involved</a>
-          <div class="mega-dropdown">
-            <div class="container mega-dropdown__inner mega-dropdown__inner--3col">
-              <div class="mega-col">
-                <span class="mega-heading">Contribute</span>
-                <a class="mega-link" href="involved.html#sponsorship">
-                  <span class="mega-link__title">Sponsorship &amp; Fundraising</span>
-                  <span class="mega-link__desc">Individual and corporate ways to support our mission</span>
-                </a>
-                <a class="mega-link" href="volunteer.html">
-                  <span class="mega-link__title">Become a Volunteer</span>
-                  <span class="mega-link__desc">Mentor students and share your expertise</span>
-                </a>
-                <a class="mega-link" href="involved.html#submit-news">
-                  <span class="mega-link__title">Submit Your News</span>
-                  <span class="mega-link__desc">Share chapter wins and highlights</span>
-                </a>
-              </div>
-              <div class="mega-col">
-                <span class="mega-heading">Grow With Us</span>
-                <a class="mega-link" href="start-chapter.html">
-                  <span class="mega-link__title">Start a Chapter</span>
-                  <span class="mega-link__desc">Bring MediLink to your high school</span>
-                </a>
-                <a class="mega-link" href="partner.html">
-                  <span class="mega-link__title">Partner With Us</span>
-                  <span class="mega-link__desc">Collaborate through community partnerships</span>
-                </a>
-              </div>
-              <div class="mega-col">
-                <span class="mega-heading">For Members</span>
-                <a class="mega-link" href="opportunities.html">
-                  <span class="mega-link__title">Internships &amp; Opportunities</span>
-                  <span class="mega-link__desc">Shadowing, internships, and research through partners</span>
-                </a>
-                <a class="mega-link" href="competition.html">
-                  <span class="mega-link__title">Competitions &amp; Events</span>
-                  <span class="mega-link__desc">Four annual competitions plus a biennial Apex</span>
-                </a>
-              </div>
-            </div>
-            <div class="mega-banner">
-              <div class="container mega-banner__inner">
-                <div class="mega-banner__body">
-                  <span class="mega-banner__tag">Get Involved</span>
-                  <span class="mega-banner__title">Support the Mission</span>
-                  <span class="mega-banner__desc">Sponsor, volunteer, start a chapter, or share your news. Pick the path that fits.</span>
-                </div>
-                <a class="mega-banner__cta" href="involved.html">Get Involved</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="opportunities.html" data-nav="opportunities">Opportunities</a>
-        <a href="portal.html" data-nav="portal">Portal</a>
-
-        <div class="nav-item has-dropdown">
-          <a href="chapters.html" data-nav="chapters">Chapters</a>
-          <div class="mega-dropdown">
-            <div class="container mega-dropdown__inner mega-dropdown__inner--2col">
-              <div class="mega-col">
-                <span class="mega-heading">Our Network</span>
-                <a class="mega-link" href="chapters.html">
-                  <span class="mega-link__title">Current Chapters</span>
-                  <span class="mega-link__desc">See all active MediLink chapters</span>
-                </a>
-                <a class="mega-link" href="chapter-support.html">
-                  <span class="mega-link__title">Chapter Support</span>
-                  <span class="mega-link__desc">Resources and guidance for existing chapters</span>
-                </a>
-              </div>
-              <div class="mega-col">
-                <span class="mega-heading">Join</span>
-                <a class="mega-link" href="start-chapter.html">
-                  <span class="mega-link__title">Start a Chapter</span>
-                  <span class="mega-link__desc">Launch MediLink at your high school</span>
-                </a>
-                <a class="mega-link" href="curriculum.html">
-                  <span class="mega-link__title">Curriculum</span>
-                  <span class="mega-link__desc">Four tracks and twelve modules every chapter can run</span>
-                </a>
-                <a class="mega-link" href="start-chapter.html#reactivate">
-                  <span class="mega-link__title">Reactivate a Chapter</span>
-                  <span class="mega-link__desc">Bring an inactive chapter back with new student leadership</span>
-                </a>
-              </div>
-            </div>
-            <div class="mega-banner">
-              <div class="container mega-banner__inner">
-                <div class="mega-banner__body">
-                  <span class="mega-banner__tag">Chapters</span>
-                  <span class="mega-banner__title">Growing a Student Network</span>
-                  <span class="mega-banner__desc">See active chapters, start your own, and connect with the MediLink community.</span>
-                </div>
-                <a class="mega-banner__cta" href="chapters.html">View Chapters</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a class="nav-cta" href="involved.html">Join</a>
+        <a href="about.html" data-nav="about">About</a>
+        <a href="competition.html" data-nav="competition">Competitions</a>
+        <a href="chapters.html" data-nav="chapters">Chapters</a>
+        <a href="involved.html" data-nav="involved">Get Involved</a>
+        <a href="contact.html" data-nav="contact">Contact</a>
       </nav>
+      <div class="header-actions">
+        <!-- SUBMIT NEWS: email flow today. Later, point this at a Google Form in data/forms.config.js (key: submitNews). -->
+        <a class="util-bar__news" href="involved.html#submit-news">Submit News</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      </div>
     </div>
   </header>
 </div>

@@ -1,40 +1,30 @@
+// Flat mobile menu only. No dropdown submenus.
+// The Menu button toggles the same six links used on desktop.
+
 window.initMediLinkNav = function initMediLinkNav() {
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.getElementById("site-nav");
+  if (!toggle || !nav) return;
+  if (toggle._navBound) return;
+  toggle._navBound = true;
 
-  const overlay = document.getElementById('nav-overlay');
-  const items   = Array.from(document.querySelectorAll('.nav-item.has-dropdown'));
-  if (!overlay) return;
-
-  function closeAll() {
-    items.forEach(i => i.classList.remove('is-open'));
-    overlay.classList.remove('is-active');
+  function closeNav() {
+    nav.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.textContent = "Menu";
   }
 
-  items.forEach(item => {
-    const trigger = item.querySelector(':scope > a');
-    if (!trigger || trigger._navBound) return;
-    trigger._navBound = true;
-
-    trigger.addEventListener('click', e => {
-      const isOpen = item.classList.contains('is-open');
-      if (!isOpen) {
-        e.preventDefault();
-        closeAll();
-        item.classList.add('is-open');
-        overlay.classList.add('is-active');
-      } else {
-        closeAll();
-      }
-    });
+  toggle.addEventListener("click", () => {
+    const open = nav.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.textContent = open ? "Close" : "Menu";
   });
 
-  if (!overlay._navBound) {
-    overlay._navBound = true;
-    overlay.addEventListener('click', closeAll);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.nav-item.has-dropdown') && !e.target.closest('.nav-overlay')) {
-        closeAll();
-      }
-    });
-  }
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeNav);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeNav();
+  });
 };
