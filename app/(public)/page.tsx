@@ -1,0 +1,338 @@
+import { ButtonLink } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { HeroNetwork } from "@/components/public/HeroNetwork";
+import { competitions } from "@/lib/content/competitions";
+import { tracks } from "@/lib/content/curriculum";
+import {
+  confirmedChapterCount,
+  getStateListings,
+} from "@/lib/content/chapters";
+import { experienceSteps, lenses, MISSION } from "@/lib/content/organization";
+import { actionHref } from "@/lib/content/forms";
+
+export default function HomePage() {
+  const schoolCount = confirmedChapterCount();
+  const states = getStateListings();
+
+  return (
+    <>
+      <section className="relative overflow-hidden bg-navy text-white">
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] lg:block">
+          <HeroNetwork />
+        </div>
+        <div className="container-ml relative grid min-h-[88vh] items-center py-28 lg:grid-cols-2">
+          <div className="reveal max-w-xl">
+            <h1 className="display" aria-label="MediLink">
+              <span className="text-white">Medi</span>
+              <span className="text-gold">Link</span>
+            </h1>
+            <p className="mt-6 text-3xl font-semibold tracking-tight md:text-4xl">
+              Healthcare is bigger than one discipline.
+            </p>
+            <p className="mt-5 max-w-lg text-base leading-7 text-white/75">
+              MediLink gives high school students the opportunity to explore
+              healthcare through clinical thinking, financial reasoning, and
+              technology.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/about">Explore MediLink</ButtonLink>
+              <ButtonLink href="/start-a-chapter" variant="secondary">
+                Start a Chapter
+              </ButtonLink>
+            </div>
+            <p className="mt-5">
+              <ButtonLink href="/portal" variant="outline" className="border-white text-white hover:bg-white/10">
+                Access Portal
+              </ButtonLink>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="band">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">What is MediLink?</p>
+            <h2>A student-founded network of high school chapters.</h2>
+          </div>
+          <div className="max-w-3xl space-y-4 text-muted">
+            <p>
+              MediLink is a nonprofit for high school students. Members learn how
+              real health systems work: a clinical problem, a money problem, and
+              a technology problem at once.
+            </p>
+            <p>{MISSION}</p>
+            <p>
+              Every chapter uses the same five officer roles, the same public
+              syllabus, and the same competition calendar. Titles and one-line
+              module descriptions stay on this site. Full lessons wait behind
+              roster approval.
+            </p>
+            <p>
+              This is high school only. There is no middle-school or college
+              division. Students join through a chapter, not as visitors on a
+              public form.
+            </p>
+          </div>
+          <div className="grid-cards cols-3 mt-10">
+            {lenses.map((lens) => (
+              <Card key={lens.id}>
+                <p className="kicker">{lens.name}</p>
+                <h3 className="text-xl font-semibold">{lens.question}</h3>
+                <p className="mt-3 text-sm text-muted">{lens.summary}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="band band--paper">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">The work</p>
+            <h2>Built for real-world problem solving</h2>
+            <p>
+              MediLink is not a lecture club. Students learn a shared syllabus,
+              compete through their chapter, and turn problems into projects.
+            </p>
+          </div>
+          <div className="grid-cards cols-4">
+            {[
+              {
+                title: "Curriculum",
+                body: "Four tracks. Twelve modules. Public titles. Full lessons for registered members.",
+                href: "/curriculum",
+              },
+              {
+                title: "Competitions",
+                body: "Five events. Two structures. Nationals is the only Regional to State to National ladder.",
+                href: "/competitions",
+              },
+              {
+                title: "Chapters",
+                body: "School-based. Same five offices everywhere. Status is earned, not sold.",
+                href: "/chapters",
+              },
+              {
+                title: "Projects",
+                body: "Ideas Lab and chapter projects live in the member portal once a roster is approved.",
+                href: "/portal",
+              },
+            ].map((item) => (
+              <Card key={item.title} className="transition-transform hover:-translate-y-0.5">
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-muted">{item.body}</p>
+                <p className="mt-4 text-sm font-semibold">
+                  <a href={item.href}>Open</a>
+                </p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="band">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">The MediLink experience</p>
+            <h2>From joining a chapter to leading one.</h2>
+          </div>
+          <ol className="grid gap-4 md:grid-cols-6">
+            {experienceSteps.map((step, index) => (
+              <li key={step.title} className="rounded-[var(--radius)] border border-border bg-white p-4">
+                <p className="kicker">0{index + 1}</p>
+                <h3 className="font-semibold">{step.title}</h3>
+                <p className="mt-2 text-sm text-muted">{step.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="band band--paper" id="compete">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">Competitions</p>
+            <h2>Five events. Two structures.</h2>
+            <p>
+              Three one-time annual events. Nationals is the yearly flagship.
+              Apex is the biennial culmination, not a sixth case.
+            </p>
+          </div>
+          <div className="grid-cards cols-2">
+            {competitions.map((event) => (
+              <a
+                key={event.id}
+                href={`/competitions#${event.id}`}
+                className={`rounded-[var(--radius)] border p-6 transition-transform hover:-translate-y-0.5 ${
+                  event.prestige === 3
+                    ? "border-gold/40 bg-navy text-white"
+                    : event.prestige === 2
+                      ? "border-navy/20 bg-white"
+                      : "border-border bg-white"
+                }`}
+              >
+                <p className={`kicker ${event.prestige === 3 ? "text-gold" : ""}`}>
+                  {event.kicker}
+                </p>
+                <h3 className="text-xl font-semibold">{event.name}</h3>
+                <p className={`mt-2 text-sm ${event.prestige === 3 ? "text-white/75" : "text-muted"}`}>
+                  {event.summary}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="band">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">Curriculum</p>
+            <h2>Four tracks. Twelve modules.</h2>
+            <p>Public visitors see syllabus-level information only.</p>
+          </div>
+          <div className="grid-cards cols-2">
+            {tracks.map((track) => (
+              <Card key={track.id}>
+                <p className="kicker">Track {track.number}</p>
+                <h3 className="text-xl font-semibold">{track.name}</h3>
+                <p className="mt-2 text-sm text-muted">{track.summary}</p>
+                <ol className="mt-4 space-y-1 text-sm">
+                  {track.modules.map((mod) => (
+                    <li key={mod.code}>
+                      <strong>{mod.code}</strong> {mod.name}
+                    </li>
+                  ))}
+                </ol>
+              </Card>
+            ))}
+          </div>
+          <p className="mt-6">
+            <ButtonLink href="/curriculum" variant="outline">
+              Full public syllabus
+            </ButtonLink>
+          </p>
+        </div>
+      </section>
+
+      <section className="band band--paper" id="chapters">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">Chapters</p>
+            <h2>Built chapter by chapter.</h2>
+            <p>
+              School chapters appear here when the board records them. This page
+              does not invent school names.
+            </p>
+          </div>
+          {schoolCount === 0 ? (
+            <div className="rounded-[var(--radius)] border border-dashed border-border bg-white p-8">
+              <p className="font-semibold">Confirmed school chapters will appear here.</p>
+              <p className="mt-2 max-w-2xl text-sm text-muted">
+                MediLink currently lists {states.length} state networks:{" "}
+                {states.map((state) => state.name).join(" and ")}. Those are
+                state listings, not confirmed school chapters.
+              </p>
+              <div className="mt-5">
+                <ButtonLink href="/start-a-chapter">Start a Chapter</ButtonLink>
+              </div>
+            </div>
+          ) : (
+            <p>{schoolCount} confirmed school chapters.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="band">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">Partners</p>
+            <h2>Work with organizations that sit in the same three rooms students study.</h2>
+            <p>
+              Healthcare, finance, insurance, technology, research, and
+              education. Partner logos appear only after a relationship is
+              public.
+            </p>
+          </div>
+          <ButtonLink href="/partner" variant="outline">
+            Partner with MediLink
+          </ButtonLink>
+        </div>
+      </section>
+
+      <section className="band band--paper">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">Get involved</p>
+            <h2>Three ways in.</h2>
+          </div>
+          <div className="grid-cards cols-3">
+            <Card>
+              <h3 className="text-lg font-semibold">Start a chapter</h3>
+              <p className="mt-2 text-sm text-muted">
+                For schools and educators ready to charter a high school chapter.
+              </p>
+              <p className="mt-4">
+                <ButtonLink href="/start-a-chapter" size="sm">
+                  Start a Chapter
+                </ButtonLink>
+              </p>
+            </Card>
+            <Card>
+              <h3 className="text-lg font-semibold">Partner with MediLink</h3>
+              <p className="mt-2 text-sm text-muted">
+                Hospitals, insurers, health-tech firms, universities, and community groups.
+              </p>
+              <p className="mt-4">
+                <ButtonLink href="/partner" size="sm" variant="secondary">
+                  Partner
+                </ButtonLink>
+              </p>
+            </Card>
+            <Card>
+              <h3 className="text-lg font-semibold">Support students</h3>
+              <p className="mt-2 text-sm text-muted">
+                Sponsor chapters and events, or volunteer as a mentor or judge.
+              </p>
+              <p className="mt-4">
+                <ButtonLink href="/get-involved" size="sm" variant="outline">
+                  Support
+                </ButtonLink>
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="band" id="news">
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">News</p>
+            <h2>News from MediLink is coming soon.</h2>
+            <p>
+              This homepage does not invent chapter wins. Send what happened.
+              Leadership decides whether it runs here.
+            </p>
+          </div>
+          <ButtonLink href={actionHref("submitNews", "Submit News Chapter Highlight")} variant="outline">
+            Submit news
+          </ButtonLink>
+        </div>
+      </section>
+
+      <section className="bg-navy py-20 text-white">
+        <div className="container-ml">
+          <p className="kicker">Next</p>
+          <h2 className="display max-w-3xl">Build the future of healthcare with us.</h2>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ButtonLink href="/start-a-chapter">Start a Chapter</ButtonLink>
+            <ButtonLink href="/portal" variant="outline" className="border-white text-white hover:bg-white/10">
+              Enter the Portal
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

@@ -1,32 +1,3 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "redirects": [
-    { "source": "/programs.html", "destination": "/", "permanent": true },
-    { "source": "/podcast.html", "destination": "/", "permanent": true },
-    { "source": "/blog.html", "destination": "/", "permanent": true },
-    { "source": "/toys-books.html", "destination": "/", "permanent": true },
-    { "source": "/arts-crafts-cards.html", "destination": "/", "permanent": true },
-    { "source": "/donate.html", "destination": "/sponsor-individual", "permanent": true },
-    { "source": "/competition-middle", "destination": "/competition", "permanent": true },
-    { "source": "/competition-middle.html", "destination": "/competition", "permanent": true },
-    { "source": "/competition-college", "destination": "/competition", "permanent": true },
-    { "source": "/competition-college.html", "destination": "/competition", "permanent": true },
-    { "source": "/competition-high", "destination": "/competition#nationals", "permanent": true },
-    { "source": "/competition-high.html", "destination": "/competition#nationals", "permanent": true },
-    { "source": "/competition-nationals", "destination": "/competition#nationals", "permanent": true },
-    { "source": "/competition-nationals.html", "destination": "/competition#nationals", "permanent": true },
-    { "source": "/competition-innovation", "destination": "/competition#innovation", "permanent": true },
-    { "source": "/competition-innovation.html", "destination": "/competition#innovation", "permanent": true },
-    { "source": "/competition-policy", "destination": "/competition#policy", "permanent": true },
-    { "source": "/competition-policy.html", "destination": "/competition#policy", "permanent": true },
-    { "source": "/competition-research", "destination": "/competition#research", "permanent": true },
-    { "source": "/competition-research.html", "destination": "/competition#research", "permanent": true },
-    { "source": "/competition-apex", "destination": "/competition#apex", "permanent": true },
-    { "source": "/competition-apex.html", "destination": "/competition#apex", "permanent": true },
-    { "source": "/opportunities", "destination": "/involved", "permanent": true },
-    { "source": "/opportunities.html", "destination": "/involved", "permanent": true },
-    { "source": "/conferences", "destination": "/competition#ladder", "permanent": true },
-    { "source": "/conferences.html", "destination": "/competition#ladder", "permanent": true }
-  ]
+  "framework": "nextjs"
 }
