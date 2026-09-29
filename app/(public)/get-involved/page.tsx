@@ -17,6 +17,8 @@ export default function GetInvolvedPage() {
         kicker="Get involved"
         title="Work with MediLink"
         lead="Start a chapter, partner with the network, support students, or submit news that actually happened."
+        image="/img/finance.png"
+        imageAlt="Ledgers and a gold lamp on a finance desk"
       />
       <section className="band">
         <div className="container-ml grid-cards cols-2">

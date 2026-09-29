@@ -15,6 +15,8 @@ export default function ChapterSupportPage() {
         kicker="Advisor resources"
         title="Chapter support"
         lead="Resources and direct help for chapters that already exist. New schools should start on Start a Chapter. Inactive chapters that need new student leadership should use reactivation."
+        image="/img/case.png"
+        imageAlt="Chapter case files on a desk"
       />
       <section className="band">
         <div className="container-ml grid gap-4 md:grid-cols-2">

@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import { PUBLIC_NAV } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-function Wordmark({ compact = false }: { compact?: boolean }) {
+function Wordmark() {
   return (
     <Link href="/" className="font-bold tracking-tight" aria-label="MediLink home">
-      <span className={compact ? "text-lg" : "text-xl"}>
+      <span className="text-2xl md:text-[1.7rem]">
         <span className="text-white">Medi</span>
         <span className="text-gold">Link</span>
       </span>
@@ -40,20 +40,17 @@ export function SiteHeader() {
         solid || open ? "bg-navy shadow-lg" : "bg-navy/90 backdrop-blur-sm",
       )}
     >
-      <div className="container-ml flex h-[72px] items-center justify-between gap-4">
+      <div className="container-ml flex h-[var(--header-h)] items-center justify-between gap-4">
         <Wordmark />
-        <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
           {PUBLIC_NAV.map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
                 href={item.href as never}
                 className={cn(
-                  "text-sm font-semibold transition-colors",
+                  "text-base font-semibold transition-colors",
                   active ? "text-gold" : "text-white/85 hover:text-white",
                 )}
               >
@@ -63,7 +60,7 @@ export function SiteHeader() {
           })}
           <Link
             href="/portal"
-            className="rounded-md bg-gold px-3.5 py-2 text-sm font-semibold text-navy hover:bg-gold-hover"
+            className="rounded-md bg-gold px-4 py-2.5 text-sm font-semibold text-navy hover:bg-gold-hover"
           >
             Portal Login
           </Link>
@@ -71,13 +68,13 @@ export function SiteHeader() {
         <div className="flex items-center gap-2 lg:hidden">
           <Link
             href="/portal"
-            className="rounded-md bg-gold px-3 py-2 text-xs font-semibold text-navy"
+            className="rounded-md bg-gold px-3.5 py-2.5 text-sm font-semibold text-navy"
           >
             Portal
           </Link>
           <button
             type="button"
-            className="rounded-md border border-white/20 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-white"
+            className="rounded-md border border-white/20 px-3.5 py-2.5 text-sm font-semibold uppercase tracking-wider text-white"
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((value) => !value)}
@@ -89,14 +86,14 @@ export function SiteHeader() {
       {open ? (
         <nav
           id="mobile-nav"
-          className="border-t border-white/10 bg-navy px-4 pb-4 lg:hidden"
+          className="border-t border-white/10 bg-navy px-4 pb-5 lg:hidden"
           aria-label="Mobile"
         >
           {PUBLIC_NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href as never}
-              className="block border-b border-white/10 py-3 text-sm font-semibold text-white"
+              className="block border-b border-white/10 py-3.5 text-base font-semibold text-white"
             >
               {item.label}
             </Link>

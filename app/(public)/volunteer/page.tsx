@@ -15,6 +15,8 @@ export default function VolunteerPage() {
         kicker="Volunteer"
         title="Mentor, judge, or help a chapter run"
         lead="Tell us your field so we can match you to a chapter, a panel, or a workshop. Volunteers back the five student offices. They do not replace them."
+        image="/img/chapter.png"
+        imageAlt="Students working together under a gold desk lamp"
       >
         <ButtonLink href={actionHref("volunteer", "Volunteer with MediLink")}>
           Apply to volunteer

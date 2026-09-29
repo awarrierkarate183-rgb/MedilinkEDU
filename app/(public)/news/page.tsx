@@ -16,6 +16,8 @@ export default function NewsPage() {
         kicker="News"
         title="News from MediLink is coming soon."
         lead="Chapter highlights appear here after review. This site does not invent school names or fake news."
+        image="/img/city.png"
+        imageAlt="City skyline at night"
       />
       <section className="band">
         <div className="container-ml">

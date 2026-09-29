@@ -16,6 +16,8 @@ export default function SponsorPage() {
         kicker="Sponsors"
         title="Support students"
         lead="Named company levels and official benefits load from the board list. Amounts and extras can be customized with leadership. A gift does not buy a student placement."
+        image="/img/finance.png"
+        imageAlt="Sponsorship files under a gold lamp"
       />
       <section className="band">
         <div className="container-ml grid gap-4 md:grid-cols-2">

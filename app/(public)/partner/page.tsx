@@ -16,6 +16,8 @@ export default function PartnerPage() {
         kicker="Partners"
         title="Partner with MediLink"
         lead="Hospitals, insurers, and health-tech firms sit in the same three-lens framework students use. Leadership sets up each relationship before students are placed. This is not a public job board."
+        image="/img/clinical.png"
+        imageAlt="Clinical exam room used for Care-lens partnership work"
       />
       <section className="band">
         <div className="container-ml grid gap-4 md:grid-cols-2">

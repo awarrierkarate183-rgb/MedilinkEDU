@@ -11,7 +11,6 @@ export const VISION =
 export const HOMEBASE = "Charlotte, North Carolina";
 
 export const PUBLIC_NAV = [
-  { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/chapters", label: "Chapters" },
   { href: "/curriculum", label: "Curriculum" },

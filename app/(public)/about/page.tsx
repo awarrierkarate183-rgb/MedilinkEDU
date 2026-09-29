@@ -19,6 +19,8 @@ export default function AboutPage() {
         kicker="About"
         title="What is MediLink?"
         lead="A student-founded nonprofit network of high school chapters. Members learn how real health systems work: a clinical problem, a money problem, and a technology problem at once."
+        image="/img/city.png"
+        imageAlt="Night skyline along a river, standing in for MediLink's Charlotte home"
       />
 
       <section className="band" id="identity">

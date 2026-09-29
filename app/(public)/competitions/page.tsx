@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
 import { Accordion } from "@/components/ui/Accordion";
+import { FadeBackdrop } from "@/components/public/FadeBackdrop";
 import { PageHero } from "@/components/public/PageHero";
 import { competitions } from "@/lib/content/competitions";
 import { publicStandings, currentCycleLabel, pointSchedule, NATIONALS_MAX, ONE_TIME_MAX } from "@/lib/content/points";
@@ -24,6 +25,8 @@ export default function CompetitionsPage() {
         kicker="Competitions"
         title="Five competitions. Two structures."
         lead="Innovation Challenge, Policy Cup, and Research Symposium each run once a year. Nationals is the only event that climbs Regional to State to National. Every other year that National round becomes the Apex. The Apex is not a sixth case."
+        image="/img/compete.png"
+        imageAlt="Competition stage with navy curtains and a gold spotlight"
       />
 
       <section className="band">
@@ -86,8 +89,14 @@ export default function CompetitionsPage() {
         </div>
       </section>
 
-      <section className="band bg-navy text-white" id="apex">
-        <div className="container-ml">
+      <section className="relative overflow-hidden bg-navy text-white" id="apex">
+        <FadeBackdrop
+          src="/img/compete.png"
+          alt="Empty stage with navy curtains and a gold spotlight"
+          tone="navy"
+          side="right"
+        />
+        <div className="container-ml relative py-16">
           <p className="kicker">MediLink Apex</p>
           <h2 className="display max-w-4xl">Champions of champions. Not a sixth case.</h2>
           <p className="lead mt-5 text-white/75">

@@ -16,6 +16,8 @@ export default function CurriculumPage() {
         kicker="Curriculum"
         title="Four tracks. Twelve modules."
         lead="Titles and short descriptions are public. Full lessons, labs, and packets wait until a chapter approves you."
+        image="/img/case.png"
+        imageAlt="Case files clipped together on a navy desk"
       />
       <section className="band">
         <div className="container-ml space-y-8">
