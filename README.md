@@ -15,15 +15,19 @@ Open http://localhost:3000
 
 ## Connect the portal
 
+Follow `BACKEND.md`. Short version:
+
 1. Copy `.env.example` to `.env.local`.
-2. Create a Supabase project.
-3. Run `supabase/migrations/0001_init.sql` in the SQL editor.
+2. Create a dedicated MediLink Supabase project. Credentials have not been added in this repository.
+3. Run `supabase/migrations/0001_init.sql`, then `0002_platform_complete.sql`.
 4. Run `supabase/seed.dev.sql` only on a development project.
-5. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-6. Add `SUPABASE_SERVICE_ROLE_KEY` on the server only. Never prefix it with `NEXT_PUBLIC_`.
-7. Create the first SUPER_ADMIN user in the Supabase Auth dashboard, then insert a matching row in `public.profiles`.
+5. Add `NEXT_PUBLIC_SUPABASE_URL` and a publishable/anon key.
+6. Add `SUPABASE_SECRET_KEY` (or `SUPABASE_SERVICE_ROLE_KEY`) on the server only. Never prefix it with `NEXT_PUBLIC_`.
+7. Create the first SUPER_ADMIN user in the Supabase Auth dashboard, then set the matching `public.profiles.role`.
 
 Do not run the development seed against production.
+
+Migrations in git are not the same as migrations applied. Until the SQL is executed in a live project, authentication cannot be tested.
 
 ## What editors still change as data
 

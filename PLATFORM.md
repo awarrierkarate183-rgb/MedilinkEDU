@@ -8,11 +8,12 @@ One Next.js App Router application.
 - Portal: `/portal`, `/portal/login`, `/portal/advisor`, `/portal/student`, `/portal/admin`
 - Chapter join: `/join/[code]`
 - Auth: Supabase Auth + Postgres + RLS
-- Service role: server only
+- Service role / secret key: server only
+- Backend status and manual steps: `BACKEND.md`
 
 ## Roles
 
-SUPER_ADMIN, STATE_ADMIN, CHAPTER_ADVISOR, STUDENT. CHAPTER_OFFICER exists in the schema and is not a day-one login destination.
+SUPER_ADMIN, STATE_ADMIN, CHAPTER_ADVISOR, STUDENT. CHAPTER_OFFICER exists in the schema and is not a day-one login destination. Database role is the source of truth, not the URL.
 
 ## Invitations
 

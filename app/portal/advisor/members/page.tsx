@@ -1,25 +1,29 @@
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { InviteMemberForm, RevokeButton } from "@/components/portal/InviteMemberForm";
+import { ApproveMemberButton } from "@/components/portal/ApproveMemberButton";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
+import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 
 export default async function MembersPage() {
   const { profile } = await requireRole(["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
   const supabase = await createClient();
-  const { data: members } = supabase
+  const { data: members, error: memberError } = supabase
     ? await supabase
         .from("chapter_members")
         .select("id, status, profiles(full_name, grade, role)")
         .eq("chapter_id", profile?.chapter_id)
-    : { data: [] };
-  const { data: invites } = supabase
+    : { data: [], error: null };
+  const { data: invites, error: inviteError } = supabase
     ? await supabase
         .from("invitations")
         .select("id, email, expires_at, revoked_at, used_at, use_count")
         .eq("chapter_id", profile?.chapter_id)
         .is("revoked_at", null)
         .is("used_at", null)
-    : { data: [] };
+    : { data: [], error: null };
+
+  if (memberError || inviteError) return <ConnectionTrouble />;
 
   return (
     <div className="space-y-8">
@@ -36,12 +40,15 @@ export default async function MembersPage() {
             {members.map((member) => {
               const person = Array.isArray(member.profiles) ? member.profiles[0] : member.profiles;
               return (
-                <li key={member.id} className="flex items-center justify-between px-4 py-3">
+                <li key={member.id} className="flex items-center justify-between gap-3 px-4 py-3">
                   <span>
                     <strong>{person?.full_name || "Unnamed member"}</strong>
                     <span className="ml-2 text-sm text-muted">{member.status}</span>
                   </span>
-                  <span className="text-sm text-muted">{person?.grade || ""}</span>
+                  <span className="flex items-center gap-3">
+                    <span className="text-sm text-muted">{person?.grade || ""}</span>
+                    {member.status === "PENDING" ? <ApproveMemberButton membershipId={member.id} /> : null}
+                  </span>
                 </li>
               );
             })}

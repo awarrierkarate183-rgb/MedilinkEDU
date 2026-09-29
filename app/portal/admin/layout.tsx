@@ -19,7 +19,7 @@ const nav = [
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  await requireRole(["SUPER_ADMIN"]);
+  await requireRole(["SUPER_ADMIN", "STATE_ADMIN"]);
   return (
     <PortalShell
       title="Administration"

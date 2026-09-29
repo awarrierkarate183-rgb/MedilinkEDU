@@ -20,17 +20,9 @@ const catalog: Record<
     title: "Advisor resource center",
     body: "Resources appear by category when an administrator publishes them. Nothing here is placeholder content pretending to be a file.",
   },
-  announcements: {
-    title: "No new chapter announcements.",
-    body: "Advisors can publish to their chapter. Students cannot publish global announcements.",
-  },
   submissions: {
     title: "No submissions waiting",
     body: "Ideas, projects, and competition files from your chapter land here for review.",
-  },
-  points: {
-    title: "Chapter points",
-    body: "Totals come from recorded point transactions in the current Apex cycle. This page does not fabricate rankings.",
   },
   reports: {
     title: "Reports",

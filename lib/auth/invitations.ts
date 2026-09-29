@@ -1,38 +1,25 @@
 "use server";
 
-import { randomBytes, createHash } from "crypto";
 import { createClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/auth/session";
-
-function hashToken(token: string) {
-  return createHash("sha256").update(token).digest("hex");
-}
+import { createInvitation, writeAudit } from "@/lib/platform/operations";
 
 export async function createInvitationAction(formData: FormData) {
   const { user, profile } = await requireRole(["CHAPTER_ADVISOR", "SUPER_ADMIN", "STATE_ADMIN"]);
   const supabase = await createClient();
-  if (!supabase || !profile?.chapter_id) {
-    return { error: "Your advisor account is not attached to a chapter yet." };
-  }
-  const email = String(formData.get("email") || "").trim() || null;
-  const token = randomBytes(24).toString("base64url");
-  const expires = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
-  const { error } = await supabase.from("invitations").insert({
-    chapter_id: profile.chapter_id,
-    created_by: user!.id,
-    intended_role: "STUDENT",
+  if (!supabase || !profile) return { error: "Your advisor account is not attached to a chapter yet." };
+  const email = String(formData.get("email") || "").trim() || undefined;
+  return createInvitation({
+    client: supabase,
+    actor: {
+      id: user!.id,
+      role: profile.role as "CHAPTER_ADVISOR" | "STATE_ADMIN" | "SUPER_ADMIN" | "STUDENT" | "CHAPTER_OFFICER",
+      chapterId: profile.chapter_id,
+      stateScope: profile.state_scope,
+    },
     email,
-    token_hash: hashToken(token),
-    expires_at: expires,
-    max_uses: 1,
+    role: "STUDENT",
   });
-  if (error) return { error: "The invitation could not be created." };
-  await supabase.from("audit_logs").insert({
-    actor_id: user!.id,
-    action: "invitation.created",
-    target: profile.chapter_id,
-  });
-  return { token, expires };
 }
 
 export async function revokeInvitationAction(formData: FormData) {
@@ -46,10 +33,6 @@ export async function revokeInvitationAction(formData: FormData) {
     .eq("id", id)
     .eq("chapter_id", profile!.chapter_id);
   if (error) return { error: "That invitation could not be revoked." };
-  await supabase.from("audit_logs").insert({
-    actor_id: user!.id,
-    action: "invitation.revoked",
-    target: id,
-  });
+  await writeAudit(supabase, user!.id, "invitation.revoked", "invitation", id);
   return { ok: true };
 }

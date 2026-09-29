@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ButtonLink } from "@/components/ui/Button";
 import { getStateListings } from "@/lib/content/chapters";
 import { createClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/utils";
+import { isSupabaseConfigured } from "@/lib/env";
 
 type Props = { params: Promise<{ code: string }> };
 

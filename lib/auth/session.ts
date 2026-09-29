@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/utils";
+import { isSupabaseConfigured } from "@/lib/env";
 import type { AppRole } from "@/lib/constants";
 
 export async function getSessionProfile() {
@@ -13,7 +13,7 @@ export async function getSessionProfile() {
   if (!user) return { configured: true, user: null, profile: null };
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, full_name, role, chapter_id, status, grade")
+    .select("id, full_name, first_name, last_name, display_name, role, chapter_id, status, grade, state_scope, avatar_url")
     .eq("id", user.id)
     .maybeSingle();
   return { configured: true, user, profile };

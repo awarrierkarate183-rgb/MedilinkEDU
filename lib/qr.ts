@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import { siteUrl } from "@/lib/utils";
+import { siteUrl } from "@/lib/env";
 
 export async function chapterJoinQrDataUrl(joinCode: string) {
   const url = `${siteUrl()}/join/${encodeURIComponent(joinCode)}`;

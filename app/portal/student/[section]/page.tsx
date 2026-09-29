@@ -2,10 +2,6 @@ import { PortalEmpty } from "@/components/portal/PortalEmpty";
 import { tracks } from "@/lib/content/curriculum";
 
 const catalog: Record<string, { title: string; body: string }> = {
-  events: {
-    title: "You're all caught up. New MediLink events will appear here.",
-    body: "Chapter, regional, state, national, workshop, webinar, competition, and deadline events are listed when published.",
-  },
   competitions: {
     title: "Competition registration will appear here when available.",
     body: "Eligibility, teams, submissions, and points come from live competition records.",

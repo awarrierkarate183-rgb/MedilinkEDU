@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
-import { isSupabaseConfigured } from "@/lib/utils";
+import { isSupabaseConfigured } from "@/lib/env";
 
 const advisorPrefix = "/portal/advisor";
 const studentPrefix = "/portal/student";
@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (pathname.startsWith(adminPrefix) && role !== "SUPER_ADMIN") {
+  if (pathname.startsWith(adminPrefix) && !["SUPER_ADMIN", "STATE_ADMIN"].includes(role || "")) {
     return NextResponse.redirect(new URL("/forbidden", request.url));
   }
   if (

@@ -33,8 +33,9 @@ export function LoginForm({ configured }: { configured: boolean }) {
     <form action={onLogin} className="mt-8 space-y-4">
       {params.get("setup") === "1" || !configured ? (
         <Alert title="Portal database is not connected" tone="warning">
-          Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to
-          .env.local, run the SQL in supabase/migrations, and restart the app.
+          Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+          (or NEXT_PUBLIC_SUPABASE_ANON_KEY) to .env.local, run the SQL in
+          supabase/migrations, and restart the app.
           Login will not work until that is done. This is not a fake sign-in.
         </Alert>
       ) : null}

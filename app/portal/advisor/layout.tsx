@@ -30,7 +30,7 @@ export default async function AdvisorLayout({ children }: { children: React.Reac
   const hello = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   return (
     <PortalShell
-      title={`${hello}, ${profile?.full_name || "Advisor"}`}
+      title={`${hello}, ${profile?.display_name || profile?.full_name || "Advisor"}`}
       subtitle="Advisor portal"
       nav={nav}
       mobileNav={mobileNav}
