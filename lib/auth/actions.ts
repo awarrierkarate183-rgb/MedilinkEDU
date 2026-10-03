@@ -16,28 +16,16 @@ export async function signInAction(formData: FormData) {
   const supabase = await createClient();
   if (!supabase) return { error: "The portal is not connected yet." };
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) {
-    const message = error.message.toLowerCase();
-    if (message.includes("confirm")) {
-      return {
-        error:
-          "This email is not confirmed yet. In Supabase go to Authentication, Users, open the user, and confirm the email or turn off Confirm email.",
-      };
-    }
-    if (message.includes("leaked") || message.includes("compromised") || message.includes("pwned")) {
-      return {
-        error:
-          "Supabase blocked that password because it appears in a known leak list. Set a longer unique password on the user in Authentication, Users.",
-      };
-    }
-    if (message.includes("invalid") || message.includes("credentials")) {
-      return {
-        error:
-          "Supabase rejected that login. Use the full email, including @gmail.com, and the password saved on that user in Authentication, Users. This is not a Google sign-in.",
-      };
-    }
-    return { error: "Sign-in failed. Check the full email and password, then try again." };
+  try {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return { error: error.message };
+  } catch (cause) {
+    return {
+      error:
+        cause instanceof Error
+          ? cause.message
+          : "Vercel could not reach Supabase. Check NEXT_PUBLIC_SUPABASE_URL.",
+    };
   }
 
   const {

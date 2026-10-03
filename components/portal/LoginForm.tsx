@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { requestResetAction } from "@/lib/auth/actions";
-import { homeForRole } from "@/lib/auth/roles";
-import { createBrowserSupabaseClient } from "@/lib/supabase/client";
+import { requestResetAction, signInAction } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/States";
 
@@ -18,31 +16,8 @@ export function LoginForm({ configured }: { configured: boolean }) {
     setLoading(true);
     setError(null);
     try {
-      const email = String(formData.get("email") || "").trim();
-      const password = String(formData.get("password") || "");
-      if (!email || !password) {
-        setError("Enter your email and password.");
-        return;
-      }
-      const supabase = createBrowserSupabaseClient();
-      if (!supabase) {
-        setError("The portal is not connected yet.");
-        return;
-      }
-      const { data, error: signError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (signError || !data.user) {
-        setError(signError?.message || "Sign-in failed.");
-        return;
-      }
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", data.user.id)
-        .maybeSingle();
-      window.location.assign(homeForRole(profile?.role));
+      const result = await signInAction(formData);
+      if (result?.error) setError(result.error);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Sign-in failed.");
     } finally {
@@ -63,10 +38,8 @@ export function LoginForm({ configured }: { configured: boolean }) {
     <form action={onLogin} className="mt-8 space-y-4">
       {params.get("setup") === "1" || !configured ? (
         <Alert title="Portal database is not connected" tone="warning">
-          Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-          (or NEXT_PUBLIC_SUPABASE_ANON_KEY) to .env.local, run the SQL in
-          supabase/migrations, and restart the app.
-          Login will not work until that is done. This is not a fake sign-in.
+          Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in
+          Vercel, then redeploy.
         </Alert>
       ) : null}
       {error ? (
