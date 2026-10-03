@@ -1,5 +1,17 @@
 import { afterEach, describe, expect, it } from "vitest";
-import { hasServerSecret, isSupabaseConfigured, supabasePublishableKey, supabaseSecretKey } from "../lib/env";
+import {
+  hasServerSecret,
+  isSupabaseConfigured,
+  supabasePublishableKey,
+  supabaseSecretKey,
+  supabaseUrl,
+} from "../lib/env";
+
+function jwtWithRef(ref: string) {
+  const header = Buffer.from(JSON.stringify({ alg: "none", typ: "JWT" })).toString("base64url");
+  const payload = Buffer.from(JSON.stringify({ ref, role: "anon" })).toString("base64url");
+  return `${header}.${payload}.x`;
+}
 
 const keys = [
   "NEXT_PUBLIC_SUPABASE_URL",
@@ -28,5 +40,11 @@ describe("environment aliases", () => {
     expect(hasServerSecret()).toBe(true);
     expect(supabaseSecretKey()).toBe("secret");
     expect(process.env.NEXT_PUBLIC_SUPABASE_SECRET_KEY).toBeUndefined();
+  });
+
+  it("corrects a mistyped project URL using the anon JWT ref", () => {
+    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://dtfjanrfihwpxgarlmdq.supabase.co";
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = jwtWithRef("dtfjarvfihwpxgarlmdq");
+    expect(supabaseUrl()).toBe("https://dtfjarvfihwpxgarlmdq.supabase.co");
   });
 });

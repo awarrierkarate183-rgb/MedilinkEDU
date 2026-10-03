@@ -18,13 +18,25 @@ export async function signInAction(formData: FormData) {
 
   try {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return { error: error.message };
+    if (error) {
+      if (/invalid login credentials|invalid_credentials/i.test(error.message)) {
+        return { error: "That email or password did not match a MediLink account." };
+      }
+      if (/email not confirmed/i.test(error.message)) {
+        return { error: "Confirm this email in Supabase Auth before signing in." };
+      }
+      return { error: error.message };
+    }
   } catch (cause) {
+    const message = cause instanceof Error ? cause.message : "";
+    if (/fetch|network|enotfound|getaddrinfo/i.test(message)) {
+      return {
+        error:
+          "The site could not reach the MediLink database. Check NEXT_PUBLIC_SUPABASE_URL and redeploy.",
+      };
+    }
     return {
-      error:
-        cause instanceof Error
-          ? cause.message
-          : "Vercel could not reach Supabase. Check NEXT_PUBLIC_SUPABASE_URL.",
+      error: message || "Vercel could not reach Supabase. Check NEXT_PUBLIC_SUPABASE_URL.",
     };
   }
 
