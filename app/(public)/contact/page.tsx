@@ -15,8 +15,6 @@ export default function ContactPage() {
         kicker="Contact"
         title="Get in touch"
         lead="Questions about a chapter, a partnership, or a sponsorship. Students, educators, organizations, and supporters use the same inbox. Based in Charlotte, North Carolina. We aim to respond within 2 to 3 business days."
-        image="/img/city.png"
-        imageAlt="Night skyline along a river"
       >
         <ButtonLink href={`mailto:${CONTACT_EMAIL}`}>Email MediLink</ButtonLink>
       </PageHero>

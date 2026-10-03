@@ -10,8 +10,6 @@ export default function TermsPage() {
         kicker="Legal"
         title="Terms of use"
         lead="The MediLink website and portal are for chapter operations, curriculum, competitions, and public information about the organization."
-        image="/img/hero.png"
-        imageAlt=""
       />
       <section className="band">
         <div className="container-ml max-w-2xl space-y-4 text-muted">

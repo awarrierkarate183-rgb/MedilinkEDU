@@ -10,8 +10,6 @@ export default function AccessibilityPage() {
         kicker="Access"
         title="Accessibility"
         lead="MediLink aims for semantic pages, keyboard navigation, visible focus, and readable contrast."
-        image="/img/hero.png"
-        imageAlt=""
       />
       <section className="band">
         <div className="container-ml max-w-2xl text-muted">

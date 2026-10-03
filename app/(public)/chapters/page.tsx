@@ -17,8 +17,6 @@ export default function ChaptersPage() {
         kicker="Chapters"
         title="Chapter network"
         lead="Find a chapter, see recorded status, or start one at your high school. This page only shows approved public information."
-        image="/img/chapter.png"
-        imageAlt="High school students working together under a gold desk lamp"
       />
       <section className="band">
         <div className="container-ml">

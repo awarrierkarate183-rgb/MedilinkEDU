@@ -17,8 +17,6 @@ export default function StartChapterPage() {
         kicker="Chapters"
         title="Start a chapter"
         lead="Bring MediLink to your high school. New chapters get five offices, a starter kit, and a path from Founding to Flagship-Eligible."
-        image="/img/chapter.png"
-        imageAlt="Students around a table starting chapter work"
       />
       <section className="band" id="apply">
         <div className="container-ml">

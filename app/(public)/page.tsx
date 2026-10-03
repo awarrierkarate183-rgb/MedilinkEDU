@@ -1,7 +1,5 @@
-﻿import Image from "next/image";
-import { ButtonLink } from "@/components/ui/Button";
+﻿import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { FadeBackdrop } from "@/components/public/FadeBackdrop";
 import { competitions } from "@/lib/content/competitions";
 import { tracks } from "@/lib/content/curriculum";
 import {
@@ -11,10 +9,10 @@ import {
 import { experienceSteps, lenses, MISSION } from "@/lib/content/organization";
 import { actionHref } from "@/lib/content/forms";
 
-const lensPhotos = {
-  clinical: { src: "/img/clinical.png", alt: "Quiet exam room with a gold lamp over a clinical table" },
-  financial: { src: "/img/finance.png", alt: "Stacked case files and a gold lamp on a finance desk" },
-  technology: { src: "/img/tech.png", alt: "Medical imaging and data on screens in a dark lab" },
+const lensColors = {
+  clinical: "bg-navy",
+  financial: "bg-gold",
+  technology: "bg-navy-soft",
 } as const;
 
 export default function HomePage() {
@@ -24,13 +22,6 @@ export default function HomePage() {
   return (
     <>
       <section className="relative min-h-[88vh] overflow-hidden bg-navy text-white">
-        <FadeBackdrop
-          src="/img/hero.png"
-          alt="Hospital corridor at dusk with gold light on the floor"
-          tone="navy"
-          side="right"
-          priority
-        />
         <div className="container-ml relative grid min-h-[88vh] items-center py-[calc(var(--header-h)+3.5rem)] lg:grid-cols-2">
           <div className="reveal max-w-xl">
             <h1 className="display" aria-label="MediLink">
@@ -61,13 +52,7 @@ export default function HomePage() {
       </section>
 
       <section className="band">
-        <FadeBackdrop
-          src="/img/clinical.png"
-          alt=""
-          tone="white"
-          side="right"
-        />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">What is MediLink?</p>
             <h2>A student-founded network of high school chapters.</h2>
@@ -93,21 +78,10 @@ export default function HomePage() {
           </div>
           <div className="grid-cards cols-3 mt-10">
             {lenses.map((lens) => {
-              const photo = lensPhotos[lens.id as keyof typeof lensPhotos];
+              const color = lensColors[lens.id as keyof typeof lensColors];
               return (
-                <Card key={lens.id} className="relative overflow-hidden pt-28">
-                  {photo ? (
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-24 overflow-hidden">
-                      <Image
-                        src={photo.src}
-                        alt=""
-                        fill
-                        className="object-cover opacity-80"
-                        sizes="400px"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white" />
-                    </div>
-                  ) : null}
+                <Card key={lens.id} className="overflow-hidden">
+                  <div className={`-mx-6 -mt-6 mb-5 h-2 ${color}`} />
                   <p className="kicker">{lens.name}</p>
                   <h3 className="text-xl font-semibold">{lens.question}</h3>
                   <p className="mt-3 text-sm text-muted">{lens.summary}</p>
@@ -119,8 +93,7 @@ export default function HomePage() {
       </section>
 
       <section className="band band--paper">
-        <FadeBackdrop src="/img/case.png" alt="" tone="paper" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">The work</p>
             <h2>Built for real-world problem solving</h2>
@@ -165,8 +138,7 @@ export default function HomePage() {
       </section>
 
       <section className="band">
-        <FadeBackdrop src="/img/chapter.png" alt="" tone="white" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">The MediLink experience</p>
             <h2>From joining a chapter to leading one.</h2>
@@ -184,8 +156,7 @@ export default function HomePage() {
       </section>
 
       <section className="band band--paper" id="compete">
-        <FadeBackdrop src="/img/compete.png" alt="" tone="paper" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">Competitions</p>
             <h2>Five events. Two structures.</h2>
@@ -221,8 +192,7 @@ export default function HomePage() {
       </section>
 
       <section className="band">
-        <FadeBackdrop src="/img/tech.png" alt="" tone="white" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">Curriculum</p>
             <h2>Four tracks. Twelve modules.</h2>
@@ -253,8 +223,7 @@ export default function HomePage() {
       </section>
 
       <section className="band band--paper" id="chapters">
-        <FadeBackdrop src="/img/chapter.png" alt="" tone="paper" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">Chapters</p>
             <h2>Built chapter by chapter.</h2>
@@ -282,8 +251,7 @@ export default function HomePage() {
       </section>
 
       <section className="band">
-        <FadeBackdrop src="/img/city.png" alt="" tone="white" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">Partners</p>
             <h2>Work with organizations that sit in the same three rooms students study.</h2>
@@ -300,8 +268,7 @@ export default function HomePage() {
       </section>
 
       <section className="band band--paper">
-        <FadeBackdrop src="/img/finance.png" alt="" tone="paper" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">Get involved</p>
             <h2>Three ways in.</h2>
@@ -345,8 +312,7 @@ export default function HomePage() {
       </section>
 
       <section className="band" id="news">
-        <FadeBackdrop src="/img/city.png" alt="" tone="white" side="right" />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <div className="section-head">
             <p className="kicker">News</p>
             <h2>News from MediLink is coming soon.</h2>
@@ -362,13 +328,7 @@ export default function HomePage() {
       </section>
 
       <section className="relative overflow-hidden bg-navy py-20 text-white">
-        <FadeBackdrop
-          src="/img/compete.png"
-          alt="Empty competition stage with a gold spotlight"
-          tone="navy"
-          side="right"
-        />
-        <div className="container-ml relative">
+        <div className="container-ml">
           <p className="kicker">Next</p>
           <h2 className="display max-w-3xl">Build the future of healthcare with us.</h2>
           <div className="mt-8 flex flex-wrap gap-3">
