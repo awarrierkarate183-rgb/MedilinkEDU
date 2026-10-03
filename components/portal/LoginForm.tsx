@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { requestResetAction, signInAction } from "@/lib/auth/actions";
+import { requestResetAction } from "@/lib/auth/actions";
+import { homeForRole } from "@/lib/auth/roles";
+import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/States";
 
@@ -15,9 +17,34 @@ export function LoginForm({ configured }: { configured: boolean }) {
   async function onLogin(formData: FormData) {
     setLoading(true);
     setError(null);
-    const result = await signInAction(formData);
-    if (result?.error) setError(result.error);
-    setLoading(false);
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
+    if (!email || !password) {
+      setError("Enter your email and password.");
+      setLoading(false);
+      return;
+    }
+    const supabase = createBrowserSupabaseClient();
+    if (!supabase) {
+      setError("The portal is not connected yet.");
+      setLoading(false);
+      return;
+    }
+    const { data, error: signError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (signError || !data.user) {
+      setError(signError?.message || "Sign-in failed.");
+      setLoading(false);
+      return;
+    }
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", data.user.id)
+      .maybeSingle();
+    window.location.assign(homeForRole(profile?.role));
   }
 
   async function onReset(formData: FormData) {
@@ -50,7 +77,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
         </Alert>
       ) : null}
       <label className="block text-sm font-semibold">
-        Email or member ID
+        Email
         <input
           name="email"
           type="email"
@@ -70,8 +97,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
         />
       </label>
       <p className="text-sm text-muted">
-        Use your chapter activation code on the invitation page if you were
-        invited and do not have a password yet.
+        Use the full email address, including @gmail.com.
       </p>
       <Button type="submit" loading={loading} disabled={!configured} className="w-full">
         Sign in
