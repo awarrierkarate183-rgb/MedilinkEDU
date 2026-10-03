@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ADVISOR_TITLES, US_STATES } from "@/lib/content/states";
 
 export const uuid = z.string().uuid("That id is not valid.");
 
@@ -53,6 +54,31 @@ export const approveChapterSchema = z.object({
 
 export const publishResultsSchema = z.object({
   resultId: uuid,
+});
+
+export const startChapterSchema = z
+  .object({
+    schoolName: z.string().trim().min(3, "Enter the high school name.").max(160),
+    city: z.string().trim().min(2, "Enter the city.").max(80),
+    state: z.enum(US_STATES, { message: "Choose a state." }),
+    advisorFirstName: z.string().trim().min(1, "Enter the advisor first name.").max(80),
+    advisorLastName: z.string().trim().min(1, "Enter the advisor last name.").max(80),
+    advisorEmail: z.string().trim().email("Enter a real advisor email.").max(160),
+    advisorPhone: z.string().trim().max(40).optional().or(z.literal("")),
+    advisorTitle: z.enum(ADVISOR_TITLES).optional(),
+    principalName: z.string().trim().max(120).optional().or(z.literal("")),
+    estimatedStudents: z.coerce.number().int().min(1).max(500).optional(),
+    statement: z.string().trim().max(1000).optional().or(z.literal("")),
+    highSchool: z.literal("yes", { message: "Confirm this is a high school chapter." }),
+    website: z.string().max(0, "That request is not valid.").optional().or(z.literal("")),
+  })
+  .strict();
+
+export const addStudentSchema = z.object({
+  firstName: z.string().trim().min(1, "Enter the student first name.").max(80),
+  lastName: z.string().trim().min(1, "Enter the student last name.").max(80),
+  email: z.string().trim().email("Enter a real student email.").max(160),
+  grade: z.enum(["9", "10", "11", "12"]).optional(),
 });
 
 export const createAnnouncementSchema = z.object({

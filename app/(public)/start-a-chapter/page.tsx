@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/public/PageHero";
+import { StartChapterForm } from "@/components/public/StartChapterForm";
 import { OFFICER_ROLES } from "@/lib/constants";
 import { actionHref } from "@/lib/content/forms";
 
@@ -16,34 +17,32 @@ export default function StartChapterPage() {
       <PageHero
         kicker="Chapters"
         title="Start a chapter"
-        lead="Bring MediLink to your high school. New chapters get five offices, a starter kit, and a path from Founding to Flagship-Eligible."
-      />
+        lead="Bring MediLink to your high school. Submit the form and the advisor account is created on this site."
+      >
+        <ButtonLink href="#apply">Start a chapter</ButtonLink>
+      </PageHero>
       <section className="band" id="apply">
-        <div className="container-ml">
-          <ol className="grid gap-4 md:grid-cols-7">
-            {[
-              "Learn about MediLink",
-              "Find an advisor",
-              "Submit chapter request",
-              "Receive approval",
-              "Receive chapter credentials",
-              "Add students",
-              "Launch chapter",
-            ].map((step, index) => (
-              <li key={step} className="rounded-[var(--radius)] border border-border p-4">
-                <p className="kicker">0{index + 1}</p>
-                <p className="font-semibold">{step}</p>
-              </li>
-            ))}
-          </ol>
-          <p className="mt-6 max-w-2xl text-sm text-muted">
-            Exact charter requirements are set by leadership as they are
-            finalized. This page does not invent extra rules.
-          </p>
-          <div className="mt-6">
-            <ButtonLink href={actionHref("startChapter", "Start a Chapter")}>
-              Submit a chapter request
-            </ButtonLink>
+        <div className="container-ml grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <StartChapterForm />
+          <div>
+            <ol className="grid gap-3">
+              {[
+                "A school adult fills out the chapter form",
+                "The site creates the chapter and advisor login",
+                "The advisor signs in and adds students",
+                "Each student gets a portal username and password",
+                "Administrators can see every chapter and roster",
+              ].map((step, index) => (
+                <li key={step} className="rounded-[var(--radius)] border border-border p-4">
+                  <p className="kicker">0{index + 1}</p>
+                  <p className="font-semibold">{step}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 text-sm text-muted">
+              Exact charter requirements stay with leadership. This form only
+              collects what is needed to open a chapter and issue accounts.
+            </p>
           </div>
         </div>
       </section>

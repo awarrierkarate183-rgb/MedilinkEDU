@@ -14,6 +14,17 @@ export default async function ChapterPage() {
         .eq("id", profile?.chapter_id)
         .maybeSingle()
     : { data: null };
+  const { data: application } = supabase
+    ? await supabase
+        .from("chapter_applications")
+        .select(
+          "advisor_first_name, advisor_last_name, advisor_email, advisor_phone, advisor_title, principal_name, estimated_students, statement, created_at",
+        )
+        .eq("chapter_id", profile?.chapter_id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle()
+    : { data: null };
 
   if (!chapter) {
     return (
@@ -42,9 +53,36 @@ export default async function ChapterPage() {
             <dd>{chapter.status}</dd>
           </div>
           <div>
+            <dt className="text-muted">Location</dt>
+            <dd>
+              {[chapter.city, chapter.state].filter(Boolean).join(", ")}
+            </dd>
+          </div>
+          <div>
             <dt className="text-muted">Public join code</dt>
             <dd>{chapter.join_code}</dd>
           </div>
+          {application ? (
+            <>
+              <div>
+                <dt className="text-muted">Advisor</dt>
+                <dd>
+                  {application.advisor_first_name} {application.advisor_last_name}
+                  {application.advisor_title ? ` · ${application.advisor_title}` : ""}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-muted">Advisor email</dt>
+                <dd>{application.advisor_email}</dd>
+              </div>
+              {application.estimated_students ? (
+                <div>
+                  <dt className="text-muted">Estimated students</dt>
+                  <dd>{application.estimated_students}</dd>
+                </div>
+              ) : null}
+            </>
+          ) : null}
         </dl>
         <p className="mt-4 text-sm text-muted">
           The QR contains only the public join URL. It does not contain passwords

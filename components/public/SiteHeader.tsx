@@ -59,6 +59,12 @@ export function SiteHeader() {
             );
           })}
           <Link
+            href="/start-a-chapter"
+            className="rounded-md border border-white/35 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
+          >
+            Start a Chapter
+          </Link>
+          <Link
             href="/portal"
             className="rounded-md bg-gold px-4 py-2.5 text-sm font-semibold text-navy hover:bg-gold-hover"
           >
@@ -98,6 +104,12 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/start-a-chapter"
+            className="block border-b border-white/10 py-3.5 text-base font-semibold text-gold"
+          >
+            Start a Chapter
+          </Link>
         </nav>
       ) : null}
     </header>

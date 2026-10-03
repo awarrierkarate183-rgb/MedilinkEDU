@@ -1,5 +1,6 @@
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { AddStudentForm } from "@/components/portal/AddStudentForm";
 import { InviteMemberForm, RevokeButton } from "@/components/portal/InviteMemberForm";
 import { ApproveMemberButton } from "@/components/portal/ApproveMemberButton";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
@@ -11,7 +12,7 @@ export default async function MembersPage() {
   const { data: members, error: memberError } = supabase
     ? await supabase
         .from("chapter_members")
-        .select("id, status, profiles(full_name, grade, role)")
+        .select("id, status, profiles(full_name, email, grade, role)")
         .eq("chapter_id", profile?.chapter_id)
     : { data: [], error: null };
   const { data: invites, error: inviteError } = supabase
@@ -27,6 +28,7 @@ export default async function MembersPage() {
 
   return (
     <div className="space-y-8">
+      <AddStudentForm />
       <InviteMemberForm />
       <section>
         <h2 className="mb-3 text-lg font-semibold">Roster</h2>
@@ -43,7 +45,9 @@ export default async function MembersPage() {
                 <li key={member.id} className="flex items-center justify-between gap-3 px-4 py-3">
                   <span>
                     <strong>{person?.full_name || "Unnamed member"}</strong>
-                    <span className="ml-2 text-sm text-muted">{member.status}</span>
+                    <span className="ml-2 text-sm text-muted">
+                      {person?.email || ""} {member.status}
+                    </span>
                   </span>
                   <span className="flex items-center gap-3">
                     <span className="text-sm text-muted">{person?.grade || ""}</span>
