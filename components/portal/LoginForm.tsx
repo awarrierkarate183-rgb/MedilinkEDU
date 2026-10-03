@@ -17,34 +17,37 @@ export function LoginForm({ configured }: { configured: boolean }) {
   async function onLogin(formData: FormData) {
     setLoading(true);
     setError(null);
-    const email = String(formData.get("email") || "").trim();
-    const password = String(formData.get("password") || "");
-    if (!email || !password) {
-      setError("Enter your email and password.");
+    try {
+      const email = String(formData.get("email") || "").trim();
+      const password = String(formData.get("password") || "");
+      if (!email || !password) {
+        setError("Enter your email and password.");
+        return;
+      }
+      const supabase = createBrowserSupabaseClient();
+      if (!supabase) {
+        setError("The portal is not connected yet.");
+        return;
+      }
+      const { data, error: signError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (signError || !data.user) {
+        setError(signError?.message || "Sign-in failed.");
+        return;
+      }
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", data.user.id)
+        .maybeSingle();
+      window.location.assign(homeForRole(profile?.role));
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Sign-in failed.");
+    } finally {
       setLoading(false);
-      return;
     }
-    const supabase = createBrowserSupabaseClient();
-    if (!supabase) {
-      setError("The portal is not connected yet.");
-      setLoading(false);
-      return;
-    }
-    const { data, error: signError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (signError || !data.user) {
-      setError(signError?.message || "Sign-in failed.");
-      setLoading(false);
-      return;
-    }
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", data.user.id)
-      .maybeSingle();
-    window.location.assign(homeForRole(profile?.role));
   }
 
   async function onReset(formData: FormData) {

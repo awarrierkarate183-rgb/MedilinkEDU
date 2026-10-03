@@ -6,6 +6,7 @@ type ProgressRow = { module_id: string; status: string; progress_percent: number
 export async function loadStudentDashboard(userId: string, chapterId: string | null) {
   const supabase = await createClient();
   if (!supabase) return { configured: false as const, error: false as const, data: null };
+  try {
 
   const now = new Date().toISOString();
   const [
@@ -25,7 +26,7 @@ export async function loadStudentDashboard(userId: string, chapterId: string | n
       .from("events")
       .select("id, title, start_at, event_date, status")
       .in("status", ["PUBLISHED", "REGISTRATION_OPEN"])
-      .order("start_at", { ascending: true, nullsFirst: false })
+      .order("start_at", { ascending: true })
       .limit(5),
     supabase
       .from("competitions")
@@ -81,6 +82,9 @@ export async function loadStudentDashboard(userId: string, chapterId: string | n
       generatedAt: now,
     },
   };
+  } catch {
+    return { configured: true as const, error: true as const, data: null };
+  }
 }
 
 export async function loadAdvisorDashboard(chapterId: string | null) {
@@ -149,6 +153,7 @@ export async function loadAdvisorDashboard(chapterId: string | null) {
 export async function loadAdminDashboard() {
   const supabase = await createClient();
   if (!supabase) return { configured: false as const, error: false as const, data: null };
+  try {
 
   const [chapters, users, pendingChapters, competitions, submissions, activity] = await Promise.all([
     supabase.from("chapters").select("id", { count: "exact", head: true }),
@@ -176,6 +181,9 @@ export async function loadAdminDashboard() {
       activity: activity.data || [],
     },
   };
+  } catch {
+    return { configured: true as const, error: true as const, data: null };
+  }
 }
 
 export async function loadCurriculumProgress(userId: string) {
