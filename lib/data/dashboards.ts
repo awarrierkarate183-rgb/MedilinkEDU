@@ -155,16 +155,23 @@ export async function loadAdminDashboard() {
   if (!supabase) return { configured: false as const, error: false as const, data: null };
   try {
 
-  const [chapters, users, pendingChapters, competitions, submissions, activity] = await Promise.all([
+  const [chapters, users, pendingChapters, competitions, submissions, activity, alerts] = await Promise.all([
     supabase.from("chapters").select("id", { count: "exact", head: true }),
     supabase.from("profiles").select("id", { count: "exact", head: true }),
     supabase.from("chapters").select("id", { count: "exact", head: true }).in("status", ["PROPOSED", "PENDING_APPROVAL"]),
     supabase.from("competitions").select("id", { count: "exact", head: true }).in("status", ["UPCOMING", "REGISTRATION_OPEN"]),
     supabase.from("submissions").select("id", { count: "exact", head: true }).eq("status", "SUBMITTED"),
     supabase.from("audit_logs").select("id, action, created_at").order("created_at", { ascending: false }).limit(8),
+    supabase
+      .from("notifications")
+      .select("id, title, message, created_at, type")
+      .in("type", ["chapter_request", "chapter_login_attempt"])
+      .is("read_at", null)
+      .order("created_at", { ascending: false })
+      .limit(8),
   ]);
 
-  const failed = [chapters, users, pendingChapters, competitions, submissions, activity].some(
+  const failed = [chapters, users, pendingChapters, competitions, submissions, activity, alerts].some(
     (row) => row && "error" in row && row.error,
   );
   if (failed) return { configured: true as const, error: true as const, data: null };
@@ -179,6 +186,7 @@ export async function loadAdminDashboard() {
       competitions: competitions.count ?? 0,
       submissions: submissions.count ?? 0,
       activity: activity.data || [],
+      alerts: alerts.data || [],
     },
   };
   } catch {

@@ -65,9 +65,18 @@ async function ensureProfile(
     role: "CHAPTER_ADVISOR" | "STUDENT";
     chapterId: string | null;
     grade?: string;
+    status?: "PENDING" | "ACTIVE";
+    advisorStatus?: "PENDING" | "ACTIVE" | null;
   },
 ) {
   const fullName = `${values.firstName} ${values.lastName}`.trim();
+  const status = values.status ?? "ACTIVE";
+  const advisorStatus =
+    values.advisorStatus !== undefined
+      ? values.advisorStatus
+      : values.role === "CHAPTER_ADVISOR"
+        ? "ACTIVE"
+        : null;
   const exists = await waitForProfile(admin, userId);
   if (!exists) {
     const { error: insertError } = await admin.from("profiles").insert({
@@ -80,8 +89,8 @@ async function ensureProfile(
       role: values.role,
       chapter_id: values.chapterId,
       grade: values.grade || "",
-      status: "ACTIVE",
-      advisor_status: values.role === "CHAPTER_ADVISOR" ? "ACTIVE" : null,
+      status,
+      advisor_status: advisorStatus,
     });
     if (insertError) return insertError.message;
     return null;
@@ -98,11 +107,34 @@ async function ensureProfile(
       role: values.role,
       chapter_id: values.chapterId,
       grade: values.grade || "",
-      status: "ACTIVE",
-      advisor_status: values.role === "CHAPTER_ADVISOR" ? "ACTIVE" : null,
+      status,
+      advisor_status: advisorStatus,
     })
     .eq("id", userId);
   return error?.message ?? null;
+}
+
+async function notifyAdmins(
+  admin: Admin,
+  type: string,
+  title: string,
+  message: string,
+  link = "/portal/admin/chapters",
+) {
+  const { data: admins } = await admin
+    .from("profiles")
+    .select("id")
+    .in("role", ["SUPER_ADMIN", "STATE_ADMIN"]);
+  for (const row of admins || []) {
+    await admin.from("notifications").insert({
+      profile_id: row.id,
+      type,
+      title,
+      body: message,
+      message,
+      link,
+    });
+  }
 }
 
 export async function startChapter(admin: Admin, input: StartChapterInput) {
@@ -141,9 +173,8 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
       city: input.city.trim(),
       state: input.state.trim(),
       country: "United States",
-      status: "FOUNDING",
+      status: "PENDING_APPROVAL",
       public_visibility: false,
-      founded_date: new Date().toISOString().slice(0, 10),
       chapter_description: input.statement?.trim() || null,
       description: input.statement?.trim() || null,
     })
@@ -178,6 +209,8 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
     lastName: input.advisorLastName.trim(),
     role: "CHAPTER_ADVISOR",
     chapterId: chapter.id,
+    status: "PENDING",
+    advisorStatus: "PENDING",
   });
   if (profileError) {
     await admin.auth.admin.deleteUser(created.user.id);
@@ -186,12 +219,6 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
   }
 
   await admin.from("chapters").update({ advisor_id: created.user.id }).eq("id", chapter.id);
-  await admin.from("chapter_members").insert({
-    chapter_id: chapter.id,
-    profile_id: created.user.id,
-    status: "ACTIVE",
-    joined_at: new Date().toISOString(),
-  });
 
   const { error: applicationError } = await admin.from("chapter_applications").insert({
     chapter_id: chapter.id,
@@ -207,6 +234,7 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
     principal_name: input.principalName?.trim() || "",
     estimated_students: input.estimatedStudents ?? null,
     statement: input.statement?.trim() || "",
+    review_status: "PENDING",
   });
   if (applicationError) {
     await admin.auth.admin.deleteUser(created.user.id);
@@ -214,14 +242,20 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
     return { error: "The chapter application could not be stored. Try again." };
   }
 
-  await writeAudit(admin, created.user.id, "chapter.started", "chapter", chapter.id, {
+  await writeAudit(admin, created.user.id, "chapter.requested", "chapter", chapter.id, {
     school,
     chapter_code: chapter.chapter_code,
   });
+  await notifyAdmins(
+    admin,
+    "chapter_request",
+    "New chapter request",
+    `${input.advisorFirstName.trim()} ${input.advisorLastName.trim()} requested a chapter at ${school}.`,
+  );
   await sendTransactionalEmail({
     to: email,
-    subject: "Your MediLink chapter advisor account",
-    text: `Your chapter at ${school} is ready. Sign in at ${siteUrl()}/portal/login with this email.`,
+    subject: "Your MediLink chapter request",
+    text: `Your request for ${school} is in. Sign in at ${siteUrl()}/portal/login. An administrator still has to accept the chapter before you can add students.`,
     template: "advisor_invitation",
   });
 
@@ -242,6 +276,16 @@ export async function addStudentAccount(
   if (!actor.chapterId) return { error: "Your advisor account is not attached to a chapter yet." };
   if (!["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"].includes(actor.role)) {
     return { error: "Only an advisor can add students to this roster." };
+  }
+  if (actor.role === "CHAPTER_ADVISOR") {
+    const { data: chapter } = await admin
+      .from("chapters")
+      .select("status")
+      .eq("id", actor.chapterId)
+      .maybeSingle();
+    if (!chapter || ["PROPOSED", "PENDING_APPROVAL", "INACTIVE"].includes(chapter.status)) {
+      return { error: "An administrator still has to accept this chapter before you can add students." };
+    }
   }
 
   const email = input.email.trim().toLowerCase();
@@ -307,4 +351,116 @@ export async function addStudentAccount(
     name: `${input.firstName.trim()} ${input.lastName.trim()}`.trim(),
     loginUrl: `${siteUrl()}/portal/login`,
   };
+}
+
+export async function recordAdvisorSignInAttempt(admin: Admin, userId: string) {
+  const { data: application } = await admin
+    .from("chapter_applications")
+    .select("id, school_name, advisor_first_name, advisor_last_name, advisor_email, review_status")
+    .eq("advisor_profile_id", userId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!application) return;
+  await admin
+    .from("chapter_applications")
+    .update({ last_sign_in_attempt_at: new Date().toISOString() })
+    .eq("id", application.id);
+  if (application.review_status !== "PENDING") return;
+  await notifyAdmins(
+    admin,
+    "chapter_login_attempt",
+    "Pending advisor signed in",
+    `${application.advisor_first_name} ${application.advisor_last_name} signed in while ${application.school_name} is waiting for review.`,
+  );
+  await writeAudit(admin, userId, "chapter.login_while_pending", "chapter_application", application.id, {
+    school: application.school_name,
+    email: application.advisor_email,
+  });
+}
+
+export async function reviewChapterRequest(
+  admin: Admin,
+  actorId: string,
+  chapterId: string,
+  decision: "approve" | "deny",
+) {
+  const { data: application } = await admin
+    .from("chapter_applications")
+    .select("id, advisor_profile_id, school_name, review_status")
+    .eq("chapter_id", chapterId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!application) return { error: "That chapter request was not found." };
+  if (application.review_status !== "PENDING") {
+    return { error: "That request has already been reviewed." };
+  }
+
+  const now = new Date().toISOString();
+  if (decision === "deny") {
+    await admin
+      .from("chapter_applications")
+      .update({
+        review_status: "DENIED",
+        reviewed_at: now,
+        reviewed_by: actorId,
+      })
+      .eq("id", application.id);
+    await admin.from("chapters").update({ status: "INACTIVE" }).eq("id", chapterId);
+    await admin
+      .from("profiles")
+      .update({ status: "INACTIVE", advisor_status: "INACTIVE" })
+      .eq("id", application.advisor_profile_id);
+    await writeAudit(admin, actorId, "chapter.denied", "chapter", chapterId);
+    await admin.from("notifications").insert({
+      profile_id: application.advisor_profile_id,
+      type: "chapter_denied",
+      title: "Chapter request not accepted",
+      body: `${application.school_name} was not accepted. Contact MediLink if this is a mistake.`,
+      message: `${application.school_name} was not accepted. Contact MediLink if this is a mistake.`,
+      link: "/portal/pending",
+    });
+    return { ok: true, decision };
+  }
+
+  await admin
+    .from("chapter_applications")
+    .update({
+      review_status: "APPROVED",
+      reviewed_at: now,
+      reviewed_by: actorId,
+    })
+    .eq("id", application.id);
+  await admin
+    .from("chapters")
+    .update({
+      status: "FOUNDING",
+      founded_date: now.slice(0, 10),
+      advisor_id: application.advisor_profile_id,
+    })
+    .eq("id", chapterId);
+  await admin
+    .from("profiles")
+    .update({ status: "ACTIVE", advisor_status: "ACTIVE" })
+    .eq("id", application.advisor_profile_id);
+  await admin.from("chapter_members").upsert(
+    {
+      chapter_id: chapterId,
+      profile_id: application.advisor_profile_id,
+      status: "ACTIVE",
+      joined_at: now,
+    },
+    { onConflict: "chapter_id,profile_id" },
+  );
+  await writeAudit(admin, actorId, "chapter.approved", "chapter", chapterId);
+  await admin.from("notifications").insert({
+    profile_id: application.advisor_profile_id,
+    type: "chapter_approved",
+    title: "Your chapter was accepted",
+    body: `${application.school_name} is now a founding MediLink chapter. You can add students.`,
+    message: `${application.school_name} is now a founding MediLink chapter. You can add students.`,
+    link: "/portal/advisor/members",
+  });
+  return { ok: true, decision };
 }

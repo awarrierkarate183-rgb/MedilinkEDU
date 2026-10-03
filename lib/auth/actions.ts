@@ -2,8 +2,10 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { isSupabaseConfigured, siteUrl } from "@/lib/env";
 import { homeForRole } from "@/lib/auth/roles";
+import { recordAdvisorSignInAttempt } from "@/lib/platform/provision";
 
 export async function signInAction(formData: FormData) {
   if (!isSupabaseConfigured()) {
@@ -45,10 +47,14 @@ export async function signInAction(formData: FormData) {
   } = await supabase.auth.getUser();
   const { data: profile } = await supabase
     .from("profiles")
-    .select("role")
+    .select("role, status, advisor_status")
     .eq("id", user?.id)
     .maybeSingle();
-  redirect(homeForRole(profile?.role));
+  if (user && profile?.role === "CHAPTER_ADVISOR") {
+    const admin = createAdminClient();
+    if (admin) await recordAdvisorSignInAttempt(admin, user.id);
+  }
+  redirect(homeForRole(profile?.role, profile));
 }
 
 export async function signOutAction() {

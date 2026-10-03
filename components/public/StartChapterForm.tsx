@@ -65,10 +65,11 @@ export function StartChapterForm() {
   if (created) {
     return (
       <div className="rounded-[var(--radius)] border border-border bg-white p-6">
-        <Alert title="Your chapter is ready" tone="navy">
-          {created.school} is now a founding MediLink chapter. Save these
-          advisor credentials now. The password is not stored in readable form
-          and will not be shown again.
+        <Alert title="Request received. Save your login." tone="navy">
+          {created.school} is waiting for an administrator to accept it. Save
+          these credentials now. You can sign in, but the advisor tools open
+          only after MediLink accepts the chapter. The password is not shown
+          again.
         </Alert>
         <dl className="mt-6 space-y-3 text-sm">
           <div>
@@ -85,7 +86,7 @@ export function StartChapterForm() {
           </div>
         </dl>
         <div className="mt-6 flex flex-wrap gap-3">
-          <ButtonLink href="/portal/login">Sign in to the advisor portal</ButtonLink>
+          <ButtonLink href="/portal/login">Sign in and wait for review</ButtonLink>
         </div>
       </div>
     );
@@ -95,8 +96,8 @@ export function StartChapterForm() {
     <form onSubmit={onSubmit} className="rounded-[var(--radius)] border border-border bg-white p-6">
       <h2 className="text-2xl font-semibold">Start your chapter</h2>
       <p className="mt-2 text-sm text-muted">
-        This creates the school record and an advisor account immediately. Use
-        the advisor email as the portal username.
+        This sends a chapter request and creates a login. An administrator
+        still has to accept the chapter before you can add students.
       </p>
       {error ? (
         <div className="mt-4">
@@ -180,7 +181,7 @@ export function StartChapterForm() {
 
       <div className="mt-6">
         <Button type="submit" loading={loading} className="w-full md:w-auto">
-          Create chapter and advisor account
+          Submit chapter request
         </Button>
       </div>
     </form>

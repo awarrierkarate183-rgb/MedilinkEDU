@@ -19,6 +19,9 @@ describe("authorization helpers", () => {
     expect(homeForRole("CHAPTER_ADVISOR")).toBe("/portal/advisor");
     expect(homeForRole("SUPER_ADMIN")).toBe("/portal/admin");
     expect(homeForRole("STATE_ADMIN")).toBe("/portal/admin");
+    expect(
+      homeForRole("CHAPTER_ADVISOR", { status: "PENDING", advisor_status: "PENDING" }),
+    ).toBe("/portal/pending");
   });
 
   it("lets a student read only their own profile", () => {

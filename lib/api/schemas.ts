@@ -52,6 +52,11 @@ export const approveChapterSchema = z.object({
   ]),
 });
 
+export const reviewChapterSchema = z.object({
+  chapterId: uuid,
+  decision: z.enum(["approve", "deny"]),
+});
+
 export const publishResultsSchema = z.object({
   resultId: uuid,
 });

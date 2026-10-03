@@ -24,7 +24,7 @@ export async function getRequestActor(): Promise<SessionActor> {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, role, chapter_id, state_scope")
+    .select("id, role, chapter_id, state_scope, status, advisor_status")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -38,6 +38,8 @@ export async function getRequestActor(): Promise<SessionActor> {
       role: profile.role as AppRole,
       chapterId: profile.chapter_id,
       stateScope: profile.state_scope,
+      status: profile.status,
+      advisorStatus: profile.advisor_status,
     },
     supabase,
   };

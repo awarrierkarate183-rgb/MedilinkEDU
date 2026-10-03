@@ -19,6 +19,24 @@ export default async function AdminDashboard() {
         <MetricCard label="Recent audit events" value={data?.activity.length ?? 0} />
       </div>
       <section>
+        <h2 className="mb-3 text-lg font-semibold">Chapter requests</h2>
+        {!data?.alerts?.length ? (
+          <p className="text-sm text-muted">No new chapter requests or pending sign-ins.</p>
+        ) : (
+          <ul className="mb-8 divide-y divide-border rounded-[var(--radius)] bg-white">
+            {data.alerts.map((row) => (
+              <li key={row.id} className="px-4 py-3 text-sm">
+                <a href="/portal/admin/chapters" className="font-semibold">
+                  {row.title}
+                </a>
+                <p className="text-muted">{row.message}</p>
+                <p className="mt-1 text-muted">{new Date(row.created_at).toLocaleString()}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+      <section>
         <h2 className="mb-3 text-lg font-semibold">System activity</h2>
         {!data?.activity.length ? (
           <PortalEmpty

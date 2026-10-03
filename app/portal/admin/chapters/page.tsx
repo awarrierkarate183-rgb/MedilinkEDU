@@ -2,6 +2,7 @@ import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
 import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
+import { ReviewChapterButtons } from "@/components/portal/ReviewChapterButtons";
 
 export default async function AdminChaptersPage() {
   await requireRole(["SUPER_ADMIN", "STATE_ADMIN"]);
@@ -11,7 +12,7 @@ export default async function AdminChaptersPage() {
   const { data: chapters, error } = await supabase
     .from("chapters")
     .select(
-      "id, name, school, city, state, status, chapter_code, join_code, created_at, chapter_applications(advisor_first_name, advisor_last_name, advisor_email, advisor_phone, advisor_title, principal_name, estimated_students, statement, created_at)",
+      "id, name, school, city, state, status, chapter_code, join_code, created_at, chapter_applications(advisor_first_name, advisor_last_name, advisor_email, advisor_phone, advisor_title, principal_name, estimated_students, statement, created_at, review_status, last_sign_in_attempt_at)",
     )
     .order("created_at", { ascending: false });
 
@@ -22,8 +23,8 @@ export default async function AdminChaptersPage() {
       <div>
         <h2 className="text-xl font-semibold">Chapters</h2>
         <p className="mt-1 text-sm text-muted">
-          Every submitted school appears here. Public chapter cards stay off
-          until leadership publishes a listing.
+          New Start a Chapter forms land here as requests. Accept one to open
+          the advisor portal and student roster tools for that school.
         </p>
       </div>
       {!chapters?.length ? (
@@ -48,7 +49,13 @@ export default async function AdminChaptersPage() {
                     <h3 className="text-lg font-semibold">{chapter.school}</h3>
                     <p className="text-sm text-muted">
                       {[chapter.city, chapter.state].filter(Boolean).join(", ")} · {chapter.status}
+                      {application?.review_status ? ` · ${application.review_status}` : ""}
                     </p>
+                    {application?.last_sign_in_attempt_at ? (
+                      <p className="mt-1 text-sm font-semibold text-navy">
+                        Signed in while waiting {new Date(application.last_sign_in_attempt_at).toLocaleString()}
+                      </p>
+                    ) : null}
                   </div>
                   <p className="text-sm text-muted">Join {chapter.join_code}</p>
                 </div>
@@ -84,6 +91,9 @@ export default async function AdminChaptersPage() {
                       </div>
                     ) : null}
                   </dl>
+                ) : null}
+                {application?.review_status === "PENDING" ? (
+                  <ReviewChapterButtons chapterId={chapter.id} />
                 ) : null}
               </li>
             );

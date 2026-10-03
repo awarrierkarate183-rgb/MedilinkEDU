@@ -4,9 +4,36 @@ export const ADVISOR_ROLES: AppRole[] = ["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPE
 export const ADMIN_ROLES: AppRole[] = ["STATE_ADMIN", "SUPER_ADMIN"];
 export const STUDENT_ROLES: AppRole[] = ["STUDENT", "CHAPTER_OFFICER"];
 
-export function homeForRole(role?: string | null) {
+export function isPendingAdvisor(profile?: {
+  role?: string | null;
+  status?: string | null;
+  advisor_status?: string | null;
+} | null) {
+  if (profile?.role !== "CHAPTER_ADVISOR") return false;
+  if (profile.status === "PENDING" || profile.status === "INACTIVE" || profile.status === "REMOVED") {
+    return true;
+  }
+  if (
+    profile.advisor_status === "PENDING" ||
+    profile.advisor_status === "SUSPENDED" ||
+    profile.advisor_status === "INACTIVE"
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export function homeForRole(
+  role?: string | null,
+  profile?: { status?: string | null; advisor_status?: string | null } | null,
+) {
   if (role === "SUPER_ADMIN" || role === "STATE_ADMIN") return "/portal/admin";
-  if (role === "CHAPTER_ADVISOR") return "/portal/advisor";
+  if (role === "CHAPTER_ADVISOR") {
+    if (isPendingAdvisor({ role, status: profile?.status, advisor_status: profile?.advisor_status })) {
+      return "/portal/pending";
+    }
+    return "/portal/advisor";
+  }
   return "/portal/student";
 }
 
@@ -23,6 +50,8 @@ export type Actor = {
   role: AppRole;
   chapterId: string | null;
   stateScope?: string | null;
+  status?: string | null;
+  advisorStatus?: string | null;
 };
 
 export function canReadProfile(actor: Actor, target: { id: string; chapterId: string | null }) {
@@ -48,7 +77,15 @@ export function canManageChapter(
   return false;
 }
 
-export function canApproveMembers(actor: Actor) {
+export function canApproveMembers(actor: Actor & { status?: string | null; advisorStatus?: string | null }) {
+  if (actor.role === "CHAPTER_ADVISOR") {
+    if (actor.status === "PENDING" || actor.status === "INACTIVE" || actor.status === "REMOVED") {
+      return false;
+    }
+    if (actor.advisorStatus === "PENDING" || actor.advisorStatus === "SUSPENDED" || actor.advisorStatus === "INACTIVE") {
+      return false;
+    }
+  }
   return isAdvisorRole(actor.role);
 }
 

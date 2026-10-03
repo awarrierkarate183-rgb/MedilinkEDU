@@ -17,7 +17,7 @@ export default function StartChapterPage() {
       <PageHero
         kicker="Chapters"
         title="Start a chapter"
-        lead="Bring MediLink to your high school. Submit the form and the advisor account is created on this site."
+        lead="Bring MediLink to your high school. Submit the request, save your login, and wait for an administrator to accept the chapter."
       >
         <ButtonLink href="#apply">Start a chapter</ButtonLink>
       </PageHero>
@@ -27,11 +27,11 @@ export default function StartChapterPage() {
           <div>
             <ol className="grid gap-3">
               {[
-                "A school adult fills out the chapter form",
-                "The site creates the chapter and advisor login",
-                "The advisor signs in and adds students",
-                "Each student gets a portal username and password",
-                "Administrators can see every chapter and roster",
+                "A school adult fills out the chapter request",
+                "They receive a username and password immediately",
+                "Signing in notifies administrators",
+                "An administrator accepts the request",
+                "The advisor portal opens and students can be added",
               ].map((step, index) => (
                 <li key={step} className="rounded-[var(--radius)] border border-border p-4">
                   <p className="kicker">0{index + 1}</p>

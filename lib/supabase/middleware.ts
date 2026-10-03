@@ -5,7 +5,7 @@ import { isSupabaseConfigured, supabasePublishableKey, supabaseUrl } from "@/lib
 export async function updateSession(request: NextRequest) {
   const response = NextResponse.next({ request });
   if (!isSupabaseConfigured()) {
-    return { response, user: null, role: null as string | null };
+    return { response, user: null, role: null as string | null, status: null, advisorStatus: null };
   }
 
   try {
@@ -28,17 +28,21 @@ export async function updateSession(request: NextRequest) {
     } = await supabase.auth.getUser();
 
     let role: string | null = null;
+    let status: string | null = null;
+    let advisorStatus: string | null = null;
     if (user) {
       const { data } = await supabase
         .from("profiles")
-        .select("role")
+        .select("role, status, advisor_status")
         .eq("id", user.id)
         .maybeSingle();
       role = data?.role ?? null;
+      status = data?.status ?? null;
+      advisorStatus = data?.advisor_status ?? null;
     }
 
-    return { response, user, role };
+    return { response, user, role, status, advisorStatus };
   } catch {
-    return { response, user: null, role: null as string | null };
+    return { response, user: null, role: null as string | null, status: null, advisorStatus: null };
   }
 }
