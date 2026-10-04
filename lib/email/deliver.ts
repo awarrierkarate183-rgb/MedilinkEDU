@@ -28,6 +28,19 @@ async function blockSupabaseMailForHour() {
   );
 }
 
+async function recordLastEmailError(message?: string) {
+  const admin = createAdminClient();
+  if (!admin || !message) return;
+  await admin.from("platform_settings").upsert(
+    {
+      key: "last_email_error",
+      value: message.slice(0, 240),
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "key" },
+  );
+}
+
 async function trySendInviteEmail(opts: {
   email: string;
   firstName: string;
@@ -47,10 +60,20 @@ async function trySendInviteEmail(opts: {
     html: message.html,
     template: "student_invitation",
   });
-  if (mail.sent) return { sent: true, userId: undefined as string | undefined };
+  if (mail.sent) return { sent: true, error: undefined as string | undefined, userId: undefined as string | undefined };
+
+  const hasOwnMailer = Boolean(httpMailerFromEnv() || (await loadSmtpConfig()));
+  if (hasOwnMailer) {
+    await recordLastEmailError(mail.error);
+    return {
+      sent: false,
+      error: mail.error || "Gmail could not send that invite.",
+      userId: undefined,
+    };
+  }
 
   if (!(await supabaseMailAllowed())) {
-    return { sent: false, userId: undefined };
+    return { sent: false, error: "Invite email is waiting to send.", userId: undefined };
   }
 
   const viaAuth = await sendInviteWithSupabaseMail({
@@ -61,8 +84,23 @@ async function trySendInviteEmail(opts: {
   });
   if (viaAuth.status === 429) {
     await blockSupabaseMailForHour();
+    await recordLastEmailError("Supabase invite mailer hit its hourly limit.");
   }
-  return { sent: viaAuth.sent, userId: viaAuth.userId };
+  return {
+    sent: viaAuth.sent,
+    error: viaAuth.sent ? undefined : "The invite email could not be sent to that student.",
+    userId: viaAuth.userId,
+  };
+}
+
+export async function cancelPendingInviteMail(email: string) {
+  const admin = createAdminClient();
+  if (!admin) return;
+  await admin
+    .from("email_outbox")
+    .update({ status: "CANCELLED", last_error: "replaced by a new invite" })
+    .eq("to_email", email)
+    .eq("status", "PENDING");
 }
 
 export async function deliverInviteEmail(opts: {
@@ -75,20 +113,21 @@ export async function deliverInviteEmail(opts: {
   const result = await trySendInviteEmail(opts);
   if (result.sent) {
     await flushInviteOutbox();
-    return { sent: true, queued: false, userId: result.userId };
+    return { sent: true, queued: false, error: undefined as string | undefined, userId: result.userId };
   }
 
   const admin = createAdminClient();
-  if (!admin) return { sent: false, queued: false, userId: result.userId };
-  const { error } = await admin.from("email_outbox").insert({
+  if (!admin) return { sent: false, queued: false, error: result.error, userId: result.userId };
+  await admin.from("email_outbox").insert({
     to_email: opts.email,
     first_name: opts.firstName,
     last_name: opts.lastName,
     invite_url: opts.inviteUrl,
     expires_at: opts.expiresAt,
     status: "PENDING",
+    last_error: result.error || "waiting to send",
   });
-  return { sent: !error, queued: !error, userId: result.userId };
+  return { sent: false, queued: true, error: result.error, userId: result.userId };
 }
 
 export async function flushInviteOutbox() {
@@ -122,7 +161,7 @@ export async function flushInviteOutbox() {
         .from("email_outbox")
         .update({
           attempts: (row.attempts || 0) + 1,
-          last_error: "waiting to send",
+          last_error: result.error || "waiting to send",
         })
         .eq("id", row.id);
     }

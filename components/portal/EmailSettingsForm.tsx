@@ -55,7 +55,8 @@ export function EmailSettingsForm({
       <h2 className="font-semibold">MediLink sending email</h2>
       <p className="mt-1 text-sm text-muted">
         Connect medi.link.edu@gmail.com once. Student invites then leave from
-        that MediLink address. Create a Google App password and paste it here.
+        that MediLink address. After you invite someone, open that Gmail Sent
+        folder. If the message is there, MediLink sent it.
       </p>
       {connected ? (
         <div className="mt-3">

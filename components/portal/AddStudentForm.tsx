@@ -63,7 +63,7 @@ export function AddStudentForm({
       </p>
       {error ? (
         <div className="mt-3">
-          <Alert title="Email not sent" tone="danger">
+          <Alert title={/already has a MediLink account/i.test(error) ? "Could not add student" : "Email not sent"} tone="danger">
             {error}
           </Alert>
         </div>
@@ -72,8 +72,9 @@ export function AddStudentForm({
         <div className="mt-3 rounded-md border border-gold bg-gold-soft p-4">
           <p className="font-semibold">Email sent to {invited.email}</p>
           <p className="mt-1 text-sm">
-            {invited.name} will get a MediLink message, click the button, choose a
-            password, and sign in through the student portal only.
+            {invited.name} should get a message from medi.link.edu@gmail.com. If
+            it is not in their inbox, have them check spam. You can also open
+            that MediLink Gmail and confirm it is in Sent.
           </p>
         </div>
       ) : null}

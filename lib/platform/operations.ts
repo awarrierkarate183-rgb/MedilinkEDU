@@ -85,6 +85,7 @@ export async function createInvitation(opts: {
 
   const inviteUrl = `${siteUrl()}/portal/invite/${token}`;
   let sent = false;
+  let sendError: string | undefined;
   if (opts.email) {
     const message =
       opts.role === "STUDENT"
@@ -107,6 +108,7 @@ export async function createInvitation(opts: {
         expiresAt: expires,
       });
       sent = delivered.sent;
+      sendError = delivered.error;
       if (delivered.userId) {
         await opts.client.from("invitations").update({ invited_user_id: delivered.userId }).eq("id", inserted.id);
       }
@@ -119,9 +121,10 @@ export async function createInvitation(opts: {
         template: "advisor_invitation",
       });
       sent = mail.sent;
+      sendError = mail.error;
     }
   }
-  return { token, expires, id: inserted.id, sent, inviteUrl };
+  return { token, expires, id: inserted.id, sent, sendError, inviteUrl };
 }
 
 export async function getInvitationPreview(token: string) {

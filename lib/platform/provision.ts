@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { generatePublicCode, slugFromName } from "@/lib/auth/passwords";
 import { createInvitation, writeAudit } from "@/lib/platform/operations";
+import { cancelPendingInviteMail } from "@/lib/email/deliver";
 import { sendTransactionalEmail } from "@/lib/email";
 import { siteUrl } from "@/lib/env";
 
@@ -310,16 +311,14 @@ export async function inviteStudent(
     return { error: "That email already has a MediLink account." };
   }
 
-  const { data: openInvite } = await admin
+  await admin
     .from("invitations")
-    .select("id")
+    .update({ revoked_at: new Date().toISOString() })
     .eq("chapter_id", chapterId)
     .ilike("email", email)
     .is("used_at", null)
-    .is("revoked_at", null)
-    .gt("expires_at", new Date().toISOString())
-    .maybeSingle();
-  if (openInvite) return { error: "That student already has an open invitation." };
+    .is("revoked_at", null);
+  await cancelPendingInviteMail(email);
 
   const created = await createInvitation({
     client: admin,
@@ -343,7 +342,9 @@ export async function inviteStudent(
   if (!created.sent) {
     await admin.from("invitations").delete().eq("id", created.id);
     return {
-      error: "The invite email could not be sent to that student. Try again in a few minutes.",
+      error:
+        created.sendError ||
+        "The invite email could not be sent to that student. Check the MediLink Gmail Sent folder, then try again.",
     };
   }
 

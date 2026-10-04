@@ -19,6 +19,7 @@ export type EmailResult = {
   sent: boolean;
   pending: boolean;
   provider: "none" | "resend" | "sendgrid" | "brevo" | "smtp" | "configured";
+  error?: string;
 };
 
 async function postJson(url: string, headers: Record<string, string>, body: unknown) {
@@ -107,17 +108,14 @@ export async function sendTransactionalEmail(message: TransactionalEmail): Promi
 
   const smtp = await loadSmtpConfig();
   if (smtp) {
-    try {
-      if (await sendWithSmtp(smtp, message)) {
-        return { sent: true, pending: false, provider: "smtp" };
-      }
-    } catch (error) {
-      console.error("[email:smtp]", error instanceof Error ? error.message : "send failed");
-    }
+    const result = await sendWithSmtp(smtp, message);
+    if (result.sent) return { sent: true, pending: false, provider: "smtp" };
+    console.error("[email:smtp]", result.error);
+    return { sent: false, pending: true, provider: "smtp", error: result.error };
   }
 
   if (process.env.NODE_ENV !== "production") {
     console.info("[email:pending]", message.template ?? "generic", message.to, message.subject);
   }
-  return { sent: false, pending: true, provider: http || smtp ? "configured" : "none" };
+  return { sent: false, pending: true, provider: http ? "configured" : "none" };
 }
