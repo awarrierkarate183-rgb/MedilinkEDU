@@ -301,8 +301,14 @@ export async function inviteStudent(
   const email = input.email.trim().toLowerCase();
   const firstName = input.firstName.trim();
   const lastName = input.lastName.trim();
-  const { data: existing } = await admin.from("profiles").select("id").ilike("email", email).maybeSingle();
-  if (existing) return { error: "That email already has a MediLink account." };
+  const { data: existing } = await admin
+    .from("profiles")
+    .select("id, role, status")
+    .ilike("email", email)
+    .maybeSingle();
+  if (existing && !(existing.role === "STUDENT" && existing.status === "PENDING")) {
+    return { error: "That email already has a MediLink account." };
+  }
 
   const { data: openInvite } = await admin
     .from("invitations")

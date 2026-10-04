@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendTransactionalEmail } from "@/lib/email";
+import { sendInviteWithSupabaseMail } from "@/lib/email/supabase-mail";
 import { studentInviteMessage } from "@/lib/email/student-invite";
 import { createInviteToken, hashToken, invitationIsUsable } from "@/lib/auth/tokens";
 import { canManageChapter, type Actor } from "@/lib/auth/roles";
@@ -105,6 +106,18 @@ export async function createInvitation(opts: {
       template: opts.role === "CHAPTER_ADVISOR" ? "advisor_invitation" : "student_invitation",
     });
     sent = mail.sent;
+    if (!sent) {
+      const viaAuth = await sendInviteWithSupabaseMail({
+        email: opts.email,
+        firstName: opts.firstName || "",
+        lastName: opts.lastName || "",
+        inviteUrl,
+      });
+      sent = viaAuth.sent;
+      if (viaAuth.userId) {
+        await opts.client.from("invitations").update({ invited_user_id: viaAuth.userId }).eq("id", inserted.id);
+      }
+    }
   }
   return { token, expires, id: inserted.id, sent, inviteUrl };
 }
