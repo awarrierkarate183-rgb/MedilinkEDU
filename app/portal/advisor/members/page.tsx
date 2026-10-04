@@ -1,45 +1,66 @@
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { AddStudentForm } from "@/components/portal/AddStudentForm";
 import { RevokeButton } from "@/components/portal/InviteMemberForm";
 import { ApproveMemberButton } from "@/components/portal/ApproveMemberButton";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
-import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
+
+function chapterIdOf(value: string | null | undefined) {
+  return value && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
+    ? value
+    : null;
+}
 
 export default async function MembersPage() {
   const { profile } = await requireRole(["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
   const supabase = await createClient();
-  const chapterId = profile?.chapter_id || null;
+  const db = createAdminClient() ?? supabase;
+  const chapterId = chapterIdOf(profile?.chapter_id);
   const canPickChapter = profile?.role === "SUPER_ADMIN" || profile?.role === "STATE_ADMIN";
 
-  const chapters = supabase && canPickChapter
-    ? await supabase.from("chapters").select("id, name, school, status").order("name")
-    : { data: [] as Array<{ id: string; name: string; school: string | null; status: string }>, error: null };
+  const chapters =
+    db && canPickChapter
+      ? ((await db.from("chapters").select("id, name, school, status").order("name")).data ?? [])
+      : [];
 
-  const { data: members, error: memberError } = supabase && chapterId
-    ? await supabase
-        .from("chapter_members")
-        .select("id, status, profiles(full_name, email, grade, role)")
-        .eq("chapter_id", chapterId)
-    : { data: [], error: null };
-  const { data: invites, error: inviteError } = supabase
-    ? chapterId
-      ? await supabase
-          .from("invitations")
-          .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
-          .eq("chapter_id", chapterId)
-          .is("revoked_at", null)
-          .is("used_at", null)
-      : canPickChapter
-        ? await supabase
-            .from("invitations")
-            .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
-            .is("revoked_at", null)
-            .is("used_at", null)
-        : { data: [], error: null }
-    : { data: [], error: null };
+  const members =
+    db && chapterId
+      ? ((
+          await db
+            .from("chapter_members")
+            .select("id, status, profiles(full_name, email, grade, role)")
+            .eq("chapter_id", chapterId)
+        ).data ?? [])
+      : [];
 
-  if (memberError || inviteError || chapters.error) return <ConnectionTrouble />;
+  let invites: Array<{
+    id: string;
+    email: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    grade?: string | null;
+    expires_at: string;
+  }> = [];
+  if (db && (chapterId || canPickChapter)) {
+    const detailed = db
+      .from("invitations")
+      .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
+      .is("revoked_at", null)
+      .is("used_at", null);
+    const first = chapterId ? await detailed.eq("chapter_id", chapterId) : await detailed;
+    if (!first.error && first.data) {
+      invites = first.data;
+    } else {
+      const basic = db
+        .from("invitations")
+        .select("id, email, expires_at, revoked_at, used_at, use_count")
+        .is("revoked_at", null)
+        .is("used_at", null);
+      const second = chapterId ? await basic.eq("chapter_id", chapterId) : await basic;
+      invites = second.data ?? [];
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -51,7 +72,7 @@ export default async function MembersPage() {
       <AddStudentForm
         chapters={
           !chapterId && canPickChapter
-            ? (chapters.data || []).map((chapter) => ({
+            ? chapters.map((chapter) => ({
                 id: chapter.id,
                 label: chapter.school || chapter.name,
               }))
@@ -60,7 +81,7 @@ export default async function MembersPage() {
       />
       <section>
         <h2 className="mb-3 text-lg font-semibold">Roster</h2>
-        {!members?.length ? (
+        {!members.length ? (
           <PortalEmpty
             title="No members yet"
             body={
@@ -93,7 +114,7 @@ export default async function MembersPage() {
       </section>
       <section>
         <h2 className="mb-3 text-lg font-semibold">Open invitations</h2>
-        {!invites?.length ? (
+        {!invites.length ? (
           <p className="text-sm text-muted">No open invitations.</p>
         ) : (
           <ul className="space-y-2">
