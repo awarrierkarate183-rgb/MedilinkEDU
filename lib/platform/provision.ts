@@ -334,29 +334,6 @@ export async function inviteStudent(
     return { error: "The invitation could not be created." };
   }
 
-  let sent = Boolean(created.sent);
-  if (!sent) {
-    const { data: invited, error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, {
-      data: {
-        first_name: firstName,
-        last_name: lastName,
-        full_name: `${firstName} ${lastName}`.trim(),
-        grade: input.grade || "",
-      },
-      redirectTo: `${siteUrl()}/auth/callback?next=${encodeURIComponent(`/portal/invite/${created.token}`)}`,
-    });
-    if (!inviteError && invited?.user) {
-      sent = true;
-      await admin
-        .from("invitations")
-        .update({ invited_user_id: invited.user.id })
-        .eq("id", created.id);
-    } else if (/already|exists|registered/i.test(inviteError?.message || "")) {
-      await admin.from("invitations").update({ revoked_at: new Date().toISOString() }).eq("id", created.id);
-      return { error: "That email already has a MediLink account." };
-    }
-  }
-
   await writeAudit(admin, actor.id, "student.invited", "invitation", created.id, {
     chapter_id: chapterId,
     email,
@@ -365,8 +342,8 @@ export async function inviteStudent(
   return {
     email,
     name: `${firstName} ${lastName}`.trim(),
-    sent,
-    inviteUrl: sent ? undefined : created.inviteUrl,
+    sent: Boolean(created.sent),
+    inviteUrl: created.inviteUrl,
   };
 }
 

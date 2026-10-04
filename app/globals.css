@@ -48,11 +48,11 @@ html {
 body {
   background: var(--background);
   color: var(--text);
-  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
   font-size: 1.05rem;
   line-height: 1.65;
-  word-spacing: normal;
-  letter-spacing: normal;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
