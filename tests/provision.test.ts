@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { generatePortalPassword, generatePublicCode, slugFromName } from "../lib/auth/passwords";
 import { addStudentSchema, startChapterSchema } from "../lib/api/schemas";
 import { studentInviteMessage } from "../lib/email/student-invite";
+import { smtpFromEnv } from "../lib/email/config";
 
 describe("chapter automation helpers", () => {
   it("creates a password that can be shown once", () => {
@@ -50,6 +51,30 @@ describe("chapter automation helpers", () => {
       highSchool: "yes",
     });
     expect(parsed.success).toBe(false);
+  });
+
+  it("reads Gmail SMTP from env when an app password is present", () => {
+    const previous = {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+      host: process.env.SMTP_HOST,
+    };
+    process.env.SMTP_HOST = "smtp.gmail.com";
+    process.env.SMTP_USER = "medi.link.edu@gmail.com";
+    process.env.SMTP_PASS = "abcd efgh ijkl mnop";
+    try {
+      const smtp = smtpFromEnv();
+      expect(smtp?.user).toBe("medi.link.edu@gmail.com");
+      expect(smtp?.pass).toBe("abcdefghijklmnop");
+      expect(smtp?.host).toBe("smtp.gmail.com");
+    } finally {
+      if (previous.user == null) delete process.env.SMTP_USER;
+      else process.env.SMTP_USER = previous.user;
+      if (previous.pass == null) delete process.env.SMTP_PASS;
+      else process.env.SMTP_PASS = previous.pass;
+      if (previous.host == null) delete process.env.SMTP_HOST;
+      else process.env.SMTP_HOST = previous.host;
+    }
   });
 
   it("builds a student invite email with a create-account button", () => {

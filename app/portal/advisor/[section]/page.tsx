@@ -28,10 +28,6 @@ const catalog: Record<
     title: "Reports",
     body: "Roster, participation, curriculum, activity, points, and project summaries export as CSV when records exist.",
   },
-  settings: {
-    title: "Chapter settings",
-    body: "Update allowed chapter profile fields. National competition rules cannot be changed from an advisor account.",
-  },
 };
 
 export default async function AdvisorSectionPage({

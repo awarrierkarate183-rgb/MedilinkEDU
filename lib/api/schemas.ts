@@ -94,6 +94,14 @@ export const startChapterSchema = z
     path: ["confirmPassword"],
   });
 
+export const emailSettingsSchema = z.object({
+  from: z.string().trim().max(200).optional().or(z.literal("")),
+  host: z.string().trim().max(200).optional().or(z.literal("")),
+  port: z.coerce.number().int().min(1).max(65535).optional(),
+  user: z.string().trim().email("Enter the Gmail address that will send invites."),
+  pass: z.string().trim().min(8, "Enter the Gmail app password.").max(200),
+});
+
 export const addStudentSchema = z.object({
   firstName: z.string().trim().min(1, "Enter the student first name.").max(80),
   lastName: z.string().trim().min(1, "Enter the student last name.").max(80),

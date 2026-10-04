@@ -19,7 +19,6 @@ const catalog: Record<string, { title: string; body: string }> = {
   announcements: { title: "Announcements", body: "Audience can be all users, advisors, students, or a chapter." },
   reports: { title: "Reports", body: "Organization-level CSV exports when data exists." },
   audit: { title: "Audit log", body: "Sensitive actions only. Students never see this page." },
-  settings: { title: "Platform settings", body: "Apex cycle, academic year, and portal configuration." },
 };
 
 export default async function AdminSection({

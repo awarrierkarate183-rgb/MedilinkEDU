@@ -94,6 +94,10 @@ export function canAwardPoints(actor: Actor) {
   return isAdvisorRole(actor.role);
 }
 
+export function canManageEmailSettings(actor: Actor) {
+  return isAdvisorRole(actor.role);
+}
+
 export function canAccessAdminPortal(role?: string | null) {
   return role === "SUPER_ADMIN" || role === "STATE_ADMIN";
 }

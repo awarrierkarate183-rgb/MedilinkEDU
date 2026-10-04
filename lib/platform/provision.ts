@@ -334,6 +334,14 @@ export async function inviteStudent(
     return { error: "The invitation could not be created." };
   }
 
+  if (!created.sent) {
+    await admin.from("invitations").delete().eq("id", created.id);
+    return {
+      error:
+        "The invite email could not be sent to that student. Connect MediLink email in Settings, then try again.",
+    };
+  }
+
   await writeAudit(admin, actor.id, "student.invited", "invitation", created.id, {
     chapter_id: chapterId,
     email,
@@ -342,8 +350,7 @@ export async function inviteStudent(
   return {
     email,
     name: `${firstName} ${lastName}`.trim(),
-    sent: Boolean(created.sent),
-    inviteUrl: created.inviteUrl,
+    sent: true,
   };
 }
 
