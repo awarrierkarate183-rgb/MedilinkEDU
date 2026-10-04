@@ -24,13 +24,7 @@ const mobileNav = [
 ];
 
 export default async function StudentLayout({ children }: { children: React.ReactNode }) {
-  const { profile } = await requireRole([
-    "STUDENT",
-    "CHAPTER_OFFICER",
-    "CHAPTER_ADVISOR",
-    "STATE_ADMIN",
-    "SUPER_ADMIN",
-  ]);
+  const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER"]);
   return (
     <PortalShell
       title={`Welcome, ${(profile?.full_name || "student").split(" ")[0]}`}

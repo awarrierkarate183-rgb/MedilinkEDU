@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isSupabaseConfigured, siteUrl } from "@/lib/env";
-import { homeForRole } from "@/lib/auth/roles";
+import { homeForRole, portalMatchesLogin } from "@/lib/auth/roles";
 import { recordAdvisorSignInAttempt } from "@/lib/platform/provision";
 
 export async function signInAction(formData: FormData) {
@@ -13,6 +13,7 @@ export async function signInAction(formData: FormData) {
   }
   const email = String(formData.get("email") || "").trim();
   const password = String(formData.get("password") || "");
+  const portal = String(formData.get("portal") || "").trim();
   if (!email || !password) return { error: "Enter your email and password." };
 
   const supabase = await createClient();
@@ -50,6 +51,16 @@ export async function signInAction(formData: FormData) {
     .select("role, status, advisor_status")
     .eq("id", user?.id)
     .maybeSingle();
+  if (!portalMatchesLogin(profile?.role, portal)) {
+    await supabase.auth.signOut();
+    if (portal === "student") {
+      return { error: "That account belongs to the advisor portal. Use advisor login." };
+    }
+    if (portal === "advisor") {
+      return { error: "That account belongs to the student portal. Use student login." };
+    }
+    return { error: "That account cannot open this portal." };
+  }
   if (user && profile?.role === "CHAPTER_ADVISOR") {
     const admin = createAdminClient();
     if (admin) await recordAdvisorSignInAttempt(admin, user.id);

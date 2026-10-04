@@ -28,6 +28,7 @@ export function homeForRole(
   profile?: { status?: string | null; advisor_status?: string | null } | null,
 ) {
   if (role === "SUPER_ADMIN" || role === "STATE_ADMIN") return "/portal/admin";
+  if (role === "STUDENT" && profile?.status === "PENDING") return "/portal/complete-invite";
   if (role === "CHAPTER_ADVISOR") {
     if (isPendingAdvisor({ role, status: profile?.status, advisor_status: profile?.advisor_status })) {
       return "/portal/pending";
@@ -102,5 +103,14 @@ export function canAccessAdvisorPortal(role?: string | null) {
 }
 
 export function canAccessStudentPortal(role?: string | null) {
-  return Boolean(role);
+  return role === "STUDENT" || role === "CHAPTER_OFFICER";
+}
+
+export function portalMatchesLogin(
+  role: string | null | undefined,
+  portal?: string | null,
+) {
+  if (portal === "student") return canAccessStudentPortal(role);
+  if (portal === "advisor") return canAccessAdvisorPortal(role);
+  return true;
 }

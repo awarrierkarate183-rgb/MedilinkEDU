@@ -14,8 +14,8 @@ export default function PortalEntryPage() {
         <p className="kicker">Welcome to the MediLink Portal</p>
         <h1 className="display max-w-3xl">Where chapters actually run.</h1>
         <p className="lead mt-5 text-white/75">
-          Students, advisors, and administrators use the same MediLink identity.
-          Access is scoped to a real chapter roster.
+          Students and advisors have separate portals. Use the login that
+          matches your account.
         </p>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           <Card className="bg-white text-navy">

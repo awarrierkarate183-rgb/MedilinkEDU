@@ -1,12 +1,18 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { isSupabaseConfigured } from "@/lib/env";
-import { isPendingAdvisor } from "@/lib/auth/roles";
+import {
+  canAccessAdvisorPortal,
+  canAccessStudentPortal,
+  homeForRole,
+  isPendingAdvisor,
+} from "@/lib/auth/roles";
 
 const advisorPrefix = "/portal/advisor";
 const studentPrefix = "/portal/student";
 const adminPrefix = "/portal/admin";
 const pendingPath = "/portal/pending";
+const completeInvitePath = "/portal/complete-invite";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -14,7 +20,8 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith(advisorPrefix) ||
     pathname.startsWith(studentPrefix) ||
     pathname.startsWith(adminPrefix) ||
-    pathname === pendingPath;
+    pathname === pendingPath ||
+    pathname === completeInvitePath;
 
   if (!isProtected) {
     if (isSupabaseConfigured()) {
@@ -46,23 +53,22 @@ export async function middleware(request: NextRequest) {
   if (!pending && pathname === pendingPath && role === "CHAPTER_ADVISOR") {
     return NextResponse.redirect(new URL("/portal/advisor", request.url));
   }
+  if (role === "STUDENT" && status === "PENDING" && pathname !== completeInvitePath) {
+    return NextResponse.redirect(new URL(completeInvitePath, request.url));
+  }
+  if (pathname === completeInvitePath && !(role === "STUDENT" && status === "PENDING")) {
+    return NextResponse.redirect(new URL(homeForRole(role, { status, advisor_status: advisorStatus }), request.url));
+  }
 
+  const home = homeForRole(role, { status, advisor_status: advisorStatus });
   if (pathname.startsWith(adminPrefix) && !["SUPER_ADMIN", "STATE_ADMIN"].includes(role || "")) {
-    return NextResponse.redirect(new URL("/forbidden", request.url));
+    return NextResponse.redirect(new URL(home, request.url));
   }
-  if (
-    pathname.startsWith(advisorPrefix) &&
-    !["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"].includes(role || "")
-  ) {
-    return NextResponse.redirect(new URL("/forbidden", request.url));
+  if (pathname.startsWith(advisorPrefix) && !canAccessAdvisorPortal(role)) {
+    return NextResponse.redirect(new URL(home, request.url));
   }
-  if (
-    pathname.startsWith(studentPrefix) &&
-    !["STUDENT", "CHAPTER_OFFICER", "CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"].includes(
-      role || "",
-    )
-  ) {
-    return NextResponse.redirect(new URL("/forbidden", request.url));
+  if (pathname.startsWith(studentPrefix) && !canAccessStudentPortal(role)) {
+    return NextResponse.redirect(new URL(home, request.url));
   }
 
   return response;

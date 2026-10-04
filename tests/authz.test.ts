@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   canAccessAdminPortal,
+  canAccessAdvisorPortal,
+  canAccessStudentPortal,
   canApproveMembers,
   canManageChapter,
   canReadProfile,
   homeForRole,
+  portalMatchesLogin,
 } from "../lib/auth/roles";
 
 const student = { id: "s1", role: "STUDENT" as const, chapterId: "c1" };
@@ -16,6 +19,7 @@ const admin = { id: "x1", role: "SUPER_ADMIN" as const, chapterId: null };
 describe("authorization helpers", () => {
   it("sends roles to the correct portal", () => {
     expect(homeForRole("STUDENT")).toBe("/portal/student");
+    expect(homeForRole("STUDENT", { status: "PENDING" })).toBe("/portal/complete-invite");
     expect(homeForRole("CHAPTER_ADVISOR")).toBe("/portal/advisor");
     expect(homeForRole("SUPER_ADMIN")).toBe("/portal/admin");
     expect(homeForRole("STATE_ADMIN")).toBe("/portal/admin");
@@ -42,5 +46,16 @@ describe("authorization helpers", () => {
     expect(canAccessAdminPortal("STUDENT")).toBe(false);
     expect(canAccessAdminPortal("SUPER_ADMIN")).toBe(true);
     expect(canManageChapter(admin, { id: "c9" })).toBe(true);
+  });
+
+  it("keeps student and advisor accounts in their own portals", () => {
+    expect(canAccessStudentPortal("STUDENT")).toBe(true);
+    expect(canAccessStudentPortal("CHAPTER_ADVISOR")).toBe(false);
+    expect(canAccessAdvisorPortal("CHAPTER_ADVISOR")).toBe(true);
+    expect(canAccessAdvisorPortal("STUDENT")).toBe(false);
+    expect(portalMatchesLogin("STUDENT", "student")).toBe(true);
+    expect(portalMatchesLogin("CHAPTER_ADVISOR", "student")).toBe(false);
+    expect(portalMatchesLogin("STUDENT", "advisor")).toBe(false);
+    expect(portalMatchesLogin("CHAPTER_ADVISOR", "advisor")).toBe(true);
   });
 });

@@ -6,7 +6,13 @@ import { requestResetAction, signInAction } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/States";
 
-export function LoginForm({ configured }: { configured: boolean }) {
+export function LoginForm({
+  configured,
+  portal = "",
+}: {
+  configured: boolean;
+  portal?: string;
+}) {
   const params = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [resetOk, setResetOk] = useState(false);
@@ -52,6 +58,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
           If that address is on a MediLink account, a reset link is on the way.
         </Alert>
       ) : null}
+      {portal ? <input type="hidden" name="portal" value={portal} /> : null}
       <label className="block text-sm font-semibold">
         Email
         <input

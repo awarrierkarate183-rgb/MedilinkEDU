@@ -9,21 +9,22 @@ export async function redeemInvitationAction(formData: FormData) {
     return { error: "The portal is not connected to a live database yet." };
   }
   const token = String(formData.get("token") || "");
-  const email = String(formData.get("email") || "").trim();
   const password = String(formData.get("password") || "");
-  const name = String(formData.get("name") || "").trim();
-  if (!token || !email || !password || !name) {
-    return { error: "Fill in your name, email, and password." };
+  const confirmPassword = String(formData.get("confirmPassword") || "");
+  if (!token || !password) {
+    return { error: "Choose a password for your student account." };
+  }
+  if (password.length < 8) {
+    return { error: "Choose a password with at least 8 characters." };
+  }
+  if (password !== confirmPassword) {
+    return { error: "The two passwords do not match." };
   }
   const supabase = await createClient();
   if (!supabase) return { error: "The portal is not connected yet." };
-  const [firstName, ...rest] = name.split(" ");
   return redeemInvitation({
     userClient: supabase,
     token,
-    email,
     password,
-    firstName,
-    lastName: rest.join(" "),
   });
 }

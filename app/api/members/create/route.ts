@@ -4,7 +4,7 @@ import { addStudentSchema } from "@/lib/api/schemas";
 import { getRequestActor } from "@/lib/api/session";
 import { canApproveMembers } from "@/lib/auth/roles";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { addStudentAccount } from "@/lib/platform/provision";
+import { inviteStudent } from "@/lib/platform/provision";
 
 export async function POST(request: Request) {
   const session = await getRequestActor();
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   const body = parsed(addStudentSchema, await readJson(request));
   if (body.error) return body.error;
 
-  const result = await addStudentAccount(admin, session.actor, body.data);
+  const result = await inviteStudent(admin, session.actor, body.data);
   if ("error" in result && result.error) {
     return errors.validation(result.error);
   }

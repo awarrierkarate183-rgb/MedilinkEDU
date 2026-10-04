@@ -11,13 +11,19 @@ export const createInvitationSchema = z.object({
   role: z.enum(["STUDENT", "CHAPTER_ADVISOR"]).default("STUDENT"),
 });
 
-export const redeemInvitationSchema = z.object({
-  token: z.string().min(16).max(200),
-  email: z.string().email(),
-  password: z.string().min(8).max(72),
-  firstName: z.string().min(1).max(80),
-  lastName: z.string().min(1).max(80).optional().or(z.literal("")),
-});
+export const redeemInvitationSchema = z
+  .object({
+    token: z.string().min(16).max(200),
+    password: z
+      .string()
+      .min(8, "Choose a password with at least 8 characters.")
+      .max(72, "That password is too long."),
+    confirmPassword: z.string().min(8, "Confirm your password."),
+  })
+  .refine((value) => value.password === value.confirmPassword, {
+    message: "The two passwords do not match.",
+    path: ["confirmPassword"],
+  });
 
 export const approveMemberSchema = z.object({
   membershipId: uuid,
@@ -92,7 +98,7 @@ export const addStudentSchema = z.object({
   firstName: z.string().trim().min(1, "Enter the student first name.").max(80),
   lastName: z.string().trim().min(1, "Enter the student last name.").max(80),
   email: z.string().trim().email("Enter a real student email.").max(160),
-  grade: z.enum(["9", "10", "11", "12"]).optional(),
+  grade: z.enum(["9", "10", "11", "12"], { message: "Choose a grade level." }),
 });
 
 export const createAnnouncementSchema = z.object({

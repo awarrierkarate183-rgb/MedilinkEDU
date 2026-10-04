@@ -1,7 +1,7 @@
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { AddStudentForm } from "@/components/portal/AddStudentForm";
-import { InviteMemberForm, RevokeButton } from "@/components/portal/InviteMemberForm";
+import { RevokeButton } from "@/components/portal/InviteMemberForm";
 import { ApproveMemberButton } from "@/components/portal/ApproveMemberButton";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
 import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
@@ -18,7 +18,7 @@ export default async function MembersPage() {
   const { data: invites, error: inviteError } = supabase
     ? await supabase
         .from("invitations")
-        .select("id, email, expires_at, revoked_at, used_at, use_count")
+        .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
         .eq("chapter_id", profile?.chapter_id)
         .is("revoked_at", null)
         .is("used_at", null)
@@ -29,13 +29,12 @@ export default async function MembersPage() {
   return (
     <div className="space-y-8">
       <AddStudentForm />
-      <InviteMemberForm />
       <section>
         <h2 className="mb-3 text-lg font-semibold">Roster</h2>
         {!members?.length ? (
           <PortalEmpty
             title="No members yet"
-            body="Invite students. Passwords are never shown here. Inactive members keep historical competition records."
+            body="Add a student above. They create their own student portal account from the email."
           />
         ) : (
           <ul className="divide-y divide-border rounded-[var(--radius)] bg-white">
@@ -65,14 +64,22 @@ export default async function MembersPage() {
           <p className="text-sm text-muted">No open invitations.</p>
         ) : (
           <ul className="space-y-2">
-            {invites.map((invite) => (
-              <li key={invite.id} className="flex items-center justify-between rounded-md bg-white px-4 py-3">
-                <span className="text-sm">
-                  {invite.email || "Unaddressed code"} expires {new Date(invite.expires_at).toLocaleDateString()}
-                </span>
-                <RevokeButton id={invite.id} />
-              </li>
-            ))}
+            {invites.map((invite) => {
+              const name = [invite.first_name, invite.last_name].filter(Boolean).join(" ");
+              return (
+                <li key={invite.id} className="flex items-center justify-between rounded-md bg-white px-4 py-3">
+                  <span className="text-sm">
+                    <strong>{name || "Student"}</strong>
+                    <span className="ml-2 text-muted">
+                      {invite.email}
+                      {invite.grade ? ` · Grade ${invite.grade}` : ""}
+                      {` · expires ${new Date(invite.expires_at).toLocaleDateString()}`}
+                    </span>
+                  </span>
+                  <RevokeButton id={invite.id} />
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>

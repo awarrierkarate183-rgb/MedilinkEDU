@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { generatePortalPassword, generatePublicCode, slugFromName } from "@/lib/auth/passwords";
-import { writeAudit } from "@/lib/platform/operations";
+import { generatePublicCode, slugFromName } from "@/lib/auth/passwords";
+import { createInvitation, writeAudit } from "@/lib/platform/operations";
 import { sendTransactionalEmail } from "@/lib/email";
 import { siteUrl } from "@/lib/env";
 
@@ -269,9 +269,9 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
   };
 }
 
-export async function addStudentAccount(
+export async function inviteStudent(
   admin: Admin,
-  actor: { id: string; chapterId: string | null; role: string },
+  actor: { id: string; chapterId: string | null; role: string; stateScope?: string | null },
   input: AddStudentInput,
 ) {
   if (!actor.chapterId) return { error: "Your advisor account is not attached to a chapter yet." };
@@ -290,67 +290,74 @@ export async function addStudentAccount(
   }
 
   const email = input.email.trim().toLowerCase();
+  const firstName = input.firstName.trim();
+  const lastName = input.lastName.trim();
   const { data: existing } = await admin.from("profiles").select("id").ilike("email", email).maybeSingle();
   if (existing) return { error: "That email already has a MediLink account." };
 
-  const password = generatePortalPassword();
-  const { data: created, error: userError } = await admin.auth.admin.createUser({
-    email,
-    password,
-    email_confirm: true,
-    user_metadata: {
-      first_name: input.firstName.trim(),
-      last_name: input.lastName.trim(),
-      full_name: `${input.firstName.trim()} ${input.lastName.trim()}`.trim(),
-    },
-    app_metadata: { role: "STUDENT" },
-  });
-  if (userError || !created.user) {
-    if (/already|exists|registered/i.test(userError?.message || "")) {
-      return { error: "That email already has a MediLink account." };
-    }
-    return { error: "The student account could not be created. Try again." };
-  }
+  const { data: openInvite } = await admin
+    .from("invitations")
+    .select("id")
+    .eq("chapter_id", actor.chapterId)
+    .ilike("email", email)
+    .is("used_at", null)
+    .is("revoked_at", null)
+    .gt("expires_at", new Date().toISOString())
+    .maybeSingle();
+  if (openInvite) return { error: "That student already has an open invitation." };
 
-  const profileError = await ensureProfile(admin, created.user.id, {
+  const created = await createInvitation({
+    client: admin,
+    actor: {
+      id: actor.id,
+      role: actor.role as "CHAPTER_ADVISOR" | "STATE_ADMIN" | "SUPER_ADMIN",
+      chapterId: actor.chapterId,
+      stateScope: actor.stateScope,
+    },
     email,
-    firstName: input.firstName.trim(),
-    lastName: input.lastName.trim(),
     role: "STUDENT",
-    chapterId: actor.chapterId,
+    firstName,
+    lastName,
     grade: input.grade,
   });
-  if (profileError) {
-    await admin.auth.admin.deleteUser(created.user.id);
-    return { error: "The student profile could not be finished. Try again." };
+  if ("error" in created && created.error) return { error: created.error };
+  if (!("token" in created) || !created.token) {
+    return { error: "The invitation could not be created." };
   }
 
-  const { error: memberError } = await admin.from("chapter_members").insert({
-    chapter_id: actor.chapterId,
-    profile_id: created.user.id,
-    status: "ACTIVE",
-    joined_at: new Date().toISOString(),
-  });
-  if (memberError) {
-    await admin.auth.admin.deleteUser(created.user.id);
-    return { error: "The student could not be added to the roster. Try again." };
+  let sent = Boolean(created.sent);
+  if (!sent) {
+    const { data: invited, error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, {
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        full_name: `${firstName} ${lastName}`.trim(),
+        grade: input.grade || "",
+      },
+      redirectTo: `${siteUrl()}/auth/callback?next=${encodeURIComponent(`/portal/invite/${created.token}`)}`,
+    });
+    if (!inviteError && invited?.user) {
+      sent = true;
+      await admin
+        .from("invitations")
+        .update({ invited_user_id: invited.user.id })
+        .eq("id", created.id);
+    } else if (/already|exists|registered/i.test(inviteError?.message || "")) {
+      await admin.from("invitations").update({ revoked_at: new Date().toISOString() }).eq("id", created.id);
+      return { error: "That email already has a MediLink account." };
+    }
   }
 
-  await writeAudit(admin, actor.id, "student.created", "profile", created.user.id, {
+  await writeAudit(admin, actor.id, "student.invited", "invitation", created.id, {
     chapter_id: actor.chapterId,
-  });
-  await sendTransactionalEmail({
-    to: email,
-    subject: "Your MediLink student account",
-    text: `Your advisor added you to a MediLink chapter. Sign in at ${siteUrl()}/portal/login with this email.`,
-    template: "student_invitation",
+    email,
   });
 
   return {
     email,
-    password,
-    name: `${input.firstName.trim()} ${input.lastName.trim()}`.trim(),
-    loginUrl: `${siteUrl()}/portal/login`,
+    name: `${firstName} ${lastName}`.trim(),
+    sent,
+    inviteUrl: sent ? undefined : created.inviteUrl,
   };
 }
 

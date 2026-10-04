@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { generatePortalPassword, generatePublicCode, slugFromName } from "../lib/auth/passwords";
-import { startChapterSchema } from "../lib/api/schemas";
+import { addStudentSchema, startChapterSchema } from "../lib/api/schemas";
+import { studentInviteMessage } from "../lib/email/student-invite";
 
 describe("chapter automation helpers", () => {
   it("creates a password that can be shown once", () => {
@@ -49,6 +50,34 @@ describe("chapter automation helpers", () => {
       highSchool: "yes",
     });
     expect(parsed.success).toBe(false);
+  });
+
+  it("builds a student invite email with a create-account button", () => {
+    const message = studentInviteMessage({
+      firstName: "Sam",
+      inviteUrl: "https://medilink-edu.vercel.app/portal/invite/abc",
+      expiresAt: "2026-10-16T00:00:00.000Z",
+    });
+    expect(message.subject).toContain("student account");
+    expect(message.text).toContain("https://medilink-edu.vercel.app/portal/invite/abc");
+    expect(message.html).toContain("Create your student account");
+  });
+
+  it("requires a student name, email, and grade to invite", () => {
+    const parsed = addStudentSchema.safeParse({
+      firstName: "Sam",
+      lastName: "Student",
+      email: "sam.student@example.com",
+      grade: "10",
+    });
+    expect(parsed.success).toBe(true);
+    expect(
+      addStudentSchema.safeParse({
+        firstName: "Sam",
+        lastName: "Student",
+        email: "sam.student@example.com",
+      }).success,
+    ).toBe(false);
   });
 
   it("rejects a missing high school confirmation", () => {
