@@ -18,6 +18,7 @@ export type StartChapterInput = {
   principalName?: string;
   estimatedStudents?: number;
   statement?: string;
+  password: string;
 };
 
 export type AddStudentInput = {
@@ -160,7 +161,7 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
   }
 
   const codes = await uniqueChapterCodes(admin, input.schoolName);
-  const password = generatePortalPassword();
+  const password = input.password;
   const school = input.schoolName.trim();
   const { data: chapter, error: chapterError } = await admin
     .from("chapters")

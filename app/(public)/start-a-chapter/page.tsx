@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/public/PageHero";
-import { StartChapterForm } from "@/components/public/StartChapterForm";
 import { OFFICER_ROLES } from "@/lib/constants";
 import { actionHref } from "@/lib/content/forms";
 
@@ -17,19 +17,19 @@ export default function StartChapterPage() {
       <PageHero
         kicker="Chapters"
         title="Start a chapter"
-        lead="Bring MediLink to your high school. Submit the request, save your login, and wait for an administrator to accept the chapter."
-      >
-        <ButtonLink href="#apply">Start a chapter</ButtonLink>
-      </PageHero>
-      <section className="band" id="apply">
-        <div className="container-ml grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <StartChapterForm />
+        lead="Bring MediLink to your high school. Open the request form, choose a portal password, then wait for an administrator to accept the chapter."
+      />
+
+      <section className="band">
+        <div className="container-ml grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <ol className="grid gap-3">
+            <p className="kicker">How it works</p>
+            <h2 className="text-3xl font-semibold">A request first. Tools after review.</h2>
+            <ol className="mt-6 grid gap-3">
               {[
-                "A school adult fills out the chapter request",
-                "They receive a username and password immediately",
-                "Signing in notifies administrators",
+                "Click here to open the full request form",
+                "Enter the school, advisor, and a password you choose",
+                "Sign in. Administrators get a notification",
                 "An administrator accepts the request",
                 "The advisor portal opens and students can be added",
               ].map((step, index) => (
@@ -39,13 +39,24 @@ export default function StartChapterPage() {
                 </li>
               ))}
             </ol>
-            <p className="mt-6 text-sm text-muted">
-              Exact charter requirements stay with leadership. This form only
-              collects what is needed to open a chapter and issue accounts.
+          </div>
+          <div className="flex min-h-[22rem] flex-col items-center justify-center rounded-[var(--radius)] bg-navy px-6 py-16 text-center text-white">
+            <p className="kicker">Ready</p>
+            <h2 className="mt-3 max-w-sm text-3xl font-semibold">Open the chapter request</h2>
+            <Link
+              href="/start-a-chapter/apply"
+              className="click-here mt-8 inline-flex rounded-md bg-gold px-8 py-4 text-lg font-semibold text-navy"
+            >
+              Click here
+            </Link>
+            <p className="mt-5 max-w-sm text-sm text-white/70">
+              The next page is the full form. It asks for school details, the
+              advisor, and the password you will use to sign in.
             </p>
           </div>
         </div>
       </section>
+
       <section className="band band--paper" id="officers">
         <div className="container-ml">
           <h2 className="text-3xl font-semibold">The same five offices in every chapter</h2>

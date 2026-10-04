@@ -173,13 +173,30 @@ h3 {
   animation: pulse-node 4.8s ease-in-out infinite;
 }
 
+@keyframes click-here {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.55);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 16px rgba(201, 162, 39, 0);
+  }
+}
+
+.click-here {
+  animation: click-here 1.7s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .reveal,
   .network-node,
-  .hero-network line {
+  .hero-network line,
+  .click-here {
     animation: none !important;
     transition: none !important;
   }

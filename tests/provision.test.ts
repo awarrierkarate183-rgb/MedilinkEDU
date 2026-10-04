@@ -28,10 +28,27 @@ describe("chapter automation helpers", () => {
       principalName: "Pat Principal",
       estimatedStudents: 18,
       statement: "Students asked for a healthcare problem-solving chapter.",
+      password: "ChapterPass12",
+      confirmPassword: "ChapterPass12",
       highSchool: "yes",
       website: "",
     });
     expect(parsed.success).toBe(true);
+  });
+
+  it("rejects mismatched portal passwords", () => {
+    const parsed = startChapterSchema.safeParse({
+      schoolName: "Lincoln High School",
+      city: "Charlotte",
+      state: "North Carolina",
+      advisorFirstName: "Ada",
+      advisorLastName: "Advisor",
+      advisorEmail: "ada.advisor@example.com",
+      password: "ChapterPass12",
+      confirmPassword: "DifferentPass12",
+      highSchool: "yes",
+    });
+    expect(parsed.success).toBe(false);
   });
 
   it("rejects a missing high school confirmation", () => {

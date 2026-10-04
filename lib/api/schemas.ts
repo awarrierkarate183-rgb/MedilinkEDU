@@ -74,10 +74,19 @@ export const startChapterSchema = z
     principalName: z.string().trim().max(120).optional().or(z.literal("")),
     estimatedStudents: z.coerce.number().int().min(1).max(500).optional(),
     statement: z.string().trim().max(1000).optional().or(z.literal("")),
+    password: z
+      .string()
+      .min(8, "Choose a password with at least 8 characters.")
+      .max(72, "That password is too long."),
+    confirmPassword: z.string().min(8, "Confirm the portal password."),
     highSchool: z.literal("yes", { message: "Confirm this is a high school chapter." }),
     website: z.string().max(0, "That request is not valid.").optional().or(z.literal("")),
   })
-  .strict();
+  .strict()
+  .refine((value) => value.password === value.confirmPassword, {
+    message: "The two passwords do not match.",
+    path: ["confirmPassword"],
+  });
 
 export const addStudentSchema = z.object({
   firstName: z.string().trim().min(1, "Enter the student first name.").max(80),

@@ -41,6 +41,7 @@ const nextConfig: NextConfig = {
       { source: "/chapters.html", destination: "/chapters", permanent: true },
       { source: "/start-chapter", destination: "/start-a-chapter", permanent: true },
       { source: "/start-chapter.html", destination: "/start-a-chapter", permanent: true },
+      { source: "/start-a-chapter.html", destination: "/start-a-chapter", permanent: true },
       { source: "/chapter-support.html", destination: "/chapter-support", permanent: true },
       { source: "/involved", destination: "/get-involved", permanent: true },
       { source: "/involved.html", destination: "/get-involved", permanent: true },

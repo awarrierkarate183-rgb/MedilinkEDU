@@ -7,13 +7,12 @@ import { ADVISOR_TITLES, US_STATES } from "@/lib/content/states";
 
 type Created = {
   email: string;
-  password: string;
   school: string;
   chapterCode: string;
-  loginUrl: string;
 };
 
-const field = "mt-1 w-full rounded-md border border-border px-3 py-2 font-normal";
+const field =
+  "mt-1 w-full rounded-md border border-border bg-white px-3 py-3 font-normal text-navy";
 
 export function StartChapterForm() {
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +38,8 @@ export function StartChapterForm() {
         ? Number(form.get("estimatedStudents"))
         : undefined,
       statement: String(form.get("statement") || ""),
+      password: String(form.get("password") || ""),
+      confirmPassword: String(form.get("confirmPassword") || ""),
       highSchool: form.get("highSchool") ? "yes" : "",
       website: String(form.get("website") || ""),
     };
@@ -64,125 +65,198 @@ export function StartChapterForm() {
 
   if (created) {
     return (
-      <div className="rounded-[var(--radius)] border border-border bg-white p-6">
-        <Alert title="Request received. Save your login." tone="navy">
-          {created.school} is waiting for an administrator to accept it. Save
-          these credentials now. You can sign in, but the advisor tools open
-          only after MediLink accepts the chapter. The password is not shown
-          again.
-        </Alert>
-        <dl className="mt-6 space-y-3 text-sm">
-          <div>
-            <dt className="text-muted">Username</dt>
-            <dd className="font-semibold">{created.email}</dd>
+      <div className="flex min-h-[calc(100vh-var(--header-h))] items-center justify-center px-4 py-16">
+        <div className="w-full max-w-xl rounded-[var(--radius)] bg-white p-8 text-navy">
+          <Alert title="Request received" tone="navy">
+            {created.school} is waiting for an administrator to accept it. Sign
+            in with the email you chose. The advisor tools open only after
+            MediLink accepts the chapter.
+          </Alert>
+          <dl className="mt-6 space-y-3 text-sm">
+            <div>
+              <dt className="text-muted">Username</dt>
+              <dd className="font-semibold">{created.email}</dd>
+            </div>
+            <div>
+              <dt className="text-muted">Password</dt>
+              <dd>The password you entered on this form.</dd>
+            </div>
+            <div>
+              <dt className="text-muted">Chapter code</dt>
+              <dd className="font-semibold">{created.chapterCode}</dd>
+            </div>
+          </dl>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <ButtonLink href="/portal/login">Sign in and wait for review</ButtonLink>
+            <ButtonLink href="/start-a-chapter" variant="outline">
+              Back
+            </ButtonLink>
           </div>
-          <div>
-            <dt className="text-muted">Temporary password</dt>
-            <dd className="break-all font-semibold">{created.password}</dd>
-          </div>
-          <div>
-            <dt className="text-muted">Chapter code</dt>
-            <dd className="font-semibold">{created.chapterCode}</dd>
-          </div>
-        </dl>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <ButtonLink href="/portal/login">Sign in and wait for review</ButtonLink>
         </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-[var(--radius)] border border-border bg-white p-6">
-      <h2 className="text-2xl font-semibold">Start your chapter</h2>
-      <p className="mt-2 text-sm text-muted">
-        This sends a chapter request and creates a login. An administrator
-        still has to accept the chapter before you can add students.
-      </p>
-      {error ? (
-        <div className="mt-4">
-          <Alert title="Chapter not created" tone="danger">
-            {error}
-          </Alert>
+    <form onSubmit={onSubmit} className="min-h-[calc(100vh-var(--header-h))] bg-navy text-white">
+      <div className="mx-auto grid min-h-[calc(100vh-var(--header-h))] w-full max-w-6xl gap-10 px-4 py-[calc(var(--header-h)+2rem)] lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+        <aside className="lg:sticky lg:top-[calc(var(--header-h)+1.5rem)]">
+          <p className="kicker">Chapter request</p>
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+            Apply for a MediLink chapter
+          </h1>
+          <p className="mt-4 max-w-md text-white/75">
+            Fill every section on this page. Your email is the portal username.
+            Choose a password you will remember. An administrator still has to
+            accept the chapter before you can add students.
+          </p>
+          <ol className="mt-8 space-y-3 text-sm text-white/80">
+            <li>1. School</li>
+            <li>2. Advisor</li>
+            <li>3. Portal password</li>
+            <li>4. Why this chapter</li>
+          </ol>
+          <p className="mt-8 text-sm">
+            <a href="/start-a-chapter" className="font-semibold text-gold">
+              Back to Start a Chapter
+            </a>
+          </p>
+        </aside>
+
+        <div className="space-y-6 pb-16">
+          {error ? (
+            <Alert title="Chapter not created" tone="danger">
+              {error}
+            </Alert>
+          ) : null}
+
+          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+            <p className="kicker">School</p>
+            <h2 className="mt-2 text-2xl font-semibold">Where will this chapter meet?</h2>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <label className="block text-sm font-semibold md:col-span-2">
+                High school name
+                <input name="schoolName" required className={field} />
+              </label>
+              <label className="block text-sm font-semibold">
+                City
+                <input name="city" required className={field} />
+              </label>
+              <label className="block text-sm font-semibold">
+                State
+                <select name="state" required defaultValue="" className={field}>
+                  <option value="" disabled>
+                    Choose a state
+                  </option>
+                  {US_STATES.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="block text-sm font-semibold">
+                Estimated interested students
+                <input name="estimatedStudents" type="number" min={1} max={500} className={field} />
+              </label>
+              <label className="block text-sm font-semibold">
+                Principal or school contact
+                <input name="principalName" className={field} />
+              </label>
+            </div>
+          </section>
+
+          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+            <p className="kicker">Advisor</p>
+            <h2 className="mt-2 text-2xl font-semibold">Who will run the chapter?</h2>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <label className="block text-sm font-semibold">
+                First name
+                <input name="advisorFirstName" required className={field} />
+              </label>
+              <label className="block text-sm font-semibold">
+                Last name
+                <input name="advisorLastName" required className={field} />
+              </label>
+              <label className="block text-sm font-semibold">
+                Email
+                <input name="advisorEmail" type="email" required autoComplete="email" className={field} />
+              </label>
+              <label className="block text-sm font-semibold">
+                Phone
+                <input name="advisorPhone" type="tel" className={field} />
+              </label>
+              <label className="block text-sm font-semibold md:col-span-2">
+                Role at the school
+                <select name="advisorTitle" defaultValue="Teacher" className={field}>
+                  {ADVISOR_TITLES.map((title) => (
+                    <option key={title} value={title}>
+                      {title}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+            <p className="kicker">Portal password</p>
+            <h2 className="mt-2 text-2xl font-semibold">Choose your login password</h2>
+            <p className="mt-2 text-sm text-muted">
+              Use at least 8 characters. This is the password you will type on
+              the portal login page with your email.
+            </p>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <label className="block text-sm font-semibold">
+                Password
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  minLength={8}
+                  autoComplete="new-password"
+                  className={field}
+                />
+              </label>
+              <label className="block text-sm font-semibold">
+                Confirm password
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  minLength={8}
+                  autoComplete="new-password"
+                  className={field}
+                />
+              </label>
+            </div>
+          </section>
+
+          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+            <p className="kicker">Chapter</p>
+            <h2 className="mt-2 text-2xl font-semibold">Why this school wants MediLink</h2>
+            <label className="mt-6 block text-sm font-semibold">
+              Short statement
+              <textarea name="statement" rows={5} className={field} />
+            </label>
+            <label className="sr-only" aria-hidden="true">
+              Website
+              <input name="website" tabIndex={-1} autoComplete="off" />
+            </label>
+            <label className="mt-5 flex items-start gap-3 text-sm">
+              <input name="highSchool" type="checkbox" value="yes" required className="mt-1" />
+              <span>
+                This is a high school chapter. MediLink does not charter middle
+                school or college chapters.
+              </span>
+            </label>
+            <div className="mt-8">
+              <Button type="submit" loading={loading} className="w-full md:w-auto">
+                Submit chapter request
+              </Button>
+            </div>
+          </section>
         </div>
-      ) : null}
-
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <label className="block text-sm font-semibold md:col-span-2">
-          High school name
-          <input name="schoolName" required className={field} />
-        </label>
-        <label className="block text-sm font-semibold">
-          City
-          <input name="city" required className={field} />
-        </label>
-        <label className="block text-sm font-semibold">
-          State
-          <select name="state" required defaultValue="" className={field}>
-            <option value="" disabled>
-              Choose a state
-            </option>
-            {US_STATES.map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="block text-sm font-semibold">
-          Advisor first name
-          <input name="advisorFirstName" required className={field} />
-        </label>
-        <label className="block text-sm font-semibold">
-          Advisor last name
-          <input name="advisorLastName" required className={field} />
-        </label>
-        <label className="block text-sm font-semibold">
-          Advisor email
-          <input name="advisorEmail" type="email" required autoComplete="email" className={field} />
-        </label>
-        <label className="block text-sm font-semibold">
-          Advisor phone
-          <input name="advisorPhone" type="tel" className={field} />
-        </label>
-        <label className="block text-sm font-semibold">
-          Role at the school
-          <select name="advisorTitle" defaultValue="Teacher" className={field}>
-            {ADVISOR_TITLES.map((title) => (
-              <option key={title} value={title}>
-                {title}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="block text-sm font-semibold">
-          Principal or school contact
-          <input name="principalName" className={field} />
-        </label>
-        <label className="block text-sm font-semibold">
-          Estimated interested students
-          <input name="estimatedStudents" type="number" min={1} max={500} className={field} />
-        </label>
-        <label className="block text-sm font-semibold md:col-span-2">
-          Why this school wants a chapter
-          <textarea name="statement" rows={4} className={field} />
-        </label>
-      </div>
-
-      <label className="sr-only" aria-hidden="true">
-        Website
-        <input name="website" tabIndex={-1} autoComplete="off" />
-      </label>
-
-      <label className="mt-5 flex items-start gap-3 text-sm">
-        <input name="highSchool" type="checkbox" value="yes" required className="mt-1" />
-        <span>This is a high school chapter. MediLink does not charter middle school or college chapters.</span>
-      </label>
-
-      <div className="mt-6">
-        <Button type="submit" loading={loading} className="w-full md:w-auto">
-          Submit chapter request
-        </Button>
       </div>
     </form>
   );
