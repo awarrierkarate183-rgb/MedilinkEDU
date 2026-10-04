@@ -1,4 +1,5 @@
 import { apiSuccess } from "@/lib/api/respond";
+import { httpMailerFromEnv, loadSmtpConfig } from "@/lib/email/config";
 import {
   configuredSupabaseUrl,
   hasServerSecret,
@@ -41,6 +42,6 @@ export async function GET() {
     urlMatchesProject: Boolean(
       projectRefFromKey() && configuredHost === `${projectRefFromKey()}.supabase.co`,
     ),
-    emailProvider: "none",
+    emailProvider: httpMailerFromEnv()?.provider || ((await loadSmtpConfig()) ? "smtp" : "queued"),
   });
 }

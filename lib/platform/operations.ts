@@ -1,6 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendTransactionalEmail } from "@/lib/email";
-import { sendInviteWithSupabaseMail } from "@/lib/email/supabase-mail";
+import { deliverInviteEmail } from "@/lib/email/deliver";
 import { studentInviteMessage } from "@/lib/email/student-invite";
 import { createInviteToken, hashToken, invitationIsUsable } from "@/lib/auth/tokens";
 import { canManageChapter, type Actor } from "@/lib/auth/roles";
@@ -98,25 +98,27 @@ export async function createInvitation(opts: {
             text: `Open this link to create your advisor account: ${inviteUrl}`,
             html: undefined as string | undefined,
           };
-    const mail = await sendTransactionalEmail({
-      to: opts.email,
-      subject: message.subject,
-      text: message.text,
-      html: message.html,
-      template: opts.role === "CHAPTER_ADVISOR" ? "advisor_invitation" : "student_invitation",
-    });
-    sent = mail.sent;
-    if (!sent) {
-      const viaAuth = await sendInviteWithSupabaseMail({
+    if (opts.role === "STUDENT") {
+      const delivered = await deliverInviteEmail({
         email: opts.email,
         firstName: opts.firstName || "",
         lastName: opts.lastName || "",
         inviteUrl,
+        expiresAt: expires,
       });
-      sent = viaAuth.sent;
-      if (viaAuth.userId) {
-        await opts.client.from("invitations").update({ invited_user_id: viaAuth.userId }).eq("id", inserted.id);
+      sent = delivered.sent;
+      if (delivered.userId) {
+        await opts.client.from("invitations").update({ invited_user_id: delivered.userId }).eq("id", inserted.id);
       }
+    } else {
+      const mail = await sendTransactionalEmail({
+        to: opts.email,
+        subject: message.subject,
+        text: message.text,
+        html: message.html,
+        template: "advisor_invitation",
+      });
+      sent = mail.sent;
     }
   }
   return { token, expires, id: inserted.id, sent, inviteUrl };
