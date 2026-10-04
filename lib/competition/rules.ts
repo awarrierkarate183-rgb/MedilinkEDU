@@ -61,6 +61,39 @@ export function assertNominationCap(existingNominations: number, alreadyNominate
   return null;
 }
 
+export function matchRosterNames(
+  roster: Array<{
+    id: string;
+    first_name?: string | null;
+    last_name?: string | null;
+    full_name?: string | null;
+    display_name?: string | null;
+    status?: string | null;
+  }>,
+  names: Array<{ firstName: string; lastName: string }>,
+) {
+  const used = new Set<string>();
+  const matched: string[] = [];
+  for (const name of names) {
+    const first = name.firstName.trim().toLowerCase();
+    const last = name.lastName.trim().toLowerCase();
+    const full = `${first} ${last}`.trim();
+    const hit = roster.find((row) => {
+      if (used.has(row.id) || row.status === "REMOVED") return false;
+      const rowFirst = (row.first_name || "").trim().toLowerCase();
+      const rowLast = (row.last_name || "").trim().toLowerCase();
+      const rowFull = (row.full_name || row.display_name || "").trim().toLowerCase();
+      return (rowFirst === first && rowLast === last) || rowFull === full;
+    });
+    if (!hit) {
+      return { error: `${name.firstName} ${name.lastName} is not on this school's active roster.` };
+    }
+    used.add(hit.id);
+    matched.push(hit.id);
+  }
+  return { profileIds: matched };
+}
+
 export function canEditLockedRoster(hasApprovedException: boolean, rosterLocked: boolean) {
   if (!rosterLocked) return null;
   if (hasApprovedException) return null;

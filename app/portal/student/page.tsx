@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
 import { requireRole } from "@/lib/auth/session";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { loadStudentDashboard } from "@/lib/data/dashboards";
+import { loadStudentAssignments } from "@/lib/data/admin-proceedings";
 
 function roleLabel(role?: string | null) {
   if (role === "CHAPTER_OFFICER") return "Chapter officer";
@@ -11,6 +13,10 @@ function roleLabel(role?: string | null) {
 export default async function StudentDashboard() {
   const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER"]);
   const result = await loadStudentDashboard(profile?.id || "", profile?.chapter_id ?? null);
+  const admin = createAdminClient();
+  const assigned = admin && profile
+    ? await loadStudentAssignments(admin, { profileId: profile.id, chapterId: profile.chapter_id })
+    : { assignments: [] };
   const data = result.data;
   const chapter = data?.chapter;
   const name = profile?.full_name || [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "Student";
@@ -48,6 +54,32 @@ export default async function StudentDashboard() {
             ) : null}
           </div>
         </dl>
+      </section>
+
+      <section>
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <h2 className="text-lg font-semibold">Your competitions</h2>
+          <Link href="/portal/student/competitions" className="text-sm font-semibold">
+            Open competitions
+          </Link>
+        </div>
+        {!assigned.assignments.length ? (
+          <PortalEmpty
+            title="No events assigned yet"
+            body="When an administrator or advisor enters your name in a competition, it will show here with instructions and a rubric when MediLink publishes them."
+          />
+        ) : (
+          <ul className="space-y-2">
+            {assigned.assignments.map((item) => (
+              <li key={`${item.tier}-${item.eventId}`} className="rounded-[var(--radius)] bg-white px-4 py-3">
+                <strong>{item.name}</strong>
+                <span className="ml-2 text-sm text-muted">
+                  {item.tier === "NORMAL" ? "Normal Event" : "Legacy Event"} · {item.formatLabel}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section>

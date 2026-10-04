@@ -9,6 +9,7 @@ import {
   assertNormalEventCap,
   assertNormalFormat,
   canEditLockedRoster,
+  matchRosterNames,
 } from "@/lib/competition/rules";
 import {
   assignRanks,
@@ -21,7 +22,7 @@ import {
   weightedChapterScore,
   type Round,
 } from "@/lib/competition/scoring";
-import { writeAudit } from "@/lib/platform/operations";
+import { notify, writeAudit } from "@/lib/platform/operations";
 
 type Admin = SupabaseClient;
 
@@ -119,7 +120,54 @@ export async function registerForNormalEvent(
   await writeAudit(admin, actor.id, "competition.normal_registered", "catalog_event", input.eventId, {
     chapter_id: chapterId,
   });
-  return { ok: true };
+  await Promise.all(
+    input.profileIds.map((profileId) =>
+      notify(
+        admin,
+        profileId,
+        "competition_assigned",
+        `You were entered in ${event.name}`,
+        `Open Competitions to see the format, your teammates, and the rubric when MediLink publishes it.`,
+        "/portal/student/competitions",
+      ),
+    ),
+  );
+  return { ok: true, eventId: input.eventId, eventName: event.name };
+}
+
+export async function assignStudentsByName(
+  admin: Admin,
+  actor: Actor,
+  input: {
+    chapterId: string;
+    eventId: string;
+    students: Array<{ firstName: string; lastName: string }>;
+  },
+) {
+  if (!isAdminRole(actor.role) && !canManageChapterCompetitions(actor)) {
+    return { error: "Only an administrator, advisor, or officer can enter a student in an event." };
+  }
+  if (!isAdminRole(actor.role) && actor.chapterId !== input.chapterId) {
+    return { error: "You can only enter students from your own chapter." };
+  }
+  if (actor.role === "STATE_ADMIN" && actor.stateScope) {
+    const { data: chapter } = await admin.from("chapters").select("state").eq("id", input.chapterId).maybeSingle();
+    if (!chapter || chapter.state !== actor.stateScope) {
+      return { error: "That school is outside your state." };
+    }
+  }
+  const { data: roster } = await admin
+    .from("profiles")
+    .select("id, first_name, last_name, full_name, display_name, status, chapter_id, role")
+    .eq("chapter_id", input.chapterId)
+    .in("role", ["STUDENT", "CHAPTER_OFFICER"]);
+  const matched = matchRosterNames(roster ?? [], input.students);
+  if ("error" in matched) return matched;
+  return registerForNormalEvent(admin, actor, {
+    eventId: input.eventId,
+    profileIds: matched.profileIds,
+    chapterId: input.chapterId,
+  });
 }
 
 export async function saveLegacyDelegation(
@@ -251,6 +299,19 @@ export async function assignLegacyEvent(
     created_by: actor.id,
   });
   if (error) return { error: error.message };
+  const event = getCatalogEvent(input.eventId);
+  await Promise.all(
+    (members ?? []).map((row) =>
+      notify(
+        admin,
+        row.profile_id,
+        "competition_assigned",
+        `Your group was entered in ${event?.name || "a Legacy Event"}`,
+        `Open Competitions to see the format, your group, and the rubric when MediLink publishes it.`,
+        "/portal/student/competitions",
+      ),
+    ),
+  );
   return { ok: true };
 }
 

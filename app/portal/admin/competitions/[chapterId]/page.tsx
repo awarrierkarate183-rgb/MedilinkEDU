@@ -1,14 +1,20 @@
+import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth/session";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 import { CompetitionDesk } from "@/components/portal/CompetitionDesk";
-import { SchoolDirectory } from "@/components/portal/SchoolDirectory";
+import { SchoolWorkbook } from "@/components/portal/SchoolWorkbook";
 import { loadCompetitionWorkspace } from "@/lib/data/competition-workspace";
-import { loadSchoolDirectory } from "@/lib/data/admin-proceedings";
+import { loadSchoolWorkbook } from "@/lib/data/admin-proceedings";
 import type { Actor } from "@/lib/auth/roles";
 import type { AppRole } from "@/lib/constants";
 
-export default async function AdminCompetitionsPage() {
+export default async function AdminSchoolCompetitionsPage({
+  params,
+}: {
+  params: Promise<{ chapterId: string }>;
+}) {
+  const { chapterId } = await params;
   const { profile } = await requireRole(["SUPER_ADMIN", "STATE_ADMIN"]);
   const admin = createAdminClient();
   if (!admin || !profile) return <ConnectionTrouble />;
@@ -18,41 +24,29 @@ export default async function AdminCompetitionsPage() {
     chapterId: profile.chapter_id,
     stateScope: profile.state_scope,
   };
-  const [directory, data] = await Promise.all([
-    loadSchoolDirectory(admin, actor),
+  const [workbook, data] = await Promise.all([
+    loadSchoolWorkbook(admin, actor, chapterId),
     loadCompetitionWorkspace(admin, {
-      chapterId: profile.chapter_id,
+      chapterId,
       profileId: profile.id,
       adminView: true,
     }),
   ]);
+  if (!workbook.school) notFound();
   const members = Array.isArray(data.delegation?.legacy_delegation_members)
     ? data.delegation.legacy_delegation_members
     : [];
   return (
     <div className="space-y-6">
-      <section className="rounded-[var(--radius)] bg-white p-5">
-        <h2 className="text-xl font-semibold">How to enter a student in a competition</h2>
-        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm">
-          <li>Open the school from the list below. Every school that has come through on MediLink is listed.</li>
-          <li>Type the student first and last names exactly as they appear on that school's roster.</li>
-          <li>Choose the competition they are doing. Add teammates only if the event allows a team.</li>
-          <li>Submit the assignment. It appears on each named student's Competitions page right away, with a slot for instructions and a rubric.</li>
-        </ol>
-        <p className="mt-3 text-sm text-muted">
-          Season {directory.season?.label || "not opened"}. Students cannot see unpublished
-          rubrics. When MediLink publishes a guide for an event, every assigned
-          student receives it automatically. Do not invent school names or scores here.
-        </p>
-      </section>
-      {directory.error ? (
-        <p className="text-sm text-muted">{directory.error}</p>
-      ) : null}
-      <SchoolDirectory schools={directory.schools} seasonLabel={directory.season?.label} />
+      <SchoolWorkbook
+        school={workbook.school}
+        students={workbook.students}
+        seasonLabel={workbook.season?.label}
+      />
       <CompetitionDesk
         mode="admin"
         profileId={profile.id}
-        chapterId={profile.chapter_id}
+        chapterId={chapterId}
         seasonLabel={data.season?.label}
         rosterLocked={Boolean(data.season?.roster_locked)}
         nominationsOpen={Boolean(data.season?.invitational_nominations_open)}
@@ -63,11 +57,11 @@ export default async function AdminCompetitionsPage() {
           groupB: members.filter((row) => row.group_label === "B").map((row) => row.profile_id),
         }}
         entries={data.entries}
-        results={data.results}
+        results={data.results.filter((row) => row.chapter_id === chapterId)}
         annual={data.annual}
         apex={data.apex}
         invitees={data.invitees}
-        candidates={data.candidates}
+        candidates={data.candidates.filter((row) => row.chapter_id === chapterId)}
         chapters={data.chapters}
         cutoffs={data.cutoffs}
       />

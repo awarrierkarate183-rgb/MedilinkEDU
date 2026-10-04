@@ -6,6 +6,7 @@ import {
   assertNormalEventCap,
   assertNormalFormat,
   canEditLockedRoster,
+  matchRosterNames,
 } from "../lib/competition/rules";
 import {
   legacyAdvancesFromRegional,
@@ -39,6 +40,23 @@ describe("competition rules", () => {
     expect(assertLegacyGroups(["a", "b", "c", "d", "e"], [])).toMatch(/at most 4/);
     expect(assertLegacyEntry("the-meridian-hearing", true, 4)).toMatch(/already entered/);
     expect(assertLegacyEntry("the-meridian-hearing", false, 3)).toMatch(/4 students/);
+  });
+
+  it("matches roster names and rejects unknown students", () => {
+    const roster = [
+      { id: "a", first_name: "Rithvik", last_name: "Balamurali", status: "ACTIVE" },
+      { id: "b", full_name: "Jordan Lee", status: "ACTIVE" },
+      { id: "c", first_name: "Sam", last_name: "Patel", status: "REMOVED" },
+    ];
+    expect(
+      matchRosterNames(roster, [
+        { firstName: "Rithvik", lastName: "Balamurali" },
+        { firstName: "Jordan", lastName: "Lee" },
+      ]),
+    ).toEqual({ profileIds: ["a", "b"] });
+    expect(matchRosterNames(roster, [{ firstName: "Sam", lastName: "Patel" }])).toEqual({
+      error: "Sam Patel is not on this school's active roster.",
+    });
   });
 
   it("caps invitational nominations at two and locks the roster", () => {

@@ -2,20 +2,30 @@ import { requireRole } from "@/lib/auth/session";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 import { CompetitionDesk } from "@/components/portal/CompetitionDesk";
+import { StudentEventBoard } from "@/components/portal/StudentEventBoard";
 import { loadCompetitionWorkspace } from "@/lib/data/competition-workspace";
+import { loadStudentAssignments } from "@/lib/data/admin-proceedings";
 
 export default async function StudentCompetitionsPage() {
   const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER"]);
   const admin = createAdminClient();
   if (!admin || !profile) return <ConnectionTrouble />;
-  const data = await loadCompetitionWorkspace(admin, {
-    chapterId: profile.chapter_id,
-    profileId: profile.id,
-  });
+  const [data, assigned] = await Promise.all([
+    loadCompetitionWorkspace(admin, {
+      chapterId: profile.chapter_id,
+      profileId: profile.id,
+    }),
+    loadStudentAssignments(admin, {
+      profileId: profile.id,
+      chapterId: profile.chapter_id,
+    }),
+  ]);
   const members = Array.isArray(data.delegation?.legacy_delegation_members)
     ? data.delegation.legacy_delegation_members
     : [];
   return (
+    <div className="space-y-6">
+      <StudentEventBoard assignments={assigned.assignments} seasonLabel={assigned.season?.label} />
     <CompetitionDesk
       mode={profile.role === "CHAPTER_OFFICER" ? "officer" : "student"}
       profileId={profile.id}
@@ -38,5 +48,6 @@ export default async function StudentCompetitionsPage() {
       chapters={[]}
       cutoffs={data.cutoffs}
     />
+    </div>
   );
 }

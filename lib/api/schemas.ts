@@ -116,6 +116,20 @@ export const normalRegisterSchema = z.object({
   chapterId: uuid.optional(),
 });
 
+export const assignByNameSchema = z.object({
+  chapterId: uuid,
+  eventId: z.string().min(3),
+  students: z
+    .array(
+      z.object({
+        firstName: z.string().trim().min(1, "Enter each student first name."),
+        lastName: z.string().trim().min(1, "Enter each student last name."),
+      }),
+    )
+    .min(1, "Enter at least one student name.")
+    .max(5, "A team may have at most five students."),
+});
+
 export const legacyRosterSchema = z.object({
   groupA: z.array(uuid).max(4),
   groupB: z.array(uuid).max(4),

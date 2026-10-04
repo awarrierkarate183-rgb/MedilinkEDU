@@ -18,6 +18,19 @@ export default async function AdminDashboard() {
         <MetricCard label="Submissions in review" value={data?.submissions ?? 0} />
         <MetricCard label="Recent audit events" value={data?.activity.length ?? 0} />
       </div>
+      <section className="rounded-[var(--radius)] bg-white p-5">
+        <h2 className="text-lg font-semibold">School proceedings</h2>
+        <p className="mt-2 text-sm text-muted">
+          Every school that has come through is listed on Competitions. Open a
+          school to see its workbook, type student names, submit the event they
+          are doing, and that assignment appears on the student portal.
+        </p>
+        <p className="mt-3 text-sm">
+          <a href="/portal/admin/competitions" className="font-semibold underline">
+            Open the school directory
+          </a>
+        </p>
+      </section>
       <section>
         <h2 className="mb-3 text-lg font-semibold">Chapter requests</h2>
         {!data?.alerts?.length ? (
