@@ -3,67 +3,105 @@ import { tracks } from "@/lib/content/curriculum";
 
 type ProgressRow = { module_id: string; status: string; progress_percent: number };
 
+async function settled<T>(promise: PromiseLike<{ data?: T | null; count?: number | null; error: unknown }>) {
+  try {
+    const result = await promise;
+    if (result.error) return { data: null as T | null, count: 0 };
+    return { data: (result.data ?? null) as T | null, count: result.count ?? 0 };
+  } catch {
+    return { data: null as T | null, count: 0 };
+  }
+}
+
 export async function loadStudentDashboard(userId: string, chapterId: string | null) {
   const supabase = await createClient();
-  if (!supabase) return { configured: false as const, error: false as const, data: null };
-  try {
+  if (!supabase) {
+    return {
+      configured: false as const,
+      error: false as const,
+      data: {
+        chapter: null,
+        events: [] as Array<{ id: string; title: string; start_at: string | null; event_date: string | null; status: string }>,
+        announcements: [] as Array<{ id: string; title: string; body: string | null; message: string | null; created_at: string }>,
+        competitionCount: 0,
+        curriculumCompleted: 0,
+        curriculumTotal: tracks.reduce((sum, track) => sum + track.modules.length, 0),
+        ideaCount: 0,
+        projectCount: 0,
+        points: 0,
+      },
+    };
+  }
 
   const now = new Date().toISOString();
+  const eventsQuery = chapterId
+    ? supabase
+        .from("events")
+        .select("id, title, start_at, event_date, status")
+        .eq("chapter_id", chapterId)
+        .in("status", ["PUBLISHED", "REGISTRATION_OPEN"])
+        .order("event_date", { ascending: true })
+        .limit(5)
+    : supabase
+        .from("events")
+        .select("id, title, start_at, event_date, status")
+        .in("status", ["PUBLISHED", "REGISTRATION_OPEN"])
+        .order("event_date", { ascending: true })
+        .limit(5);
+
+  const announcementsQuery = supabase
+    .from("announcements")
+    .select("id, title, body, message, created_at, status, chapter_id, audience_type, audience")
+    .order("created_at", { ascending: false })
+    .limit(12);
+
   const [
     chapterRes,
     eventsRes,
+    announcementsRes,
     competitionsRes,
     progressRes,
     ideasRes,
     projectsRes,
-    notificationsRes,
     pointsRes,
   ] = await Promise.all([
     chapterId
-      ? supabase.from("chapters").select("id, name, status, school").eq("id", chapterId).maybeSingle()
-      : Promise.resolve({ data: null, error: null }),
-    supabase
-      .from("events")
-      .select("id, title, start_at, event_date, status")
-      .in("status", ["PUBLISHED", "REGISTRATION_OPEN"])
-      .order("start_at", { ascending: true })
-      .limit(5),
-    supabase
-      .from("competitions")
-      .select("id", { count: "exact", head: true })
-      .in("status", ["UPCOMING", "REGISTRATION_OPEN", "IN_PROGRESS"]),
-    supabase
-      .from("curriculum_progress")
-      .select("status")
-      .eq("profile_id", userId),
-    supabase.from("ideas").select("id", { count: "exact", head: true }).eq("owner_id", userId),
+      ? settled<{ id: string; name: string; status: string; school: string | null; city: string | null; state: string | null }>(
+          supabase.from("chapters").select("id, name, status, school, city, state").eq("id", chapterId).maybeSingle(),
+        )
+      : Promise.resolve({ data: null, count: 0 }),
+    settled<Array<{ id: string; title: string; start_at: string | null; event_date: string | null; status: string }>>(eventsQuery),
+    settled<
+      Array<{
+        id: string;
+        title: string;
+        body: string | null;
+        message: string | null;
+        created_at: string;
+        status: string | null;
+        chapter_id: string | null;
+        audience_type: string | null;
+        audience: string | null;
+      }>
+    >(announcementsQuery),
+    settled(supabase.from("competitions").select("id", { count: "exact", head: true }).in("status", ["UPCOMING", "REGISTRATION_OPEN", "IN_PROGRESS"])),
+    settled<Array<{ status: string }>>(supabase.from("curriculum_progress").select("status").eq("profile_id", userId)),
+    settled(supabase.from("ideas").select("id", { count: "exact", head: true }).eq("owner_id", userId)),
     chapterId
-      ? supabase.from("projects").select("id", { count: "exact", head: true }).eq("chapter_id", chapterId)
-      : Promise.resolve({ count: 0, error: null }),
-    supabase
-      .from("notifications")
-      .select("id, title, message, created_at, read_at")
-      .eq("profile_id", userId)
-      .is("read_at", null)
-      .order("created_at", { ascending: false })
-      .limit(5),
-    supabase.from("points_transactions").select("amount").eq("profile_id", userId),
+      ? settled(supabase.from("projects").select("id", { count: "exact", head: true }).eq("chapter_id", chapterId))
+      : Promise.resolve({ data: null, count: 0 }),
+    settled<Array<{ amount: number }>>(supabase.from("points_transactions").select("amount").eq("profile_id", userId)),
   ]);
 
-  const failed = [
-    chapterRes,
-    eventsRes,
-    competitionsRes,
-    progressRes,
-    ideasRes,
-    projectsRes,
-    notificationsRes,
-    pointsRes,
-  ].some((row) => row && "error" in row && row.error);
+  const announcements = (announcementsRes.data || []).filter((row) => {
+    const status = (row.status || "").toLowerCase();
+    const audience = `${row.audience_type || ""} ${row.audience || ""}`.toLowerCase();
+    if (status && status !== "published" && status !== "publish") return false;
+    if (audience.includes("advisor")) return false;
+    return true;
+  });
 
-  if (failed) return { configured: true as const, error: true as const, data: null };
-
-  const completed = (progressRes.data || []).filter((row: { status: string }) => row.status === "COMPLETED").length;
+  const completed = (progressRes.data || []).filter((row) => row.status === "COMPLETED").length;
   const totalModules = tracks.reduce((sum, track) => sum + track.modules.length, 0);
 
   return {
@@ -72,19 +110,16 @@ export async function loadStudentDashboard(userId: string, chapterId: string | n
     data: {
       chapter: chapterRes.data,
       events: eventsRes.data || [],
+      announcements,
       competitionCount: competitionsRes.count ?? 0,
       curriculumCompleted: completed,
       curriculumTotal: totalModules,
       ideaCount: ideasRes.count ?? 0,
       projectCount: projectsRes.count ?? 0,
-      notifications: notificationsRes.data || [],
-      points: (pointsRes.data || []).reduce((sum: number, row: { amount: number }) => sum + row.amount, 0),
+      points: (pointsRes.data || []).reduce((sum, row) => sum + (row.amount || 0), 0),
       generatedAt: now,
     },
   };
-  } catch {
-    return { configured: true as const, error: true as const, data: null };
-  }
 }
 
 export async function loadAdvisorDashboard(chapterId: string | null) {

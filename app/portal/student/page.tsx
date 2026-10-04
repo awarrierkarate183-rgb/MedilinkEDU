@@ -1,52 +1,104 @@
-import { MetricCard } from "@/components/ui/Card";
+import Link from "next/link";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
-import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 import { requireRole } from "@/lib/auth/session";
 import { loadStudentDashboard } from "@/lib/data/dashboards";
 
+function roleLabel(role?: string | null) {
+  if (role === "CHAPTER_OFFICER") return "Chapter officer";
+  return "Student";
+}
+
 export default async function StudentDashboard() {
-  const { profile } = await requireRole([
-    "STUDENT",
-    "CHAPTER_OFFICER",
-    "CHAPTER_ADVISOR",
-    "STATE_ADMIN",
-    "SUPER_ADMIN",
-  ]);
-  if (!profile) return <ConnectionTrouble />;
-  const result = await loadStudentDashboard(profile.id, profile.chapter_id ?? null);
-  if (result.error) return <ConnectionTrouble />;
+  const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER"]);
+  const result = await loadStudentDashboard(profile?.id || "", profile?.chapter_id ?? null);
   const data = result.data;
+  const chapter = data?.chapter;
+  const name = profile?.full_name || [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "Student";
 
   return (
     <div className="space-y-8">
-      <p className="text-lg font-semibold">{data?.chapter?.name || "Chapter assignment pending"}</p>
-      <div className="grid gap-4 md:grid-cols-5">
-        <MetricCard label="Upcoming events" value={data?.events.length ?? 0} />
-        <MetricCard label="Active competitions" value={data?.competitionCount ?? 0} />
-        <MetricCard
-          label="Curriculum progress"
-          value={`${data?.curriculumCompleted ?? 0}/${data?.curriculumTotal ?? 0}`}
-        />
-        <MetricCard label="My points" value={data?.points ?? 0} />
-        <MetricCard label="Ideas" value={data?.ideaCount ?? 0} />
-      </div>
+      <section className="rounded-[var(--radius)] bg-white p-5">
+        <h2 className="text-lg font-semibold">Your information</h2>
+        <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <dt className="text-sm text-muted">Name</dt>
+            <dd className="font-semibold">{name}</dd>
+          </div>
+          <div>
+            <dt className="text-sm text-muted">Email</dt>
+            <dd className="font-semibold">{profile?.email || "Not on file"}</dd>
+          </div>
+          <div>
+            <dt className="text-sm text-muted">Grade</dt>
+            <dd className="font-semibold">{profile?.grade || "Not set"}</dd>
+          </div>
+          <div>
+            <dt className="text-sm text-muted">Role</dt>
+            <dd className="font-semibold">{roleLabel(profile?.role)}</dd>
+          </div>
+          <div className="sm:col-span-2">
+            <dt className="text-sm text-muted">Chapter</dt>
+            <dd className="font-semibold">
+              {chapter?.school || chapter?.name || "Your advisor has not attached a chapter yet"}
+            </dd>
+            {chapter?.city || chapter?.state ? (
+              <p className="text-sm text-muted">
+                {[chapter.city, chapter.state].filter(Boolean).join(", ")}
+              </p>
+            ) : null}
+          </div>
+        </dl>
+      </section>
+
       <section>
-        <h2 className="mb-3 text-lg font-semibold">Your next steps</h2>
-        {!data?.notifications.length && !data?.events.length ? (
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <h2 className="text-lg font-semibold">Advisor updates</h2>
+          <Link href="/portal/student/announcements" className="text-sm font-semibold">
+            All updates
+          </Link>
+        </div>
+        {!data?.announcements.length ? (
           <PortalEmpty
-            title="You're all caught up."
-            body="Next steps are built from your events, curriculum progress, and open competitions. Nothing is invented here."
+            title="No advisor updates yet"
+            body="When your chapter advisor publishes an announcement, it will show here."
+          />
+        ) : (
+          <ul className="space-y-3">
+            {data.announcements.map((update) => (
+              <li key={update.id} className="rounded-[var(--radius)] bg-white px-4 py-4">
+                <p className="text-sm text-muted">
+                  {new Date(update.created_at).toLocaleDateString()}
+                </p>
+                <h3 className="font-semibold">{update.title}</h3>
+                <p className="mt-1 text-sm text-muted">{update.body || update.message}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section>
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <h2 className="text-lg font-semibold">Upcoming events</h2>
+          <Link href="/portal/student/events" className="text-sm font-semibold">
+            My events
+          </Link>
+        </div>
+        {!data?.events.length ? (
+          <PortalEmpty
+            title="No upcoming events"
+            body="Published chapter events will appear here."
           />
         ) : (
           <ul className="space-y-2">
-            {data?.notifications.map((item) => (
-              <li key={item.id} className="rounded-[var(--radius)] bg-white px-4 py-3">
-                {item.title}
-              </li>
-            ))}
-            {data?.events.map((event) => (
+            {data.events.map((event) => (
               <li key={event.id} className="rounded-[var(--radius)] bg-white px-4 py-3">
-                Upcoming: {event.title}
+                <strong>{event.title}</strong>
+                <span className="ml-2 text-sm text-muted">
+                  {event.event_date
+                    ? new Date(event.event_date).toLocaleDateString()
+                    : event.status.replaceAll("_", " ")}
+                </span>
               </li>
             ))}
           </ul>

@@ -1,32 +1,31 @@
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
-import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
 
 export default async function StudentEventsPage() {
-  const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER", "CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
+  const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER"]);
   const supabase = await createClient();
-  const { data, error } = supabase
-    ? await supabase
+  const query = supabase
+    ? supabase
         .from("events")
-        .select("id, title, start_at, location, status, chapter_id")
+        .select("id, title, event_date, location, status, chapter_id")
         .in("status", ["PUBLISHED", "REGISTRATION_OPEN", "REGISTRATION_CLOSED"])
-        .order("start_at", { ascending: true })
+        .order("event_date", { ascending: true })
         .limit(25)
-    : { data: [], error: null };
-
-  if (error) return <ConnectionTrouble />;
+    : null;
+  const { data, error } = query ? await query : { data: [], error: null };
+  const events = error ? [] : data || [];
 
   return (
     <div className="space-y-6">
-      {!data?.length ? (
+      {!events.length ? (
         <PortalEmpty
           title="You're all caught up. New MediLink events will appear here."
           body="Chapter, regional, state, national, workshop, webinar, competition, and deadline events are listed when published."
         />
       ) : (
         <ul className="space-y-2">
-          {data.map((event) => (
+          {events.map((event) => (
             <li key={event.id} className="rounded-[var(--radius)] bg-white px-4 py-3">
               <strong>{event.title}</strong>
               <span className="ml-2 text-sm text-muted">{event.status.replaceAll("_", " ")}</span>
