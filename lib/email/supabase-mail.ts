@@ -8,7 +8,7 @@ export async function sendInviteWithSupabaseMail(opts: {
 }) {
   const url = supabaseUrl();
   const key = supabaseSecretKey();
-  if (!url || !key) return { sent: false, userId: undefined as string | undefined };
+  if (!url || !key) return { sent: false, status: 0, userId: undefined as string | undefined };
 
   const response = await fetch(`${url}/auth/v1/invite`, {
     method: "POST",
@@ -37,7 +37,7 @@ export async function sendInviteWithSupabaseMail(opts: {
   }
   if (!response.ok) {
     console.error("[email:supabase]", response.status, detail.slice(0, 300));
-    return { sent: false, userId: userId || undefined };
+    return { sent: false, status: response.status, userId: userId || undefined };
   }
-  return { sent: true, userId: userId || undefined };
+  return { sent: true, status: response.status, userId: userId || undefined };
 }

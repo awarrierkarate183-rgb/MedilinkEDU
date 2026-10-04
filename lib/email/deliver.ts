@@ -4,6 +4,30 @@ import { sendInviteWithSupabaseMail } from "@/lib/email/supabase-mail";
 import { studentInviteMessage } from "@/lib/email/student-invite";
 import { createAdminClient } from "@/lib/supabase/admin";
 
+const BLOCK_KEY = "supabase_mail_blocked_until";
+
+async function supabaseMailAllowed() {
+  const admin = createAdminClient();
+  if (!admin) return false;
+  const { data } = await admin.from("platform_settings").select("value").eq("key", BLOCK_KEY).maybeSingle();
+  if (!data?.value) return true;
+  const until = Date.parse(data.value);
+  return !Number.isFinite(until) || until <= Date.now();
+}
+
+async function blockSupabaseMailForHour() {
+  const admin = createAdminClient();
+  if (!admin) return;
+  await admin.from("platform_settings").upsert(
+    {
+      key: BLOCK_KEY,
+      value: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "key" },
+  );
+}
+
 async function trySendInviteEmail(opts: {
   email: string;
   firstName: string;
@@ -25,12 +49,19 @@ async function trySendInviteEmail(opts: {
   });
   if (mail.sent) return { sent: true, userId: undefined as string | undefined };
 
+  if (!(await supabaseMailAllowed())) {
+    return { sent: false, userId: undefined };
+  }
+
   const viaAuth = await sendInviteWithSupabaseMail({
     email: opts.email,
     firstName: opts.firstName,
     lastName: opts.lastName,
     inviteUrl: opts.inviteUrl,
   });
+  if (viaAuth.status === 429) {
+    await blockSupabaseMailForHour();
+  }
   return { sent: viaAuth.sent, userId: viaAuth.userId };
 }
 

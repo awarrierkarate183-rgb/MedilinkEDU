@@ -52,10 +52,10 @@ export function EmailSettingsForm({
 
   return (
     <form onSubmit={onSubmit} className="rounded-[var(--radius)] bg-white p-5">
-      <h2 className="font-semibold">Send student emails</h2>
+      <h2 className="font-semibold">MediLink sending email</h2>
       <p className="mt-1 text-sm text-muted">
-        Connect the MediLink Gmail so invites go to each student inbox. Create a
-        Google App password for this account, then paste it here once.
+        Connect medi.link.edu@gmail.com once. Student invites then leave from
+        that MediLink address. Create a Google App password and paste it here.
       </p>
       {connected ? (
         <div className="mt-3">
