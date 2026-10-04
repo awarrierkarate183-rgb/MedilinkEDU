@@ -3,8 +3,8 @@ import { tracks } from "@/lib/content/curriculum";
 
 const catalog: Record<string, { title: string; body: string }> = {
   competitions: {
-    title: "Competition registration will appear here when available.",
-    body: "Eligibility, teams, submissions, and points come from live competition records.",
+    title: "Open Competitions in the student menu.",
+    body: "Normal Event registration, Legacy roster status, and published rankings live on that page.",
   },
   curriculum: {
     title: "Curriculum progress",

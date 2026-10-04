@@ -110,6 +110,67 @@ export const addStudentSchema = z.object({
   chapterId: uuid.optional(),
 });
 
+export const normalRegisterSchema = z.object({
+  eventId: z.string().min(3),
+  profileIds: z.array(uuid).min(1).max(5),
+  chapterId: uuid.optional(),
+});
+
+export const legacyRosterSchema = z.object({
+  groupA: z.array(uuid).max(4),
+  groupB: z.array(uuid).max(4),
+  chapterId: uuid.optional(),
+});
+
+export const legacyEntrySchema = z.object({
+  eventId: z.string().min(3),
+  groupLabel: z.enum(["A", "B"]),
+  chapterId: uuid.optional(),
+});
+
+export const legacyExceptionSchema = z.object({
+  chapterId: uuid.optional(),
+  profileOut: uuid,
+  profileIn: uuid,
+  reason: z.enum(["WITHDRAWAL_FROM_SCHOOL", "MEDICAL", "NATIONALLY_APPROVED"]),
+  notes: z.string().max(400).optional(),
+});
+
+export const eventResultSchema = z.object({
+  eventId: z.string().min(3),
+  round: z.enum(["REGIONAL", "STATE", "NATIONAL"]),
+  chapterId: uuid,
+  placement: z.coerce.number().int().min(1).max(50),
+  profileId: uuid.optional(),
+  teamId: uuid.optional(),
+  legacyEntryId: uuid.optional(),
+  published: z.boolean().optional(),
+});
+
+export const publishRankingsSchema = z.object({
+  publish: z.boolean().default(true),
+});
+
+export const nominateSchema = z.object({
+  profileId: uuid,
+  chapterId: uuid.optional(),
+});
+
+export const invitationalScoreSchema = z.object({
+  profileId: uuid,
+  chapterId: uuid,
+  score: z.coerce.number().min(0).max(100),
+});
+
+export const publishInviteesSchema = z.object({
+  profileIds: z.array(uuid).min(1),
+});
+
+export const seasonSettingsSchema = z.object({
+  rosterLocked: z.boolean().optional(),
+  invitationalNominationsOpen: z.boolean().optional(),
+});
+
 export const createAnnouncementSchema = z.object({
   title: z.string().min(1).max(160),
   body: z.string().min(1).max(8000),

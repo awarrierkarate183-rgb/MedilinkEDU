@@ -27,8 +27,8 @@ export default function PartnerPage() {
             ["Speakers", "Guest sessions mapped to a syllabus module or a case lens."],
             ["Workshops", "A two-hour workshop mapped to a module is more useful than a generic talk."],
             ["Mentorship", "Sit with an officer office. Volunteers back student offices. They do not replace them."],
-            ["Competition judging", "Care-lens, Cost-lens, and Code-lens judges for Nationals regional rounds."],
-            ["Event partnerships", "Host a local case challenge or a Nationals regional round."],
+            ["Competition judging", "Care-lens, Cost-lens, and Code-lens judges for Regional and State rounds."],
+            ["Event partnerships", "Host a local case challenge or a Regional conference."],
           ].map(([title, body]) => (
             <article key={title} className="rounded-[var(--radius)] border border-border p-5">
               <h2 className="font-semibold">{title}</h2>

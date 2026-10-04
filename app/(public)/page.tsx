@@ -111,7 +111,7 @@ export default function HomePage() {
               },
               {
                 title: "Competitions",
-                body: "Five events. Two structures. Nationals is the only Regional to State to National ladder.",
+                body: "Twenty Normal Events and five Legacy Events. Different rules. You compete through your chapter.",
                 href: "/competitions",
               },
               {
@@ -159,10 +159,11 @@ export default function HomePage() {
         <div className="container-ml">
           <div className="section-head">
             <p className="kicker">Competitions</p>
-            <h2>Five events. Two structures.</h2>
+            <h2>Two tiers. Different rules.</h2>
             <p>
-              Three one-time annual events. Nationals is the yearly flagship.
-              Apex is the biennial culmination, not a sixth case.
+              Normal Events are broad-access. Legacy Events are an
+              eight-student chapter delegation. The Apex is a biennial chapter
+              summit. The invitational is a separate individual honor.
             </p>
           </div>
           <div className="grid-cards cols-2">

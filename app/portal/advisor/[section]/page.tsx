@@ -9,8 +9,8 @@ const catalog: Record<
     body: "You're all caught up. New MediLink events will appear here when they are published.",
   },
   competitions: {
-    title: "Competition registration will appear here when available.",
-    body: "Advisors review chapter teams, approve registrations, and finalize entries from live competition records.",
+    title: "Open Competitions in the advisor menu.",
+    body: "Register students, set the Legacy roster, and assign Legacy events on that page.",
   },
   curriculum: {
     title: "Chapter curriculum progress",

@@ -10,25 +10,26 @@ insert into public.curriculum_tracks (number, name, summary) values
   (1, 'Foundations of Health Economics', 'How care is paid for, why it costs what it costs, and who is left out.'),
   (2, 'Health Technology and Systems', 'Records, data, devices. No coding background required.'),
   (3, 'Financial Modeling for Health Ventures', 'Budgets, funding paths, and why ROI looks different in health.'),
-  (4, 'Applied Capstone and Competition Prep', 'The yearly capstone becomes that year''s Nationals case.')
+  (4, 'Applied Capstone and Competition Prep', 'The yearly capstone prepares students for Normal and Legacy events.')
 on conflict (number) do nothing;
 
 insert into public.competitions (slug, name, kind, description, status, team_event, min_team_size, max_team_size, annual, apex_related, active, config)
 values
-  ('innovation', 'Innovation Challenge', 'one-time', 'Single annual pitch event.', 'UPCOMING', true, 1, 3, true, true, true, '{"datesHardcoded": false}'::jsonb),
-  ('policy', 'Policy Cup', 'one-time', 'Single annual policy brief event.', 'UPCOMING', true, 1, 2, true, true, true, '{"datesHardcoded": false}'::jsonb),
-  ('research', 'Research Symposium', 'one-time', 'Single annual research event.', 'UPCOMING', false, 1, 1, true, true, true, '{"datesHardcoded": false}'::jsonb),
-  ('nationals', 'MediLink Nationals', 'ladder', 'The only Regional to State to National ladder.', 'UPCOMING', true, 3, 4, true, true, true, '{"ladder": ["regional", "state", "national"]}'::jsonb),
-  ('apex', 'MediLink Apex', 'biennial', 'Biennial culmination drawn from the other four competitions.', 'UPCOMING', true, 3, 4, false, true, true, '{"datesHardcoded": false}'::jsonb)
+  ('normal-events', 'Normal Events', 'ladder', 'Twenty high-school events. Regional, then State, then Nationals for the top 3.', 'UPCOMING', true, 1, 5, true, true, true, '{"datesHardcoded": false}'::jsonb),
+  ('legacy-events', 'Legacy Events', 'ladder', 'Five selective chapter events. Eight students, two groups of four.', 'UPCOMING', true, 4, 4, true, true, true, '{"datesHardcoded": false}'::jsonb),
+  ('apex', 'MediLink Apex', 'biennial', 'Biennial chapter summit from the 2-year 65/25/10 cumulative total.', 'UPCOMING', true, 4, 8, false, true, true, '{"datesHardcoded": false}'::jsonb)
 on conflict (slug) do nothing;
 
 insert into public.competition_stages (competition_id, name, sequence, description, active)
 select c.id, stage.name, stage.seq, stage.about, true
 from public.competitions c
 join (values
-  ('nationals', 'Regional', 1, 'Regional round'),
-  ('nationals', 'State', 2, 'State round'),
-  ('nationals', 'National', 3, 'National round')
+  ('normal-events', 'Regional', 1, 'Regional round'),
+  ('normal-events', 'State', 2, 'State round'),
+  ('normal-events', 'National', 3, 'National round'),
+  ('legacy-events', 'Regional', 1, 'Regional round'),
+  ('legacy-events', 'State', 2, 'State round'),
+  ('legacy-events', 'National', 3, 'National round')
 ) as stage(slug, name, seq, about) on stage.slug = c.slug
 on conflict (competition_id, sequence) do nothing;
 

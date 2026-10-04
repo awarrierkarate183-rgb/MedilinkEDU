@@ -10,7 +10,10 @@ const catalog: Record<string, { title: string; body: string }> = {
     body: "Advisors and students. Roles are assigned here, never from the browser.",
   },
   events: { title: "Events", body: "National and chapter events are database-driven. Dates are not hardcoded." },
-  competitions: { title: "Competitions", body: "Yearly configuration lives in the competitions table." },
+  competitions: {
+    title: "Open Competitions in the admin menu.",
+    body: "Enter results, lock the Legacy roster, publish rankings, and manage the invitational there.",
+  },
   curriculum: { title: "Curriculum", body: "Attach lesson files later. Public titles already exist." },
   resources: { title: "Resources", body: "Access control: public, member, advisor, admin." },
   news: { title: "News", body: "Student submissions must be reviewed before they publish." },

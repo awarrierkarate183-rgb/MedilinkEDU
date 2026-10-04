@@ -108,8 +108,9 @@ export default function AboutPage() {
             <Card>
               <h3 className="font-semibold">Competitions</h3>
               <p className="mt-2 text-sm text-muted">
-                Four annual events plus a biennial Apex. Nationals is the yearly
-                flagship and the only ladder.
+                Twenty Normal Events, five Legacy Events, annual chapter
+                rankings, a biennial Apex, and a separate individual
+                invitational.
               </p>
             </Card>
             <Card>

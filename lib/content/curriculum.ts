@@ -53,7 +53,7 @@ export const tracks = [
         code: "2.3",
         name: "Medical Devices and Wearables",
         description:
-          "How monitoring technology is changing care delivery. A device concept still has to name a user and a gap. Innovation Challenge later tests that as a pitch.",
+          "How monitoring technology is changing care delivery. A device concept still has to name a user and a gap. Pitch Day and Seed Round later test that as a live pitch.",
       },
     ],
   },
@@ -90,9 +90,9 @@ export const tracks = [
     id: "track-4",
     number: 4,
     name: "Applied Capstone and Competition Prep",
-    summary: "The yearly capstone becomes that year's Nationals case.",
+    summary: "The yearly capstone prepares students for Normal and Legacy events.",
     intro:
-      "Curriculum and competition stay linked on purpose. Packets still use the internal name Care, Cost, Code. Only Nationals has a ladder. The other three events each run once a year.",
+      "Curriculum and competition stay linked on purpose. Packets still use the internal name Care, Cost, Code. Normal Events and Legacy Events use the same Regional, State, and National stages, with different cutoffs.",
     lab: "A full mock case run-through, in teams. New schools should start a chapter, not email for a dump of lessons.",
     modules: [
       {
@@ -105,13 +105,13 @@ export const tracks = [
         code: "4.2",
         name: "Case Analysis Practice",
         description:
-          "Guided practice on past-style cases. Teams of 3 to 4 should already be covering clinic, money, and tech before they write a Nationals brief.",
+          "Guided practice on past-style cases. Teams should already be covering clinic, money, and tech before they enter a judged event.",
       },
       {
         code: "4.3",
         name: "Competition-Specific Prep",
         description:
-          "Pitch (Innovation Challenge), brief (Policy Cup), poster (Research Symposium), case-team (Nationals). Format is not interchangeable. A poster is not a Nationals case restated.",
+          "Normal Events and Legacy Events use different formats. A pitch is not a hearing. A solo chart review is not a four-person crisis command. Prepare for the event you entered.",
       },
     ],
   },

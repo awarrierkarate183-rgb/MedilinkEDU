@@ -22,7 +22,7 @@ export default function ChapterSupportPage() {
             ["Chapter Management", "Charter template, officer structure, and status path."],
             ["Recruitment", "How members join through a chapter QR and advisor invitation."],
             ["Curriculum", "Four-track syllabus. Full files wait behind roster approval."],
-            ["Competitions", "Prep help for the five events. Dates come from state boards."],
+            ["Competitions", "Prep help for Normal Events and Legacy Events. Dates come from state boards."],
             ["Events", "Meetings, local case challenges, and internal events."],
             ["Leadership", "Coaching that backs the five student offices."],
             ["Community Service", "Owned by the Outreach and Service Lead."],

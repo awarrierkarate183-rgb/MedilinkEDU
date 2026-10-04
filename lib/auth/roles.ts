@@ -94,6 +94,10 @@ export function canAwardPoints(actor: Actor) {
   return isAdvisorRole(actor.role);
 }
 
+export function canManageChapterCompetitions(actor: Actor) {
+  return actor.role === "CHAPTER_OFFICER" || isAdvisorRole(actor.role);
+}
+
 export function canManageEmailSettings(actor: Actor) {
   return isAdvisorRole(actor.role);
 }
