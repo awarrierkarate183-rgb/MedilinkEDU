@@ -16,10 +16,7 @@ export async function POST(request: Request) {
   const result = await redeemInvitation({
     userClient: supabase,
     token: body.data.token,
-    email: body.data.email,
     password: body.data.password,
-    firstName: body.data.firstName,
-    lastName: body.data.lastName || "",
   });
   if ("error" in result && result.error) return errors.validation(result.error);
   return apiSuccess({ redeemed: true });
