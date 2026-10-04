@@ -26,6 +26,7 @@ export type AddStudentInput = {
   lastName: string;
   email: string;
   grade?: string;
+  chapterId?: string;
 };
 
 async function waitForProfile(admin: Admin, userId: string) {
@@ -274,19 +275,27 @@ export async function inviteStudent(
   actor: { id: string; chapterId: string | null; role: string; stateScope?: string | null },
   input: AddStudentInput,
 ) {
-  if (!actor.chapterId) return { error: "Your advisor account is not attached to a chapter yet." };
   if (!["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"].includes(actor.role)) {
     return { error: "Only an advisor can add students to this roster." };
   }
-  if (actor.role === "CHAPTER_ADVISOR") {
-    const { data: chapter } = await admin
+  const chapterId =
+    actor.role === "CHAPTER_ADVISOR" ? actor.chapterId : actor.chapterId || input.chapterId || null;
+  if (!chapterId) return { error: "Choose a chapter for this student." };
+  if (actor.role === "STATE_ADMIN" && input.chapterId && input.chapterId !== actor.chapterId) {
+    const { data: scoped } = await admin
       .from("chapters")
-      .select("status")
-      .eq("id", actor.chapterId)
+      .select("id, state")
+      .eq("id", input.chapterId)
       .maybeSingle();
-    if (!chapter || ["PROPOSED", "PENDING_APPROVAL", "INACTIVE"].includes(chapter.status)) {
-      return { error: "An administrator still has to accept this chapter before you can add students." };
+    if (!scoped || (actor.stateScope && scoped.state !== actor.stateScope)) {
+      return { error: "You can only add students to a chapter in your state." };
     }
+  }
+
+  const { data: chapter } = await admin.from("chapters").select("status").eq("id", chapterId).maybeSingle();
+  if (!chapter) return { error: "That chapter was not found." };
+  if (actor.role === "CHAPTER_ADVISOR" && ["PROPOSED", "PENDING_APPROVAL", "INACTIVE"].includes(chapter.status)) {
+    return { error: "An administrator still has to accept this chapter before you can add students." };
   }
 
   const email = input.email.trim().toLowerCase();
@@ -298,7 +307,7 @@ export async function inviteStudent(
   const { data: openInvite } = await admin
     .from("invitations")
     .select("id")
-    .eq("chapter_id", actor.chapterId)
+    .eq("chapter_id", chapterId)
     .ilike("email", email)
     .is("used_at", null)
     .is("revoked_at", null)
@@ -311,7 +320,7 @@ export async function inviteStudent(
     actor: {
       id: actor.id,
       role: actor.role as "CHAPTER_ADVISOR" | "STATE_ADMIN" | "SUPER_ADMIN",
-      chapterId: actor.chapterId,
+      chapterId,
       stateScope: actor.stateScope,
     },
     email,
@@ -349,7 +358,7 @@ export async function inviteStudent(
   }
 
   await writeAudit(admin, actor.id, "student.invited", "invitation", created.id, {
-    chapter_id: actor.chapterId,
+    chapter_id: chapterId,
     email,
   });
 

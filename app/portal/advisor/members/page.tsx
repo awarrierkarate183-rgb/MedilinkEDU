@@ -9,32 +9,65 @@ import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 export default async function MembersPage() {
   const { profile } = await requireRole(["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
   const supabase = await createClient();
-  const { data: members, error: memberError } = supabase
+  const chapterId = profile?.chapter_id || null;
+  const canPickChapter = profile?.role === "SUPER_ADMIN" || profile?.role === "STATE_ADMIN";
+
+  const chapters = supabase && canPickChapter
+    ? await supabase.from("chapters").select("id, name, school, status").order("name")
+    : { data: [] as Array<{ id: string; name: string; school: string | null; status: string }>, error: null };
+
+  const { data: members, error: memberError } = supabase && chapterId
     ? await supabase
         .from("chapter_members")
         .select("id, status, profiles(full_name, email, grade, role)")
-        .eq("chapter_id", profile?.chapter_id)
+        .eq("chapter_id", chapterId)
     : { data: [], error: null };
   const { data: invites, error: inviteError } = supabase
-    ? await supabase
-        .from("invitations")
-        .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
-        .eq("chapter_id", profile?.chapter_id)
-        .is("revoked_at", null)
-        .is("used_at", null)
+    ? chapterId
+      ? await supabase
+          .from("invitations")
+          .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
+          .eq("chapter_id", chapterId)
+          .is("revoked_at", null)
+          .is("used_at", null)
+      : canPickChapter
+        ? await supabase
+            .from("invitations")
+            .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
+            .is("revoked_at", null)
+            .is("used_at", null)
+        : { data: [], error: null }
     : { data: [], error: null };
 
-  if (memberError || inviteError) return <ConnectionTrouble />;
+  if (memberError || inviteError || chapters.error) return <ConnectionTrouble />;
 
   return (
     <div className="space-y-8">
-      <AddStudentForm />
+      {!chapterId && canPickChapter ? (
+        <p className="rounded-[var(--radius)] bg-white px-4 py-3 text-sm text-muted">
+          This admin account is not tied to one chapter. Choose a chapter when you add a student.
+        </p>
+      ) : null}
+      <AddStudentForm
+        chapters={
+          !chapterId && canPickChapter
+            ? (chapters.data || []).map((chapter) => ({
+                id: chapter.id,
+                label: chapter.school || chapter.name,
+              }))
+            : undefined
+        }
+      />
       <section>
         <h2 className="mb-3 text-lg font-semibold">Roster</h2>
         {!members?.length ? (
           <PortalEmpty
             title="No members yet"
-            body="Add a student above. They create their own student portal account from the email."
+            body={
+              chapterId
+                ? "Add a student above. They create their own student portal account from the email."
+                : "Choose a chapter when you add a student. Their roster stays with that chapter."
+            }
           />
         ) : (
           <ul className="divide-y divide-border rounded-[var(--radius)] bg-white">

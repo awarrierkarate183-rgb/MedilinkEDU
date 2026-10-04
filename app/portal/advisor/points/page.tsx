@@ -8,11 +8,11 @@ import { sumPoints } from "@/lib/points/award";
 export default async function AdvisorPointsPage() {
   const { profile } = await requireRole(["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
   const supabase = await createClient();
-  const { data, error } = supabase
+  const { data, error } = supabase && profile?.chapter_id
     ? await supabase
         .from("points_transactions")
         .select("id, amount, reason, reason_code, created_at")
-        .eq("chapter_id", profile?.chapter_id)
+        .eq("chapter_id", profile.chapter_id)
         .order("created_at", { ascending: false })
         .limit(50)
     : { data: [], error: null };

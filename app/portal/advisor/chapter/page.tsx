@@ -7,20 +7,20 @@ import { siteUrl } from "@/lib/utils";
 export default async function ChapterPage() {
   const { profile } = await requireRole(["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
   const supabase = await createClient();
-  const { data: chapter } = supabase
+  const { data: chapter } = supabase && profile?.chapter_id
     ? await supabase
         .from("chapters")
         .select("name, school, chapter_code, join_code, status, city, state, country")
-        .eq("id", profile?.chapter_id)
+        .eq("id", profile.chapter_id)
         .maybeSingle()
     : { data: null };
-  const { data: application } = supabase
+  const { data: application } = supabase && profile?.chapter_id
     ? await supabase
         .from("chapter_applications")
         .select(
           "advisor_first_name, advisor_last_name, advisor_email, advisor_phone, advisor_title, principal_name, estimated_students, statement, created_at",
         )
-        .eq("chapter_id", profile?.chapter_id)
+        .eq("chapter_id", profile.chapter_id)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle()

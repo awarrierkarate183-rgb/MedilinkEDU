@@ -13,7 +13,11 @@ type Invited = {
 
 const field = "mt-1 w-full rounded-md border border-border px-3 py-2 font-normal";
 
-export function AddStudentForm() {
+export function AddStudentForm({
+  chapters,
+}: {
+  chapters?: Array<{ id: string; label: string }>;
+}) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [invited, setInvited] = useState<Invited | null>(null);
@@ -33,6 +37,7 @@ export function AddStudentForm() {
           lastName: String(data.get("lastName") || ""),
           email: String(data.get("email") || ""),
           grade: String(data.get("grade") || ""),
+          chapterId: String(data.get("chapterId") || "") || undefined,
         }),
       });
       const json = await response.json();
@@ -76,6 +81,21 @@ export function AddStudentForm() {
         </div>
       ) : null}
       <div className="mt-4 grid gap-4 md:grid-cols-2">
+        {chapters?.length ? (
+          <label className="block text-sm font-semibold md:col-span-2">
+            Chapter
+            <select name="chapterId" required className={field} defaultValue="">
+              <option value="" disabled>
+                Choose a chapter
+              </option>
+              {chapters.map((chapter) => (
+                <option key={chapter.id} value={chapter.id}>
+                  {chapter.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
         <label className="block text-sm font-semibold">
           First name
           <input name="firstName" required className={field} />

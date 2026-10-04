@@ -99,6 +99,7 @@ export const addStudentSchema = z.object({
   lastName: z.string().trim().min(1, "Enter the student last name.").max(80),
   email: z.string().trim().email("Enter a real student email.").max(160),
   grade: z.enum(["9", "10", "11", "12"], { message: "Choose a grade level." }),
+  chapterId: uuid.optional(),
 });
 
 export const createAnnouncementSchema = z.object({
