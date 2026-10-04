@@ -57,9 +57,9 @@ export function AddStudentForm({
     <form onSubmit={onSubmit} className="rounded-[var(--radius)] bg-white p-5">
       <h2 className="font-semibold">Add a student</h2>
       <p className="mt-1 text-sm text-muted">
-        Enter their first name, last name, email, and grade. MediLink emails that
-        address a button to create their student portal account and choose a
-        password.
+        Enter first name, last name, email, and grade. MediLink emails them a
+        link from a MediLink address. They click it, choose a password, and sign
+        in through the student portal.
       </p>
       {error ? (
         <div className="mt-3">

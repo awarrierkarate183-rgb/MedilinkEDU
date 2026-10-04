@@ -39,7 +39,7 @@ export function PortalShell({
                   key={item.href}
                   href={item.href as never}
                   className={cn(
-                    "block rounded-md px-3 py-2 text-sm font-semibold",
+                    "block rounded-md px-3 py-2 text-sm font-medium [font-synthesis:none]",
                     active ? "bg-gold text-navy" : "text-white/80 hover:bg-white/10",
                   )}
                 >
@@ -57,7 +57,7 @@ export function PortalShell({
         <div className="flex min-h-screen flex-col">
           <header className="flex items-center justify-between border-b border-border bg-white px-4 py-4 lg:px-8">
             <div>
-              <h1 className="text-xl font-semibold">{title}</h1>
+              <h1 className="text-xl font-medium [font-synthesis:none]">{title}</h1>
               {subtitle ? <p className="text-sm text-muted">{subtitle}</p> : null}
             </div>
             <Link href="/" className="text-sm font-semibold text-navy">

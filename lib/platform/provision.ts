@@ -337,8 +337,7 @@ export async function inviteStudent(
   if (!created.sent) {
     await admin.from("invitations").delete().eq("id", created.id);
     return {
-      error:
-        "The invite email could not be sent to that student. Connect MediLink email in Settings, then try again.",
+      error: "The invite email could not be sent to that student. Try again in a few minutes.",
     };
   }
 

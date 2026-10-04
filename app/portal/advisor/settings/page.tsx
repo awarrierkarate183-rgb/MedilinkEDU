@@ -1,11 +1,10 @@
-import { EmailSettingsForm } from "@/components/portal/EmailSettingsForm";
-import { emailSettingsPublic } from "@/lib/email/config";
+import { PortalEmpty } from "@/components/portal/PortalEmpty";
 
-export default async function AdvisorSettingsPage() {
-  const email = await emailSettingsPublic();
+export default function AdvisorSettingsPage() {
   return (
-    <div className="space-y-8">
-      <EmailSettingsForm connected={email.connected} user={email.user} />
-    </div>
+    <PortalEmpty
+      title="Chapter settings"
+      body="Update allowed chapter profile fields. National competition rules cannot be changed from an advisor account."
+    />
   );
 }

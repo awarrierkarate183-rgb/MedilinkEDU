@@ -2,11 +2,9 @@ import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { AddStudentForm } from "@/components/portal/AddStudentForm";
-import { EmailSettingsForm } from "@/components/portal/EmailSettingsForm";
 import { RevokeButton } from "@/components/portal/InviteMemberForm";
 import { ApproveMemberButton } from "@/components/portal/ApproveMemberButton";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
-import { emailSettingsPublic } from "@/lib/email/config";
 
 function chapterIdOf(value: string | null | undefined) {
   return value && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
@@ -20,7 +18,6 @@ export default async function MembersPage() {
   const db = createAdminClient() ?? supabase;
   const chapterId = chapterIdOf(profile?.chapter_id);
   const canPickChapter = profile?.role === "SUPER_ADMIN" || profile?.role === "STATE_ADMIN";
-  const email = await emailSettingsPublic();
 
   const chapters =
     db && canPickChapter
@@ -72,7 +69,6 @@ export default async function MembersPage() {
           This admin account is not tied to one chapter. Choose a chapter when you add a student.
         </p>
       ) : null}
-      {email.connected ? null : <EmailSettingsForm connected={false} user={email.user} />}
       <AddStudentForm
         chapters={
           !chapterId && canPickChapter
