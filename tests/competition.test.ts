@@ -8,6 +8,7 @@ import {
   canEditLockedRoster,
   matchRosterNames,
 } from "../lib/competition/rules";
+import { normalEventHandbook } from "../lib/content/normal-event-handbook";
 import {
   legacyAdvancesFromRegional,
   legacyAdvancesFromState,
@@ -92,6 +93,15 @@ describe("competition scoring", () => {
         { id: "d", regionalPoints: 6, statePoints: 16 },
       ]),
     ).toEqual(["b", "a", "d"]);
+  });
+
+  it("keeps twenty Normal Event handbooks at 100 points", () => {
+    expect(normalEventHandbook).toHaveLength(20);
+    for (const event of normalEventHandbook) {
+      expect(event.rubric.reduce((sum, row) => sum + row.points, 0)).toBe(100);
+      expect(event.role).toBeTruthy();
+      expect(event.mechanic).toBeTruthy();
+    }
   });
 
   it("weights annual ranking 65 / 25 / 10", () => {

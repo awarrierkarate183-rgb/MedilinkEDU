@@ -29,6 +29,10 @@ export default async function AdminDashboard() {
           <a href="/portal/admin/competitions" className="font-semibold underline">
             Open the school directory
           </a>
+          {" · "}
+          <a href="/portal/admin/guides" className="font-semibold underline">
+            Publish or fix event guides
+          </a>
         </p>
       </section>
       <section>

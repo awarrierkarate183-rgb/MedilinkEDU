@@ -185,6 +185,23 @@ export const seasonSettingsSchema = z.object({
   invitationalNominationsOpen: z.boolean().optional(),
 });
 
+export const eventGuideSchema = z.object({
+  eventId: z.string().min(3),
+  kind: z.enum(["INSTRUCTIONS", "RUBRIC"]),
+  title: z.string().trim().min(1).max(160),
+  body: z.string().trim().min(1).max(20000),
+  filePath: z.string().trim().max(400).optional(),
+  published: z.boolean().optional(),
+});
+
+export const adminDeskSchema = z.object({
+  message: z.string().trim().min(1).max(4000),
+});
+
+export const aiSettingsSchema = z.object({
+  groqKey: z.string().trim().min(10).max(200).optional(),
+});
+
 export const createAnnouncementSchema = z.object({
   title: z.string().min(1).max(160),
   body: z.string().min(1).max(8000),

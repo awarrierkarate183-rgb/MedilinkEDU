@@ -3,12 +3,14 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Accordion } from "@/components/ui/Accordion";
 import { PageHero } from "@/components/public/PageHero";
 import { HashAliases } from "@/components/public/HashAliases";
+import { EventHandbook } from "@/components/competitions/EventHandbook";
 import {
   LEGACY_POINTS,
   RANKING_WEIGHTS,
   legacyEvents,
   normalEvents,
 } from "@/lib/content/competition-system";
+import { getNormalHandbook, HANDBOOK_PDF } from "@/lib/content/normal-event-handbook";
 import { loadPublishedCompetitionStandings } from "@/lib/content/rankings";
 import { actionHref } from "@/lib/content/forms";
 
@@ -22,24 +24,29 @@ function eventItems(
   events: typeof normalEvents,
   prestige: number,
 ) {
-  return events.map((event) => ({
-    id: event.id,
-    title: `${event.number}. ${event.name}`,
-    subtitle: event.formatLabel,
-    prestige,
-    children: (
-      <div className="grid gap-4 md:grid-cols-2">
-        <div>
-          <p className="kicker">What it is</p>
-          <p className={prestige === 2 ? "text-muted" : "text-muted"}>{event.description}</p>
+  return events.map((event) => {
+    const handbook = getNormalHandbook(event.id);
+    return {
+      id: event.id,
+      title: `${event.number}. ${event.name}`,
+      subtitle: handbook ? `${handbook.formatLabel} · ${handbook.releaseLabel}` : event.formatLabel,
+      prestige,
+      children: handbook ? (
+        <EventHandbook event={handbook} compact={prestige === 2} />
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2">
+          <div>
+            <p className="kicker">What it is</p>
+            <p className="text-muted">{event.description}</p>
+          </div>
+          <div>
+            <p className="kicker">Format</p>
+            <p className="text-muted">{event.formatLabel}. High-school members. In person.</p>
+          </div>
         </div>
-        <div>
-          <p className="kicker">Format</p>
-          <p className="text-muted">{event.formatLabel}. High-school members. In person.</p>
-        </div>
-      </div>
-    ),
-  }));
+      ),
+    };
+  });
 }
 
 export default async function CompetitionsPage() {
@@ -68,6 +75,15 @@ export default async function CompetitionsPage() {
               earn a National nomination. At Nationals, first place is National
               Champion. Second and third receive prizes and finalist
               recognition.
+            </p>
+            <p className="mt-3">
+              Each event has its own role, action, live mechanic, work product,
+              and 100-point rubric. Open an event below for the official
+              student procedures.{" "}
+              <a href={HANDBOOK_PDF} className="font-semibold underline">
+                Download the Normal Events handbook
+              </a>
+              .
             </p>
           </div>
           <Accordion items={eventItems(normalEvents, 1)} />

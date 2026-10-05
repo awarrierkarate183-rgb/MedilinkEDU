@@ -2,6 +2,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Actor } from "@/lib/auth/roles";
 import { getCatalogEvent } from "@/lib/content/competition-system";
 import { currentSeason } from "@/lib/competition/operations";
+import {
+  getNormalHandbook,
+  handbookInstructionsBody,
+  handbookRubricBody,
+  type NormalHandbookEntry,
+} from "@/lib/content/normal-event-handbook";
 
 export type SchoolRow = {
   id: string;
@@ -230,6 +236,7 @@ export type StudentAssignment = {
   groupLabel: string | null;
   instructions: { title: string; body: string; filePath: string | null } | null;
   rubric: { title: string; body: string; filePath: string | null } | null;
+  handbook: NormalHandbookEntry | null;
 };
 
 export async function loadStudentAssignments(
@@ -239,9 +246,17 @@ export async function loadStudentAssignments(
   const season = await currentSeason(admin);
   const guides = await loadPublishedGuides(admin);
   const guideFor = (eventId: string, kind: "INSTRUCTIONS" | "RUBRIC") => {
-    const row = guides.find((item) => item.catalog_event_id === eventId && item.kind === kind);
-    if (!row) return null;
-    return { title: row.title, body: row.body, filePath: row.file_path || null };
+    const row = guides.find((item) => item.catalog_event_id === eventId && item.kind === kind && item.published);
+    const handbook = getNormalHandbook(eventId);
+    if (row?.body) {
+      return { title: row.title, body: row.body, filePath: row.file_path || "/docs/normal-events-handbook.pdf" };
+    }
+    if (!handbook) return null;
+    return {
+      title: kind === "RUBRIC" ? `${handbook.name} rubric` : `${handbook.name} instructions`,
+      body: kind === "RUBRIC" ? handbookRubricBody(handbook) : handbookInstructionsBody(handbook),
+      filePath: "/docs/normal-events-handbook.pdf",
+    };
   };
 
   if (!season) return { season: null, assignments: [] as StudentAssignment[] };
@@ -303,6 +318,7 @@ export async function loadStudentAssignments(
       groupLabel: null,
       instructions: guideFor(event.id, "INSTRUCTIONS"),
       rubric: guideFor(event.id, "RUBRIC"),
+      handbook: getNormalHandbook(event.id),
     });
   }
 
@@ -325,6 +341,7 @@ export async function loadStudentAssignments(
       groupLabel: entry.group_label,
       instructions: guideFor(event.id, "INSTRUCTIONS"),
       rubric: guideFor(event.id, "RUBRIC"),
+      handbook: getNormalHandbook(event.id),
     });
   }
 
