@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandMark } from "@/components/public/BrandMark";
 import { signOutAction } from "@/lib/auth/actions";
 import { cn } from "@/lib/utils";
 
@@ -26,9 +27,7 @@ export function PortalShell({
       <div className="mx-auto grid min-h-screen lg:grid-cols-[240px_1fr]">
         <aside className="hidden bg-navy text-white lg:flex lg:flex-col">
           <div className="px-5 py-6">
-            <p className="text-lg font-bold">
-              Medi<span className="text-gold">Link</span>
-            </p>
+            <BrandMark href="/portal" light size="sm" />
             <p className="mt-1 text-xs text-white/60">Portal</p>
           </div>
           <nav className="flex-1 space-y-1 px-3" aria-label="Portal">

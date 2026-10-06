@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { BrandMark } from "@/components/public/BrandMark";
 import { LoginForm } from "@/components/portal/LoginForm";
 import { isSupabaseConfigured } from "@/lib/env";
 
@@ -28,9 +29,7 @@ export default async function LoginPage({
   return (
     <div className="flex min-h-screen items-center justify-center bg-surface px-4">
       <div className="w-full max-w-md rounded-[var(--radius)] border border-border bg-white p-8 shadow-[var(--shadow)]">
-        <p className="text-2xl font-bold">
-          Medi<span className="text-gold">Link</span>
-        </p>
+        <BrandMark href="/" />
         <h1 className="mt-4 text-2xl font-semibold">{title}</h1>
         <p className="mt-2 text-sm text-muted">{body}</p>
         <Suspense>

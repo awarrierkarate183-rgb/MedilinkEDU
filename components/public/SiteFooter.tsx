@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/public/BrandMark";
 import { ColorWidgets } from "@/components/public/widgets";
 import { CONTACT_EMAIL, MISSION } from "@/lib/constants";
 import { publicNav } from "@/lib/content/public-nav";
@@ -18,18 +19,15 @@ export function SiteFooter() {
       />
       <div className="container-ml grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <p className="text-2xl font-bold tracking-tight">
-            <span>Medi</span>
-            <span className="text-gold">Link</span>
-          </p>
-          <p className="mt-4 max-w-md text-sm leading-7 text-white/70">{MISSION}</p>
+          <BrandMark href="/" light size="sm" />
+          <p className="mt-4 max-w-md text-sm leading-7 text-white/90">{MISSION}</p>
         </div>
         <div>
           <p className="kicker">Explore</p>
           <ul className="mt-3 space-y-2 text-sm">
             {publicNav.map((item) => (
               <li key={item.href}>
-                <Link className="text-white/80 hover:text-white" href={item.href as never}>
+                <Link className="text-white hover:text-gold" href={item.href as never}>
                   {item.label}
                 </Link>
               </li>
@@ -38,7 +36,7 @@ export function SiteFooter() {
         </div>
         <div>
           <p className="kicker">For chapters</p>
-          <ul className="mt-3 space-y-2 text-sm text-white/80">
+          <ul className="mt-3 space-y-2 text-sm text-white">
             <li>
               <Link href="/start-a-chapter">Start a chapter</Link>
             </li>
@@ -61,7 +59,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="container-ml flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-white/55">
+        <div className="container-ml flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-white/80">
           <p>High school only. Student-founded. Based in Charlotte, North Carolina.</p>
           <p className="flex gap-4">
             <Link href="/privacy">Privacy</Link>

@@ -1,6 +1,7 @@
 ﻿import { ButtonLink } from "@/components/ui/Button";
 import { ColorWidgets, PhotoTile, SplitFeature, StatStrip } from "@/components/public/widgets";
 import { loadPublicChapters } from "@/lib/data/public-chapters";
+import { chapterPhotos } from "@/lib/content/news";
 import { actionHref } from "@/lib/content/forms";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +13,11 @@ export default async function HomePage() {
   return (
     <>
       <section className="photo-hero">
-        <img src="/media/hero.jpg" alt="" className="photo-hero__image" style={{ objectPosition: "center 20%" }} />
+        <img
+          src="/news/lake-norman-welcome.png"
+          alt="Ravenwood High School MediLink members"
+          className="photo-hero__image"
+        />
         <div className="photo-hero__shade" />
         <div className="relative mx-auto flex min-h-[86vh] w-full max-w-[1500px] flex-col justify-end px-6 pb-16 pt-[calc(var(--header-h)+3rem)] lg:px-14">
           <p className="kicker text-gold">Student-founded. High school only.</p>
@@ -72,7 +77,7 @@ export default async function HomePage() {
         <div className="container-ml space-y-6">
           <SplitFeature
             href="/chapters"
-            image="/media/chapter.jpg"
+            image="/news/lake-norman-welcome.png"
             kicker="Chapters"
             title="A school chapter. Not a public signup."
             body="Students join through a high school chapter. The same five offices, the same syllabus, and the same calendar sit in every school MediLink accepts."
@@ -80,12 +85,11 @@ export default async function HomePage() {
           />
           <SplitFeature
             href="/competitions"
-            image="/media/compete.jpg"
             kicker="Compete"
             title="Twenty Normal Events. Three Legacy Events."
             body="You compete through your chapter. Normal Events are broad-access. Legacy is one team of four in the Legacy Triad."
             action="See the events"
-            reverse
+            tone="navy"
           />
         </div>
       </section>
@@ -99,21 +103,21 @@ export default async function HomePage() {
           <div className="grid gap-4 md:grid-cols-3">
             <PhotoTile
               href="/about/lenses"
-              image="/media/clinical.jpg"
+              tone="navy"
               kicker="Clinical"
               title="Who is affected?"
               body="Name the condition, the people, and the gap in care."
             />
             <PhotoTile
               href="/about/lenses"
-              image="/media/financial.jpg"
+              tone="gold"
               kicker="Financial"
               title="Who pays?"
               body="Cost, coverage, and whether the idea lasts."
             />
             <PhotoTile
               href="/about/lenses"
-              image="/media/technology.jpg"
+              tone="soft"
               kicker="Technology"
               title="What changes access?"
               body="Records, tools, and infrastructure. Outcome over novelty."
@@ -159,8 +163,8 @@ export default async function HomePage() {
             </div>
           </div>
           <img
-            src="/media/chapter.jpg"
-            alt=""
+            src="/news/lake-norman-table.png"
+            alt="Ravenwood High School MediLink members at a table"
             className="h-72 w-full rounded-[var(--radius)] object-cover"
           />
         </div>
@@ -173,17 +177,13 @@ export default async function HomePage() {
             <h2>Real chapter photos.</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {[
-              { src: "/news/lake-norman-welcome.png", title: "Welcome" },
-              { src: "/news/lake-norman-table.png", title: "Table work" },
-              { src: "/news/lake-norman-review.png", title: "Review" },
-            ].map((item) => (
+            {chapterPhotos.map((item, index) => (
               <PhotoTile
                 key={item.src}
                 href="/news"
                 image={item.src}
-                kicker="Lake Norman Charter"
-                title={item.title}
+                kicker="Ravenwood High School"
+                title={["Welcome", "Table work", "Review"][index] || "Chapter photo"}
               />
             ))}
           </div>
@@ -203,17 +203,16 @@ export default async function HomePage() {
             <h2>Four ways in.</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <PhotoTile href="/start-a-chapter" image="/media/chapter.jpg" kicker="Schools" title="Start a chapter" />
-            <PhotoTile href="/start-a-chapter/reactivate" image="/media/involved.jpg" kicker="Return" title="Reactivate" />
-            <PhotoTile href="/partner" image="/media/financial.jpg" kicker="Organizations" title="Partner" />
-            <PhotoTile href="/portal" image="/media/curriculum.jpg" kicker="Members" title="Portal login" />
+            <PhotoTile href="/start-a-chapter" tone="gold" kicker="Schools" title="Start a chapter" />
+            <PhotoTile href="/start-a-chapter/reactivate" tone="navy" kicker="Return" title="Reactivate" />
+            <PhotoTile href="/partner" tone="soft" kicker="Organizations" title="Partner" />
+            <PhotoTile href="/portal" tone="cream" kicker="Members" title="Portal login" />
           </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-navy py-20 text-white">
-        <img src="/media/hero.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" />
-        <div className="container-ml relative">
+      <section className="bg-navy py-20 text-white">
+        <div className="container-ml">
           <p className="kicker">Next</p>
           <h2 className="display max-w-3xl">Bring MediLink to your high school.</h2>
           <div className="mt-8 flex flex-wrap gap-3">

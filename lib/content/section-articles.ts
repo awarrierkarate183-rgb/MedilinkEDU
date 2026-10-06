@@ -765,7 +765,7 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "What you are looking at",
         body: [
-          "The News overview holds the rotating album. The first pictures came from Lake Norman Charter High School in Huntersville, North Carolina: a welcome slide, table conversation, and members reading printed materials. Student names are not listed.",
+          "The News overview holds the rotating album. The first pictures came from Ravenwood High School: a welcome slide, table conversation, and members reading printed materials. Student names are not listed.",
           "More photos appear after review. This page will not invent a second school to make the album look bigger.",
         ],
       },

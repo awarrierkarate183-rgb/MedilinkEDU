@@ -17,7 +17,6 @@ export default function StartChapterPage() {
         kicker="Chapters"
         title="Start a chapter"
         lead="Bring MediLink to your high school. Open the request form, choose a portal password, then wait for an administrator to accept the chapter."
-        image="/media/chapter.jpg"
       />
 
       <ColorWidgets
@@ -34,7 +33,6 @@ export default function StartChapterPage() {
       <section className="band">
         <div className="container-ml grid gap-6 lg:grid-cols-2">
           <div className="relative min-h-[22rem] overflow-hidden rounded-[var(--radius)] bg-navy text-white">
-            <img src="/media/chapter.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
             <div className="relative flex h-full min-h-[22rem] flex-col items-center justify-center px-6 py-12 text-center">
               <p className="kicker">New school</p>
               <h2 className="mt-3 max-w-sm text-3xl font-semibold">Start a chapter</h2>
@@ -49,18 +47,17 @@ export default function StartChapterPage() {
               </p>
             </div>
           </div>
-          <div className="relative min-h-[22rem] overflow-hidden rounded-[var(--radius)] bg-navy text-white">
-            <img src="/media/involved.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+          <div className="relative min-h-[22rem] overflow-hidden rounded-[var(--radius)] bg-gold text-navy">
             <div className="relative flex h-full min-h-[22rem] flex-col items-center justify-center px-6 py-12 text-center">
-              <p className="kicker">Existing school</p>
+              <p className="kicker text-navy">Existing school</p>
               <h2 className="mt-3 max-w-sm text-3xl font-semibold">Reactivate a chapter</h2>
               <Link
                 href="/start-a-chapter/reactivate"
-                className="mt-8 inline-flex rounded-md bg-gold px-8 py-4 text-lg font-semibold text-navy"
+                className="mt-8 inline-flex rounded-md bg-navy px-8 py-4 text-lg font-semibold text-white"
               >
                 Open reactivation form
               </Link>
-              <p className="mt-5 max-w-sm text-sm text-white/80">
+              <p className="mt-5 max-w-sm text-sm text-navy/70">
                 Use this if the school already had a MediLink chapter and it went quiet.
               </p>
             </div>
@@ -93,21 +90,21 @@ export default function StartChapterPage() {
           <div className="grid gap-4 md:grid-cols-3">
             <PhotoTile
               href="/chapters/status"
-              image="/media/chapter.jpg"
+              tone="navy"
               kicker="Founding"
               title="Chartered"
               body="Officers are in place. The chapter receives a unique QR after founding."
             />
             <PhotoTile
               href="/chapters/status"
-              image="/media/curriculum.jpg"
+              tone="gold"
               kicker="Established"
               title="Running"
               body="At least one internal event and at least ten active members."
             />
             <PhotoTile
               href="/chapters/status"
-              image="/media/compete.jpg"
+              tone="soft"
               kicker="Flagship-Eligible"
               title="Competing"
               body="The chapter has entered a regional competition and can send teams onward."
@@ -118,7 +115,11 @@ export default function StartChapterPage() {
 
       <section className="band band--paper" id="qr">
         <div className="container-ml grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <img src="/media/clinical.jpg" alt="" className="h-72 w-full rounded-[var(--radius)] object-cover" />
+          <img
+            src="/news/lake-norman-review.png"
+            alt="Ravenwood High School MediLink members reviewing printed materials"
+            className="h-72 w-full rounded-[var(--radius)] object-cover"
+          />
           <div>
             <p className="kicker">How members join</p>
             <h2>A chapter QR. Then an advisor invite.</h2>

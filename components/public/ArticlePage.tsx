@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/public/PageHero";
 import { PhotoTile } from "@/components/public/widgets";
 import { ButtonLink } from "@/components/ui/Button";
+import { chapterPhotos } from "@/lib/content/news";
 import { navTabByHref, type NavTab } from "@/lib/content/public-nav";
 
 export type ArticleBlock = {
@@ -10,27 +11,11 @@ export type ArticleBlock = {
   body: string[];
 };
 
-const HERO_BY_TAB: Record<string, string> = {
-  "/about": "/media/clinical.jpg",
-  "/chapters": "/media/chapter.jpg",
-  "/curriculum": "/media/curriculum.jpg",
-  "/competitions": "/media/compete.jpg",
-  "/get-involved": "/media/involved.jpg",
-  "/news": "/news/lake-norman-welcome.png",
-};
-
-const TILE_IMAGES = [
-  "/media/clinical.jpg",
-  "/media/financial.jpg",
-  "/media/technology.jpg",
-  "/media/chapter.jpg",
-  "/media/compete.jpg",
-  "/media/curriculum.jpg",
-];
+const TILE_TONES = ["navy", "gold", "soft", "cream"] as const;
 
 function heroFor(href: string) {
   const root = `/${href.split("/").filter(Boolean)[0] || ""}`;
-  return HERO_BY_TAB[root] || "/media/hero.jpg";
+  return root === "/news" ? chapterPhotos[0].src : undefined;
 }
 
 export function ArticlePage({
@@ -56,7 +41,7 @@ export function ArticlePage({
             {blocks.map((block) => (
               <section key={block.heading}>
                 <h2 className="tab-heading text-3xl md:text-4xl">{block.heading}</h2>
-                <div className="mt-4 max-w-3xl space-y-4 text-lg leading-8 text-muted">
+                <div className="mt-4 max-w-3xl space-y-4 text-lg leading-8 text-[var(--muted)]">
                   {block.body.map((paragraph) => (
                     <p key={paragraph.slice(0, 48)}>{paragraph}</p>
                   ))}
@@ -91,6 +76,7 @@ export function SectionHub({
   lead: string;
   children?: ReactNode;
 }) {
+  const isNews = tab.href === "/news";
   return (
     <>
       <PageHero kicker={tab.label} title={title} lead={lead} image={heroFor(tab.href)} />
@@ -103,7 +89,8 @@ export function SectionHub({
               <PhotoTile
                 key={item.href}
                 href={item.href}
-                image={TILE_IMAGES[index % TILE_IMAGES.length]}
+                image={isNews ? chapterPhotos[index % chapterPhotos.length].src : undefined}
+                tone={TILE_TONES[index % TILE_TONES.length]}
                 kicker={`0${index + 1}`}
                 title={item.label}
               />
@@ -116,13 +103,14 @@ export function SectionHub({
 }
 
 function SectionRail({ tab, current }: { tab: NavTab; current: string }) {
+  const image = heroFor(tab.href);
   return (
     <aside className="h-fit overflow-hidden rounded-[var(--radius)] bg-navy text-white lg:sticky lg:top-[calc(var(--header-h)+1.25rem)]">
-      <img src={heroFor(tab.href)} alt="" className="h-28 w-full object-cover opacity-70" />
+      {image ? <img src={image} alt="" className="h-28 w-full object-cover opacity-70" /> : null}
       <div className="p-6">
         <p className="kicker">{tab.kicker}</p>
         <p className="tab-heading text-2xl">{tab.label}</p>
-        <p className="mt-3 text-sm text-white/70">{tab.blurb}</p>
+        <p className="mt-3 text-sm text-white/90">{tab.blurb}</p>
         <ul className="mt-6 space-y-3 text-sm">
           <li>
             <Link href={tab.href as never} className={current === tab.href ? "text-gold" : "text-white/80 hover:text-white"}>

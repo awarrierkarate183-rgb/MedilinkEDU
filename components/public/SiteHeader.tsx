@@ -3,20 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BrandMark } from "@/components/public/BrandMark";
 import { NavIcon } from "@/components/public/NavIcon";
 import { navGroups, publicNav } from "@/lib/content/public-nav";
 import { cn } from "@/lib/utils";
-
-function Wordmark() {
-  return (
-    <Link href="/" className="font-bold tracking-tight" aria-label="MediLink home">
-      <span className="text-2xl md:text-[1.7rem]">
-        <span className="text-navy">Medi</span>
-        <span className="text-gold">Link</span>
-      </span>
-    </Link>
-  );
-}
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -42,7 +32,7 @@ export function SiteHeader() {
     >
       <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[1680px] items-center px-6 lg:px-12">
         <div className="shrink-0">
-          <Wordmark />
+          <BrandMark />
         </div>
         <nav className="ml-8 hidden h-full items-stretch gap-6 lg:flex" aria-label="Primary">
           {publicNav.map((tab) => {

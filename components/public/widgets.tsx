@@ -27,10 +27,12 @@ const tones = {
   cream: "bg-beige text-navy",
 } as const;
 
+export type WidgetTone = keyof typeof tones;
+
 export function ColorWidgets({
   items,
 }: {
-  items: Array<{ href: string; label: string; icon: NavIconName; tone: keyof typeof tones }>;
+  items: Array<{ href: string; label: string; icon: NavIconName; tone: WidgetTone }>;
 }) {
   return (
     <div className="color-widgets">
@@ -54,16 +56,21 @@ export function PhotoTile({
   kicker,
   title,
   body,
+  tone = "navy",
 }: {
   href: string;
-  image: string;
+  image?: string;
   kicker: string;
   title: string;
   body?: string;
+  tone?: WidgetTone;
 }) {
   return (
-    <Link href={href as never} className="photo-tile">
-      <img src={image} alt="" className="photo-tile__image" />
+    <Link
+      href={href as never}
+      className={cn("photo-tile", !image && tones[tone], image && "photo-tile--photo")}
+    >
+      {image ? <img src={image} alt="" className="photo-tile__image" /> : null}
       <div className="photo-tile__copy">
         <p className="kicker">{kicker}</p>
         <h3>{title}</h3>
@@ -81,18 +88,28 @@ export function SplitFeature({
   body,
   action,
   reverse,
+  tone = "navy",
 }: {
   href: string;
-  image: string;
+  image?: string;
   kicker: string;
   title: string;
   body: string;
   action: string;
   reverse?: boolean;
+  tone?: WidgetTone;
 }) {
   return (
-    <Link href={href as never} className={cn("split-feature", reverse && "split-feature--reverse")}>
-      <img src={image} alt="" className="split-feature__image" />
+    <Link
+      href={href as never}
+      className={cn(
+        "split-feature",
+        reverse && "split-feature--reverse",
+        !image && tones[tone],
+        !image && "split-feature--color",
+      )}
+    >
+      {image ? <img src={image} alt="" className="split-feature__image" /> : null}
       <div className="split-feature__copy">
         <p className="kicker">{kicker}</p>
         <h3>{title}</h3>
