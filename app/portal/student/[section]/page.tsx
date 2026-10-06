@@ -1,14 +1,9 @@
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
-import { tracks } from "@/lib/content/curriculum";
 
 const catalog: Record<string, { title: string; body: string }> = {
   competitions: {
     title: "Open Competitions in the student menu.",
     body: "Normal Event registration, Legacy roster status, and published rankings live on that page.",
-  },
-  curriculum: {
-    title: "Curriculum progress",
-    body: "Open a module when lesson files are attached. Status is not started, in progress, or completed.",
   },
   projects: {
     title: "No projects yet",
@@ -38,32 +33,6 @@ export default async function StudentSectionPage({
   params: Promise<{ section: string }>;
 }) {
   const { section } = await params;
-  if (section === "curriculum") {
-    return (
-      <div className="space-y-4">
-        {tracks.map((track) => (
-          <article key={track.id} className="rounded-[var(--radius)] bg-white p-5">
-            <p className="kicker">Track {track.number}</p>
-            <h2 className="font-semibold">{track.name}</h2>
-            <ul className="mt-3 space-y-2 text-sm">
-              {track.modules.map((mod) => (
-                <li key={mod.code} className="flex justify-between">
-                  <span>
-                    {mod.code} {mod.name}
-                  </span>
-                  <span className="text-muted">Not started</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
-        <p className="text-sm text-muted">
-          Full lesson, video, reading, lab, and quiz files attach when content is
-          uploaded. This page does not invent lesson text.
-        </p>
-      </div>
-    );
-  }
   const copy = catalog[section];
   if (!copy) {
     return <PortalEmpty title="Page not found" body="This student tool is not available." />;

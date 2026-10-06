@@ -1,3 +1,17 @@
+export type CurriculumFile = {
+  id: string;
+  title: string;
+  kind: "slideshow" | "task";
+  href: string;
+};
+
+export type CurriculumModule = {
+  code: string;
+  name: string;
+  description: string;
+  files?: CurriculumFile[];
+};
+
 export const tracks = [
   {
     id: "track-1",
@@ -13,6 +27,20 @@ export const tracks = [
         name: "How Healthcare Gets Paid For",
         description:
           "Insurance basics, premiums, deductibles, and employer vs. government coverage. A student who finishes this module should be able to say who writes the check for a visit, not just that insurance pays.",
+        files: [
+          {
+            id: "module-1-1",
+            title: "Module 1.1 slideshow",
+            kind: "slideshow" as const,
+            href: "/docs/curriculum/module-1.1.pdf",
+          },
+          {
+            id: "task-1-overview",
+            title: "Task 1 overview",
+            kind: "task" as const,
+            href: "/docs/curriculum/task-1-overview.pdf",
+          },
+        ],
       },
       {
         code: "1.2",
@@ -116,3 +144,18 @@ export const tracks = [
     ],
   },
 ];
+
+export function attachedCurriculumFiles() {
+  return tracks.flatMap((track) =>
+    track.modules.flatMap((mod) =>
+      (mod.files || []).map((file) => ({
+        ...file,
+        trackId: track.id,
+        trackNumber: track.number,
+        trackName: track.name,
+        moduleCode: mod.code,
+        moduleName: mod.name,
+      })),
+    ),
+  );
+}

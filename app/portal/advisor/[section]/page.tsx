@@ -8,10 +8,6 @@ const catalog: Record<
     title: "Open Competitions in the advisor menu.",
     body: "Register students, set the Legacy roster, and assign Legacy events on that page.",
   },
-  curriculum: {
-    title: "Chapter curriculum progress",
-    body: "Progress is calculated from real module completion only. Full lesson files attach when content is uploaded.",
-  },
   resources: {
     title: "Advisor resource center",
     body: "Resources appear by category when an administrator publishes them. Nothing here is placeholder content pretending to be a file.",
