@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
 import { chapterPhotos } from "@/lib/content/news";
-import { photoEmailHref } from "@/lib/content/forms";
+import { CONTACT_EMAIL, photoEmailHref } from "@/lib/content/forms";
 
 export const dynamic = "force-dynamic";
 
@@ -126,7 +126,7 @@ export default async function HomePage() {
               sentence about the frame. Ask the people in the picture first.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href={photoEmailHref()}>Email pictures</ButtonLink>
+              <ButtonLink href={photoEmailHref()}>Email {CONTACT_EMAIL}</ButtonLink>
               <ButtonLink href="/news" variant="outline">
                 Open News
               </ButtonLink>
