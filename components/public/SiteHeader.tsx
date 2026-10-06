@@ -121,7 +121,7 @@ export function SiteHeader() {
 
       {activeTab ? (
         <div className="hidden border-t border-white/10 bg-navy-deep lg:block">
-          <div className="mx-auto flex w-full max-w-[1680px] items-start gap-12 px-6 py-4 lg:px-12">
+          <div className="mx-auto flex w-full max-w-[1680px] items-start gap-16 px-6 py-4 lg:px-12">
             <div className="w-36 shrink-0 pt-1">
               <p className="kicker">{activeTab.kicker}</p>
               <p className="mt-1 text-base font-semibold text-white">{activeTab.label}</p>
@@ -129,7 +129,7 @@ export function SiteHeader() {
                 Overview
               </Link>
             </div>
-            <div className="grid w-full max-w-xl grid-cols-2 gap-x-8 gap-y-0.5">
+            <div className="grid min-w-0 flex-1 grid-cols-3 gap-x-12 gap-y-1">
               {activeTab.items.map((item, index) => (
                 <Link
                   key={item.href}
