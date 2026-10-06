@@ -146,7 +146,7 @@ export function EventChoiceInbox({ choices }: { choices: EventChoiceRow[] }) {
         <h2 className="text-xl font-semibold">Student event choices</h2>
         <p className="mt-1 text-sm text-muted">
           Students send these from Choose Event. Enter a student to save the official assignment. They will see the
-          event and rubric on their Competitions page.
+          event on Competitions. Every official rubric is on Resources.
         </p>
       </div>
       {pending.length ? (

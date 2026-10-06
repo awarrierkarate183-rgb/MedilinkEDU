@@ -9,10 +9,6 @@ const catalog: Record<string, { title: string; body: string }> = {
     title: "No projects yet",
     body: "Turn an Ideas Lab entry into a project when you are ready. Private files are never public.",
   },
-  resources: {
-    title: "Student resources",
-    body: "Learn, compete, build, research, and lead. Files appear when published for members.",
-  },
   announcements: {
     title: "No new chapter announcements.",
     body: "Advisor and national announcements for your chapter show here.",

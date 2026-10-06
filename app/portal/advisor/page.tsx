@@ -45,7 +45,7 @@ export default async function AdvisorDashboard() {
               </Link>
             ) : null}
             {pendingChoices > 0 ? (
-              <Link href="/portal/advisor/events" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+              <Link href="/portal/advisor/competitions" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
                 {pendingChoices} student event {pendingChoices === 1 ? "choice" : "choices"} waiting to be entered
               </Link>
             ) : null}
@@ -61,11 +61,11 @@ export default async function AdvisorDashboard() {
         <div className="mb-3 flex items-end justify-between gap-3">
           <h2 className="text-lg font-semibold">Upcoming events</h2>
           <Link href="/portal/advisor/events" className="text-sm font-semibold">
-            Open events
+            Open competition events
           </Link>
         </div>
         {!data?.upcoming.length ? (
-          <PortalEmpty title="No dated chapter events yet" body="The full MediLink event catalog is on Events. Student choices land there too." />
+          <PortalEmpty title="No dated chapter events yet" body="The official catalog is on Competition Events. Student choices and entries land on Competitions." />
         ) : (
           <ul className="space-y-2">
             {data.upcoming.map((event) => (

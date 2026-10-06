@@ -112,7 +112,7 @@ export default async function StudentDashboard() {
       <section>
         <div className="mb-3 flex items-end justify-between gap-3">
           <h2 className="text-lg font-semibold">Upcoming events</h2>
-          <Link href="/portal/student/events" className="text-sm font-semibold">
+          <Link href="/portal/student/competitions" className="text-sm font-semibold">
             My events
           </Link>
         </div>

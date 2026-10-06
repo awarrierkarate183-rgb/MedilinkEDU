@@ -14,8 +14,8 @@ export function StudentEventBoard({
         <h2 className="text-xl font-semibold">Your assigned events</h2>
         <p className="mt-1 text-sm text-muted">
           Season {seasonLabel || "not opened"}. When an administrator or advisor
-          enters you in a competition, this page opens the official instructions,
-          rubric, work product, and rules for that event.
+          enters you in a competition, this page opens the official instructions
+          and rules for that event. Every event rubric and point system is on Resources.
         </p>
       </div>
       {assignments.length ? (

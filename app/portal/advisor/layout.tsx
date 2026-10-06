@@ -5,7 +5,7 @@ const nav = [
   { href: "/portal/advisor", label: "Dashboard" },
   { href: "/portal/advisor/members", label: "Members" },
   { href: "/portal/advisor/chapter", label: "Chapter" },
-  { href: "/portal/advisor/events", label: "Events" },
+  { href: "/portal/advisor/events", label: "Competition Events" },
   { href: "/portal/advisor/competitions", label: "Competitions" },
   { href: "/portal/advisor/curriculum", label: "Curriculum" },
   { href: "/portal/advisor/resources", label: "Resources" },
@@ -19,7 +19,7 @@ const nav = [
 const mobileNav = [
   { href: "/portal/advisor", label: "Home" },
   { href: "/portal/advisor/members", label: "Members" },
-  { href: "/portal/advisor/events", label: "Events" },
+  { href: "/portal/advisor/events", label: "Comp Events" },
   { href: "/portal/advisor/submissions", label: "Tasks" },
   { href: "/portal/advisor/settings", label: "More" },
 ];

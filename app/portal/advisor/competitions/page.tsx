@@ -3,9 +3,11 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 import { AssignEventForm } from "@/components/portal/AssignEventForm";
 import { CompetitionDesk } from "@/components/portal/CompetitionDesk";
+import { EventChoiceInbox } from "@/components/portal/EventChoiceInbox";
 import { SchoolWorkbook } from "@/components/portal/SchoolWorkbook";
 import { loadCompetitionWorkspace } from "@/lib/data/competition-workspace";
 import { loadSchoolWorkbook } from "@/lib/data/admin-proceedings";
+import { loadEventChoices } from "@/lib/competition/choices";
 import type { Actor } from "@/lib/auth/roles";
 import type { AppRole } from "@/lib/constants";
 
@@ -19,7 +21,7 @@ export default async function AdvisorCompetitionsPage() {
     chapterId: profile.chapter_id,
     stateScope: profile.state_scope,
   };
-  const [data, workbook] = await Promise.all([
+  const [data, workbook, requested] = await Promise.all([
     loadCompetitionWorkspace(admin, {
       chapterId: profile.chapter_id,
       profileId: profile.id,
@@ -27,12 +29,23 @@ export default async function AdvisorCompetitionsPage() {
     profile.chapter_id
       ? loadSchoolWorkbook(admin, actor, profile.chapter_id)
       : Promise.resolve(null),
+    profile.chapter_id
+      ? loadEventChoices(admin, { chapterId: profile.chapter_id })
+      : Promise.resolve({ choices: [] }),
   ]);
   const members = Array.isArray(data.delegation?.legacy_delegation_members)
     ? data.delegation.legacy_delegation_members
     : [];
   return (
     <div className="space-y-6">
+      <section className="rounded-[var(--radius)] bg-white p-5">
+        <h1 className="text-xl font-semibold">Competitions</h1>
+        <p className="mt-2 text-sm text-muted">
+          Enter students from the choices they send, submit regular events, and set the Legacy team of four.
+          Event descriptions live on Competition Events. Rubrics live on Resources.
+        </p>
+      </section>
+      <EventChoiceInbox choices={requested.choices} />
       {workbook?.school ? (
         <SchoolWorkbook
           school={workbook.school}
@@ -48,7 +61,7 @@ export default async function AdvisorCompetitionsPage() {
               <li>Type the student first and last names exactly as they appear on your roster.</li>
               <li>Choose the competition they are doing.</li>
               <li>Add teammates only if the event allows a team.</li>
-              <li>Submit. Each student will see the event, format, and rubric slots on their Competitions page immediately.</li>
+              <li>Submit. Each student will see the event on their Competitions page immediately. Rubrics live on Resources.</li>
             </ol>
           </section>
           {profile.chapter_id ? (

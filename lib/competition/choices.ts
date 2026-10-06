@@ -202,8 +202,8 @@ export async function submitEventChoices(
         advisor.id,
         "event_choice",
         `${studentName} chose events`,
-        `${studentName} asked to compete in ${names}. Open Events to enter them.`,
-        "/portal/advisor/events",
+        `${studentName} asked to compete in ${names}. Open Competitions to enter them.`,
+        "/portal/advisor/competitions",
       ),
     ),
   );

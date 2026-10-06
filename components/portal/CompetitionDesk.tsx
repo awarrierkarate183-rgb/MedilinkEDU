@@ -87,10 +87,10 @@ export function CompetitionDesk(props: Props) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold">Competitions</h2>
+        <h2 className="text-xl font-semibold">Season entries</h2>
         <p className="mt-1 text-sm text-muted">
-          Season {props.seasonLabel || "not opened"}. Normal Events cap at six.
-          Legacy uses one team of four. That team may enter one, two, or all three Triad events.
+          Season {props.seasonLabel || "not opened"}. Submit regular Normal Events here. Set the
+          Legacy team of four, then enter that team in one, two, or all three Triad events.
         </p>
       </div>
       {error ? <Alert title="Not saved" tone="danger">{error}</Alert> : null}

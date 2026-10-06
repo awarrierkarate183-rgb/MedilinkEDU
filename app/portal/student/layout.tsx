@@ -3,7 +3,7 @@ import { requireRole } from "@/lib/auth/session";
 
 const nav = [
   { href: "/portal/student", label: "Dashboard" },
-  { href: "/portal/student/events", label: "Events" },
+  { href: "/portal/student/events", label: "Competition Events" },
   { href: "/portal/student/choose-event", label: "Choose Event" },
   { href: "/portal/student/competitions", label: "Competitions" },
   { href: "/portal/student/curriculum", label: "Curriculum" },
@@ -18,7 +18,7 @@ const nav = [
 
 const mobileNav = [
   { href: "/portal/student", label: "Home" },
-  { href: "/portal/student/events", label: "Events" },
+  { href: "/portal/student/events", label: "Comp Events" },
   { href: "/portal/student/choose-event", label: "Choose" },
   { href: "/portal/student/competitions", label: "Compete" },
   { href: "/portal/student/ideas", label: "Ideas" },

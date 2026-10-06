@@ -8,10 +8,6 @@ const catalog: Record<
     title: "Open Competitions in the advisor menu.",
     body: "Register students, set the Legacy roster, and assign Legacy events on that page.",
   },
-  resources: {
-    title: "Advisor resource center",
-    body: "Resources appear by category when an administrator publishes them. Nothing here is placeholder content pretending to be a file.",
-  },
   submissions: {
     title: "No submissions waiting",
     body: "Ideas, projects, and competition files from your chapter land here for review.",
