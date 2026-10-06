@@ -280,6 +280,63 @@ h3 {
   }
 }
 
+.home-split {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .home-split {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 4.5rem;
+  }
+}
+
+.home-hero {
+  background: var(--cream);
+  color: var(--navy);
+  padding: calc(var(--header-h) + 2.25rem) 0 4.25rem;
+}
+
+.home-hero .container-ml {
+  width: min(1280px, calc(100% - 2.5rem));
+}
+
+.home-hero .hero-wordmark {
+  filter: none;
+}
+
+.home-hero .hero-line {
+  color: var(--navy);
+}
+
+.home-photo {
+  width: 100%;
+  display: block;
+  min-height: 22rem;
+  max-height: 40rem;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--navy);
+}
+
+.home-photo--hero {
+  min-height: 28rem;
+  box-shadow: 18px 18px 0 var(--gold);
+}
+
+.home-photo--meet {
+  min-height: 26rem;
+  box-shadow: 16px 16px 0 var(--gold);
+}
+
+.home-caption {
+  margin-top: 0.85rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
 .meet-photo {
   width: 100%;
   min-height: 26rem;

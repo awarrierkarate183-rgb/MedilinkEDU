@@ -1,5 +1,5 @@
 import { ButtonLink } from "@/components/ui/Button";
-import { actionHref, CONTACT_EMAIL } from "@/lib/content/forms";
+import { CONTACT_EMAIL, photoEmailHref } from "@/lib/content/forms";
 
 export function PhotoCallout() {
   return (
@@ -21,11 +21,11 @@ export function PhotoCallout() {
           <li>Do not send student emails, grades, or private portal screens.</li>
         </ul>
         <div className="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href={actionHref("submitNews", "Submit News Chapter Photos")} className="click-here">
-            Send photos now
+          <ButtonLink href={photoEmailHref()} className="click-here">
+            Email {CONTACT_EMAIL}
           </ButtonLink>
-          <ButtonLink href={`mailto:${CONTACT_EMAIL}?subject=Chapter%20photos`} variant="secondary">
-            Email pictures
+          <ButtonLink href="/news/send-photos" variant="secondary">
+            Photo rules
           </ButtonLink>
         </div>
       </div>

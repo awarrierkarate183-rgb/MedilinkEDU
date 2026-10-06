@@ -10,3 +10,7 @@ export function actionHref(
 ) {
   return formOrMailto(forms[key], subject, CONTACT_EMAIL);
 }
+
+export function photoEmailHref() {
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Chapter photos")}`;
+}

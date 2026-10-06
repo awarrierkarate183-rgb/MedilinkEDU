@@ -732,8 +732,9 @@ export const sectionArticles: SectionArticle[] = [
       },
     ],
     actions: [
-      { href: "/news", label: "Open News" },
-      { href: "/news/send-photos", label: "Send photos", variant: "outline" },
+      { href: "mailto:medi.link.edu@gmail.com?subject=Chapter%20photos", label: "Email medi.link.edu@gmail.com" },
+      { href: "/news", label: "Open News", variant: "outline" },
+      { href: "/news/send-photos", label: "Photo rules", variant: "outline" },
     ],
   },
   {
@@ -799,11 +800,14 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "How to send it",
         body: [
-          "Use the news form or email medi.link.edu@gmail.com. Keep a copy of the files. A form is a request, not an automatic post.",
+          "Email pictures to medi.link.edu@gmail.com. Put the school name and city in the subject or the first line. Keep a copy of the files. A message is a request, not an automatic post.",
         ],
       },
     ],
-    actions: [{ href: "/news", label: "Back to News" }],
+    actions: [
+      { href: "mailto:medi.link.edu@gmail.com?subject=Chapter%20photos", label: "Email medi.link.edu@gmail.com" },
+      { href: "/news", label: "Back to News", variant: "outline" },
+    ],
   },
   {
     href: "/news/how-review-works",

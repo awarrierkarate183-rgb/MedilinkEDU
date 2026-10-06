@@ -5,6 +5,32 @@ import { PhotoTile, QuietLinks } from "@/components/public/widgets";
 import { ButtonLink } from "@/components/ui/Button";
 import { chapterPhotos } from "@/lib/content/news";
 import { navTabByHref, type NavTab } from "@/lib/content/public-nav";
+import { CONTACT_EMAIL } from "@/lib/constants";
+
+export type ArticleBlock = {
+  heading: string;
+  body: string[];
+};
+
+function heroFor(href: string) {
+  const root = `/${href.split("/").filter(Boolean)[0] || ""}`;
+  return root === "/news" ? chapterPhotos[0].src : undefined;
+}
+
+function linkContactEmail(text: string) {
+  const parts = text.split(CONTACT_EMAIL);
+  if (parts.length === 1) return text;
+  return parts.flatMap((part, index) =>
+    index === 0
+      ? [part]
+      : [
+          <a key={`${CONTACT_EMAIL}-${index}`} href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-navy underline">
+            {CONTACT_EMAIL}
+          </a>,
+          part,
+        ],
+  );
+}
 
 export type ArticleBlock = {
   heading: string;
@@ -41,7 +67,9 @@ export function ArticlePage({
                 <h2 className="tab-heading text-3xl md:text-4xl">{block.heading}</h2>
                 <div className="mt-4 max-w-3xl space-y-4 text-lg leading-8 text-[var(--muted)]">
                   {block.body.map((paragraph) => (
-                    <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                    <p key={paragraph.slice(0, 48)}>
+                      {linkContactEmail(paragraph)}
+                    </p>
                   ))}
                 </div>
               </section>

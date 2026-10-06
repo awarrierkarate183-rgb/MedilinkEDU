@@ -60,16 +60,26 @@ export function ButtonLink({
   className,
   children,
 }: Common & { href: string; children: ReactNode }) {
+  const classes = cn(
+    "inline-flex items-center justify-center gap-2 rounded-md transition-colors",
+    variants[variant],
+    sizes[size],
+    className,
+  );
+  if (/^(mailto:|https?:|tel:)/i.test(href)) {
+    return (
+      <a
+        href={href}
+        className={classes}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel={href.startsWith("http") ? "noreferrer" : undefined}
+      >
+        {children}
+      </a>
+    );
+  }
   return (
-    <Link
-      href={href as never}
-      className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md transition-colors",
-        variants[variant],
-        sizes[size],
-        className,
-      )}
-    >
+    <Link href={href as never} className={classes}>
       {children}
     </Link>
   );
