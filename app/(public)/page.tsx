@@ -24,8 +24,8 @@ export default async function HomePage() {
     <>
       <section className="relative min-h-[88vh] overflow-hidden bg-navy text-white">
         <div className="container-ml relative grid min-h-[88vh] items-center py-[calc(var(--header-h)+3.5rem)] lg:grid-cols-2">
-          <div className="reveal max-w-xl">
-            <h1 className="display" aria-label="MediLink">
+          <div className="reveal max-w-3xl">
+            <h1 className="hero-wordmark" aria-label="MediLink">
               <span className="text-white">Medi</span>
               <span className="text-gold">Link</span>
             </h1>

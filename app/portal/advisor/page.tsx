@@ -3,11 +3,20 @@ import { MetricCard } from "@/components/ui/Card";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
 import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 import { requireRole } from "@/lib/auth/session";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { loadAdvisorDashboard } from "@/lib/data/dashboards";
+import { loadEventChoices } from "@/lib/competition/choices";
 
 export default async function AdvisorDashboard() {
   const { profile } = await requireRole(["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
   const result = await loadAdvisorDashboard(profile?.chapter_id ?? null);
+  const admin = createAdminClient();
+  const pendingChoices =
+    admin && profile?.chapter_id
+      ? (await loadEventChoices(admin, { chapterId: profile.chapter_id })).choices.filter(
+          (row) => row.status === "PENDING",
+        ).length
+      : 0;
 
   if (result.error) return <ConnectionTrouble />;
 
@@ -26,21 +35,35 @@ export default async function AdvisorDashboard() {
       </div>
       <section>
         <h2 className="mb-3 text-lg font-semibold">Pending actions</h2>
-        {(data?.pending ?? 0) > 0 ? (
-          <Link href="/portal/advisor/members" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
-            {data?.pending} student registrations awaiting approval
-          </Link>
+        {(data?.pending ?? 0) > 0 || pendingChoices > 0 ? (
+          <div className="space-y-2">
+            {(data?.pending ?? 0) > 0 ? (
+              <Link href="/portal/advisor/members" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+                {data?.pending} student registrations awaiting approval
+              </Link>
+            ) : null}
+            {pendingChoices > 0 ? (
+              <Link href="/portal/advisor/events" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+                {pendingChoices} student event {pendingChoices === 1 ? "choice" : "choices"} waiting to be entered
+              </Link>
+            ) : null}
+          </div>
         ) : (
           <PortalEmpty
             title="No pending actions"
-            body="Approvals, incomplete registrations, and reviews will land here from live chapter data."
+            body="Approvals, event choices, and reviews will land here from live chapter data."
           />
         )}
       </section>
       <section>
-        <h2 className="mb-3 text-lg font-semibold">Upcoming events</h2>
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <h2 className="text-lg font-semibold">Upcoming events</h2>
+          <Link href="/portal/advisor/events" className="text-sm font-semibold">
+            Open events
+          </Link>
+        </div>
         {!data?.upcoming.length ? (
-          <PortalEmpty title="No upcoming events" body="Published chapter events will appear here." />
+          <PortalEmpty title="No dated chapter events yet" body="The full MediLink event catalog is on Events. Student choices land there too." />
         ) : (
           <ul className="space-y-2">
             {data.upcoming.map((event) => (

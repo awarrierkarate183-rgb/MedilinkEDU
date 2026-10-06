@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  assertEventChoiceSet,
   assertLegacyEntry,
   assertLegacyGroups,
   assertNominationCap,
@@ -61,6 +62,33 @@ describe("competition rules", () => {
     expect(matchRosterNames(roster, [{ firstName: "Sam", lastName: "Patel" }])).toEqual({
       error: "Sam Patel is not on this school's active roster.",
     });
+  });
+
+  it("lets a student choose six Normal Events plus Legacy, and blocks a seventh Normal", () => {
+    expect(assertEventChoiceSet([])).toMatch(/at least one/);
+    expect(assertEventChoiceSet([{ eventId: "not-an-event" }])).toMatch(/real MediLink events/);
+    expect(
+      assertEventChoiceSet([
+        { eventId: "triage-protocol" },
+        { eventId: "the-chart-room" },
+        { eventId: "system-failure" },
+        { eventId: "patient-zero" },
+        { eventId: "under-review" },
+        { eventId: "the-gray-area" },
+        { eventId: "the-sovereign-ledger", intent: "I want the finance seat." },
+      ]),
+    ).toBeNull();
+    expect(
+      assertEventChoiceSet([
+        { eventId: "triage-protocol" },
+        { eventId: "the-chart-room" },
+        { eventId: "system-failure" },
+        { eventId: "patient-zero" },
+        { eventId: "under-review" },
+        { eventId: "the-gray-area" },
+        { eventId: "the-floor" },
+      ]),
+    ).toMatch(/at most 6/);
   });
 
   it("caps invitational nominations at two and locks the roster", () => {

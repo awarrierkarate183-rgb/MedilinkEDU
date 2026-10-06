@@ -47,61 +47,63 @@ export function SiteHeader() {
       )}
       onMouseLeave={() => setOpenTab(null)}
     >
-      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[1680px] items-center justify-between gap-10 px-6 lg:px-12">
+      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[1680px] items-center px-6 lg:px-12">
         <div className="shrink-0">
           <Wordmark />
         </div>
-        <nav className="hidden min-w-0 flex-1 items-center justify-evenly gap-x-8 lg:flex" aria-label="Primary">
-          {publicNav.map((tab) => {
-            const active = pathname === tab.href || pathname.startsWith(`${tab.href}/`);
-            const isOpen = openTab === tab.href;
-            return (
-              <div
-                key={tab.href}
-                className="relative flex items-center"
-                onMouseEnter={() => setOpenTab(tab.href)}
-              >
-                <Link
-                  href={tab.href as never}
-                  className={cn(
-                    "public-nav inline-flex items-center gap-1.5 border-b-2 px-1.5 py-2 text-[1.05rem] leading-none transition-colors",
-                    active || isOpen ? "border-gold text-gold" : "border-transparent text-white/85 hover:text-white",
-                  )}
+        <div className="ml-auto hidden items-center gap-8 lg:flex">
+          <nav className="flex items-center gap-7" aria-label="Primary">
+            {publicNav.map((tab) => {
+              const active = pathname === tab.href || pathname.startsWith(`${tab.href}/`);
+              const isOpen = openTab === tab.href;
+              return (
+                <div
+                  key={tab.href}
+                  className="relative flex items-center"
+                  onMouseEnter={() => setOpenTab(tab.href)}
                 >
-                  {tab.label}
-                  <span aria-hidden="true" className="text-[0.65rem]">
-                    ▾
-                  </span>
-                </Link>
-                <button
-                  type="button"
-                  className="sr-only"
-                  aria-expanded={isOpen}
-                  aria-haspopup="true"
-                  aria-label={`${tab.label} menu`}
-                  onClick={() => setOpenTab(isOpen ? null : tab.href)}
-                >
-                  Open {tab.label} menu
-                </button>
-              </div>
-            );
-          })}
-        </nav>
-        <div className="hidden shrink-0 items-center gap-4 lg:flex">
-          <Link
-            href="/start-a-chapter"
-            className="whitespace-nowrap rounded-md border border-white/35 px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-white hover:bg-white/10"
-          >
-            Start a Chapter
-          </Link>
-          <Link
-            href="/portal"
-            className="whitespace-nowrap rounded-md bg-gold px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-navy hover:bg-gold-hover"
-          >
-            Portal Login
-          </Link>
+                  <Link
+                    href={tab.href as never}
+                    className={cn(
+                      "public-nav inline-flex items-center gap-1.5 border-b-2 px-0.5 py-2 text-[1.05rem] leading-none transition-colors",
+                      active || isOpen ? "border-gold text-gold" : "border-transparent text-white/85 hover:text-white",
+                    )}
+                  >
+                    {tab.label}
+                    <span aria-hidden="true" className="text-[0.65rem]">
+                      ▾
+                    </span>
+                  </Link>
+                  <button
+                    type="button"
+                    className="sr-only"
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    aria-label={`${tab.label} menu`}
+                    onClick={() => setOpenTab(isOpen ? null : tab.href)}
+                  >
+                    Open {tab.label} menu
+                  </button>
+                </div>
+              );
+            })}
+          </nav>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/start-a-chapter"
+              className="whitespace-nowrap rounded-md border border-white/35 px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-white hover:bg-white/10"
+            >
+              Start a Chapter
+            </Link>
+            <Link
+              href="/portal"
+              className="whitespace-nowrap rounded-md bg-gold px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-navy hover:bg-gold-hover"
+            >
+              Portal Login
+            </Link>
+          </div>
         </div>
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
           <Link href="/portal" className="rounded-md bg-gold px-3.5 py-2.5 text-sm font-semibold text-navy">
             Portal
           </Link>

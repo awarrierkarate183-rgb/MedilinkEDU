@@ -59,14 +59,14 @@ export default async function StudentDashboard() {
       <section>
         <div className="mb-3 flex items-end justify-between gap-3">
           <h2 className="text-lg font-semibold">Your competitions</h2>
-          <Link href="/portal/student/competitions" className="text-sm font-semibold">
-            Open competitions
+          <Link href="/portal/student/choose-event" className="text-sm font-semibold">
+            Choose Event
           </Link>
         </div>
         {!assigned.assignments.length ? (
           <PortalEmpty
             title="No events assigned yet"
-            body="When an administrator or advisor enters your name in a competition, it will show here with instructions and a rubric when MediLink publishes them."
+            body="Open Choose Event to send your picks to your advisor. When they enter you, the event and rubric show here."
           />
         ) : (
           <ul className="space-y-2">

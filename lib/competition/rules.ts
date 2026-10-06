@@ -28,6 +28,28 @@ export function assertNormalEventCap(existingEventIds: string[], nextEventId: st
   return null;
 }
 
+export function assertEventChoiceSet(
+  choices: Array<{ eventId: string; intent?: string }>,
+  alreadyHeldNormalIds: string[] = [],
+) {
+  if (!choices.length) return "Choose at least one event.";
+  const seen = new Set<string>();
+  const held = new Set(alreadyHeldNormalIds);
+  let newNormal = 0;
+  for (const row of choices) {
+    const event = getCatalogEvent(row.eventId);
+    if (!event) return "Choose real MediLink events.";
+    if (seen.has(event.id)) return "Do not send the same event twice.";
+    seen.add(event.id);
+    if ((row.intent || "").length > 800) return "Keep each note under 800 characters.";
+    if (event.tier === "NORMAL" && !held.has(event.id)) newNormal += 1;
+  }
+  if (held.size + newNormal > NORMAL_EVENT_CAP) {
+    return `A student may choose at most ${NORMAL_EVENT_CAP} Normal Events.`;
+  }
+  return null;
+}
+
 export function assertLegacyGroups(groupA: string[], groupB: string[] = []) {
   if (groupB.length) {
     return "Legacy uses one team of four. Do not assign a second group.";

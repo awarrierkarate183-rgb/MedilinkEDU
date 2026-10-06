@@ -130,6 +130,33 @@ export const assignByNameSchema = z.object({
     .max(5, "A team may have at most five students."),
 });
 
+export const eventChoiceSchema = z.object({
+  choices: z
+    .array(
+      z.object({
+        eventId: z.string().min(3),
+        intent: z.string().trim().max(800).optional().default(""),
+      }),
+    )
+    .min(1, "Choose at least one event.")
+    .max(9, "Choose at most six Normal Events and the three Legacy Events."),
+});
+
+export const reviewEventChoiceSchema = z.object({
+  choiceId: uuid,
+  decision: z.enum(["approve", "decline"]),
+  teammates: z
+    .array(
+      z.object({
+        firstName: z.string().trim().min(1, "Enter each teammate first name."),
+        lastName: z.string().trim().min(1, "Enter each teammate last name."),
+      }),
+    )
+    .max(4)
+    .optional()
+    .default([]),
+});
+
 export const legacyRosterSchema = z.object({
   groupA: z.array(uuid).max(4),
   groupB: z.array(uuid).max(4).optional().default([]),

@@ -70,9 +70,9 @@ export function StudentEventBoard({
         ))
       ) : (
         <div className="rounded-[var(--radius)] bg-white p-5 text-sm text-muted">
-          You are not entered in an event yet. Your advisor or a MediLink
-          administrator types your name, chooses the competition, and submits.
-          That assignment will appear on this page with the official rubric.
+          You are not entered in an event yet. Open Choose Event to send your
+          picks to your advisor. When they enter you, this page opens the official
+          rubric.
         </div>
       )}
     </section>

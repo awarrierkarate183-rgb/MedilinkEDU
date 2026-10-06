@@ -4,10 +4,6 @@ const catalog: Record<
   string,
   { title: string; body: string }
 > = {
-  events: {
-    title: "No upcoming events",
-    body: "You're all caught up. New MediLink events will appear here when they are published.",
-  },
   competitions: {
     title: "Open Competitions in the advisor menu.",
     body: "Register students, set the Legacy roster, and assign Legacy events on that page.",
