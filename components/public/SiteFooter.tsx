@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CONTACT_EMAIL, MISSION, PUBLIC_NAV } from "@/lib/constants";
+import { CONTACT_EMAIL, MISSION } from "@/lib/constants";
+import { publicNav } from "@/lib/content/public-nav";
 
 export function SiteFooter() {
   return (
@@ -15,7 +16,7 @@ export function SiteFooter() {
         <div>
           <p className="kicker">Explore</p>
           <ul className="mt-3 space-y-2 text-sm">
-            {PUBLIC_NAV.map((item) => (
+            {publicNav.map((item) => (
               <li key={item.href}>
                 <Link className="text-white/80 hover:text-white" href={item.href as never}>
                   {item.label}

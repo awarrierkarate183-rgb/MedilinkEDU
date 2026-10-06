@@ -1,0 +1,41 @@
+import type { Metadata } from "next";
+import { HashAliases } from "@/components/public/HashAliases";
+import { ArticlePage } from "@/components/public/ArticlePage";
+import { EventCatalog } from "@/components/competitions/EventCatalog";
+import { LEGACY_HANDBOOK_PDF, legacyPurpose } from "@/lib/content/legacy-event-handbook";
+import { legacyEvents } from "@/lib/content/competition-system";
+
+export const metadata: Metadata = {
+  title: "Legacy Events",
+  description: "Five MediLink Legacy championship events with official procedures and 100-point rubrics.",
+};
+
+export default function LegacyEventsPage() {
+  return (
+    <>
+      <HashAliases />
+      <ArticlePage
+        href="/competitions/legacy"
+        title="Five Legacy Events. Eight students. Two groups."
+        lead="Selective chapter-owned championship simulations. Open an event for the official packet."
+        blocks={[
+          {
+            heading: "How Legacy works",
+            body: [
+              "Each chapter selects a maximum of eight Legacy-eligible students and organizes them as two groups of up to four. For any one Legacy event, a chapter may enter only one group. The roster locks when the season begins. All rounds are in person and use Advanced Release: the confidential packet opens two hours before the judged simulation.",
+              legacyPurpose,
+            ],
+          },
+        ]}
+        actions={[{ href: LEGACY_HANDBOOK_PDF, label: "Download the Legacy Championship handbook", variant: "outline" }]}
+      />
+      <section className="band band--paper">
+        <div className="container-ml">
+          <p className="kicker">Championship packets</p>
+          <h2 className="tab-heading mb-6 text-3xl">Open an event</h2>
+          <EventCatalog events={legacyEvents} prestige={2} />
+        </div>
+      </section>
+    </>
+  );
+}
