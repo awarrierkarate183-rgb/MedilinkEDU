@@ -121,25 +121,25 @@ export function SiteHeader() {
 
       {activeTab ? (
         <div className="hidden border-t border-white/10 bg-navy-deep lg:block">
-          <div className="mx-auto grid w-full max-w-[1680px] gap-10 px-6 py-9 lg:grid-cols-[0.85fr_1.5fr] lg:px-12">
-            <div>
+          <div className="mx-auto flex w-full max-w-[1680px] items-start gap-12 px-6 py-4 lg:px-12">
+            <div className="w-36 shrink-0 pt-1">
               <p className="kicker">{activeTab.kicker}</p>
-              <p className="tab-heading text-3xl text-white">{activeTab.label}</p>
-              <p className="mt-3 max-w-md text-sm leading-7 text-white/70">{activeTab.blurb}</p>
-              <Link href={activeTab.href as never} className="mt-5 inline-block text-sm font-semibold text-gold">
-                Open the {activeTab.label} overview
+              <p className="mt-1 text-base font-semibold text-white">{activeTab.label}</p>
+              <Link href={activeTab.href as never} className="mt-2 inline-block text-xs font-semibold text-gold">
+                Overview
               </Link>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid w-full max-w-xl grid-cols-2 gap-x-8 gap-y-0.5">
               {activeTab.items.map((item, index) => (
                 <Link
                   key={item.href}
                   href={item.href as never}
-                  className="rounded-xl border border-white/10 bg-navy/40 p-4 transition hover:border-gold/60 hover:bg-navy"
+                  className="flex items-center gap-3 px-1 py-2 text-sm text-white/85 transition-colors hover:text-white"
                 >
-                  <p className="kicker text-gold">0{index + 1}</p>
-                  <p className="tab-heading text-lg text-white">{item.label}</p>
-                  <p className="mt-1 text-sm text-white/65">{item.blurb}</p>
+                  <span className="w-6 shrink-0 text-[0.65rem] font-semibold tracking-[0.14em] text-gold">
+                    0{index + 1}
+                  </span>
+                  <span>{item.label}</span>
                 </Link>
               ))}
             </div>

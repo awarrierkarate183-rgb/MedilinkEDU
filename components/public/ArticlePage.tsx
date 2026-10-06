@@ -74,17 +74,17 @@ export function SectionHub({
       <section className="band">
         <div className="container-ml">
           <p className="kicker">In this section</p>
-          <h2 className="tab-heading mb-8 text-3xl md:text-4xl">Open a subsection</h2>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="mt-4 grid gap-x-10 gap-y-1 md:grid-cols-2">
             {tab.items.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href as never}
-                className="rounded-[var(--radius)] border border-border bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow)]"
+                className="flex items-center gap-3 border-b border-border py-3 text-sm font-semibold transition-colors hover:text-gold"
               >
-                <p className="kicker">0{index + 1}</p>
-                <h3 className="tab-heading text-2xl">{item.label}</h3>
-                <p className="mt-2 text-muted">{item.blurb}</p>
+                <span className="w-6 shrink-0 text-[0.65rem] font-semibold tracking-[0.14em] text-gold">
+                  0{index + 1}
+                </span>
+                <span>{item.label}</span>
               </Link>
             ))}
           </div>
