@@ -277,6 +277,19 @@ export const reviewIdeaSchema = z.object({
   feedback: z.string().trim().max(2000).optional().default(""),
 });
 
+export const createMedilinkListingSchema = z.object({
+  title: z.string().trim().min(1, "Give the listing a title.").max(160),
+  body: z.string().trim().min(1, "Describe the listing.").max(8000),
+  kind: z.enum(["volunteer", "event", "internship", "research"]),
+  region: z.enum(["national", "northeast", "southeast", "midwest", "southwest", "west"]).default("national"),
+  href: z.string().trim().max(400).optional().default(""),
+  eventDate: z.string().trim().max(32).optional().default(""),
+});
+
+export const unpublishMedilinkListingSchema = z.object({
+  listingId: uuid,
+});
+
 export const createAnnouncementSchema = z.object({
   title: z.string().min(1).max(160),
   body: z.string().min(1).max(8000),

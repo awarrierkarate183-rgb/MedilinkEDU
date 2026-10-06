@@ -138,7 +138,7 @@ export const publicNav: NavTab[] = [
     href: "/medilink-events",
     label: "MediLink Events",
     kicker: "Openings",
-    blurb: "Volunteer by region, MediLink-hosted events, internships, and research seats MediLink publishes.",
+    blurb: "Volunteer by region, MediLink-hosted events, internships, and research seats. MediLink-wide listings reach every chapter.",
     items: [
       { href: "/medilink-events/volunteer", label: "Volunteer by region", blurb: "Openings grouped by region when MediLink publishes them.", group: "Ways to help", icon: "volunteer" },
       { href: "/medilink-events/events", label: "MediLink events", blurb: "Workshops and program days MediLink hosts.", group: "Ways to help", icon: "calendar" },
