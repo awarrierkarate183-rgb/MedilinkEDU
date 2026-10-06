@@ -3,7 +3,7 @@ import { MISSION, VISION } from "@/lib/constants";
 export const aims = [
   "Train students to apply the three-lens framework to real health-system problems.",
   "Grow a nationwide chapter network with a shared officer structure, curriculum, and starter kit.",
-  "Run twenty Normal Events and five Legacy Events each season, plus a biennial Apex and a separate individual invitational.",
+  "Run twenty Normal Events and three Legacy Triad events each season, plus a biennial Apex and a separate individual invitational.",
   "Connect members with clinical, finance, and health-tech partners for shadowing, internships, and research.",
   "Give students titles, projects, and competition experience that transfer to college and career.",
   "Give back through chapter service and outreach.",
@@ -40,7 +40,7 @@ export const experienceSteps = [
   { title: "Join a chapter", body: "Membership is chapter-based. You join a school, not a generic website account." },
   { title: "Learn", body: "Four tracks and twelve modules. Titles are public. Full lessons wait behind roster approval." },
   { title: "Build", body: "Ideas Lab and projects turn a health-system problem into something a team can ship or argue." },
-  { title: "Compete", body: "Twenty Normal Events and five Legacy Events. You compete through your chapter." },
+  { title: "Compete", body: "Twenty Normal Events and three Legacy Triad events. You compete through your chapter." },
   { title: "Connect", body: "Partners in clinic, finance, and health-tech sit with chapters after leadership sets the relationship." },
   { title: "Lead", body: "Five officer roles. Status is earned: Founding, Established, Flagship-Eligible." },
 ];

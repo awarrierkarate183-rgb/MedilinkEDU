@@ -96,7 +96,7 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "How the lenses show up later",
         body: [
-          "Track 4 and the competition packets force the same three questions under a clock. A pitch that forgets the payer fails The Ledger and Market Call. A hearing that forgets the patient fails The Atlas Docket. The names change. The habit does not.",
+          "Track 4 and the competition packets force the same three questions under a clock. A pitch that forgets the payer fails The Sovereign Ledger. A hearing that forgets the patient fails The Janus Protocol. The names change. The habit does not.",
         ],
       },
     ],
@@ -117,7 +117,7 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "The same calendar, locally run",
         body: [
-          "Curriculum titles are public. Full lessons open after the advisor adds a student. Normal Events allow up to six entries per student. Legacy Events use an eight-student delegation. Rankings and the Apex are chapter outcomes.",
+          "Curriculum titles are public. Full lessons open after the advisor adds a student. Normal Events allow up to six entries per student. Legacy Events use one team of four in the Legacy Triad. Rankings and the Apex are chapter outcomes.",
           "A new school uses Start a Chapter. After MediLink accepts the request, the school can appear on the public map. Pending requests stay off that map.",
         ],
       },
@@ -158,7 +158,7 @@ export const sectionArticles: SectionArticle[] = [
         body: [
           "Train students to apply the three-lens framework to real health-system problems.",
           "Grow a nationwide chapter network with a shared officer structure, curriculum, and starter kit.",
-          "Run twenty Normal Events and five Legacy Events each season, plus a biennial Apex and a separate individual invitational.",
+          "Run twenty Normal Events and three Legacy Triad events each season, plus a biennial Apex and a separate individual invitational.",
           "Connect members with clinical, finance, and health-tech partners for shadowing, internships, and research.",
           "Give students titles, projects, and competition experience that transfer to college and career.",
           "Give back through chapter service and outreach.",
@@ -234,7 +234,7 @@ export const sectionArticles: SectionArticle[] = [
         heading: "What opens after accept",
         body: [
           "Members. The advisor enters first name, last name, grade, and email. MediLink emails the student a link. The student chooses a password and lands in the student portal only.",
-          "Competitions. The advisor types student names and submits the event. The student page then opens that event's instructions and rubric. Legacy uses an eight-student delegation in two groups of up to four.",
+          "Competitions. The advisor types student names and submits the event. The student page then opens that event's instructions and rubric. Legacy uses one team of four that may enter one, two, or all three Triad events.",
           "Updates. Advisor announcements appear on the student dashboard. Public pages never show student emails, grades, login codes, or internal IDs.",
         ],
       },
@@ -531,8 +531,8 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "Legacy Events",
         body: [
-          "Five championship simulations. A chapter may select eight Legacy-eligible students as two groups of up to four. Only one group may enter any given Legacy event. The roster locks when the season begins.",
-          "All Legacy rounds are in person and use Advanced Release: the confidential packet opens two hours before the judged simulation. Regional keeps the top five by points. State keeps the top three by Regional plus State. Nationals decides first place only.",
+          "Three championship simulations: The Sovereign Ledger, Nightfall: Code Meridian, and The Janus Protocol. A chapter registers exactly one team of four. That team may enter one, two, or all three events. The roster locks before Regionals.",
+          "Regionals fit five acts into one day. The complete fictional case releases at monitored check-in. Regional keeps the top three in each pool, separately by event. State standing is 35 percent Regional raw score plus 65 percent State raw score. One cumulative champion per event advances to Nationals.",
         ],
       },
       {
@@ -550,7 +550,7 @@ export const sectionArticles: SectionArticle[] = [
   {
     href: "/competitions/advancement",
     title: "Advancement and points",
-    lead: "Same conference names. Different cutoffs. Legacy points are a table, not a vibe.",
+    lead: "Same conference names. Different cutoffs. Legacy uses raw scores out of 1,000, not placement bonuses.",
     blocks: [
       {
         heading: "Normal ladder",
@@ -561,8 +561,9 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "Legacy ladder",
         body: [
-          "Regional keeps the top five chapter entries by points. State keeps the top three by Regional plus State combined. Nationals decides first place only. Second and third are finalists, with no consolation prizes.",
-          "Legacy Regional points are 12, 10, 8, 6, and 4. State points are 20, 16, 13, 10, and 8. National points are 35, 28, and 22. Ties use the later-round score, then technical-content, then oral-defense, then a designated tie-break.",
+          "Each event is scored out of 1,000. Regionals advance the top three eligible teams from each regional pool, separately in each event. A thin pool advances its eligible teams. No empty qualifiers.",
+          "State standing equals 35 percent Regional raw score plus 65 percent State raw score. The single highest cumulative standing in each event advances to Nationals. Proposed National standing is 15 percent Regional, 25 percent State, and 60 percent National. That national formula is published before registration and is not changed after results are seen.",
+          "State ties use the higher State raw score, then the safety or clinical criterion, then live adaptation, then a common 15-minute tie case. The numbers in the handbook example are illustrations of the formula, not real chapter results.",
         ],
       },
     ],

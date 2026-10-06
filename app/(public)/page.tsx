@@ -112,7 +112,7 @@ export default async function HomePage() {
               },
               {
                 title: "Competitions",
-                body: "Twenty Normal Events and five Legacy Events. Different rules. You compete through your chapter.",
+                body: "Twenty Normal Events and three Legacy Triad events. Different rules. You compete through your chapter.",
                 href: "/competitions",
               },
               {
@@ -162,8 +162,8 @@ export default async function HomePage() {
             <p className="kicker">Competitions</p>
             <h2>Two tiers. Different rules.</h2>
             <p>
-              Normal Events are broad-access. Legacy Events are an
-              eight-student chapter delegation. The Apex is a biennial chapter
+              Normal Events are broad-access. Legacy Events are one team of
+              four in the Legacy Triad. The Apex is a biennial chapter
               summit. The invitational is a separate individual honor.
             </p>
           </div>

@@ -43,13 +43,36 @@ export function EventHandbook({
             <p className="mt-1">{event.whyLegacy}</p>
           </div>
           <div>
-            <p className="kicker">Core decision layers</p>
+            <p className="kicker">Four-person operating model</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
-              {event.decisionLayers.map((layer) => (
+              {("roles" in event && event.roles ? event.roles : event.decisionLayers).map((layer) => (
                 <li key={layer}>{layer}</li>
               ))}
             </ul>
           </div>
+          {"acts" in event && event.acts?.length ? (
+            <div>
+              <p className="kicker">Five-act storyline</p>
+              <div className="mt-2 space-y-3">
+                {event.acts.map((act) => (
+                  <div key={act.title}>
+                    <p className="font-semibold">{act.title}</p>
+                    <p className="mt-1">{act.body}</p>
+                    <p className="mt-1 text-muted">Required output. {act.output}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <p className="kicker">Core decision layers</p>
+              <ul className="mt-2 list-disc space-y-1 pl-5">
+                {event.decisionLayers.map((layer) => (
+                  <li key={layer}>{layer}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </>
       ) : null}
       {!compact ? (
@@ -69,7 +92,7 @@ export function EventHandbook({
         </>
       ) : null}
       <div>
-        <p className="kicker">{rubricOverride?.title || (legacy ? "Championship rubric. 100 points." : "Event rubric. 100 points.")}</p>
+        <p className="kicker">{rubricOverride?.title || (legacy ? "Championship rubric. 1,000 points." : "Event rubric. 100 points.")}</p>
         <p className="mt-1 text-muted">{handbookScoring(event)}</p>
         {rubricOverride?.body && rubricOverride.body !== officialRubric ? (
           <p className="mt-2 whitespace-pre-wrap">{rubricOverride.body}</p>

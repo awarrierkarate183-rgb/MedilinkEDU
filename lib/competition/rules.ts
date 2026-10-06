@@ -1,6 +1,5 @@
 import {
   INVITATIONAL_NOMINATIONS_PER_CHAPTER,
-  LEGACY_GROUP_SIZE,
   LEGACY_ROSTER_SIZE,
   NORMAL_EVENT_CAP,
   getCatalogEvent,
@@ -29,16 +28,15 @@ export function assertNormalEventCap(existingEventIds: string[], nextEventId: st
   return null;
 }
 
-export function assertLegacyGroups(groupA: string[], groupB: string[]) {
-  const combined = [...groupA, ...groupB];
-  if (new Set(combined).size !== combined.length) {
-    return "A student cannot sit in both Legacy groups.";
+export function assertLegacyGroups(groupA: string[], groupB: string[] = []) {
+  if (groupB.length) {
+    return "Legacy uses one team of four. Do not assign a second group.";
   }
-  if (groupA.length > LEGACY_GROUP_SIZE || groupB.length > LEGACY_GROUP_SIZE) {
-    return `Each Legacy group may have at most ${LEGACY_GROUP_SIZE} students.`;
+  if (new Set(groupA).size !== groupA.length) {
+    return "A student cannot appear twice on the Legacy roster.";
   }
-  if (combined.length > LEGACY_ROSTER_SIZE) {
-    return `A chapter Legacy roster may have at most ${LEGACY_ROSTER_SIZE} students.`;
+  if (groupA.length !== LEGACY_ROSTER_SIZE) {
+    return `A chapter Legacy delegation must be exactly ${LEGACY_ROSTER_SIZE} students.`;
   }
   return null;
 }
@@ -46,11 +44,11 @@ export function assertLegacyGroups(groupA: string[], groupB: string[]) {
 export function assertLegacyEntry(eventId: string, alreadyEntered: boolean, groupSize: number) {
   const event = getCatalogEvent(eventId);
   if (!event || event.tier !== "LEGACY") return "That event is not a Legacy Event.";
-  if (alreadyEntered) return "This chapter already entered one group in that Legacy event.";
+  if (alreadyEntered) return "This chapter already entered that Legacy event.";
   const min = event.minTeamSize;
   const max = event.maxTeamSize;
   if (groupSize < min || groupSize > max) {
-    return `That Legacy group must have ${min} to ${max} students before it can enter.`;
+    return `That Legacy team must have exactly ${min} students before it can enter.`;
   }
   return null;
 }

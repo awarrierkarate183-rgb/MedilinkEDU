@@ -97,7 +97,7 @@ export function AssignEventForm({
         </select>
       </label>
       <p className="mt-2 text-sm text-muted">
-        Legacy Events use the eight-student roster and group assignment, not this name form.
+        Legacy Events use the four-student Triad roster, not this name form.
       </p>
       <div className="mt-4 grid gap-3">
         {Array.from({ length: rows }, (_, index) => (

@@ -1,4 +1,11 @@
 import type { HandbookRubricRow, ReleaseClass } from "@/lib/content/normal-event-handbook";
+import { resolveCatalogEventId } from "@/lib/content/competition-system";
+
+export type LegacyAct = {
+  title: string;
+  body: string;
+  output: string;
+};
 
 export type LegacyHandbookEntry = {
   id: string;
@@ -14,6 +21,11 @@ export type LegacyHandbookEntry = {
   overview: string;
   whyLegacy: string;
   decisionLayers: string[];
+  roles: string[];
+  acts: LegacyAct[];
+  constraints: string[];
+  routes: string[];
+  packet: string[];
   preparation: string;
   experience: string;
   workProduct: string;
@@ -28,282 +40,370 @@ export type LegacyHandbookEntry = {
 export const LEGACY_HANDBOOK_PDF = "/docs/legacy-championship-handbook.pdf";
 
 export const legacyPurpose =
-  "Legacy events are not harder Normal Events. They are selective, chapter-owned championship simulations that demand synthesis across medicine, finance, leadership, technology, policy, and communication. A Legacy team must make decisions under ambiguity, defend tradeoffs, absorb new facts, and keep a coherent strategy under pressure.";
+  "The Legacy Triad is one school, four delegates, and three arenas. A reputation is earned under pressure. Teams cannot win by delivering one polished presentation. Their work must survive execution, cross-examination, and changing facts.";
 
 export const legacyIdentity =
-  "Each Legacy competition is a recognizable flagship experience with a permanent brand, an annual hyper-specific fact pattern, multi-layer decision-making, a live challenge, and a rubric that rewards substantive reasoning over presentation polish.";
+  "Three flagship events: The Sovereign Ledger, Nightfall: Code Meridian, and The Janus Protocol. Regionals unfold in one competition day. State scheduling can expand the experience, but duration is not the event's identity.";
 
 export const legacyDelegationRules = [
-  "Each school chapter selects a maximum of eight Legacy-eligible students for the season, organized as two groups of up to four students.",
-  "For any one Legacy event, a chapter may enter only one of its two groups. The other group may not enter the same Legacy event.",
-  "The selected eight form the chapter's season-long Legacy delegation. Except for narrowly documented, approved circumstances, substitutes may not be added after the season begins.",
-  "Legacy delegates may also compete in Normal Events. Legacy performance primarily represents the chapter. Individual excellence may be recognized separately or considered for the biennial invitational.",
-  "All Legacy rounds occur in person. Each event uses On-site: Advanced Release. The broad domain is announced earlier. The full confidential packet releases two hours before the judged simulation.",
+  "Each school chapter registers exactly one team of four high-school members. Those four are the chapter's entire Legacy delegation for the season. No second group, extra specialist, or alternating event roster.",
+  "Teams may enter one, two, or all three Legacy events. Qualification is separate for each event. A chapter may qualify in several or none.",
+  "The roster locks before Regionals. A nationally approved replacement is permitted only for documented withdrawal or serious unavailability before a later round, not to acquire a specialist. No mid-event substitution.",
+  "Each student owns a functional role and must understand cross-role decisions. Rotate leadership between phases if useful, but log ownership changes.",
+  "Legacy delegates may participate in Normal Events under Normal Event rules. Legacy scheduling must not assume the four students can compete in simultaneous events.",
 ];
 
 export const legacyAdvancementNotes = [
-  "Regionals eliminate all but the top five entries.",
-  "States determine the top three cumulative standings that advance to Nationals.",
-  "Nationals determines the champion by cumulative standing. There is no consolation bracket.",
-  "At States, all five Regional qualifiers receive State placement points, but only the top three by cumulative score advance to Nationals.",
-  "At Nationals, the team with the highest cumulative score after all three rounds is the Legacy National Champion.",
-  "Ties are resolved by the later-round score, then technical-content score, then oral-defense score, then a designated tie-break challenge.",
+  "Regionals: the top three eligible teams from each regional pool, separately in each event, advance to States. Ranking uses Regional raw score out of 1,000.",
+  "A pool with fewer than three eligible teams advances its eligible teams. No artificial empty qualifiers.",
+  "States: all qualifying regional teams within the state compete. The single highest cumulative Regional-State score in each event advances to Nationals.",
+  "State standing equals 35 percent Regional raw score plus 65 percent State raw score. Calculate on unrounded values. Display one decimal.",
+  "Nationals: state champions compete for one national title in each event. Proposed National standing equals 15 percent Regional, 25 percent State, and 60 percent National. Publish or replace that national formula before registration.",
+  "State ties: higher State raw score, then the State safety or clinical criterion, then live-adaptation, then a common 15-minute tie case. National ties use National raw score followed by the equivalent criteria.",
 ];
 
 export const legacyIntegrityRules = [
-  "During the two-hour supervised preparation period, personal devices, outside communication, internet research, generative AI, and outside coaching are prohibited unless specifically authorized by the annual event guide.",
-  "Teams may use only the supplied packet, allowed tools, official reference materials, and materials created during supervised preparation.",
-  "Each team must submit its preparation notes and all required written materials before entering the judged phase.",
-  "Judges may question any delegate about any part of the team's reasoning. A team cannot conceal nonparticipation behind a polished presentation.",
-  "Each event includes case facts that may be incomplete or conflicting. Teams must distinguish facts, assumptions, and recommendations.",
-  "All scenarios are fictional and educational. Competitors must not present themselves as licensed clinicians or give real-person medical or legal advice.",
+  "During controlled phases, only supplied materials and authorized tools are allowed. No open internet, generative AI, personal messaging, or outside coaches unless a specific rule authorizes a tool.",
+  "The complete fictional case releases only at monitored check-in. Recommended advance release is a broad topic, skills blueprint, sample templates, formula sheet, and allowed-tool list eight weeks before Regionals.",
+  "Each exhibit carries an ID, timestamp, units, and reliability status. Distinguish confirmed facts, estimates, allegations, and binding constraints. A contradictory actor statement is not automatically true.",
+  "Lock each decision before the next release. Later revisions must identify the changed fact, the old assumption, the new action, and its owner. Correcting an error earns adaptation credit. It does not erase the earlier error from the evidence trail.",
+  "Rival encounters test negotiation, evidence, and composure. Teams earn points for defensible decisions, not simply for beating a weaker opponent. An uncooperative rival cannot deny a team all transaction points.",
+  "All cases are fictional. No patient care, medication administration, real clinical records, unapproved human testing, legal representation, or actual investment solicitation.",
 ];
 
 export const legacyScoring =
-  "Every Legacy event uses a 100-point rubric. Strong teams do not simply offer more ideas. They make disciplined choices, name what they will not do, disclose assumptions, protect against foreseeable harm, and present an implementation pathway that a real organization could follow. Judges score substance and reasoning over presentation polish.";
+  "Every Legacy event uses a 1,000-point rubric. For each criterion, a judge awards a 0 to 4 anchor. Awarded points equal the criterion maximum times the level divided by 4. Half-levels need a written rationale. Three judges rate independently, then scores are averaged. Each criterion is scored once over the full evidence trail.";
 
 export const legacyEliteNote =
-  "Elite performance uses the case record precisely, makes explicit tradeoffs, integrates medicine, finance, ethics, and operations where relevant, adapts decisively to new facts, and withstands direct questioning from multiple stakeholders.";
+  "Level 4 is accurate, complete, case-specific, and feasible. Level 3 is a sound core strategy with minor gaps. Level 2 is developing. Level 1 is weak or generic. Level 0 is absent, fabricated, or incompatible with binding constraints.";
 
 const sharedEscalation = [
-  { round: "Regionals", design: "Core fact pattern. Teams must show a sound framework, technical competence, and an initial defensible strategy." },
-  { round: "States", design: "More complex data, stronger stakeholder conflict, tighter resource constraints, and a consequential live update." },
-  { round: "Nationals", design: "Full multi-layer simulation with advanced evidence, high-stakes tradeoffs, intense questioning, and a final change that tests whether the strategy truly holds." },
+  {
+    round: "Regionals",
+    design:
+      "One-day five-act case with a concise evidence packet, one principal rival encounter, and common core injects.",
+  },
+  {
+    round: "States",
+    design:
+      "Richer data, tighter constraints, deeper stakeholder conflict, and more developed encounter cycles. Expanded logistics appear in the event notice.",
+  },
+  {
+    round: "Nationals",
+    design:
+      "System-level dependencies and harder uncertainty, with the same published criterion weights. Scheduling is approved separately.",
+  },
 ];
 
 const sharedWhy =
-  "This event requires teams to connect technical evidence with real organizational consequences. A winning solution must be defensible from multiple viewpoints, withstand new information, and show why its strategy remains safer, fairer, or more viable than competing approaches. The event intentionally has no single obvious solution.";
+  "A sequence of locked actions creates consequences. Rival encounters test judgment. Technical and clinical evidence must survive execution. The final hearing examines both what the team chose and how it revised. No slide deck can replace the work history.";
+
+const sharedLock =
+  "Lock the decision before the next release. Later revisions must identify the changed fact, the old assumption, the new action, and its owner.";
 
 export const legacyEventHandbook: LegacyHandbookEntry[] = [
   {
-    id: "the-atlas-docket",
+    id: "the-sovereign-ledger",
     number: 1,
-    name: "The Atlas Docket",
-    domain: "Health law, clinical AI, equity, finance, and regulatory governance",
-    formatLabel: "Team-only, 2 to 4 Legacy delegates",
+    name: "The Sovereign Ledger",
+    domain: "Medicine and finance",
+    formatLabel: "One four-student chapter team. Five-act live championship.",
     releaseClass: "ADVANCED_RELEASE",
-    releaseLabel: "On-site: Advanced Release",
-    role: "Hospital AI governance counsel",
-    action: "Argue",
-    mechanic: "The Bench: judicial questioning plus an evidence-objection round",
-    overview:
-      "A fictional regional health system has deployed Atlas, an AI-supported emergency-department acuity and routing platform. Atlas shortens waiting times, reduces avoidable admissions, and improves throughput, but an independent audit suggests it may under-prioritize patients from particular demographic groups and may have been trained on incomplete local data. After a serious alleged harm, a coalition challenges continued deployment. Teams serve as counsel before a specialized appellate-regulatory panel deciding whether Atlas may remain in use, under what conditions, and with what financial, clinical, and legal safeguards.",
-    whyLegacy: sharedWhy,
-    decisionLayers: [
-      "The clinical question: does the tool improve actual patient care, or does its observed efficiency conceal unacceptable safety risk?",
-      "The data question: what do sensitivity, calibration, subgroup performance, missing data, local validation, and workflow behavior actually establish?",
-      "The governance question: who is accountable when clinicians, administrators, vendors, and algorithms share decision influence?",
-      "The financial question: how should a hospital weigh savings, licensing costs, liability exposure, staffing pressure, and the cost of alternative safeguards?",
-      "The remedy question: approve, restrict, redesign, suspend, independently audit, pilot, or terminate, and why?",
-    ],
-    preparation:
-      "Study AI and clinical-decision-support concepts, evidence interpretation, algorithmic bias, privacy and data governance, hospital operations, liability and regulation, and persuasive hearing practice. The broad annual domain is published early. The full record, exhibits, witness summaries, contract excerpts, audit tables, and procedural question release two hours before the hearing in supervised preparation.",
-    experience:
-      "Two-hour supervised case review and role allocation. Teams submit a written appellate brief and exhibit index before entering the hearing room. Hearing sequence: opening argument, panel questioning, evidence and admissibility objection round, opposing-case rebuttal or respondent defense, remedy argument, closing. During the hearing, the Bench may disclose a new audit exhibit, vendor contract clause, patient testimony, or sentinel-event update.",
-    workProduct:
-      "Written appellate and regulatory brief. Exhibit and evidence theory map. Clinical-safety and equity analysis. Governance and remedy framework. Oral hearing performance and individual cross-questioning.",
-    rubric: [
-      { criterion: "Legal-regulatory theory and remedy design", points: 25 },
-      { criterion: "Clinical validity, safety, and evidence analysis", points: 20 },
-      { criterion: "Equity, data governance, and accountability", points: 20 },
-      { criterion: "Financial and operational consequences", points: 15 },
-      { criterion: "Advocacy, rebuttal, and response to the Bench", points: 15 },
-      { criterion: "Individual mastery and team coordination", points: 5 },
-    ],
-    success:
-      "A standout team inhabits hospital AI governance counsel, performs argue, and uses The Bench to prove the remedy holds when new evidence appears.",
-    extraRules: [
-      "This is a fictional educational hearing, not legal advice.",
-      "Teams are scored on the strength and coherence of their analysis, not on personal views about AI.",
-      "A strong team may argue for conditional use, suspension, redesign, or termination if the record supports it.",
-    ],
-    judgeStandard: legacyScoring,
-    annualExpansion:
-      "The annual technology, health system, claimed harm, and regulatory posture can change while the Atlas Docket identity remains.",
-    escalation: sharedEscalation,
-  },
-  {
-    id: "the-covenant-table",
-    number: 2,
-    name: "The Covenant Table",
-    domain: "Medicine, capital finance, hospital strategy, access, and executive leadership",
-    formatLabel: "Team-only, 2 to 4 Legacy delegates",
-    releaseClass: "ADVANCED_RELEASE",
-    releaseLabel: "On-site: Advanced Release",
-    role: "Health-system capital allocation council",
+    releaseLabel: "Full case at monitored check-in",
+    role: "Capital strategy delegation for Asterion Health Alliance",
     action: "Allocate",
-    mechanic: "The Red Ledger: fixed capital tokens plus a late credit shock",
+    mechanic: "Five locked acts, a rival exchange, and a consequence engine",
     overview:
-      "Teams become the Capital Allocation Council for a fictional health system facing aging infrastructure, tight debt capacity, uneven access, workforce gaps, and competing clinical investments. They must decide what the system funds, phases, partners for, redesigns, defers, protects, or closes over five years. The challenge is not to fund everything. It is to make painful choices without treating patients, communities, or staff as spreadsheet entries.",
+      "Asterion Health Alliance serves a metropolitan center and three community hospitals. Its unrestricted capital envelope is $48 million, with a $6 million minimum reserve. Competing investments exceed available funds. A rival provider is capturing profitable outpatient demand, a maternity pathway needs safer transfer capacity, and a cyber infrastructure replacement cannot be delayed indefinitely. A lender wants stability. Clinicians want equipment. Communities want access. The team decides what deserves capital and what it will refuse.",
     whyLegacy: sharedWhy,
     decisionLayers: [
-      "Review service-line margin, utilization, quality, workforce, payer, access, debt, and community data.",
-      "Construct a five-year portfolio within a hard capital ceiling and financing limit.",
-      "Choose among competing opportunities such as behavioral-health capacity, rural emergency stabilization, maternal transfer networks, imaging replacement, oncology expansion, cybersecurity, home-based chronic care, primary-care access, debt reduction, or strategic partnerships.",
-      "Explain clinical benefit, equity, opportunity cost, financing structure, risk, and first-year execution.",
+      "Finance: sources and uses, debt, cash flow, and downside cases.",
+      "Clinical access: safety floors, service continuity, equity, and transfer feasibility.",
+      "Investment and risk: sensitivities, workforce dependencies, and implementation.",
+      "Negotiation: partner terms, concessions, public defense, and accountability.",
+    ],
+    roles: [
+      "Finance strategist: sources and uses, debt, cash flow, and downside cases.",
+      "Clinical access officer: safety floors, service continuity, equity, and transfer feasibility.",
+      "Investment and risk analyst: sensitivities, workforce dependencies, and implementation.",
+      "Negotiation and board lead: partner terms, concessions, public defense, and accountability.",
+    ],
+    packet: [
+      "Income statement, balance sheet, cash forecast, and debt covenant schedule.",
+      "Service-line volume, margin, staffing, payer mix, quality, and travel-time maps.",
+      "Eight project dossiers with cost, recurring expense, capacity dependencies, and clinical impact.",
+      "Partner bids, financing choices, acquisition restrictions, and minimum safety obligations.",
+      "A quantified no-investment baseline and an assumptions worksheet.",
+    ],
+    acts: [
+      {
+        title: "Act I. The Opening Ledger",
+        body: "Lock a five-year portfolio, reserve policy, and clinical-access floor. Explain rejected investments. Do not claim every project will pay for itself.",
+        output: "Capital allocation sheet, cash schedule, evidence index, and assumptions register.",
+      },
+      {
+        title: "Act II. The Exchange",
+        body: "Negotiate a shared-service agreement with a rival hospital team. A bounded sealed-bid procurement exercise allocates fictional vendor capacity. Safety-critical care itself is never auctioned.",
+        output: "Signed term sheet or justified walk-away, risk allocation, and alternative plan.",
+      },
+      {
+        title: "Act III. The Covenant Breach",
+        body: "A common payer update lowers expected receipts. The consequence engine applies previously stated liquidity and covenant relationships. High leverage is not automatically wrong, but it becomes costly.",
+        output: "Revised cash forecast, covenant test, project sequencing, and access mitigation.",
+      },
+      {
+        title: "Act IV. The Benefactor's Clause",
+        body: "A donation appears with restrictive service commitments. A second exhibit reveals that the favored growth project creates a staffing bottleneck. Accept, counteroffer, or reject with evidence.",
+        output: "Donation decision, revised staffing and capital plan, and downside comparison.",
+      },
+      {
+        title: "Act V. The Sovereign Board",
+        body: "Clinician, lender, labor, and community actors challenge the final portfolio. A rival files one exhibit-based challenge. Close with first-100-day execution and accountability.",
+        output: "Final board book, three-scenario model, ownership milestones, and public explanation.",
+      },
+    ],
+    constraints: [
+      "Capital available after reserve is $42 million. Reserved cash cannot also fund projects.",
+      "Recurring operating expense must be financed separately from one-time capital.",
+      "Every signed deal has an owner, funding source, and contingency.",
+      "A donation is evaluated for long-term obligations, not its headline amount.",
+    ],
+    routes: [
+      "Phased expansion with liquidity preserved.",
+      "Shared infrastructure instead of duplicate purchases.",
+      "A lower-margin portfolio justified by essential access and credible financing.",
+      "Partnerships with explicit service-quality and exit conditions.",
     ],
     preparation:
-      "Study healthcare finance, capital budgeting, debt and cash concepts, hospital operations, reimbursement, community access, quality measures, and executive communication. The annual health-system type and broad capital challenge are announced in advance. The full financial, clinical, and community packet releases two hours before the summit.",
+      "Study capital budgeting, hospital finance, access and equity, negotiation, and board defense. Eight weeks out, expect a topic, skills blueprint, templates, formula sheet, and allowed-tool list. The complete fictional case releases only at monitored check-in.",
     experience:
-      "Two-hour supervised portfolio build. Teams place finite capital tokens across investment categories and submit a balanced five-year allocation table. Board summit: presentation to clinical, finance, labor, patient, and community stakeholders. Red Ledger shock: a bond downgrade, payer shift, cyberattack, physician exit, major employer closure, or emergency-capacity failure changes borrowing cost or community need. Teams must rebalance the portfolio publicly and defend what they are willing to defer.",
+      "Regional day: 08:00 full case release, 10:00 opening lock, 10:45 first execution and rival encounter, 12:30 consequence inject, 13:30 major reversal, 14:30 final hearing and individual questioning, 15:30 artifact lock. States may split analysis and reversal across two controlled days. No overnight homework or midnight injects.",
     workProduct:
-      "Five-year capital portfolio. Financing plan covering cash, debt, lease, partnership, grant, philanthropy, or staged investment. Clinical-access and equity impact statement. Risk register and first-90-days execution plan. Community and employee board briefing.",
+      "Locked act packets, an assumptions register, numbered evidence citations, a rival term sheet or walk-away, and a final board book that a real organization could follow.",
     rubric: [
-      { criterion: "Capital-allocation logic and financial viability", points: 30 },
-      { criterion: "Clinical benefit, safety, access, and equity", points: 25 },
-      { criterion: "Use of data and explicit assumptions", points: 15 },
-      { criterion: "Financing strategy and risk management", points: 15 },
-      { criterion: "Response to the Red Ledger shock", points: 10 },
-      { criterion: "Board communication and team leadership", points: 5 },
+      { criterion: "Financial integrity and capital allocation", points: 220 },
+      { criterion: "Clinical access, safety, and equity", points: 200 },
+      { criterion: "Evidence and sensitivity analysis", points: 150 },
+      { criterion: "Transactions and negotiation", points: 120 },
+      { criterion: "Adaptation and strategic coherence", points: 160 },
+      { criterion: "Implementation and board defense", points: 100 },
+      { criterion: "Individual mastery", points: 50 },
     ],
     success:
-      "A standout team inhabits the capital allocation council, performs allocate, and uses The Red Ledger to prove the portfolio holds when credit or community need changes.",
+      "A standout team names what it will not fund, keeps the reserve honest, and can explain every locked act after a reversal. Novelty is not automatically superior.",
     extraRules: [
-      "No portfolio is pre-designated as correct. Judges score coherent tradeoffs, data discipline, and viable implementation.",
-      "Teams cannot earn top marks by maximizing margin while ignoring essential access, nor by preserving every service without a funding explanation.",
+      sharedLock,
+      "Safety-critical care is never auctioned.",
+      "A team can win without accepting a deal or expanding services if its alternative meets constraints and withstands challenge.",
     ],
     judgeStandard: legacyScoring,
     annualExpansion:
-      "The annual system can change: rural nonprofit network, pediatric system, safety-net organization, urban academic center, or merger candidate, without weakening the event identity.",
+      "The annual health-system type and project set can change. The Sovereign Ledger identity stays: scarce capital, essential care, and public accountability.",
     escalation: sharedEscalation,
   },
   {
-    id: "black-box-protocol",
-    number: 3,
-    name: "Black Box Protocol",
-    domain: "Technology, medicine, cybersecurity, clinical evidence, procurement, and ethics",
-    formatLabel: "Team-only, 2 to 4 Legacy delegates",
+    id: "nightfall-code-meridian",
+    number: 2,
+    name: "Nightfall: Code Meridian",
+    domain: "Medicine and management",
+    formatLabel: "One four-student chapter team. Five-act live championship.",
     releaseClass: "ADVANCED_RELEASE",
-    releaseLabel: "On-site: Advanced Release",
-    role: "Independent clinical technology review board",
-    action: "Validate",
-    mechanic: "Kill Switch: live incident and deployment-governance drill",
-    overview:
-      "A hospital system is considering a high-stakes technology, such as sepsis prediction, radiology prioritization, maternal-risk modeling, remote monitoring, medication-error detection, AI documentation, or prior-authorization automation. The product promises savings, speed, and improved detection, but the evidence may be incomplete, biased, non-generalizable, insecure, or incompatible with the real workflow. Teams must decide whether and how the system should deploy it.",
-    whyLegacy: sharedWhy,
-    decisionLayers: [
-      "Technical performance must be separated from clinical usefulness.",
-      "Audit validation results, subgroup performance, calibration, data provenance, missingness, workflow fit, privacy, cybersecurity, vendor terms, and financial impact.",
-      "Define a deployment scope, human-oversight model, success thresholds, monitoring plan, audit rights, incident protocol, and shutdown authority.",
-      "Approve, reject, pilot, restrict, redesign, defer, or replace the technology with a nontechnical alternative.",
-    ],
-    preparation:
-      "Study clinical AI and digital-health evaluation, basic diagnostic-performance concepts, bias, privacy, cybersecurity, interoperability, workflow design, procurement, contracts, and health-system finance. The annual technology class is announced in advance. The full dossier releases two hours before competition.",
-    experience:
-      "Two-hour supervised technical and clinical review. Teams submit a go, no-go, or conditional-go decision memo and deployment map. The review board hearing tests contract terms, oversight, workflow impacts, and financial assumptions. Kill Switch drill: a false negative, subgroup disparity, cyber incident, vendor acquisition, dashboard outage, clinician work-around, or data-sharing breach. Teams must decide whether to pause, modify, disclose, audit, continue, or terminate deployment, and communicate that decision to patients, clinicians, executives, and the vendor.",
-    workProduct:
-      "Formal recommendation and rationale. Deployment map and human-in-the-loop workflow. Validation and equity audit plan. Contract redline or procurement memorandum. Financial sensitivity analysis. Incident response and public-facing statement.",
-    rubric: [
-      { criterion: "Clinical validity and patient safety", points: 25 },
-      { criterion: "Technical and data-quality analysis", points: 20 },
-      { criterion: "Equity, privacy, cybersecurity, and governance", points: 20 },
-      { criterion: "Deployment, workflow, and accountability design", points: 15 },
-      { criterion: "Financial, contractual, and procurement reasoning", points: 10 },
-      { criterion: "Kill Switch response and stakeholder communication", points: 10 },
-    ],
-    success:
-      "A standout team inhabits the clinical technology review board, performs validate, and uses the Kill Switch to prove the deployment decision holds when the system fails.",
-    extraRules: [
-      "This event is not a generic AI debate. Teams must make an operational decision and define exact deployment conditions.",
-      "A recommendation to reject technology can score at the highest level if the case evidence supports it.",
-      "Judges reward teams that recognize when workforce, process redesign, or simpler technology is better than automation.",
-    ],
-    judgeStandard: legacyScoring,
-    annualExpansion: "The annual fact pattern can change completely while retaining the Black Box Protocol structure.",
-    escalation: sharedEscalation,
-  },
-  {
-    id: "the-last-mile-accord",
-    number: 4,
-    name: "The Last Mile Accord",
-    domain: "Population health, payer-provider contracting, chronic care, reimbursement, negotiation, and justice",
-    formatLabel: "Team-only, 2 to 4 Legacy delegates",
-    releaseClass: "ADVANCED_RELEASE",
-    releaseLabel: "On-site: Advanced Release",
-    role: "Multi-stakeholder payment-design delegation",
-    action: "Negotiate",
-    mechanic: "The Corridor: closed-door negotiation followed by public arbitration",
-    overview:
-      "A payer, a physician network, a safety-net hospital, and a patient coalition are trapped in a dispute over a value-based chronic-disease contract. The existing agreement rewards some outcomes but may penalize providers who serve complex patients, underfund social needs, increase administrative burden, or create incentives to avoid high-risk people. Teams must design or arbitrate a durable payment accord that aligns quality, access, risk, accountability, and financial sustainability.",
-    whyLegacy: sharedWhy,
-    decisionLayers: [
-      "Interpret quality metrics, risk adjustment, utilization, patient complexity, shared savings, penalties, care-management costs, pharmacy costs, access protections, and administrative burden.",
-      "Decide which outcomes count, who bears downside risk, how patient complexity is adjusted, how disputes are appealed, and how savings or losses are distributed.",
-      "Protect against gaming, under-service, cherry-picking, and metric fixation while preserving a financially credible contract.",
-    ],
-    preparation:
-      "Study health insurance and reimbursement, value-based care, risk adjustment, quality measurement, provider incentives, negotiation, chronic-disease management, health equity, and contract design. The broad clinical population and payment domain are announced early. The full data packet and stakeholder mandates release two hours before competition.",
-    experience:
-      "Two-hour supervised analysis and strategy build. Part I: closed-door negotiation with judges acting as stakeholder representatives. Teams may make offers, concessions, and conditional proposals. Part II: public arbitration hearing where teams defend the proposed contract to an independent panel and patient advocates. The Corridor update introduces an adverse-selection pattern, a quality-metric failure, a new expensive therapy, or a budget shock that requires contract revision.",
-    workProduct:
-      "Term sheet for the payment accord. Quality and risk-adjustment framework. Patient-access and equity protections. Shared-savings, penalty, and appeals structure. Negotiation log and public arbitration defense.",
-    rubric: [
-      { criterion: "Payment design and financial logic", points: 25 },
-      { criterion: "Clinical quality, access, and equity protections", points: 25 },
-      { criterion: "Risk adjustment and incentive analysis", points: 20 },
-      { criterion: "Negotiation and stakeholder management", points: 15 },
-      { criterion: "Contract feasibility and governance", points: 10 },
-      { criterion: "Response to Corridor update", points: 5 },
-    ],
-    success:
-      "A standout team inhabits the payment-design delegation, performs negotiate, and uses The Corridor to prove the accord holds when the contract is shocked.",
-    extraRules: [
-      "This event is neither a standard debate nor a generic insurance case. Teams must produce negotiated contract language and live concessions.",
-      "There may be several valid contracts. Judges score consistency, protections against perverse incentives, and financial realism.",
-    ],
-    judgeStandard: legacyScoring,
-    annualExpansion:
-      "Annual versions may focus on diabetes, heart failure, maternal care, behavioral health, oncology navigation, or another chronic or population-health context.",
-    escalation: sharedEscalation,
-  },
-  {
-    id: "nightfall-command",
-    number: 5,
-    name: "Nightfall Command",
-    domain: "Clinical operations, incident command, hospital finance, workforce, logistics, and public trust",
-    formatLabel: "Team-only, 2 to 4 Legacy delegates",
-    releaseClass: "ADVANCED_RELEASE",
-    releaseLabel: "On-site: Advanced Release",
-    role: "Hospital incident-command executive team",
+    releaseLabel: "Full case at monitored check-in",
+    role: "Incident-command executive team for Meridian Regional",
     action: "Command",
-    mechanic: "The Nightfall Clock: escalating real-time crisis injects",
+    mechanic: "Five locked acts, mutual aid, and a cascade engine",
     overview:
-      "A hospital must maintain safe care while multiple failures converge. Teams serve as the incident-command executive group for a fictional health system confronting a crisis such as ransomware plus mass casualties, oxygen disruption during a winter storm, neonatal infection concern, supply contamination, behavioral-health surge, medication-system outage, or respiratory demand spike. The event rewards disciplined command, not flashy improvisation.",
+      "Meridian Regional is a fictional 320-bed referral hospital. An electronic-record outage coincides with a storm that limits transport and staff arrivals. Emergency demand rises while neighboring hospitals strain. Oxygen, blood, and qualified coverage are finite. Elective procedures support cash flow but compete for capacity. The team must hold the organization together without making unsafe promises.",
     whyLegacy: sharedWhy,
     decisionLayers: [
-      "Establish authority, assign functional roles, identify immediate safety threats, allocate beds, staff, supplies, and cash, set service priorities, protect vulnerable patients, communicate internally and externally, and plan recovery.",
-      "Each choice creates consequences. Stopping elective care may protect capacity but lose revenue. Using agency staff may preserve coverage but raise cost and handoff risk. Public statements may protect trust or create exposure.",
-      "The team must make decisions on a time horizon of 30 minutes, 24 hours, 72 hours, and post-incident recovery.",
+      "Incident command: authority, objectives, decision cadence, and logs.",
+      "Clinical continuity: service priorities, handoffs, escalation, and transfer safety.",
+      "Workforce and logistics: staffed beds, credentials, rest limits, inventory, and transport.",
+      "Finance and public trust: spending authority, cash exposure, accurate messages, and board oversight.",
+    ],
+    roles: [
+      "Incident commander: authority, objectives, decision cadence, and logs.",
+      "Clinical continuity lead: service priorities, handoffs, escalation, and transfer safety.",
+      "Workforce and logistics chief: staffed beds, credentials, rest limits, inventory, and transport.",
+      "Finance and public trust lead: spending authority, cash exposure, accurate messages, and board oversight.",
+    ],
+    packet: [
+      "Census, acuity bands, staffed-bed map, procedure schedule, and transfer capacities.",
+      "Staff credentials, coverage minima, absence forecast, and fatigue constraints.",
+      "Inventory, lead times, oxygen and blood limits, and downtime workflow options.",
+      "Cash buffer, emergency authority, interruption costs, and revenue assumptions.",
+      "Stakeholder messages and an explicit command authority matrix.",
+    ],
+    acts: [
+      {
+        title: "Act I. The First Thirty Minutes",
+        body: "Establish command and immediate priorities. Define what can continue safely, what must change, and who can authorize action.",
+        output: "Command chart, first-30-minute actions, and service-priority matrix.",
+      },
+      {
+        title: "Act II. The Mutual Aid Table",
+        body: "Negotiate with teams representing neighboring hospitals. Transfer capacity, staff assistance, and supply support require safe handoffs and realistic timing.",
+        output: "Mutual-aid agreement, transfer log, balanced resource board, and fallback.",
+      },
+      {
+        title: "Act III. The Cascade",
+        body: "A road closure interrupts resupply. A medication-reconciliation warning exposes a weakness in downtime processes. Prior decisions affect queues through disclosed relationships.",
+        output: "Revised resource and staff plan, verification checkpoint, and internal and public update.",
+      },
+      {
+        title: "Act IV. The False All-Clear",
+        body: "Some systems return, but records remain inconsistent. Staff fatigue worsens while a public report incorrectly claims full restoration. Reopening needs verification, not optimism.",
+        output: "Restore or hold decision, verification criteria, rest plan, and correction statement.",
+      },
+      {
+        title: "Act V. The Meridian Inquiry",
+        body: "Board, regulator, staff representative, and patient actors demand explanation. A rival challenges one allocation. Show restoration criteria, financial mitigation, and lessons.",
+        output: "24-hour and 72-hour plans, exposure report, recovery thresholds, and after-action reforms.",
+      },
+    ],
+    constraints: [
+      "An empty bed is not a staffed bed.",
+      "Transport time and receiving-site acceptance must be confirmed in the fictional record.",
+      "Supplies and staff cannot serve two places simultaneously.",
+      "Restoration requires technical and clinical verification.",
+    ],
+    routes: [
+      "Staged service restoration with verification gates.",
+      "Distributed stabilization partnerships and explicit handoffs.",
+      "Conservative capacity decisions paired with credible mutual aid.",
+      "Controlled downtime processes that lower workload without weakening safety.",
     ],
     preparation:
-      "Study incident command, hospital operations, clinical continuity, emergency logistics, staffing, bed management, communications, finance, risk, quality improvement, and ethical resource allocation. The broad crisis domain is announced in advance. The full incident packet releases two hours before the simulation.",
+      "Study incident command, hospital operations, staffing, logistics, downtime workflows, and public communication. The complete incident packet releases at monitored check-in.",
     experience:
-      "Two-hour supervised initial planning. Round 1 Stabilize: establish command structure and immediate patient-safety actions. Round 2 Escalate: a new clinical, technical, staffing, or supply failure appears. Round 3 Scrutiny: media, regulator, board, labor, or patient advocate challenges the team. Round 4 Recover: teams explain restoration, financial mitigation, accountability, and system redesign. The Nightfall Clock limits response windows and forces clear prioritization.",
+      "The same one-day five-act Regional clock as the rest of the Triad. Mutual aid is a scored encounter, not a courtesy scene. Restoration without verification fails the relevant criterion.",
     workProduct:
-      "30-minute stabilization plan. 24-hour and 72-hour operational plans. Incident-command chart and resource-allocation table. Service-prioritization matrix: continue, modify, defer, transfer, or suspend. Staff, patient, and public communications. Board and CFO financial brief and after-action review.",
+      "Command chart, service-priority matrix, mutual-aid record, verification criteria, rest plan, and after-action reforms.",
     rubric: [
-      { criterion: "Immediate patient safety and continuity of care", points: 25 },
-      { criterion: "Incident-command structure and leadership", points: 20 },
-      { criterion: "Resource allocation and operational feasibility", points: 15 },
-      { criterion: "Workforce strategy and staff safety", points: 10 },
-      { criterion: "Financial resilience and decision transparency", points: 10 },
-      { criterion: "Communication, equity, and public trust", points: 10 },
-      { criterion: "Response to escalating injects and recovery plan", points: 10 },
+      { criterion: "Patient safety and continuity", points: 250 },
+      { criterion: "Command and decision discipline", points: 150 },
+      { criterion: "Resource and workforce execution", points: 180 },
+      { criterion: "Adaptation and restoration", points: 170 },
+      { criterion: "Financial resilience", points: 100 },
+      { criterion: "Trust and stakeholder communication", points: 100 },
+      { criterion: "Individual command mastery", points: 50 },
     ],
     success:
-      "A standout team inhabits the incident-command executive team, performs command, and uses the Nightfall Clock to prove the hospital can keep care safe as injects escalate.",
+      "A standout team keeps contemporaneous logs, refuses fictitious capacity, and corrects a false all-clear in public. Cooperation may be a winning strategy.",
     extraRules: [
-      "This is deliberately the most interdependent Legacy event. No single student can credibly carry clinical, operations, finance, and communication responsibilities alone.",
-      "Judges should score explicit decision logic and responsible adaptation, not whether teams predict every later inject.",
+      sharedLock,
+      "Do not punish appropriate medical mutual aid.",
+      "Unsafe proposals affect the safety criterion. An honest analytical mistake is not automatic disqualification.",
     ],
     judgeStandard: legacyScoring,
-    annualExpansion: "The annual scenario may change radically while retaining the Nightfall Command structure.",
+    annualExpansion:
+      "The annual hazard can change. Nightfall: Code Meridian stays a command event about cascading failure, finite resources, and public trust.",
+    escalation: sharedEscalation,
+  },
+  {
+    id: "the-janus-protocol",
+    number: 3,
+    name: "The Janus Protocol",
+    domain: "Medicine and technology",
+    formatLabel: "One four-student chapter team. Five-act live championship.",
+    releaseClass: "ADVANCED_RELEASE",
+    releaseLabel: "Full case at monitored check-in",
+    role: "Clinical technology review and procurement delegation",
+    action: "Validate",
+    mechanic: "Five locked acts, a red-team arena, and a kill-switch hearing",
+    overview:
+      "A fictional hospital consortium is considering JANUS, an AI deterioration-prediction and care-routing platform. Aggregate performance looks compelling and projected savings are large. Local data are fragmented. Subgroup estimates are uncertain. The contract restricts audit access. A competing product offers less automation but better integration. The team must distinguish an impressive demo from an accountable clinical system.",
+    whyLegacy: sharedWhy,
+    decisionLayers: [
+      "Clinical validation: outcome relevance, error consequences, and the safety case.",
+      "Data and technical audit: denominators, missingness, leakage, calibration, and local validity.",
+      "Governance and security: privacy, audit access, incident ownership, and shutdown authority.",
+      "Implementation and finance: workflow, total cost, procurement, staffing, and alternatives.",
+    ],
+    roles: [
+      "Clinical validation lead: outcome relevance, error consequences, and the safety case.",
+      "Data and technical lead: denominators, missingness, leakage, calibration, and local validity.",
+      "Governance and security lead: privacy, audit access, incident ownership, and shutdown authority.",
+      "Implementation and finance lead: workflow, total cost, procurement, staffing, and alternatives.",
+    ],
+    packet: [
+      "Cohort tables, confusion matrices, prevalence, subgroup counts, and uncertainty information.",
+      "Data dictionary, provenance, missingness, train and test separation, and local pilot results.",
+      "Interface and workflow maps, clinician feedback, alert burden, and fallback options.",
+      "Vendor contracts, interoperability and data rights, total-cost assumptions, and competing solutions.",
+      "Incident log, acceptance-threshold form, and deployment restriction template.",
+    ],
+    acts: [
+      {
+        title: "Act I. The Evidence Gate",
+        body: "Audit validation and lock initial approve, pilot, restrict, defer, or reject conditions. Identify populations, endpoints, and stop rules.",
+        output: "Evidence audit, calculation sheet, thresholds, and deployment map.",
+      },
+      {
+        title: "Act II. The Procurement Arena",
+        body: "Actors present competing vendor offers. Rivals file evidence-based red-team questions. Negotiate audit rights, exit, portability, and implementation commitments.",
+        output: "Procurement memo, contract terms, total-cost comparison, and response to challenge.",
+      },
+      {
+        title: "Act III. The Mirror Test",
+        body: "Local performance differs from vendor results. Distinguish prevalence effects, data shift, and workflow failure using supplied evidence.",
+        output: "Recomputed metrics, uncertainty statement, and deployment revision.",
+      },
+      {
+        title: "Act IV. The Janus Reversal",
+        body: "A safety incident coincides with a product update and apparent subgroup disparity. A media allegation is partly wrong. Another mechanism better fits the record.",
+        output: "Incident reconstruction, pause, continue, or rollback decision, and correction.",
+      },
+      {
+        title: "Act V. The Kill-Switch Hearing",
+        body: "Clinicians, patient, security, vendor, and finance actors interrogate the final system. A rival offers a red-team exhibit. Defend deployment, redesign, staged pilot, or rejection.",
+        output: "Safety case, governance charter, fallback plan, and monitoring dashboard.",
+      },
+    ],
+    constraints: [
+      "Overall accuracy alone cannot establish clinical usefulness.",
+      "Predictive value can change with prevalence.",
+      "Small subgroup samples require explicit uncertainty.",
+      "Human in the loop needs a named decision owner and a feasible workflow.",
+    ],
+    routes: [
+      "Restricted pilot with prespecified stopping rules.",
+      "Reject the product and improve workflow without AI.",
+      "Require independent audit access before purchasing.",
+      "Separate predictive performance from a measured clinical benefit.",
+    ],
+    preparation:
+      "Study clinical validation, diagnostic-performance concepts, bias, privacy, procurement, and workflow design. The complete JANUS dossier releases at monitored check-in.",
+    experience:
+      "The same one-day five-act Regional clock. Rejection can score at the highest level if the record supports it. A red-team challenge is scored independently. No point stealing.",
+    workProduct:
+      "Evidence audit, procurement memo, recomputed metrics, incident reconstruction, and a kill-switch safety case.",
+    rubric: [
+      { criterion: "Clinical validity and safety", points: 220 },
+      { criterion: "Technical and statistical evidence audit", points: 200 },
+      { criterion: "Governance, security, privacy, and equity", points: 160 },
+      { criterion: "Workflow, procurement, and finance", points: 140 },
+      { criterion: "Incident response and adaptation", points: 160 },
+      { criterion: "Red-team and stakeholder defense", points: 70 },
+      { criterion: "Individual technical mastery", points: 50 },
+    ],
+    success:
+      "A standout team treats accuracy as insufficient, names uncertainty, and can shut the system down with a real owner. Marketing is not evidence.",
+    extraRules: [
+      sharedLock,
+      "A recommendation to reject technology can score at the highest level if the case evidence supports it.",
+      "Judges reward teams that recognize when workforce or process redesign is better than automation.",
+    ],
+    judgeStandard: legacyScoring,
+    annualExpansion:
+      "The annual product class can change. The Janus Protocol stays an accountable-innovation event: validate, contract, reverse, and defend a kill switch.",
     escalation: sharedEscalation,
   },
 ];
 
 export function getLegacyHandbook(id: string) {
-  return legacyEventHandbook.find((event) => event.id === id) || null;
+  const resolved = resolveCatalogEventId(id);
+  return legacyEventHandbook.find((event) => event.id === resolved) || null;
 }
 
 export function legacyHandbookInstructionsBody(event: LegacyHandbookEntry) {
@@ -319,8 +419,20 @@ export function legacyHandbookInstructionsBody(event: LegacyHandbookEntry) {
     "Why this event is Legacy-level",
     event.whyLegacy,
     "",
-    "Core decision layers",
-    ...event.decisionLayers.map((layer) => `- ${layer}`),
+    "Four-person operating model",
+    ...event.roles.map((role) => `- ${role}`),
+    "",
+    "Secured case packet",
+    ...event.packet.map((item) => `- ${item}`),
+    "",
+    "Five-act storyline",
+    ...event.acts.flatMap((act) => [act.title, act.body, `Required output: ${act.output}`, ""]),
+    "",
+    "Hard constraint checks",
+    ...event.constraints.map((item) => `- ${item}`),
+    "",
+    "Legitimate routes to victory",
+    ...event.routes.map((item) => `- ${item}`),
     "",
     "Preparation before competition",
     event.preparation,
@@ -346,12 +458,14 @@ export function legacyHandbookInstructionsBody(event: LegacyHandbookEntry) {
 export function legacyHandbookRubricBody(event: LegacyHandbookEntry) {
   const rows = event.rubric.map((row) => `${row.criterion}: ${row.points} points`).join("\n");
   return [
-    "Championship rubric. 100 points.",
+    "Championship rubric. 1,000 points.",
     event.judgeStandard,
     "",
     legacyEliteNote,
     "",
     rows,
+    "",
+    "Individual defense: ask every student two equivalent short questions, one on work they owned and one on a cross-role dependency. Individual mastery contributes only its listed points.",
     "",
     event.annualExpansion,
   ].join("\n");

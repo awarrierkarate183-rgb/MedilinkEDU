@@ -15,15 +15,17 @@ export type CatalogEvent = {
 };
 
 export const NORMAL_EVENT_CAP = 6;
-export const LEGACY_ROSTER_SIZE = 8;
+export const LEGACY_ROSTER_SIZE = 4;
 export const LEGACY_GROUP_SIZE = 4;
 export const INVITATIONAL_NOMINATIONS_PER_CHAPTER = 2;
 
-export const LEGACY_POINTS = {
-  REGIONAL: { 1: 12, 2: 10, 3: 8, 4: 6, 5: 4 },
-  STATE: { 1: 20, 2: 16, 3: 13, 4: 10, 5: 8 },
-  NATIONAL: { 1: 35, 2: 28, 3: 22 },
+export const LEGACY_STANDING = {
+  STATE: { regional: 0.35, state: 0.65 },
+  NATIONAL: { regional: 0.15, state: 0.25, national: 0.6 },
 } as const;
+
+export const LEGACY_REGIONAL_ADVANCE = 3;
+export const LEGACY_STATE_ADVANCE = 1;
 
 export const NORMAL_CHAPTER_POINTS = {
   REGIONAL: { 1: 6, 2: 5, 3: 4, 4: 3, 5: 2, competed: 1 },
@@ -302,76 +304,65 @@ export const normalEvents: CatalogEvent[] = [
 
 export const legacyEvents: CatalogEvent[] = [
   {
-    id: "the-atlas-docket",
+    id: "the-sovereign-ledger",
     number: 1,
-    name: "The Atlas Docket",
+    name: "The Sovereign Ledger",
     tier: "LEGACY",
     format: "TEAM_ONLY",
-    minTeamSize: 2,
+    minTeamSize: 4,
     maxTeamSize: 4,
-    formatLabel: "Mock appellate regulatory hearing. One group of 2 to 4.",
-    summary: "Hospital AI counsel argues whether Atlas may stay in use.",
+    formatLabel: "Medicine x finance. One four-student chapter team. Five-act live championship.",
+    summary: "Disciplined capital strategy, financial nerve, and protection of essential care.",
     description:
-      "A fictional health system deployed Atlas, an emergency-department acuity and routing tool. Teams serve as hospital AI governance counsel before a regulatory panel deciding whether it may remain in use, under what conditions, and with what safeguards.",
+      "Asterion Health Alliance has a $48 million unrestricted capital envelope and a $6 million reserve floor. The team decides what deserves capital, what it will refuse, and how the portfolio survives a payer shock, a restrictive gift, and a public board.",
   },
   {
-    id: "the-covenant-table",
+    id: "nightfall-code-meridian",
     number: 2,
-    name: "The Covenant Table",
+    name: "Nightfall: Code Meridian",
     tier: "LEGACY",
     format: "TEAM_ONLY",
-    minTeamSize: 2,
+    minTeamSize: 4,
     maxTeamSize: 4,
-    formatLabel: "Five-year capital-allocation summit. One group of 2 to 4.",
-    summary: "Allocate scarce capital without treating people as spreadsheet entries.",
+    formatLabel: "Medicine x management. One four-student chapter team. Five-act live championship.",
+    summary: "Command discipline, safe logistics, and leadership during cascading failure.",
     description:
-      "Teams become a health-system capital allocation council. They decide what to fund, phase, partner, defer, protect, or close over five years, then rebalance after The Red Ledger shock.",
+      "Meridian Regional is a fictional 320-bed referral hospital. An electronic-record outage meets a storm that limits transport and staff. The team holds the organization together without making unsafe promises.",
   },
   {
-    id: "black-box-protocol",
+    id: "the-janus-protocol",
     number: 3,
-    name: "Black Box Protocol",
+    name: "The Janus Protocol",
     tier: "LEGACY",
     format: "TEAM_ONLY",
-    minTeamSize: 2,
+    minTeamSize: 4,
     maxTeamSize: 4,
-    formatLabel: "Clinical technology deployment simulation. One group of 2 to 4.",
-    summary: "Decide whether a high-stakes clinical tool may deploy.",
+    formatLabel: "Medicine x technology. One four-student chapter team. Five-act live championship.",
+    summary: "Technical skepticism, clinical validation, and accountable innovation.",
     description:
-      "An independent technology review board audits a high-stakes clinical product, then faces a Kill Switch incident that forces pause, modify, disclose, audit, continue, or terminate.",
-  },
-  {
-    id: "the-last-mile-accord",
-    number: 4,
-    name: "The Last Mile Accord",
-    tier: "LEGACY",
-    format: "TEAM_ONLY",
-    minTeamSize: 2,
-    maxTeamSize: 4,
-    formatLabel: "Value-based payment negotiation and arbitration. One group of 2 to 4.",
-    summary: "Design a durable chronic-care payment accord.",
-    description:
-      "A payer, physician network, safety-net hospital, and patient coalition dispute a value-based chronic-disease contract. Teams negotiate, then defend the accord in public arbitration after The Corridor update.",
-  },
-  {
-    id: "nightfall-command",
-    number: 5,
-    name: "Nightfall Command",
-    tier: "LEGACY",
-    format: "TEAM_ONLY",
-    minTeamSize: 2,
-    maxTeamSize: 4,
-    formatLabel: "Four-round hospital crisis command. One group of 2 to 4.",
-    summary: "Keep a hospital safe through escalating crisis injects.",
-    description:
-      "Teams serve as the incident-command executive group through stabilize, escalate, scrutiny, and recover rounds on The Nightfall Clock.",
+      "A fictional hospital consortium is considering JANUS, an AI deterioration-prediction and care-routing platform. The team must separate an impressive demo from an accountable clinical system.",
   },
 ];
 
 export const catalogEvents = [...normalEvents, ...legacyEvents];
 
+export const LEGACY_ID_ALIASES: Record<string, string> = {
+  "the-covenant-table": "the-sovereign-ledger",
+  "the-atlas-docket": "the-janus-protocol",
+  "black-box-protocol": "the-janus-protocol",
+  "nightfall-command": "nightfall-code-meridian",
+  "operation-containment": "nightfall-code-meridian",
+  "the-meridian-hearing": "the-janus-protocol",
+  "project-onconova": "the-janus-protocol",
+  "the-rural-lifeline-case": "the-sovereign-ledger",
+};
+
+export function resolveCatalogEventId(id: string) {
+  return LEGACY_ID_ALIASES[id] || id;
+}
+
 export function getCatalogEvent(id: string) {
-  return catalogEvents.find((event) => event.id === id);
+  return catalogEvents.find((event) => event.id === resolveCatalogEventId(id));
 }
 
 export const competitionPillars = [
@@ -385,8 +376,8 @@ export const competitionPillars = [
   {
     id: "legacy",
     name: "Legacy Events",
-    kicker: "Five events",
-    summary: "Eight students per chapter, two groups of four, locked for the season.",
+    kicker: "Three events",
+    summary: "One team of four. The Sovereign Ledger, Nightfall: Code Meridian, and The Janus Protocol.",
     prestige: 2,
   },
   {

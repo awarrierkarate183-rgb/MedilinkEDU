@@ -90,7 +90,7 @@ export function CompetitionDesk(props: Props) {
         <h2 className="text-xl font-semibold">Competitions</h2>
         <p className="mt-1 text-sm text-muted">
           Season {props.seasonLabel || "not opened"}. Normal Events cap at six.
-          Legacy uses eight students, two groups of up to four, one group per event.
+          Legacy uses one team of four. That team may enter one, two, or all three Triad events.
         </p>
       </div>
       {error ? <Alert title="Not saved" tone="danger">{error}</Alert> : null}
@@ -205,19 +205,17 @@ export function CompetitionDesk(props: Props) {
         <p className="mt-1 text-sm text-muted">
           {props.rosterLocked
             ? "This season roster is locked. Only a documented exception can change it."
-            : "Eight students, two groups of up to four. One group may enter any given Legacy event."}
+            : "Exactly four students. The same four are the chapter Legacy delegation. They may enter one, two, or all three events."}
         </p>
         {props.mode === "student" ? (
           <p className="mt-3 text-sm">
             {props.delegation.groupA.includes(props.profileId)
-              ? "You are in Group A."
-              : props.delegation.groupB.includes(props.profileId)
-                ? "You are in Group B."
-                : "You are not on this season's Legacy roster."}
+              ? "You are one of the four Legacy delegates."
+              : "You are not on this season's Legacy roster."}
           </p>
         ) : (
           <form
-            className="mt-4 grid gap-4 md:grid-cols-2"
+            className="mt-4 grid gap-4"
             onSubmit={(event) => {
               event.preventDefault();
               const data = new FormData(event.currentTarget);
@@ -225,25 +223,23 @@ export function CompetitionDesk(props: Props) {
                 "/api/competitions/legacy-roster",
                 {
                   groupA: data.getAll("groupA").map(String),
-                  groupB: data.getAll("groupB").map(String),
+                  groupB: [],
                   chapterId: activeChapterId,
                 },
                 "Legacy roster saved.",
               );
             }}
           >
-            {(["groupA", "groupB"] as const).map((group) => (
-              <label key={group} className="block text-sm font-semibold">
-                {group === "groupA" ? "Group A" : "Group B"}
-                <select name={group} multiple className={`${field} min-h-40`}>
-                  {props.roster.map((row) => (
-                    <option key={row.id} value={row.id}>
-                      {nameOf(row)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ))}
+            <label className="block text-sm font-semibold">
+              Four Legacy delegates
+              <select name="groupA" multiple className={`${field} min-h-40`}>
+                {props.roster.map((row) => (
+                  <option key={row.id} value={row.id}>
+                    {nameOf(row)}
+                  </option>
+                ))}
+              </select>
+            </label>
             <div>
               <Button type="submit" size="sm" loading={loading} disabled={props.rosterLocked && props.mode !== "admin"}>
                 Save roster
@@ -251,17 +247,14 @@ export function CompetitionDesk(props: Props) {
             </div>
           </form>
         )}
-        <div className="mt-4 grid gap-3 md:grid-cols-2 text-sm">
+        <div className="mt-4 text-sm">
           <p>
-            Group A: {props.delegation.groupA.map((id) => nameOf(people.get(id))).filter(Boolean).join(", ") || "Empty"}
-          </p>
-          <p>
-            Group B: {props.delegation.groupB.map((id) => nameOf(people.get(id))).filter(Boolean).join(", ") || "Empty"}
+            Delegation: {props.delegation.groupA.map((id) => nameOf(people.get(id))).filter(Boolean).join(", ") || "Empty"}
           </p>
         </div>
         {props.mode !== "student" ? (
           <form
-            className="mt-4 grid gap-3 md:grid-cols-3"
+            className="mt-4 grid gap-3 md:grid-cols-2"
             onSubmit={(event) => {
               event.preventDefault();
               const data = new FormData(event.currentTarget);
@@ -269,7 +262,7 @@ export function CompetitionDesk(props: Props) {
                 "/api/competitions/legacy-entry",
                 {
                   eventId: String(data.get("eventId") || ""),
-                  groupLabel: String(data.get("groupLabel") || "A"),
+                  groupLabel: "A",
                   chapterId: activeChapterId,
                 },
                 "Legacy event assigned.",
@@ -289,16 +282,9 @@ export function CompetitionDesk(props: Props) {
                 ))}
               </select>
             </label>
-            <label className="block text-sm font-semibold">
-              Group
-              <select name="groupLabel" className={field} defaultValue="A">
-                <option value="A">A</option>
-                <option value="B">B</option>
-              </select>
-            </label>
             <div className="flex items-end">
               <Button type="submit" size="sm" loading={loading}>
-                Assign group
+                Enter the team
               </Button>
             </div>
           </form>
@@ -306,7 +292,7 @@ export function CompetitionDesk(props: Props) {
         <ul className="mt-3 space-y-1 text-sm">
           {props.entries.map((entry) => (
             <li key={entry.catalog_event_id}>
-              {catalogEvents.find((event) => event.id === entry.catalog_event_id)?.name} · Group {entry.group_label}
+              {catalogEvents.find((event) => event.id === entry.catalog_event_id)?.name || entry.catalog_event_id}
             </li>
           ))}
         </ul>
@@ -515,8 +501,9 @@ function AdminTools({
       <section className="rounded-[var(--radius)] bg-white p-5">
         <h3 className="font-semibold">Enter a result</h3>
         <p className="mt-1 text-sm text-muted">
-          Placement is entered. Points and Legacy cutoffs are computed. Regional
-          keeps the top 5 Legacy entries. State keeps the top 3 by cumulative total.
+          Normal Events still use placement. Legacy uses the raw 1,000-point score.
+          Regional keeps the top 3 in each pool. State advances the one highest
+          35 / 65 cumulative standing.
         </p>
         <form
           className="mt-4 grid gap-3 md:grid-cols-2"
@@ -530,6 +517,7 @@ function AdminTools({
                 round: String(data.get("round") || "REGIONAL"),
                 chapterId: String(data.get("chapterId") || ""),
                 placement: Number(data.get("placement") || 1),
+                rawScore: data.get("rawScore") ? Number(data.get("rawScore")) : undefined,
                 published: true,
               },
               "Result saved.",
@@ -559,7 +547,11 @@ function AdminTools({
           </label>
           <label className="block text-sm font-semibold">
             Placement
-            <input name="placement" type="number" min={1} max={50} required defaultValue={1} className={field} />
+            <input name="placement" type="number" min={1} max={50} defaultValue={1} className={field} />
+          </label>
+          <label className="block text-sm font-semibold">
+            Legacy raw score / 1000
+            <input name="rawScore" type="number" min={0} max={1000} step="0.1" className={field} />
           </label>
           <label className="block text-sm font-semibold md:col-span-2">
             Chapter

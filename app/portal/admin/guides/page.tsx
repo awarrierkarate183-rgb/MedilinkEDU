@@ -18,7 +18,7 @@ export default async function AdminGuidesPage() {
         <p className="mt-2 text-sm text-muted">
           When an advisor or administrator enters a student in a Normal or
           Legacy Event, the student portal opens that event's official
-          instructions and 100-point rubric. Publish each handbook once, then
+          instructions and rubric. Publish each handbook once, then
           upload replacements here any time.
         </p>
       </section>

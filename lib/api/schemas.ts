@@ -132,13 +132,13 @@ export const assignByNameSchema = z.object({
 
 export const legacyRosterSchema = z.object({
   groupA: z.array(uuid).max(4),
-  groupB: z.array(uuid).max(4),
+  groupB: z.array(uuid).max(4).optional().default([]),
   chapterId: uuid.optional(),
 });
 
 export const legacyEntrySchema = z.object({
   eventId: z.string().min(3),
-  groupLabel: z.enum(["A", "B"]),
+  groupLabel: z.enum(["A", "B"]).optional().default("A"),
   chapterId: uuid.optional(),
 });
 
@@ -154,7 +154,8 @@ export const eventResultSchema = z.object({
   eventId: z.string().min(3),
   round: z.enum(["REGIONAL", "STATE", "NATIONAL"]),
   chapterId: uuid,
-  placement: z.coerce.number().int().min(1).max(50),
+  placement: z.coerce.number().int().min(1).max(50).optional(),
+  rawScore: z.coerce.number().min(0).max(1000).optional(),
   profileId: uuid.optional(),
   teamId: uuid.optional(),
   legacyEntryId: uuid.optional(),

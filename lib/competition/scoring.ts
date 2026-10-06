@@ -1,14 +1,23 @@
 import {
-  LEGACY_POINTS,
+  LEGACY_REGIONAL_ADVANCE,
+  LEGACY_STANDING,
+  LEGACY_STATE_ADVANCE,
   NORMAL_CHAPTER_POINTS,
   RANKING_WEIGHTS,
 } from "@/lib/content/competition-system";
 
 export type Round = "REGIONAL" | "STATE" | "NATIONAL";
 
-export function legacyPointsForPlacement(round: Round, placement: number) {
-  const table = LEGACY_POINTS[round] as Record<number, number>;
-  return table[placement] ?? 0;
+export function legacyStateStanding(regionalRaw: number, stateRaw: number) {
+  return regionalRaw * LEGACY_STANDING.STATE.regional + stateRaw * LEGACY_STANDING.STATE.state;
+}
+
+export function legacyNationalStanding(regionalRaw: number, stateRaw: number, nationalRaw: number) {
+  return (
+    regionalRaw * LEGACY_STANDING.NATIONAL.regional +
+    stateRaw * LEGACY_STANDING.NATIONAL.state +
+    nationalRaw * LEGACY_STANDING.NATIONAL.national
+  );
 }
 
 export function normalChapterPointsForPlacement(round: Round, placement: number) {
@@ -20,7 +29,7 @@ export function normalChapterPointsForPlacement(round: Round, placement: number)
 export function legacyAdvancesFromRegional(entries: Array<{ id: string; points: number }>) {
   return [...entries]
     .sort((a, b) => b.points - a.points)
-    .slice(0, 5)
+    .slice(0, LEGACY_REGIONAL_ADVANCE)
     .map((row) => row.id);
 }
 
@@ -28,9 +37,13 @@ export function legacyAdvancesFromState(
   entries: Array<{ id: string; regionalPoints: number; statePoints: number }>,
 ) {
   return [...entries]
-    .map((row) => ({ id: row.id, total: row.regionalPoints + row.statePoints }))
-    .sort((a, b) => b.total - a.total)
-    .slice(0, 3)
+    .map((row) => ({
+      id: row.id,
+      total: legacyStateStanding(row.regionalPoints, row.statePoints),
+      stateRaw: row.statePoints,
+    }))
+    .sort((a, b) => b.total - a.total || b.stateRaw - a.stateRaw)
+    .slice(0, LEGACY_STATE_ADVANCE)
     .map((row) => row.id);
 }
 
@@ -61,7 +74,7 @@ export function membershipScore(input: {
     input.seasonMaxActive > 0 ? Math.min(1, input.activeMembers / input.seasonMaxActive) : 0;
   const participationShare =
     input.activeMembers > 0 ? Math.min(1, input.registeredMembers / input.activeMembers) : 0;
-  return (sizeShare * 50 + participationShare * 50);
+  return sizeShare * 50 + participationShare * 50;
 }
 
 export function assignRanks<T extends { score: number; state?: string | null }>(rows: T[]) {

@@ -47,9 +47,11 @@ export function SiteHeader() {
       )}
       onMouseLeave={() => setOpenTab(null)}
     >
-      <div className="container-ml flex h-[var(--header-h)] items-center justify-between gap-4">
-        <Wordmark />
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[1680px] items-center justify-between gap-10 px-6 lg:px-12">
+        <div className="shrink-0">
+          <Wordmark />
+        </div>
+        <nav className="hidden min-w-0 flex-1 items-center justify-evenly gap-x-8 lg:flex" aria-label="Primary">
           {publicNav.map((tab) => {
             const active = pathname === tab.href || pathname.startsWith(`${tab.href}/`);
             const isOpen = openTab === tab.href;
@@ -62,38 +64,43 @@ export function SiteHeader() {
                 <Link
                   href={tab.href as never}
                   className={cn(
-                    "public-nav inline-flex items-center border-b-2 px-3 py-2 text-lg transition-colors",
+                    "public-nav inline-flex items-center gap-1.5 border-b-2 px-1.5 py-2 text-[1.05rem] leading-none transition-colors",
                     active || isOpen ? "border-gold text-gold" : "border-transparent text-white/85 hover:text-white",
                   )}
                 >
                   {tab.label}
+                  <span aria-hidden="true" className="text-[0.65rem]">
+                    ▾
+                  </span>
                 </Link>
                 <button
                   type="button"
-                  className={cn("pb-0.5 text-xs", active || isOpen ? "text-gold" : "text-white/70")}
+                  className="sr-only"
                   aria-expanded={isOpen}
                   aria-haspopup="true"
                   aria-label={`${tab.label} menu`}
                   onClick={() => setOpenTab(isOpen ? null : tab.href)}
                 >
-                  ▾
+                  Open {tab.label} menu
                 </button>
               </div>
             );
           })}
+        </nav>
+        <div className="hidden shrink-0 items-center gap-4 lg:flex">
           <Link
             href="/start-a-chapter"
-            className="ml-3 rounded-md border border-white/35 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
+            className="whitespace-nowrap rounded-md border border-white/35 px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-white hover:bg-white/10"
           >
             Start a Chapter
           </Link>
           <Link
             href="/portal"
-            className="rounded-md bg-gold px-4 py-2.5 text-sm font-semibold text-navy hover:bg-gold-hover"
+            className="whitespace-nowrap rounded-md bg-gold px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-navy hover:bg-gold-hover"
           >
             Portal Login
           </Link>
-        </nav>
+        </div>
         <div className="flex items-center gap-2 lg:hidden">
           <Link href="/portal" className="rounded-md bg-gold px-3.5 py-2.5 text-sm font-semibold text-navy">
             Portal
@@ -112,7 +119,7 @@ export function SiteHeader() {
 
       {activeTab ? (
         <div className="hidden border-t border-white/10 bg-navy-deep lg:block">
-          <div className="container-ml grid gap-8 py-8 lg:grid-cols-[0.9fr_1.4fr]">
+          <div className="mx-auto grid w-full max-w-[1680px] gap-10 px-6 py-9 lg:grid-cols-[0.85fr_1.5fr] lg:px-12">
             <div>
               <p className="kicker">{activeTab.kicker}</p>
               <p className="tab-heading text-3xl text-white">{activeTab.label}</p>

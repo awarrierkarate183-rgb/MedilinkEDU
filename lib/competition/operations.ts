@@ -15,7 +15,6 @@ import {
   assignRanks,
   legacyAdvancesFromRegional,
   legacyAdvancesFromState,
-  legacyPointsForPlacement,
   membershipScore,
   normalizeScores,
   normalChapterPointsForPlacement,
@@ -306,8 +305,8 @@ export async function assignLegacyEvent(
         admin,
         row.profile_id,
         "competition_assigned",
-        `Your group was entered in ${event?.name || "a Legacy Event"}`,
-        `Open Competitions to see the format, your group, and the rubric when MediLink publishes it.`,
+        `Your team was entered in ${event?.name || "a Legacy Event"}`,
+        `Open Competitions to see the format, your four-person team, and the 1,000-point rubric.`,
         "/portal/student/competitions",
       ),
     ),
@@ -322,7 +321,8 @@ export async function enterEventResult(
     eventId: string;
     round: Round;
     chapterId: string;
-    placement: number;
+    placement?: number;
+    rawScore?: number;
     profileId?: string;
     teamId?: string;
     legacyEntryId?: string;
@@ -334,10 +334,13 @@ export async function enterEventResult(
   if (!season) return { error: "No competition season is open." };
   const event = getCatalogEvent(input.eventId);
   if (!event) return { error: "Choose an event." };
+  if (event.tier === "LEGACY" && (input.rawScore == null || Number.isNaN(input.rawScore))) {
+    return { error: "Enter the Legacy raw score out of 1000." };
+  }
   const points =
     event.tier === "LEGACY"
-      ? legacyPointsForPlacement(input.round, input.placement)
-      : normalChapterPointsForPlacement(input.round, input.placement);
+      ? Number(input.rawScore)
+      : normalChapterPointsForPlacement(input.round, input.placement || 1);
 
   let legacyEntryId = input.legacyEntryId || null;
   if (event.tier === "LEGACY" && !legacyEntryId) {
@@ -359,7 +362,7 @@ export async function enterEventResult(
     profile_id: input.profileId || null,
     team_id: input.teamId || null,
     legacy_entry_id: legacyEntryId,
-    placement: input.placement,
+    placement: input.placement || 1,
     points,
     published: Boolean(input.published),
     entered_by: actor.id,

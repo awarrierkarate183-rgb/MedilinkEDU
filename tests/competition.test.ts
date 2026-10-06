@@ -13,7 +13,7 @@ import { legacyEventHandbook } from "../lib/content/legacy-event-handbook";
 import {
   legacyAdvancesFromRegional,
   legacyAdvancesFromState,
-  legacyPointsForPlacement,
+  legacyStateStanding,
   membershipScore,
   weightedChapterScore,
 } from "../lib/competition/scoring";
@@ -38,10 +38,12 @@ describe("competition rules", () => {
     expect(assertNormalFormat("SOLO_OR_TEAM", 1)).toBeNull();
   });
 
-  it("blocks two groups in the same Legacy event and a fifth group member", () => {
-    expect(assertLegacyGroups(["a", "b", "c", "d", "e"], [])).toMatch(/at most 4/);
-    expect(assertLegacyEntry("the-atlas-docket", true, 4)).toMatch(/already entered/);
-    expect(assertLegacyEntry("the-atlas-docket", false, 1)).toMatch(/2 to 4 students/);
+  it("requires one team of four and blocks a second group", () => {
+    expect(assertLegacyGroups(["a", "b", "c", "d", "e"], [])).toMatch(/exactly 4/);
+    expect(assertLegacyGroups(["a", "b", "c", "d"], ["e"])).toMatch(/one team of four/);
+    expect(assertLegacyGroups(["a", "b", "c", "d"], [])).toBeNull();
+    expect(assertLegacyEntry("the-sovereign-ledger", true, 4)).toMatch(/already entered/);
+    expect(assertLegacyEntry("the-sovereign-ledger", false, 1)).toMatch(/exactly 4 students/);
   });
 
   it("matches roster names and rejects unknown students", () => {
@@ -69,31 +71,26 @@ describe("competition rules", () => {
 });
 
 describe("competition scoring", () => {
-  it("uses the Legacy points table", () => {
-    expect(legacyPointsForPlacement("REGIONAL", 1)).toBe(12);
-    expect(legacyPointsForPlacement("STATE", 3)).toBe(13);
-    expect(legacyPointsForPlacement("NATIONAL", 1)).toBe(35);
-    expect(legacyPointsForPlacement("NATIONAL", 4)).toBe(0);
+  it("uses the 35 / 65 State standing formula", () => {
+    expect(legacyStateStanding(920, 800)).toBe(842);
+    expect(legacyStateStanding(780, 950)).toBe(890.5);
   });
 
-  it("keeps the top 5 Regional and top 3 cumulative State entries", () => {
+  it("keeps the top 3 Regional and one cumulative State champion", () => {
     const regional = legacyAdvancesFromRegional([
-      { id: "a", points: 12 },
-      { id: "b", points: 10 },
-      { id: "c", points: 8 },
-      { id: "d", points: 6 },
-      { id: "e", points: 4 },
-      { id: "f", points: 0 },
+      { id: "a", points: 920 },
+      { id: "b", points: 830 },
+      { id: "c", points: 780 },
+      { id: "d", points: 700 },
     ]);
-    expect(regional).toEqual(["a", "b", "c", "d", "e"]);
+    expect(regional).toEqual(["a", "b", "c"]);
     expect(
       legacyAdvancesFromState([
-        { id: "a", regionalPoints: 12, statePoints: 10 },
-        { id: "b", regionalPoints: 10, statePoints: 20 },
-        { id: "c", regionalPoints: 8, statePoints: 8 },
-        { id: "d", regionalPoints: 6, statePoints: 16 },
+        { id: "a", regionalPoints: 920, statePoints: 800 },
+        { id: "b", regionalPoints: 830, statePoints: 920 },
+        { id: "c", regionalPoints: 780, statePoints: 950 },
       ]),
-    ).toEqual(["b", "a", "d"]);
+    ).toEqual(["c"]);
   });
 
   it("keeps twenty Normal Event handbooks at 100 points", () => {
@@ -105,17 +102,16 @@ describe("competition scoring", () => {
     }
   });
 
-  it("keeps five final Legacy championship events at 100 points", () => {
+  it("keeps three Legacy Triad events at 1,000 points", () => {
     expect(legacyEventHandbook.map((event) => event.id)).toEqual([
-      "the-atlas-docket",
-      "the-covenant-table",
-      "black-box-protocol",
-      "the-last-mile-accord",
-      "nightfall-command",
+      "the-sovereign-ledger",
+      "nightfall-code-meridian",
+      "the-janus-protocol",
     ]);
     for (const event of legacyEventHandbook) {
-      expect(event.rubric.reduce((sum, row) => sum + row.points, 0)).toBe(100);
-      expect(event.mechanic).toBeTruthy();
+      expect(event.rubric.reduce((sum, row) => sum + row.points, 0)).toBe(1000);
+      expect(event.acts).toHaveLength(5);
+      expect(event.roles).toHaveLength(4);
     }
   });
 

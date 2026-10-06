@@ -19,19 +19,22 @@ const PAGE_ALIASES: Record<string, string> = {
   apex: "/competitions/rankings",
   "road-to-apex": "/competitions/rankings",
   invitational: "/competitions/invitational",
-  "the-meridian-hearing": "/competitions/legacy#the-atlas-docket",
-  "the-rural-lifeline-case": "/competitions/legacy#the-covenant-table",
-  "project-onconova": "/competitions/legacy#black-box-protocol",
-  "the-valuecare-arbitration": "/competitions/legacy#the-last-mile-accord",
-  "operation-containment": "/competitions/legacy#nightfall-command",
+  "the-meridian-hearing": "/competitions/legacy#the-janus-protocol",
+  "the-rural-lifeline-case": "/competitions/legacy#the-sovereign-ledger",
+  "project-onconova": "/competitions/legacy#the-janus-protocol",
+  "the-valuecare-arbitration": "/competitions/legacy#the-sovereign-ledger",
+  "operation-containment": "/competitions/legacy#nightfall-code-meridian",
+  "the-atlas-docket": "/competitions/legacy#the-janus-protocol",
+  "the-covenant-table": "/competitions/legacy#the-sovereign-ledger",
+  "black-box-protocol": "/competitions/legacy#the-janus-protocol",
+  "the-last-mile-accord": "/competitions/legacy",
+  "nightfall-command": "/competitions/legacy#nightfall-code-meridian",
 };
 
 const EVENT_PAGES: Record<string, string> = {
-  "the-atlas-docket": "/competitions/legacy",
-  "the-covenant-table": "/competitions/legacy",
-  "black-box-protocol": "/competitions/legacy",
-  "the-last-mile-accord": "/competitions/legacy",
-  "nightfall-command": "/competitions/legacy",
+  "the-sovereign-ledger": "/competitions/legacy",
+  "nightfall-code-meridian": "/competitions/legacy",
+  "the-janus-protocol": "/competitions/legacy",
 };
 
 export function HashAliases() {

@@ -107,6 +107,8 @@ h3 {
 .public-nav {
   font-family: var(--font-fraunces), Georgia, serif;
   font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .lead {

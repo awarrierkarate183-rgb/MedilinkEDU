@@ -111,7 +111,7 @@ export async function runAdminDesk(admin: Admin, actor: Actor, message: string) 
       type: "function",
       function: {
         name: "publish_legacy_handbook",
-        description: "Publish official Legacy Championship instructions and 100-point rubrics to the student portal.",
+        description: "Publish official Legacy Triad instructions and 1,000-point rubrics to the student portal.",
         parameters: { type: "object", properties: {} },
       },
     },

@@ -63,8 +63,8 @@ export const publicNav: NavTab[] = [
     items: [
       { href: "/competitions/two-tiers", label: "Two tiers", blurb: "Why Normal and Legacy are not one shared format." },
       { href: "/competitions/normal", label: "Normal Events", blurb: "Twenty events, six-event cap, and the full 100-point packets." },
-      { href: "/competitions/legacy", label: "Legacy Events", blurb: "The five championship simulations and the eight-student roster." },
-      { href: "/competitions/advancement", label: "Advancement and points", blurb: "Regional, State, Nationals, and the Legacy placement table." },
+      { href: "/competitions/legacy", label: "Legacy Events", blurb: "The Legacy Triad. One team of four. Three arenas." },
+      { href: "/competitions/advancement", label: "Advancement and points", blurb: "Regional top three. One State champion per event. Raw scores out of 1,000." },
       { href: "/competitions/rankings", label: "Rankings and Apex", blurb: "Annual Top 10 and the 2-year Road to Apex." },
       { href: "/competitions/invitational", label: "Invitational", blurb: "A separate individual honor after a two-year cycle." },
     ],
