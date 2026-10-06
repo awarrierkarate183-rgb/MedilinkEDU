@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { chapterPin, projectState, stateCenter } from "../lib/content/us-geo";
+import { MAP_WIDTH, STATE_SHAPES, chapterPin } from "../lib/content/us-geo";
 import { publicStatusLabel } from "../lib/content/chapters";
 
 describe("chapter map pins", () => {
   it("places North Carolina on the eastern half of the map", () => {
-    const center = stateCenter("North Carolina");
-    expect(center).toBeTruthy();
-    const pin = projectState(center!.lat, center!.lng);
-    expect(pin.x).toBeGreaterThan(200);
-    expect(pin.y).toBeGreaterThan(40);
+    const pin = chapterPin("North Carolina", 0, 1);
+    expect(pin).toBeTruthy();
+    expect(STATE_SHAPES["North Carolina"]?.abbr).toBe("NC");
+    expect(pin!.x).toBeGreaterThan(MAP_WIDTH * 0.55);
+    expect(pin!.y).toBeGreaterThan(80);
   });
 
   it("offsets two schools in the same state", () => {

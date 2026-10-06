@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/public/PageHero";
+import { ColorWidgets, PhotoTile } from "@/components/public/widgets";
 import { OFFICER_ROLES } from "@/lib/constants";
-import { actionHref } from "@/lib/content/forms";
 
 export const metadata: Metadata = {
   title: "Start a Chapter",
@@ -18,95 +17,116 @@ export default function StartChapterPage() {
         kicker="Chapters"
         title="Start a chapter"
         lead="Bring MediLink to your high school. Open the request form, choose a portal password, then wait for an administrator to accept the chapter."
+        image="/media/chapter.jpg"
+      />
+
+      <ColorWidgets
+        items={[
+          { href: "/start-a-chapter/apply", label: "Start a chapter", icon: "start", tone: "gold" },
+          { href: "/start-a-chapter/reactivate", label: "Reactivate", icon: "support", tone: "navy" },
+          { href: "/chapters", label: "Chapter map", icon: "map", tone: "soft" },
+          { href: "/chapter-support", label: "Advisor help", icon: "support", tone: "cream" },
+          { href: "/curriculum", label: "Curriculum", icon: "book", tone: "navy" },
+          { href: "/competitions", label: "Events", icon: "trophy", tone: "gold" },
+        ]}
       />
 
       <section className="band">
-        <div className="container-ml grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p className="kicker">How it works</p>
-            <h2 className="text-3xl font-semibold">A request first. Tools after review.</h2>
-            <ol className="mt-6 grid gap-3">
-              {[
-                "Click here to open the full request form",
-                "Enter the school, advisor, and a password you choose",
-                "Sign in. Administrators get a notification",
-                "An administrator accepts the request",
-                "The advisor portal opens and students can be added",
-              ].map((step, index) => (
-                <li key={step} className="rounded-[var(--radius)] border border-border p-4">
-                  <p className="kicker">0{index + 1}</p>
-                  <p className="font-semibold">{step}</p>
-                </li>
-              ))}
-            </ol>
+        <div className="container-ml grid gap-6 lg:grid-cols-2">
+          <div className="relative min-h-[22rem] overflow-hidden rounded-[var(--radius)] bg-navy text-white">
+            <img src="/media/chapter.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+            <div className="relative flex h-full min-h-[22rem] flex-col items-center justify-center px-6 py-12 text-center">
+              <p className="kicker">New school</p>
+              <h2 className="mt-3 max-w-sm text-3xl font-semibold">Start a chapter</h2>
+              <Link
+                href="/start-a-chapter/apply"
+                className="click-here mt-8 inline-flex rounded-md bg-gold px-8 py-4 text-lg font-semibold text-navy"
+              >
+                Click here
+              </Link>
+              <p className="mt-5 max-w-sm text-sm text-white/80">
+                Open the full request form. School, advisor, and the password you will use to sign in.
+              </p>
+            </div>
           </div>
-          <div className="flex min-h-[22rem] flex-col items-center justify-center rounded-[var(--radius)] bg-navy px-6 py-16 text-center text-white">
-            <p className="kicker">Ready</p>
-            <h2 className="mt-3 max-w-sm text-3xl font-semibold">Open the chapter request</h2>
-            <Link
-              href="/start-a-chapter/apply"
-              className="click-here mt-8 inline-flex rounded-md bg-gold px-8 py-4 text-lg font-semibold text-navy"
-            >
-              Click here
-            </Link>
-            <p className="mt-5 max-w-sm text-sm text-white/70">
-              The next page is the full form. It asks for school details, the
-              advisor, and the password you will use to sign in.
-            </p>
+          <div className="relative min-h-[22rem] overflow-hidden rounded-[var(--radius)] bg-navy text-white">
+            <img src="/media/involved.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+            <div className="relative flex h-full min-h-[22rem] flex-col items-center justify-center px-6 py-12 text-center">
+              <p className="kicker">Existing school</p>
+              <h2 className="mt-3 max-w-sm text-3xl font-semibold">Reactivate a chapter</h2>
+              <Link
+                href="/start-a-chapter/reactivate"
+                className="mt-8 inline-flex rounded-md bg-gold px-8 py-4 text-lg font-semibold text-navy"
+              >
+                Open reactivation form
+              </Link>
+              <p className="mt-5 max-w-sm text-sm text-white/80">
+                Use this if the school already had a MediLink chapter and it went quiet.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="band band--paper" id="officers">
         <div className="container-ml">
-          <h2 className="text-3xl font-semibold">The same five offices in every chapter</h2>
-          <ul className="mt-6 grid gap-3 md:grid-cols-2">
+          <div className="section-head">
+            <p className="kicker">Officers</p>
+            <h2>The same five offices in every chapter</h2>
+          </div>
+          <div className="grid gap-3 md:grid-cols-5">
             {OFFICER_ROLES.map((role) => (
-              <li key={role} className="rounded-lg bg-cream-card p-4 font-semibold">
-                {role}
-              </li>
+              <div key={role} className="rounded-[var(--radius)] bg-navy px-4 py-6 text-center text-white">
+                <p className="font-semibold">{role}</p>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
+
       <section className="band" id="levels">
-        <div className="container-ml grid gap-4 md:grid-cols-3">
-          <article className="rounded-[var(--radius)] border border-border p-5">
-            <p className="kicker">Founding</p>
-            <p>Officers are established. Chapter is chartered. Receives a unique QR after founding.</p>
-          </article>
-          <article className="rounded-[var(--radius)] border border-border p-5">
-            <p className="kicker">Established</p>
-            <p>Chapter has run at least one internal event and has at least ten active members.</p>
-          </article>
-          <article className="rounded-[var(--radius)] border border-border p-5">
-            <p className="kicker">Flagship-Eligible</p>
-            <p>Chapter has participated in a regional-level competition and can send teams to the national level.</p>
-          </article>
+        <div className="container-ml">
+          <div className="section-head">
+            <p className="kicker">Growth</p>
+            <h2>Status is earned.</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            <PhotoTile
+              href="/chapters/status"
+              image="/media/chapter.jpg"
+              kicker="Founding"
+              title="Chartered"
+              body="Officers are in place. The chapter receives a unique QR after founding."
+            />
+            <PhotoTile
+              href="/chapters/status"
+              image="/media/curriculum.jpg"
+              kicker="Established"
+              title="Running"
+              body="At least one internal event and at least ten active members."
+            />
+            <PhotoTile
+              href="/chapters/status"
+              image="/media/compete.jpg"
+              kicker="Flagship-Eligible"
+              title="Competing"
+              body="The chapter has entered a regional competition and can send teams onward."
+            />
+          </div>
         </div>
       </section>
+
       <section className="band band--paper" id="qr">
-        <div className="container-ml">
-          <h2 className="text-3xl font-semibold">How members join</h2>
-          <p className="mt-3 max-w-2xl text-muted">
-            Each chapter receives a unique chapter identifier. The QR code
-            points to a chapter-specific join page. It never contains private
-            credentials. Advisors then invite students and approve the roster.
-          </p>
-        </div>
-      </section>
-      <section className="band" id="reactivate">
-        <div className="container-ml">
-          <h2 className="text-3xl font-semibold">Reactivate a chapter</h2>
-          <p className="mt-3 max-w-2xl text-muted">
-            Chapters that have gone inactive can be reactivated rather than
-            started from scratch. Reactivation keeps the chapter history and
-            name. Status is earned again from the work in front of you.
-          </p>
-          <div className="mt-6">
-            <ButtonLink href={actionHref("reactivateChapter", "Chapter Reactivation")}>
-              Reactivate this chapter
-            </ButtonLink>
+        <div className="container-ml grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <img src="/media/clinical.jpg" alt="" className="h-72 w-full rounded-[var(--radius)] object-cover" />
+          <div>
+            <p className="kicker">How members join</p>
+            <h2>A chapter QR. Then an advisor invite.</h2>
+            <p className="mt-4 max-w-2xl text-muted">
+              Each chapter receives a unique chapter identifier. The QR code
+              points to a chapter-specific join page. It never contains private
+              credentials. Advisors then invite students and approve the roster.
+            </p>
           </div>
         </div>
       </section>

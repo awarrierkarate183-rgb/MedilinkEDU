@@ -1,20 +1,27 @@
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+
 export function PageHero({
   kicker,
   title,
   lead,
   children,
+  image,
 }: {
   kicker?: string;
-  title: React.ReactNode;
+  title: ReactNode;
   lead?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
+  image?: string;
 }) {
   return (
-    <section className="relative overflow-hidden bg-navy text-white">
+    <section className={cn("photo-hero photo-hero--page", !image && "bg-navy")}>
+      {image ? <img src={image} alt="" className="photo-hero__image" /> : null}
+      <div className="photo-hero__shade" />
       <div className="container-ml relative pb-16 pt-[calc(var(--header-h)+4.25rem)]">
         {kicker ? <p className="kicker">{kicker}</p> : null}
         <h1 className="display max-w-4xl">{title}</h1>
-        {lead ? <p className="lead mt-5 text-white/75">{lead}</p> : null}
+        {lead ? <p className="lead mt-5 max-w-2xl text-white/80">{lead}</p> : null}
         {children ? <div className="mt-8 flex flex-wrap gap-3">{children}</div> : null}
       </div>
     </section>

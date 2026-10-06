@@ -102,12 +102,20 @@ h3 {
 
 .hero-wordmark {
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(4.2rem, 11vw, 8.4rem);
+  font-size: clamp(2.8rem, 8.8vw, 7.2rem);
   font-weight: 700;
   font-style: italic;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  filter: drop-shadow(0 18px 36px rgba(201, 162, 39, 0.28));
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  filter: drop-shadow(0 12px 28px rgba(201, 162, 39, 0.16));
+}
+
+.hero-line {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(1.7rem, 2.8vw, 2.45rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 .tab-heading {
@@ -173,6 +181,194 @@ h3 {
 .grid-cards {
   display: grid;
   gap: 1.1rem;
+}
+
+.photo-hero {
+  position: relative;
+  min-height: 86vh;
+  overflow: hidden;
+  background: var(--navy);
+  color: #fff;
+}
+
+.photo-hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-hero__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7, 21, 37, 0.58) 0%, rgba(7, 21, 37, 0.22) 46%, rgba(7, 21, 37, 0.08) 100%),
+    linear-gradient(180deg, rgba(7, 21, 37, 0.16) 0%, rgba(7, 21, 37, 0.06) 38%, rgba(7, 21, 37, 0.7) 100%);
+}
+
+.photo-hero--page {
+  min-height: 52vh;
+}
+
+.color-widgets {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 900px) {
+  .color-widgets {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.color-widget {
+  display: flex;
+  min-height: 7.5rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  padding: 1.15rem 1.1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.25;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.color-widget:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.06);
+}
+
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: #d4c4aa;
+  border: 1px solid #d4c4aa;
+}
+
+@media (min-width: 800px) {
+  .stat-strip {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.stat-strip__item {
+  background: var(--cream-card);
+  padding: 1.35rem 1.1rem;
+}
+
+.stat-strip__value {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--navy);
+}
+
+.stat-strip__label {
+  margin-top: 0.45rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.photo-tile {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--navy);
+  color: #fff;
+  min-height: 22rem;
+  position: relative;
+}
+
+.photo-tile__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.photo-tile:hover .photo-tile__image {
+  transform: scale(1.04);
+}
+
+.photo-tile__copy {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 1.4rem 1.3rem 1.3rem;
+  background: linear-gradient(180deg, transparent, rgba(7, 21, 37, 0.92));
+}
+
+.photo-tile__copy h3 {
+  margin-top: 0.25rem;
+  font-size: 1.35rem;
+}
+
+.photo-tile__copy p:last-child {
+  margin-top: 0.4rem;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.92rem;
+}
+
+.split-feature {
+  display: grid;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--navy);
+  color: #fff;
+  min-height: 22rem;
+}
+
+@media (min-width: 860px) {
+  .split-feature {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+  .split-feature--reverse {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+  .split-feature--reverse .split-feature__image {
+    order: 2;
+  }
+}
+
+.split-feature__image {
+  width: 100%;
+  height: 100%;
+  min-height: 16rem;
+  object-fit: cover;
+}
+
+.split-feature__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.split-feature__copy h3 {
+  margin-top: 0.4rem;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+}
+
+.split-feature__copy p {
+  margin-top: 0.8rem;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.split-feature__action {
+  margin-top: 1.3rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
 @media (min-width: 720px) {

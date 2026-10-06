@@ -37,9 +37,9 @@ const paths: Record<NavIconName, string> = {
   calendar: "M7 5v2M17 5v2M5 9h14M6 7h12v12H6z",
 };
 
-export function NavIcon({ name }: { name: NavIconName }) {
+export function NavIcon({ name, className }: { name: NavIconName; className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-gold" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className={className || "h-5 w-5 shrink-0 text-gold"} fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <path d={paths[name]} strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );

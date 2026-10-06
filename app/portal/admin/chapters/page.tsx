@@ -12,7 +12,7 @@ export default async function AdminChaptersPage() {
   const { data: chapters, error } = await supabase
     .from("chapters")
     .select(
-      "id, name, school, city, state, status, chapter_code, join_code, created_at, chapter_applications(advisor_first_name, advisor_last_name, advisor_email, advisor_phone, advisor_title, principal_name, estimated_students, statement, created_at, review_status, last_sign_in_attempt_at)",
+      "id, name, school, city, state, status, chapter_code, join_code, created_at, chapter_applications(advisor_first_name, advisor_last_name, advisor_email, advisor_phone, advisor_title, principal_name, estimated_students, statement, created_at, review_status, request_type, last_sign_in_attempt_at)",
     )
     .order("created_at", { ascending: false });
 
@@ -23,8 +23,9 @@ export default async function AdminChaptersPage() {
       <div>
         <h2 className="text-xl font-semibold">Chapters</h2>
         <p className="mt-1 text-sm text-muted">
-          New Start a Chapter forms land here as requests. Accept one to open
-          the advisor portal and student roster tools for that school.
+          New Start a Chapter and Reactivate a Chapter forms land here as
+          requests. Accept one to open the advisor portal and student roster
+          tools for that school.
         </p>
       </div>
       {!chapters?.length ? (
@@ -45,7 +46,10 @@ export default async function AdminChaptersPage() {
               <li key={chapter.id} className="rounded-[var(--radius)] bg-white p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <p className="kicker">{chapter.chapter_code}</p>
+                    <p className="kicker">
+                      {chapter.chapter_code}
+                      {application?.request_type === "REACTIVATE" ? " · Reactivation" : ""}
+                    </p>
                     <h3 className="text-lg font-semibold">{chapter.school}</h3>
                     <p className="text-sm text-muted">
                       {[chapter.city, chapter.state].filter(Boolean).join(", ")} · {chapter.status}

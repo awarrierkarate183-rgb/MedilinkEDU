@@ -1,4 +1,8 @@
-/** Geographic centers of U.S. states. Used to place chapter pins by recorded state, not a street address. */
+import { MAP_HEIGHT, MAP_OFFSET, MAP_WIDTH, STATE_SHAPES } from "@/lib/content/us-state-shapes";
+
+export { MAP_HEIGHT, MAP_OFFSET, MAP_WIDTH, STATE_SHAPES };
+
+/** Geographic centers of U.S. states. Used only as a fallback if a shape is missing. */
 export const STATE_CENTERS: Record<string, { lat: number; lng: number }> = {
   Alabama: { lat: 32.81, lng: -86.79 },
   Alaska: { lat: 64.07, lng: -152.28 },
@@ -53,9 +57,6 @@ export const STATE_CENTERS: Record<string, { lat: number; lng: number }> = {
   Wyoming: { lat: 43.0, lng: -107.55 },
 };
 
-export const MAP_WIDTH = 360;
-export const MAP_HEIGHT = 230;
-
 export function stateCenter(state: string | null | undefined) {
   if (!state) return null;
   return STATE_CENTERS[state] || null;
@@ -76,12 +77,17 @@ export function projectState(lat: number, lng: number) {
 }
 
 export function chapterPin(state: string | null | undefined, indexInState: number, stateCount: number) {
-  const center = stateCenter(state);
-  if (!center) return null;
-  const point = projectState(center.lat, center.lng);
+  const shape = state ? STATE_SHAPES[state] : null;
+  const point = shape
+    ? { x: shape.cx, y: shape.cy }
+    : (() => {
+        const center = stateCenter(state);
+        return center ? projectState(center.lat, center.lng) : null;
+      })();
+  if (!point) return null;
   if (stateCount <= 1) return point;
   const angle = (indexInState / stateCount) * Math.PI * 2 - Math.PI / 2;
-  const radius = 16;
+  const radius = 10;
   return {
     x: point.x + Math.cos(angle) * radius,
     y: point.y + Math.sin(angle) * radius,

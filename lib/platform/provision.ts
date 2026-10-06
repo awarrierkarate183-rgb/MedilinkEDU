@@ -22,6 +22,10 @@ export type StartChapterInput = {
   password: string;
 };
 
+export type ReactivateChapterInput = StartChapterInput & {
+  chapterCode?: string;
+};
+
 export type AddStudentInput = {
   firstName: string;
   lastName: string;
@@ -238,6 +242,7 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
     estimated_students: input.estimatedStudents ?? null,
     statement: input.statement?.trim() || "",
     review_status: "PENDING",
+    request_type: "START",
   });
   if (applicationError) {
     await admin.auth.admin.deleteUser(created.user.id);
@@ -266,6 +271,162 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
     email,
     password,
     school,
+    chapterCode: chapter.chapter_code,
+    loginUrl: `${siteUrl()}/portal/login`,
+  };
+}
+
+export async function reactivateChapter(admin: Admin, input: ReactivateChapterInput) {
+  const school = input.schoolName.trim();
+  const city = input.city.trim();
+  const state = input.state.trim();
+  const code = input.chapterCode?.trim().toUpperCase() || "";
+
+  let chapterQuery = admin
+    .from("chapters")
+    .select("id, school, city, state, status, chapter_code, advisor_id")
+    .limit(1);
+  if (code) {
+    chapterQuery = chapterQuery.eq("chapter_code", code);
+  } else {
+    chapterQuery = chapterQuery.ilike("school", school).ilike("city", city).ilike("state", state);
+  }
+  const { data: chapter } = await chapterQuery.maybeSingle();
+  if (!chapter) {
+    return {
+      error:
+        "No MediLink chapter is recorded for that school. Use Start a Chapter if this is a new campus.",
+    };
+  }
+  if (["PENDING_APPROVAL", "PROPOSED"].includes(chapter.status)) {
+    return { error: "That school already has a request waiting for review." };
+  }
+  if (chapter.status !== "INACTIVE") {
+    return {
+      error: "That chapter is already active. Sign in or write MediLink if you need advisor access.",
+    };
+  }
+
+  const { data: pending } = await admin
+    .from("chapter_applications")
+    .select("id")
+    .eq("chapter_id", chapter.id)
+    .eq("review_status", "PENDING")
+    .maybeSingle();
+  if (pending) {
+    return { error: "That chapter already has a reactivation request waiting for review." };
+  }
+
+  const email = input.advisorEmail.trim().toLowerCase();
+  const { data: existingProfile } = await admin
+    .from("profiles")
+    .select("id, role, chapter_id")
+    .ilike("email", email)
+    .maybeSingle();
+
+  let advisorId = existingProfile?.id || "";
+  if (existingProfile) {
+    const sameChapterAdvisor =
+      existingProfile.role === "CHAPTER_ADVISOR" && existingProfile.chapter_id === chapter.id;
+    if (!sameChapterAdvisor) {
+      return { error: "That email already has a MediLink account. Sign in or use a different email." };
+    }
+    const { error: passwordError } = await admin.auth.admin.updateUserById(existingProfile.id, {
+      password: input.password,
+    });
+    if (passwordError) return { error: "The advisor password could not be updated. Try again." };
+    const profileError = await ensureProfile(admin, existingProfile.id, {
+      email,
+      firstName: input.advisorFirstName.trim(),
+      lastName: input.advisorLastName.trim(),
+      role: "CHAPTER_ADVISOR",
+      chapterId: chapter.id,
+      status: "PENDING",
+      advisorStatus: "PENDING",
+    });
+    if (profileError) return { error: "The advisor profile could not be updated. Try again." };
+  } else {
+    const { data: created, error: userError } = await admin.auth.admin.createUser({
+      email,
+      password: input.password,
+      email_confirm: true,
+      user_metadata: {
+        first_name: input.advisorFirstName.trim(),
+        last_name: input.advisorLastName.trim(),
+        full_name: `${input.advisorFirstName.trim()} ${input.advisorLastName.trim()}`.trim(),
+      },
+      app_metadata: { role: "CHAPTER_ADVISOR" },
+    });
+    if (userError || !created.user) {
+      if (/already|exists|registered/i.test(userError?.message || "")) {
+        return { error: "That email already has a MediLink account. Sign in or use a different email." };
+      }
+      return { error: "The advisor account could not be created. Try again." };
+    }
+    advisorId = created.user.id;
+    const profileError = await ensureProfile(admin, created.user.id, {
+      email,
+      firstName: input.advisorFirstName.trim(),
+      lastName: input.advisorLastName.trim(),
+      role: "CHAPTER_ADVISOR",
+      chapterId: chapter.id,
+      status: "PENDING",
+      advisorStatus: "PENDING",
+    });
+    if (profileError) {
+      await admin.auth.admin.deleteUser(created.user.id);
+      return { error: "The advisor profile could not be finished. Try again." };
+    }
+  }
+
+  await admin.from("chapters").update({
+    status: "PENDING_APPROVAL",
+    public_visibility: false,
+    advisor_id: advisorId,
+  }).eq("id", chapter.id);
+
+  const { error: applicationError } = await admin.from("chapter_applications").insert({
+    chapter_id: chapter.id,
+    advisor_profile_id: advisorId,
+    school_name: school,
+    city,
+    state,
+    advisor_first_name: input.advisorFirstName.trim(),
+    advisor_last_name: input.advisorLastName.trim(),
+    advisor_email: email,
+    advisor_phone: input.advisorPhone?.trim() || "",
+    advisor_title: input.advisorTitle?.trim() || "",
+    principal_name: input.principalName?.trim() || "",
+    estimated_students: input.estimatedStudents ?? null,
+    statement: input.statement?.trim() || "",
+    review_status: "PENDING",
+    request_type: "REACTIVATE",
+  });
+  if (applicationError) {
+    await admin.from("chapters").update({ status: "INACTIVE", public_visibility: false }).eq("id", chapter.id);
+    return { error: "The reactivation request could not be stored. Try again." };
+  }
+
+  await writeAudit(admin, advisorId, "chapter.reactivation_requested", "chapter", chapter.id, {
+    school: chapter.school,
+    chapter_code: chapter.chapter_code,
+  });
+  await notifyAdmins(
+    admin,
+    "chapter_reactivation",
+    "Chapter reactivation request",
+    `${input.advisorFirstName.trim()} ${input.advisorLastName.trim()} asked to reactivate ${chapter.school}.`,
+  );
+  await sendTransactionalEmail({
+    to: email,
+    subject: "Your MediLink chapter reactivation request",
+    text: `Your request to reactivate ${chapter.school} is in. Sign in at ${siteUrl()}/portal/login. An administrator still has to accept the chapter before you can add students.`,
+    template: "advisor_invitation",
+  });
+
+  return {
+    email,
+    school: chapter.school,
     chapterCode: chapter.chapter_code,
     loginUrl: `${siteUrl()}/portal/login`,
   };

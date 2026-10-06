@@ -21,7 +21,7 @@ export default async function ChaptersPage() {
       lead="Use the Chapters dropdown for start, advisors, status, and support. The map below shows accepted schools only."
     >
       <section className="band band--paper">
-        <div className="container-ml">
+        <div className="mx-auto w-full max-w-[1500px] px-6 lg:px-10">
           <ChapterExplorer chapters={chapters} />
         </div>
       </section>

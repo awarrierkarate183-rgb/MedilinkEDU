@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generatePortalPassword, generatePublicCode, slugFromName } from "../lib/auth/passwords";
-import { addStudentSchema, startChapterSchema } from "../lib/api/schemas";
+import { addStudentSchema, reactivateChapterSchema, startChapterSchema } from "../lib/api/schemas";
 import { studentInviteMessage } from "../lib/email/student-invite";
 import { smtpFromEnv } from "../lib/email/config";
 
@@ -116,5 +116,23 @@ describe("chapter automation helpers", () => {
       highSchool: "no",
     });
     expect(parsed.success).toBe(false);
+  });
+
+  it("accepts a complete chapter reactivation request", () => {
+    const parsed = reactivateChapterSchema.safeParse({
+      schoolName: "Lincoln High School",
+      city: "Charlotte",
+      state: "North Carolina",
+      chapterCode: "ML-ABCDEF",
+      advisorFirstName: "Ada",
+      advisorLastName: "Advisor",
+      advisorEmail: "ada.advisor@example.com",
+      statement: "The chapter paused last year and students want it back.",
+      password: "ChapterPass12",
+      confirmPassword: "ChapterPass12",
+      highSchool: "yes",
+      website: "",
+    });
+    expect(parsed.success).toBe(true);
   });
 });

@@ -312,8 +312,8 @@ export const sectionArticles: SectionArticle[] = [
       },
     ],
     actions: [
-      { href: "/chapter-support", label: "Chapter resources" },
-      { href: "/get-involved/contact", label: "Write MediLink", variant: "outline" },
+      { href: "/start-a-chapter/reactivate", label: "Reactivate a chapter" },
+      { href: "/chapter-support", label: "Chapter resources", variant: "outline" },
     ],
   },
   {

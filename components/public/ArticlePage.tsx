@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { PageHero } from "@/components/public/PageHero";
+import { PhotoTile } from "@/components/public/widgets";
 import { ButtonLink } from "@/components/ui/Button";
 import { navTabByHref, type NavTab } from "@/lib/content/public-nav";
 
@@ -8,6 +9,29 @@ export type ArticleBlock = {
   heading: string;
   body: string[];
 };
+
+const HERO_BY_TAB: Record<string, string> = {
+  "/about": "/media/clinical.jpg",
+  "/chapters": "/media/chapter.jpg",
+  "/curriculum": "/media/curriculum.jpg",
+  "/competitions": "/media/compete.jpg",
+  "/get-involved": "/media/involved.jpg",
+  "/news": "/news/lake-norman-welcome.png",
+};
+
+const TILE_IMAGES = [
+  "/media/clinical.jpg",
+  "/media/financial.jpg",
+  "/media/technology.jpg",
+  "/media/chapter.jpg",
+  "/media/compete.jpg",
+  "/media/curriculum.jpg",
+];
+
+function heroFor(href: string) {
+  const root = `/${href.split("/").filter(Boolean)[0] || ""}`;
+  return HERO_BY_TAB[root] || "/media/hero.jpg";
+}
 
 export function ArticlePage({
   href,
@@ -25,7 +49,7 @@ export function ArticlePage({
   const tab = navTabByHref(href);
   return (
     <>
-      <PageHero kicker={tab?.label} title={title} lead={lead} />
+      <PageHero kicker={tab?.label} title={title} lead={lead} image={heroFor(href)} />
       <section className="band">
         <div className="container-ml grid gap-10 lg:grid-cols-[0.72fr_0.28fr]">
           <article className="space-y-10">
@@ -69,23 +93,20 @@ export function SectionHub({
 }) {
   return (
     <>
-      <PageHero kicker={tab.label} title={title} lead={lead} />
+      <PageHero kicker={tab.label} title={title} lead={lead} image={heroFor(tab.href)} />
       {children}
       <section className="band">
         <div className="container-ml">
           <p className="kicker">In this section</p>
-          <div className="mt-4 grid gap-x-10 gap-y-1 md:grid-cols-2">
+          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {tab.items.map((item, index) => (
-              <Link
+              <PhotoTile
                 key={item.href}
-                href={item.href as never}
-                className="flex items-center gap-3 border-b border-border py-3 text-sm font-semibold transition-colors hover:text-gold"
-              >
-                <span className="w-6 shrink-0 text-[0.65rem] font-semibold tracking-[0.14em] text-gold">
-                  0{index + 1}
-                </span>
-                <span>{item.label}</span>
-              </Link>
+                href={item.href}
+                image={TILE_IMAGES[index % TILE_IMAGES.length]}
+                kicker={`0${index + 1}`}
+                title={item.label}
+              />
             ))}
           </div>
         </div>
@@ -96,27 +117,30 @@ export function SectionHub({
 
 function SectionRail({ tab, current }: { tab: NavTab; current: string }) {
   return (
-    <aside className="h-fit rounded-[var(--radius)] bg-navy p-6 text-white lg:sticky lg:top-[calc(var(--header-h)+1.25rem)]">
-      <p className="kicker">{tab.kicker}</p>
-      <p className="tab-heading text-2xl">{tab.label}</p>
-      <p className="mt-3 text-sm text-white/70">{tab.blurb}</p>
-      <ul className="mt-6 space-y-3 text-sm">
-        <li>
-          <Link href={tab.href as never} className={current === tab.href ? "text-gold" : "text-white/80 hover:text-white"}>
-            Overview
-          </Link>
-        </li>
-        {tab.items.map((item) => (
-          <li key={item.href}>
-            <Link
-              href={item.href as never}
-              className={current === item.href ? "text-gold" : "text-white/80 hover:text-white"}
-            >
-              {item.label}
+    <aside className="h-fit overflow-hidden rounded-[var(--radius)] bg-navy text-white lg:sticky lg:top-[calc(var(--header-h)+1.25rem)]">
+      <img src={heroFor(tab.href)} alt="" className="h-28 w-full object-cover opacity-70" />
+      <div className="p-6">
+        <p className="kicker">{tab.kicker}</p>
+        <p className="tab-heading text-2xl">{tab.label}</p>
+        <p className="mt-3 text-sm text-white/70">{tab.blurb}</p>
+        <ul className="mt-6 space-y-3 text-sm">
+          <li>
+            <Link href={tab.href as never} className={current === tab.href ? "text-gold" : "text-white/80 hover:text-white"}>
+              Overview
             </Link>
           </li>
-        ))}
-      </ul>
+          {tab.items.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href as never}
+                className={current === item.href ? "text-gold" : "text-white/80 hover:text-white"}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </aside>
   );
 }
