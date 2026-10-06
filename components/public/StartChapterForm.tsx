@@ -12,7 +12,7 @@ type Created = {
 };
 
 const field =
-  "mt-1 w-full rounded-md border border-border bg-white px-3 py-3 font-normal text-navy";
+  "mt-1 w-full rounded-md border border-border bg-cream-card px-3 py-3 font-normal text-navy";
 
 export function StartChapterForm() {
   const [error, setError] = useState<string | null>(null);
@@ -66,7 +66,7 @@ export function StartChapterForm() {
   if (created) {
     return (
       <div className="flex min-h-[calc(100vh-var(--header-h))] items-center justify-center px-4 py-16">
-        <div className="w-full max-w-xl rounded-[var(--radius)] bg-white p-8 text-navy">
+        <div className="w-full max-w-xl rounded-[var(--radius)] bg-cream-card p-8 text-navy">
           <Alert title="Request received" tone="navy">
             {created.school} is waiting for an administrator to accept it. Sign
             in with the email you chose. The advisor tools open only after
@@ -134,7 +134,7 @@ export function StartChapterForm() {
             </Alert>
           ) : null}
 
-          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+          <section className="rounded-[var(--radius)] bg-cream-card p-6 text-navy md:p-8">
             <p className="kicker">School</p>
             <h2 className="mt-2 text-2xl font-semibold">Where will this chapter meet?</h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -170,7 +170,7 @@ export function StartChapterForm() {
             </div>
           </section>
 
-          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+          <section className="rounded-[var(--radius)] bg-cream-card p-6 text-navy md:p-8">
             <p className="kicker">Advisor</p>
             <h2 className="mt-2 text-2xl font-semibold">Who will run the chapter?</h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -203,7 +203,7 @@ export function StartChapterForm() {
             </div>
           </section>
 
-          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+          <section className="rounded-[var(--radius)] bg-cream-card p-6 text-navy md:p-8">
             <p className="kicker">Portal password</p>
             <h2 className="mt-2 text-2xl font-semibold">Choose your login password</h2>
             <p className="mt-2 text-sm text-muted">
@@ -236,7 +236,7 @@ export function StartChapterForm() {
             </div>
           </section>
 
-          <section className="rounded-[var(--radius)] bg-white p-6 text-navy md:p-8">
+          <section className="rounded-[var(--radius)] bg-cream-card p-6 text-navy md:p-8">
             <p className="kicker">Chapter</p>
             <h2 className="mt-2 text-2xl font-semibold">Why this school wants MediLink</h2>
             <label className="mt-6 block text-sm font-semibold">

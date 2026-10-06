@@ -46,7 +46,7 @@ export function Accordion({
             key={item.id}
             id={item.id}
             className={cn(
-              "overflow-hidden rounded-[var(--radius)] border bg-white transition-shadow duration-300",
+              "overflow-hidden rounded-[var(--radius)] border bg-[var(--card-bg,#ffffff)] transition-shadow duration-300",
               item.prestige === 3
                 ? "border-gold/50 bg-navy text-white"
                 : item.prestige === 2

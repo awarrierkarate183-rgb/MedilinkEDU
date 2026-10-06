@@ -13,7 +13,7 @@ export function Card({
     <article
       id={id}
       className={cn(
-        "rounded-[var(--radius)] border border-border bg-white p-6 shadow-[var(--shadow)]",
+        "rounded-[var(--radius)] border border-border bg-[var(--card-bg,#ffffff)] p-6 shadow-[var(--shadow)]",
         className,
       )}
     >

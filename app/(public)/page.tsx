@@ -146,7 +146,7 @@ export default async function HomePage() {
           </div>
           <ol className="grid gap-4 md:grid-cols-6">
             {experienceSteps.map((step, index) => (
-              <li key={step.title} className="rounded-[var(--radius)] border border-border bg-white/90 p-4">
+              <li key={step.title} className="rounded-[var(--radius)] border border-border bg-cream-card/90 p-4">
                 <p className="kicker">0{index + 1}</p>
                 <h3 className="font-semibold">{step.title}</h3>
                 <p className="mt-2 text-sm text-muted">{step.body}</p>
@@ -176,8 +176,8 @@ export default async function HomePage() {
                   event.prestige === 3
                     ? "border-gold/40 bg-navy text-white"
                     : event.prestige === 2
-                      ? "border-navy/20 bg-white/90"
-                      : "border-border bg-white/90"
+                      ? "border-navy/20 bg-cream-card/90"
+                      : "border-border bg-cream-card/90"
                 }`}
               >
                 <p className={`kicker ${event.prestige === 3 ? "text-gold" : ""}`}>
@@ -202,7 +202,7 @@ export default async function HomePage() {
           </div>
           <div className="grid-cards cols-2">
             {tracks.map((track) => (
-              <Card key={track.id} className="bg-white/90">
+              <Card key={track.id} className="bg-cream-card/90">
                 <p className="kicker">Track {track.number}</p>
                 <h3 className="text-xl font-semibold">{track.name}</h3>
                 <p className="mt-2 text-sm text-muted">{track.summary}</p>
@@ -235,7 +235,7 @@ export default async function HomePage() {
             </p>
           </div>
           {schoolCount === 0 ? (
-            <div className="rounded-[var(--radius)] border border-dashed border-border bg-white/90 p-8">
+            <div className="rounded-[var(--radius)] border border-dashed border-border bg-cream-card/90 p-8">
               <p className="font-semibold">Confirmed school chapters will appear here.</p>
               <p className="mt-2 max-w-2xl text-sm text-muted">
                 MediLink currently lists {states.length} state networks:{" "}
@@ -290,7 +290,7 @@ export default async function HomePage() {
             <h2>Three ways in.</h2>
           </div>
           <div className="grid-cards cols-3">
-            <Card className="bg-white/90">
+            <Card className="bg-cream-card/90">
               <h3 className="text-lg font-semibold">Start a chapter</h3>
               <p className="mt-2 text-sm text-muted">
                 For schools and educators ready to charter a high school chapter.
@@ -301,7 +301,7 @@ export default async function HomePage() {
                 </ButtonLink>
               </p>
             </Card>
-            <Card className="bg-white/90">
+            <Card className="bg-cream-card/90">
               <h3 className="text-lg font-semibold">Partner with MediLink</h3>
               <p className="mt-2 text-sm text-muted">
                 Hospitals, insurers, health-tech firms, universities, and community groups.
@@ -312,7 +312,7 @@ export default async function HomePage() {
                 </ButtonLink>
               </p>
             </Card>
-            <Card className="bg-white/90">
+            <Card className="bg-cream-card/90">
               <h3 className="text-lg font-semibold">Support students</h3>
               <p className="mt-2 text-sm text-muted">
                 Sponsor chapters and events, or volunteer as a mentor or judge.

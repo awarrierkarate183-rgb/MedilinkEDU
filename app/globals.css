@@ -7,6 +7,9 @@
   --gold: #c9a227;
   --gold-hover: #b8921f;
   --gold-soft: #f6efd8;
+  --cream: #fcf9f4;
+  --beige: #f7f2e8;
+  --cream-card: #fffdf9;
   --white: #ffffff;
   --background: #ffffff;
   --surface: #f3f4f6;
@@ -28,6 +31,9 @@
   --color-gold: var(--gold);
   --color-gold-hover: var(--gold-hover);
   --color-gold-soft: var(--gold-soft);
+  --color-cream: var(--cream);
+  --color-beige: var(--beige);
+  --color-cream-card: var(--cream-card);
   --color-ml-white: var(--white);
   --color-background: var(--background);
   --color-surface: var(--surface);
@@ -107,6 +113,14 @@ h3 {
 .tab-heading {
   font-family: var(--font-fraunces), Georgia, serif;
   font-weight: 600;
+}
+
+.public-site {
+  --background: var(--cream);
+  --surface: var(--beige);
+  --border: #e8e0d2;
+  --card-bg: var(--cream-card);
+  background: var(--cream);
 }
 
 .public-site h1,

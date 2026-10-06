@@ -35,7 +35,7 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b bg-white",
+        "fixed inset-x-0 top-0 z-50 border-b bg-beige",
         openTab || mobileOpen ? "border-border shadow-sm" : "border-transparent shadow-sm",
       )}
       onMouseLeave={() => setOpenTab(null)}
@@ -105,7 +105,7 @@ export function SiteHeader() {
       </div>
 
       {activeTab ? (
-        <div className="hidden border-t border-border bg-white lg:block">
+        <div className="hidden border-t border-border bg-cream lg:block">
           <div className="mx-auto grid w-full max-w-[1680px] gap-12 px-6 py-10 lg:grid-cols-[1.4fr_0.7fr] lg:px-12">
             <div className="space-y-8">
               {navGroups(activeTab).map((group) => (
@@ -146,7 +146,7 @@ export function SiteHeader() {
       ) : null}
 
       {mobileOpen ? (
-        <nav id="mobile-nav" className="border-t border-border bg-white px-4 pb-5 lg:hidden" aria-label="Mobile">
+        <nav id="mobile-nav" className="border-t border-border bg-cream px-4 pb-5 lg:hidden" aria-label="Mobile">
           {publicNav.map((tab) => (
             <div key={tab.href} className="border-b border-border">
               <div className="flex items-center justify-between">

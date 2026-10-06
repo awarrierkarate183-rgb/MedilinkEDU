@@ -62,7 +62,7 @@ export default function StartChapterPage() {
           <h2 className="text-3xl font-semibold">The same five offices in every chapter</h2>
           <ul className="mt-6 grid gap-3 md:grid-cols-2">
             {OFFICER_ROLES.map((role) => (
-              <li key={role} className="rounded-lg bg-white p-4 font-semibold">
+              <li key={role} className="rounded-lg bg-cream-card p-4 font-semibold">
                 {role}
               </li>
             ))}
