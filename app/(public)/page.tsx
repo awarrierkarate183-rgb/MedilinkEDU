@@ -22,7 +22,11 @@ export default async function HomePage() {
         <div className="photo-hero__shade" />
         <div className="relative mx-auto flex min-h-[86vh] w-full max-w-[1500px] flex-col justify-end px-6 pb-16 pt-[calc(var(--header-h)+3rem)] lg:px-14">
           <p className="kicker">Student-founded. High school only.</p>
-          <p className="hero-line mt-4 max-w-3xl">Healthcare is bigger than one discipline.</p>
+          <h1 className="hero-wordmark mt-3" aria-label="MediLink">
+            <span className="text-white">Medi</span>
+            <span className="text-gold">Link</span>
+          </h1>
+          <p className="hero-line mt-8 max-w-3xl">Healthcare is bigger than one discipline.</p>
           <p className="mt-5 max-w-xl text-lg font-medium text-white">
             A classroom chapter. Real students. Clinical, money, and tech in the same problem.
           </p>
