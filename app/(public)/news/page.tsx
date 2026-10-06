@@ -3,7 +3,6 @@ import { Accordion } from "@/components/ui/Accordion";
 import { PageHero } from "@/components/public/PageHero";
 import { NewsGallery } from "@/components/public/NewsGallery";
 import { PhotoCallout } from "@/components/public/PhotoCallout";
-import { chapterPhotos } from "@/lib/content/news";
 import { actionHref, CONTACT_EMAIL } from "@/lib/content/forms";
 
 export const metadata: Metadata = {
@@ -25,29 +24,8 @@ export default function NewsPage() {
         <div className="container-ml space-y-10">
           <NewsGallery />
           <Accordion
-            defaultOpen="photos"
+            defaultOpen="send-photos"
             items={[
-              {
-                id: "photos",
-                subtitle: "Published photos",
-                title: "Lake Norman Charter High School",
-                children: (
-                  <div className="space-y-4">
-                    <p>
-                      These three photographs are from the Lake Norman Charter
-                      High School MediLink chapter in Huntersville, North
-                      Carolina. They show a welcome slide, table conversation,
-                      and members reading printed materials. Student names are
-                      not listed here.
-                    </p>
-                    <ul className="space-y-2">
-                      {chapterPhotos.map((photo) => (
-                        <li key={photo.src}>{photo.caption}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ),
-              },
               {
                 id: "send-photos",
                 subtitle: "What we want",
