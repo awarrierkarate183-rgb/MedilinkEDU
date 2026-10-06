@@ -90,7 +90,7 @@ export function CompetitionDesk(props: Props) {
         <h2 className="text-xl font-semibold">Competitions</h2>
         <p className="mt-1 text-sm text-muted">
           Season {props.seasonLabel || "not opened"}. Normal Events cap at six.
-          Legacy uses eight students, two groups of four, one group per event.
+          Legacy uses eight students, two groups of up to four, one group per event.
         </p>
       </div>
       {error ? <Alert title="Not saved" tone="danger">{error}</Alert> : null}
@@ -205,7 +205,7 @@ export function CompetitionDesk(props: Props) {
         <p className="mt-1 text-sm text-muted">
           {props.rosterLocked
             ? "This season roster is locked. Only a documented exception can change it."
-            : "Eight students, two groups of four. One group may enter any given Legacy event."}
+            : "Eight students, two groups of up to four. One group may enter any given Legacy event."}
         </p>
         {props.mode === "student" ? (
           <p className="mt-3 text-sm">

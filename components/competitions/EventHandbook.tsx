@@ -1,10 +1,12 @@
 import {
-  HANDBOOK_PDF,
-  handbookRubricBody,
-  integrityRules,
-  universalScoring,
-  type NormalHandbookEntry,
-} from "@/lib/content/normal-event-handbook";
+  getEventHandbook,
+  handbookPdf,
+  handbookPdfLabel,
+  handbookRubric,
+  handbookRules,
+  handbookScoring,
+  type AnyHandbook,
+} from "@/lib/content/event-handbook";
 
 export function EventHandbook({
   event,
@@ -13,13 +15,15 @@ export function EventHandbook({
   filePath,
   compact = false,
 }: {
-  event: NormalHandbookEntry;
+  event: AnyHandbook;
   instructionsOverride?: { title: string; body: string; filePath: string | null } | null;
   rubricOverride?: { title: string; body: string; filePath: string | null } | null;
   filePath?: string | null;
   compact?: boolean;
 }) {
-  const attached = filePath || instructionsOverride?.filePath || rubricOverride?.filePath || HANDBOOK_PDF;
+  const attached = filePath || instructionsOverride?.filePath || rubricOverride?.filePath || handbookPdf(event.id);
+  const legacy = "whyLegacy" in event;
+  const officialRubric = handbookRubric(event);
   return (
     <div className="space-y-5 text-sm">
       <div className="grid gap-3 md:grid-cols-2">
@@ -30,8 +34,24 @@ export function EventHandbook({
       </div>
       <div>
         <p className="kicker">What you do</p>
-        <p className="mt-1 whitespace-pre-wrap">{instructionsOverride?.body || event.overview}</p>
+        <p className="mt-1 whitespace-pre-wrap">{event.overview}</p>
       </div>
+      {legacy && !compact ? (
+        <>
+          <div>
+            <p className="kicker">Why this event is Legacy-level</p>
+            <p className="mt-1">{event.whyLegacy}</p>
+          </div>
+          <div>
+            <p className="kicker">Core decision layers</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              {event.decisionLayers.map((layer) => (
+                <li key={layer}>{layer}</li>
+              ))}
+            </ul>
+          </div>
+        </>
+      ) : null}
       {!compact ? (
         <>
           <div>
@@ -49,9 +69,9 @@ export function EventHandbook({
         </>
       ) : null}
       <div>
-        <p className="kicker">{rubricOverride?.title || "Event rubric. 100 points."}</p>
-        <p className="mt-1 text-muted">{universalScoring}</p>
-        {rubricOverride?.body && rubricOverride.body !== handbookRubricBody(event) ? (
+        <p className="kicker">{rubricOverride?.title || (legacy ? "Championship rubric. 100 points." : "Event rubric. 100 points.")}</p>
+        <p className="mt-1 text-muted">{handbookScoring(event)}</p>
+        {rubricOverride?.body && rubricOverride.body !== officialRubric ? (
           <p className="mt-2 whitespace-pre-wrap">{rubricOverride.body}</p>
         ) : (
           <table className="mt-3 w-full text-left">
@@ -76,11 +96,29 @@ export function EventHandbook({
         <p className="kicker">Student success standard</p>
         <p className="mt-1">{event.success}</p>
       </div>
+      {legacy && !compact ? (
+        <>
+          <div>
+            <p className="kicker">Annual expansion</p>
+            <p className="mt-1">{event.annualExpansion}</p>
+          </div>
+          <div>
+            <p className="kicker">Round difficulty</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              {event.escalation.map((row) => (
+                <li key={row.round}>
+                  <strong>{row.round}.</strong> {row.design}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      ) : null}
       {!compact ? (
         <div>
           <p className="kicker">Rules and boundaries</p>
           <ul className="mt-2 list-disc space-y-1 pl-5">
-            {integrityRules.map((rule) => (
+            {handbookRules(event).map((rule) => (
               <li key={rule}>{rule}</li>
             ))}
             {(event.extraRules || []).map((rule) => (
@@ -92,10 +130,14 @@ export function EventHandbook({
       {attached ? (
         <p>
           <a href={attached} className="font-semibold underline" target="_blank" rel="noreferrer">
-            Open the Normal Events handbook
+            {handbookPdfLabel(event.id)}
           </a>
         </p>
       ) : null}
     </div>
   );
+}
+
+export function handbookForId(id: string) {
+  return getEventHandbook(id);
 }

@@ -47,8 +47,10 @@ export function assertLegacyEntry(eventId: string, alreadyEntered: boolean, grou
   const event = getCatalogEvent(eventId);
   if (!event || event.tier !== "LEGACY") return "That event is not a Legacy Event.";
   if (alreadyEntered) return "This chapter already entered one group in that Legacy event.";
-  if (groupSize !== LEGACY_GROUP_SIZE) {
-    return `That Legacy group must have ${LEGACY_GROUP_SIZE} students before it can enter.`;
+  const min = event.minTeamSize;
+  const max = event.maxTeamSize;
+  if (groupSize < min || groupSize > max) {
+    return `That Legacy group must have ${min} to ${max} students before it can enter.`;
   }
   return null;
 }

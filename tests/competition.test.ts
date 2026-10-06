@@ -9,6 +9,7 @@ import {
   matchRosterNames,
 } from "../lib/competition/rules";
 import { normalEventHandbook } from "../lib/content/normal-event-handbook";
+import { legacyEventHandbook } from "../lib/content/legacy-event-handbook";
 import {
   legacyAdvancesFromRegional,
   legacyAdvancesFromState,
@@ -39,8 +40,8 @@ describe("competition rules", () => {
 
   it("blocks two groups in the same Legacy event and a fifth group member", () => {
     expect(assertLegacyGroups(["a", "b", "c", "d", "e"], [])).toMatch(/at most 4/);
-    expect(assertLegacyEntry("the-meridian-hearing", true, 4)).toMatch(/already entered/);
-    expect(assertLegacyEntry("the-meridian-hearing", false, 3)).toMatch(/4 students/);
+    expect(assertLegacyEntry("the-atlas-docket", true, 4)).toMatch(/already entered/);
+    expect(assertLegacyEntry("the-atlas-docket", false, 1)).toMatch(/2 to 4 students/);
   });
 
   it("matches roster names and rejects unknown students", () => {
@@ -100,6 +101,20 @@ describe("competition scoring", () => {
     for (const event of normalEventHandbook) {
       expect(event.rubric.reduce((sum, row) => sum + row.points, 0)).toBe(100);
       expect(event.role).toBeTruthy();
+      expect(event.mechanic).toBeTruthy();
+    }
+  });
+
+  it("keeps five final Legacy championship events at 100 points", () => {
+    expect(legacyEventHandbook.map((event) => event.id)).toEqual([
+      "the-atlas-docket",
+      "the-covenant-table",
+      "black-box-protocol",
+      "the-last-mile-accord",
+      "nightfall-command",
+    ]);
+    for (const event of legacyEventHandbook) {
+      expect(event.rubric.reduce((sum, row) => sum + row.points, 0)).toBe(100);
       expect(event.mechanic).toBeTruthy();
     }
   });

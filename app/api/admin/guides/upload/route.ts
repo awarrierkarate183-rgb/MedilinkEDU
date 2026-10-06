@@ -3,7 +3,7 @@ import { getRequestActor } from "@/lib/api/session";
 import { isAdminRole } from "@/lib/auth/roles";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { upsertEventGuide } from "@/lib/guides/operations";
-import { getNormalHandbook, handbookInstructionsBody, handbookRubricBody } from "@/lib/content/normal-event-handbook";
+import { getEventHandbook, handbookInstructions, handbookRubric } from "@/lib/content/event-handbook";
 
 export async function POST(request: Request) {
   const session = await getRequestActor();
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   const kind = form.get("kind") === "RUBRIC" ? "RUBRIC" : "INSTRUCTIONS";
   const file = form.get("file");
   if (!(file instanceof File) || !file.size) return errors.validation("Choose a document to upload.");
-  const handbook = getNormalHandbook(eventId);
+  const handbook = getEventHandbook(eventId);
   if (!handbook) return errors.validation("Choose a catalog event.");
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-").slice(0, 80);
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     eventId,
     kind,
     title: `${handbook.name} ${kind === "RUBRIC" ? "rubric" : "instructions"}`,
-    body: kind === "RUBRIC" ? handbookRubricBody(handbook) : handbookInstructionsBody(handbook),
+    body: kind === "RUBRIC" ? handbookRubric(handbook) : handbookInstructions(handbook),
     filePath,
     published: true,
   });

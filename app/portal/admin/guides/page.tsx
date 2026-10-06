@@ -4,6 +4,7 @@ import { ConnectionTrouble } from "@/components/portal/ConnectionTrouble";
 import { AdminGuideDesk } from "@/components/portal/AdminGuideDesk";
 import { listEventGuides } from "@/lib/guides/operations";
 import { normalEventHandbook } from "@/lib/content/normal-event-handbook";
+import { legacyEventHandbook } from "@/lib/content/legacy-event-handbook";
 
 export default async function AdminGuidesPage() {
   const { profile } = await requireRole(["SUPER_ADMIN", "STATE_ADMIN"]);
@@ -15,10 +16,10 @@ export default async function AdminGuidesPage() {
       <section className="rounded-[var(--radius)] bg-white p-5">
         <h2 className="text-xl font-semibold">Event guides</h2>
         <p className="mt-2 text-sm text-muted">
-          When an advisor or administrator enters a student in a Normal Event,
-          the student portal opens that event's official instructions and
-          100-point rubric. Publish the handbook once, then upload replacements
-          here any time.
+          When an advisor or administrator enters a student in a Normal or
+          Legacy Event, the student portal opens that event's official
+          instructions and 100-point rubric. Publish each handbook once, then
+          upload replacements here any time.
         </p>
       </section>
       <AdminGuideDesk />
@@ -33,16 +34,17 @@ export default async function AdminGuidesPage() {
             </tr>
           </thead>
           <tbody>
-            {normalEventHandbook.map((event) => {
+            {[
+              ...normalEventHandbook.map((event) => ({ ...event, label: `${event.number}. ${event.name}` })),
+              ...legacyEventHandbook.map((event) => ({ ...event, label: `L${event.number}. ${event.name}` })),
+            ].map((event) => {
               const instructions = guides.find(
                 (row) => row.catalog_event_id === event.id && row.kind === "INSTRUCTIONS",
               );
               const rubric = guides.find((row) => row.catalog_event_id === event.id && row.kind === "RUBRIC");
               return (
                 <tr key={event.id} className="border-t border-border">
-                  <td className="py-2 pr-3 font-semibold">
-                    {event.number}. {event.name}
-                  </td>
+                  <td className="py-2 pr-3 font-semibold">{event.label}</td>
                   <td className="py-2 pr-3">{instructions?.published ? "Published" : "Handbook fallback"}</td>
                   <td className="py-2">{rubric?.published ? "Published" : "Handbook fallback"}</td>
                 </tr>

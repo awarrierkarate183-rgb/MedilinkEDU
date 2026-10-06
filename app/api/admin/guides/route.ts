@@ -4,7 +4,7 @@ import { eventGuideSchema } from "@/lib/api/schemas";
 import { getRequestActor } from "@/lib/api/session";
 import { isAdminRole } from "@/lib/auth/roles";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { listEventGuides, publishNormalHandbook, upsertEventGuide } from "@/lib/guides/operations";
+import { listEventGuides, publishLegacyHandbook, publishNormalHandbook, upsertEventGuide } from "@/lib/guides/operations";
 
 export async function GET() {
   const session = await getRequestActor();
@@ -26,6 +26,11 @@ export async function POST(request: Request) {
   const raw = await readJson(request);
   if (raw && typeof raw === "object" && "publishHandbook" in raw) {
     const result = await publishNormalHandbook(admin, session.actor);
+    if ("error" in result && result.error) return errors.validation(result.error);
+    return apiSuccess(result);
+  }
+  if (raw && typeof raw === "object" && "publishLegacyHandbook" in raw) {
+    const result = await publishLegacyHandbook(admin, session.actor);
     if ("error" in result && result.error) return errors.validation(result.error);
     return apiSuccess(result);
   }

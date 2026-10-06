@@ -7,6 +7,11 @@ const ALIASES: Record<string, string> = {
   policy: "normal",
   research: "normal",
   nationals: "ladder",
+  "the-meridian-hearing": "the-atlas-docket",
+  "the-rural-lifeline-case": "the-covenant-table",
+  "project-onconova": "black-box-protocol",
+  "the-valuecare-arbitration": "the-last-mile-accord",
+  "operation-containment": "nightfall-command",
 };
 
 export function HashAliases() {

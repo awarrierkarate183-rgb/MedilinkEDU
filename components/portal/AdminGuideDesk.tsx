@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/States";
 import { normalEventHandbook } from "@/lib/content/normal-event-handbook";
+import { legacyEventHandbook } from "@/lib/content/legacy-event-handbook";
 
 const field = "mt-1 w-full rounded-md border border-border px-3 py-2 font-normal";
 
@@ -30,7 +31,7 @@ export function AdminGuideDesk() {
         setError(json.error.message);
         return;
       }
-      setOk("The Normal Events handbook is live. Assigned students now see instructions and rubrics.");
+      setOk("The handbook is live. Assigned students now see instructions and rubrics.");
       router.refresh();
     } catch {
       setError("The handbook could not be published. Try again.");
@@ -101,9 +102,42 @@ export function AdminGuideDesk() {
           same remotely when you type what is wrong.
         </p>
         <div className="mt-4">
-          <Button type="button" size="sm" loading={loading} onClick={publishHandbook}>
-            Publish Normal Events handbook
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button type="button" size="sm" loading={loading} onClick={publishHandbook}>
+              Publish Normal Events handbook
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              loading={loading}
+              onClick={async () => {
+                setError(null);
+                setOk(null);
+                setLoading(true);
+                try {
+                  const response = await fetch("/api/admin/guides", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ publishLegacyHandbook: true }),
+                  });
+                  const json = await response.json();
+                  if (json.error) {
+                    setError(json.error.message);
+                    return;
+                  }
+                  setOk("The Legacy Championship handbook is live on assigned student pages.");
+                  router.refresh();
+                } catch {
+                  setError("The Legacy handbook could not be published. Try again.");
+                } finally {
+                  setLoading(false);
+                }
+              }}
+            >
+              Publish Legacy handbook
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -134,11 +168,20 @@ export function AdminGuideDesk() {
               <option value="" disabled>
                 Choose the event
               </option>
-              {normalEventHandbook.map((event) => (
-                <option key={event.id} value={event.id}>
-                  {event.number}. {event.name}
-                </option>
-              ))}
+              <optgroup label="Normal Events">
+                {normalEventHandbook.map((event) => (
+                  <option key={event.id} value={event.id}>
+                    {event.number}. {event.name}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Legacy Events">
+                {legacyEventHandbook.map((event) => (
+                  <option key={event.id} value={event.id}>
+                    L{event.number}. {event.name}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </label>
           <label className="block text-sm font-semibold">

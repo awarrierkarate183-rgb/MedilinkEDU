@@ -10,7 +10,9 @@ import {
   legacyEvents,
   normalEvents,
 } from "@/lib/content/competition-system";
-import { getNormalHandbook, HANDBOOK_PDF } from "@/lib/content/normal-event-handbook";
+import { HANDBOOK_PDF } from "@/lib/content/normal-event-handbook";
+import { LEGACY_HANDBOOK_PDF, legacyPurpose } from "@/lib/content/legacy-event-handbook";
+import { getEventHandbook } from "@/lib/content/event-handbook";
 import { loadPublishedCompetitionStandings } from "@/lib/content/rankings";
 import { actionHref } from "@/lib/content/forms";
 
@@ -25,14 +27,14 @@ function eventItems(
   prestige: number,
 ) {
   return events.map((event) => {
-    const handbook = getNormalHandbook(event.id);
+    const handbook = getEventHandbook(event.id);
     return {
       id: event.id,
       title: `${event.number}. ${event.name}`,
       subtitle: handbook ? `${handbook.formatLabel} · ${handbook.releaseLabel}` : event.formatLabel,
       prestige,
       children: handbook ? (
-        <EventHandbook event={handbook} compact={prestige === 2} />
+        <EventHandbook event={handbook} />
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           <div>
@@ -96,14 +98,22 @@ export default async function CompetitionsPage() {
             <p className="kicker">Legacy Events</p>
             <h2>Five events. Eight students. Two groups.</h2>
             <p>
-              Each chapter selects exactly eight students for the season and
-              splits them into two groups of four. A chapter may enter only one
-              of those groups into any single Legacy event, never both. The
-              chapter decides how to divide the five events between the two
-              groups. The eight-person roster locks when the season begins. It
-              can change only for withdrawal from school, serious medical
-              unavailability, or another nationally approved reason. A new
-              season starts with a new roster.
+              Each chapter selects a maximum of eight Legacy-eligible students
+              and organizes them as two groups of up to four. For any one
+              Legacy event, a chapter may enter only one group. The roster
+              locks when the season begins and can change only for a documented,
+              approved reason. All Legacy rounds are in person and use Advanced
+              Release: the confidential packet opens two hours before the
+              judged simulation.
+            </p>
+            <p className="mt-3">{legacyPurpose}</p>
+            <p className="mt-3">
+              The five flagship events are The Atlas Docket, The Covenant Table,
+              Black Box Protocol, The Last Mile Accord, and Nightfall Command.{" "}
+              <a href={LEGACY_HANDBOOK_PDF} className="font-semibold underline">
+                Download the Legacy Championship handbook
+              </a>
+              .
             </p>
           </div>
           <Accordion items={eventItems(legacyEvents, 2)} />

@@ -1,8 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Actor } from "@/lib/auth/roles";
 import { loadSchoolDirectory } from "@/lib/data/admin-proceedings";
-import { listEventGuides, publishNormalHandbook, upsertEventGuide } from "@/lib/guides/operations";
-import { getNormalHandbook, normalEventHandbook } from "@/lib/content/normal-event-handbook";
+import { listEventGuides, publishLegacyHandbook, publishNormalHandbook, upsertEventGuide } from "@/lib/guides/operations";
+import { getEventHandbook } from "@/lib/content/event-handbook";
+import { normalEventHandbook } from "@/lib/content/normal-event-handbook";
+import { legacyEventHandbook } from "@/lib/content/legacy-event-handbook";
 
 type Admin = SupabaseClient;
 
@@ -21,6 +23,9 @@ async function runTool(admin: Admin, actor: Actor, name: string, args: Record<st
   if (name === "publish_normal_handbook") {
     return publishNormalHandbook(admin, actor);
   }
+  if (name === "publish_legacy_handbook") {
+    return publishLegacyHandbook(admin, actor);
+  }
   if (name === "update_event_guide") {
     return upsertEventGuide(admin, actor, {
       eventId: String(args.eventId || ""),
@@ -34,7 +39,7 @@ async function runTool(admin: Admin, actor: Actor, name: string, args: Record<st
   if (name === "list_guides") {
     const rows = await listEventGuides(admin);
     return {
-      events: normalEventHandbook.map((event) => ({
+      events: [...normalEventHandbook, ...legacyEventHandbook].map((event) => ({
         id: event.id,
         name: event.name,
         instructions: rows.some((row) => row.catalog_event_id === event.id && row.kind === "INSTRUCTIONS" && row.published),
@@ -46,14 +51,17 @@ async function runTool(admin: Admin, actor: Actor, name: string, args: Record<st
     return loadSchoolDirectory(admin, actor);
   }
   if (name === "lookup_event") {
-    const event = getNormalHandbook(String(args.eventId || ""));
-    return event || { error: "That event is not in the Normal Events handbook." };
+    const event = getEventHandbook(String(args.eventId || ""));
+    return event || { error: "That event is not in the official handbooks." };
   }
   return { error: "That tool is not available." };
 }
 
 function commandFallback(message: string) {
   const text = message.toLowerCase();
+  if (text.includes("publish") && text.includes("legacy")) {
+    return { name: "publish_legacy_handbook", args: {} };
+  }
   if (text.includes("publish") && (text.includes("handbook") || text.includes("rubric") || text.includes("guide"))) {
     return { name: "publish_normal_handbook", args: {} };
   }
@@ -72,8 +80,10 @@ export async function runAdminDesk(admin: Admin, actor: Actor, message: string) 
     const result = await runTool(admin, actor, fallback.name, fallback.args);
     return {
       reply:
-        fallback.name === "publish_normal_handbook"
-          ? "The Normal Events handbook is now published. Assigned students will see instructions and rubrics on their Competitions page."
+        fallback.name === "publish_legacy_handbook"
+          ? "The Legacy Championship handbook is now published. Assigned students will see instructions and rubrics on their Competitions page."
+          : fallback.name === "publish_normal_handbook"
+            ? "The Normal Events handbook is now published. Assigned students will see instructions and rubrics on their Competitions page."
           : "Here is the current portal status.",
       result,
     };
@@ -94,6 +104,14 @@ export async function runAdminDesk(admin: Admin, actor: Actor, message: string) 
       function: {
         name: "publish_normal_handbook",
         description: "Publish official Normal Event instructions and 100-point rubrics to the student portal.",
+        parameters: { type: "object", properties: {} },
+      },
+    },
+    {
+      type: "function",
+      function: {
+        name: "publish_legacy_handbook",
+        description: "Publish official Legacy Championship instructions and 100-point rubrics to the student portal.",
         parameters: { type: "object", properties: {} },
       },
     },
