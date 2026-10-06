@@ -2,25 +2,47 @@
 
 import { useMemo, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
-import { getPublicSchoolChapters, getStateListings } from "@/lib/content/chapters";
+import { getStateListings, publicStatusLabel, type PublicChapter } from "@/lib/content/chapters";
+import { MAP_HEIGHT, MAP_WIDTH, chapterPin } from "@/lib/content/us-geo";
 import { actionHref } from "@/lib/content/forms";
 
-export function ChapterExplorer() {
+function statusKey(status: string) {
+  return status.toLowerCase().replace(/_/g, "-");
+}
+
+export function ChapterExplorer({ chapters }: { chapters: PublicChapter[] }) {
   const states = getStateListings();
-  const schools = getPublicSchoolChapters();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
+  const [selectedId, setSelectedId] = useState<string | null>(chapters[0]?.id ?? null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return schools.filter((chapter) => {
-      const hay = `${chapter.name} ${chapter.location} ${chapter.stateName}`.toLowerCase();
+    return chapters.filter((chapter) => {
+      const hay = `${chapter.school} ${chapter.city || ""} ${chapter.state || ""}`.toLowerCase();
       const matchesQuery = !q || hay.includes(q);
-      const matchesStatus =
-        status === "all" || (chapter.status || "").toLowerCase() === status;
+      const matchesStatus = status === "all" || statusKey(chapter.status) === status;
       return matchesQuery && matchesStatus;
     });
-  }, [query, schools, status]);
+  }, [chapters, query, status]);
+
+  const pins = useMemo(() => {
+    const counts = new Map<string, number>();
+    const seen = new Map<string, number>();
+    for (const chapter of filtered) {
+      const key = chapter.state || "unknown";
+      counts.set(key, (counts.get(key) || 0) + 1);
+    }
+    return filtered.map((chapter) => {
+      const key = chapter.state || "unknown";
+      const index = seen.get(key) || 0;
+      seen.set(key, index + 1);
+      return {
+        chapter,
+        pin: chapterPin(chapter.state, index, counts.get(key) || 1),
+      };
+    });
+  }, [filtered]);
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
@@ -52,19 +74,33 @@ export function ChapterExplorer() {
         <div className="mt-6 space-y-3">
           {filtered.length === 0 ? (
             <p className="rounded-[var(--radius)] border border-dashed border-border p-6 text-sm text-muted">
-              No confirmed school chapters match this search. State networks
-              currently listed: {states.map((state) => state.name).join(", ")}.
+              {chapters.length
+                ? "No accepted school chapters match this search."
+                : "No accepted school chapters are on the map yet. A school appears here after it uses Start a Chapter and MediLink accepts the request."}{" "}
+              State networks currently listed: {states.map((state) => state.name).join(", ")}.
             </p>
           ) : (
             filtered.map((chapter) => (
-              <article key={chapter.id} className="rounded-[var(--radius)] border border-border p-5">
-                <h3 className="font-semibold">{chapter.name}</h3>
-                <p className="text-sm text-muted">{chapter.stateName}</p>
-                {chapter.status ? (
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-wider">
-                    {chapter.status}
+              <article
+                key={chapter.id}
+                id={`chapter-${chapter.id}`}
+                className={`rounded-[var(--radius)] border p-5 ${
+                  selectedId === chapter.id ? "border-navy bg-surface" : "border-border"
+                }`}
+              >
+                <button
+                  type="button"
+                  className="w-full text-left"
+                  onClick={() => setSelectedId(chapter.id)}
+                >
+                  <h3 className="font-semibold">{chapter.school}</h3>
+                  <p className="text-sm text-muted">
+                    {[chapter.city, chapter.state].filter(Boolean).join(", ")}
                   </p>
-                ) : null}
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wider">
+                    {publicStatusLabel(chapter.status)}
+                  </p>
+                </button>
               </article>
             ))
           )}
@@ -74,20 +110,57 @@ export function ChapterExplorer() {
         <p className="kicker">Chapter map</p>
         <h2 className="text-2xl font-semibold">Built chapter by chapter.</h2>
         <p className="mt-3 text-sm text-white/70">
-          Pins mark state networks that are listed. School pins appear when the
-          board records a chapter. This map does not invent locations.
+          Pins come from accepted Start a Chapter forms. Each pin marks the
+          state entered on the form, not a street address. This map does not
+          invent school names or locations.
         </p>
-        <svg viewBox="0 0 320 220" className="mt-6 w-full" role="img" aria-label="Southeast United States with North Carolina and Georgia markers">
-          <rect width="320" height="220" fill="#071525" rx="12" />
-          <circle cx="210" cy="70" r="8" fill="#C9A227" />
-          <text x="224" y="74" fill="white" fontSize="12">
-            North Carolina
-          </text>
-          <circle cx="170" cy="130" r="8" fill="#C9A227" />
-          <text x="184" y="134" fill="white" fontSize="12">
-            Georgia
-          </text>
+        <svg
+          viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
+          className="mt-6 w-full"
+          role="img"
+          aria-label="United States map with accepted MediLink chapter pins"
+        >
+          <rect width={MAP_WIDTH} height={MAP_HEIGHT} fill="#071525" rx="12" />
+          {pins.length === 0 ? (
+            <text x={MAP_WIDTH / 2} y={MAP_HEIGHT / 2} fill="white" fontSize="12" textAnchor="middle">
+              Pins appear after a chapter is accepted
+            </text>
+          ) : (
+            pins.map(({ chapter, pin }) => {
+              if (!pin) return null;
+              const active = selectedId === chapter.id;
+              return (
+                <g key={chapter.id}>
+                  <circle
+                    cx={pin.x}
+                    cy={pin.y}
+                    r={active ? 10 : 8}
+                    fill="#C9A227"
+                    className="cursor-pointer"
+                    onClick={() => setSelectedId(chapter.id)}
+                  >
+                    <title>{`${chapter.school}, ${chapter.state || ""}`}</title>
+                  </circle>
+                  <text
+                    x={pin.x + 14}
+                    y={pin.y + 4}
+                    fill="white"
+                    fontSize="11"
+                    className="cursor-pointer"
+                    onClick={() => setSelectedId(chapter.id)}
+                  >
+                    {chapter.school}
+                  </text>
+                </g>
+              );
+            })
+          )}
         </svg>
+        {selectedId ? (
+          <p className="mt-4 text-sm text-white/80">
+            Selected: {chapters.find((chapter) => chapter.id === selectedId)?.school}
+          </p>
+        ) : null}
         <div className="mt-5 flex flex-wrap gap-3">
           <ButtonLink href="/start-a-chapter" size="sm">
             Start a chapter

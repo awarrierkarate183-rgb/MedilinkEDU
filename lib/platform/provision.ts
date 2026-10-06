@@ -414,7 +414,7 @@ export async function reviewChapterRequest(
         reviewed_by: actorId,
       })
       .eq("id", application.id);
-    await admin.from("chapters").update({ status: "INACTIVE" }).eq("id", chapterId);
+    await admin.from("chapters").update({ status: "INACTIVE", public_visibility: false }).eq("id", chapterId);
     await admin
       .from("profiles")
       .update({ status: "INACTIVE", advisor_status: "INACTIVE" })
@@ -445,6 +445,7 @@ export async function reviewChapterRequest(
       status: "FOUNDING",
       founded_date: now.slice(0, 10),
       advisor_id: application.advisor_profile_id,
+      public_visibility: true,
     })
     .eq("id", chapterId);
   await admin

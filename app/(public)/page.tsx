@@ -2,12 +2,12 @@
 import { Card } from "@/components/ui/Card";
 import { competitions } from "@/lib/content/competitions";
 import { tracks } from "@/lib/content/curriculum";
-import {
-  confirmedChapterCount,
-  getStateListings,
-} from "@/lib/content/chapters";
+import { getStateListings } from "@/lib/content/chapters";
+import { loadPublicChapters } from "@/lib/data/public-chapters";
 import { experienceSteps, lenses, MISSION } from "@/lib/content/organization";
 import { actionHref } from "@/lib/content/forms";
+
+export const dynamic = "force-dynamic";
 
 const lensColors = {
   clinical: "bg-navy",
@@ -15,8 +15,9 @@ const lensColors = {
   technology: "bg-navy-soft",
 } as const;
 
-export default function HomePage() {
-  const schoolCount = confirmedChapterCount();
+export default async function HomePage() {
+  const schools = await loadPublicChapters();
+  const schoolCount = schools.length;
   const states = getStateListings();
 
   return (
@@ -229,8 +230,8 @@ export default function HomePage() {
             <p className="kicker">Chapters</p>
             <h2>Built chapter by chapter.</h2>
             <p>
-              School chapters appear here when the board records them. This page
-              does not invent school names.
+              School chapters appear here when Start a Chapter is accepted.
+              This page does not invent school names.
             </p>
           </div>
           {schoolCount === 0 ? (
@@ -246,7 +247,21 @@ export default function HomePage() {
               </div>
             </div>
           ) : (
-            <p>{schoolCount} confirmed school chapters.</p>
+            <div>
+              <ul className="space-y-2">
+                {schools.map((school) => (
+                  <li key={school.id} className="font-semibold">
+                    {school.school}
+                    <span className="ml-2 font-normal text-muted">
+                      {[school.city, school.state].filter(Boolean).join(", ")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-5">
+                <ButtonLink href="/chapters">See the chapter map</ButtonLink>
+              </div>
+            </div>
           )}
         </div>
       </section>

@@ -414,9 +414,13 @@ export async function approveChapter(opts: {
   if (!canManageChapter(opts.actor, { id: chapter.id, state: chapter.state, advisorId: chapter.advisor_id })) {
     return { error: "That chapter is outside your administrative scope." };
   }
+  const publicStatuses = new Set(["FOUNDING", "ESTABLISHED", "FLAGSHIP_ELIGIBLE"]);
   const { error } = await opts.client
     .from("chapters")
-    .update({ status: opts.status })
+    .update({
+      status: opts.status,
+      public_visibility: publicStatuses.has(opts.status),
+    })
     .eq("id", chapter.id);
   if (error) return { error: "The chapter could not be updated." };
   await writeAudit(opts.client, opts.actor.id, "chapter_created" === opts.status ? "chapter_updated" : "chapter_updated", "chapter", chapter.id, {

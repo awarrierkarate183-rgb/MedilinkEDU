@@ -45,3 +45,18 @@ export function getPublicSchoolChapters() {
 export function confirmedChapterCount() {
   return getPublicSchoolChapters().length;
 }
+
+export type PublicChapter = {
+  id: string;
+  school: string;
+  city: string | null;
+  state: string | null;
+  status: string;
+};
+
+export function publicStatusLabel(status: string) {
+  if (status === "FLAGSHIP_ELIGIBLE") return "Flagship-Eligible";
+  if (status === "FOUNDING") return "Founding";
+  if (status === "ESTABLISHED") return "Established";
+  return status;
+}

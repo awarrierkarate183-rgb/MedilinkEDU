@@ -86,10 +86,14 @@ export function StartChapterForm() {
               <dd className="font-semibold">{created.chapterCode}</dd>
             </div>
           </dl>
+          <p className="mt-4 text-sm text-muted">
+            After MediLink accepts the chapter, the school name appears on the
+            chapter map with a pin for the state you entered.
+          </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <ButtonLink href="/portal/login">Sign in and wait for review</ButtonLink>
-            <ButtonLink href="/start-a-chapter" variant="outline">
-              Back
+            <ButtonLink href="/chapters" variant="outline">
+              Open the chapter map
             </ButtonLink>
           </div>
         </div>

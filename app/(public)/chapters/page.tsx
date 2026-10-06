@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/public/PageHero";
 import { ChapterExplorer } from "@/components/public/ChapterExplorer";
+import { loadPublicChapters } from "@/lib/data/public-chapters";
 import { actionHref } from "@/lib/content/forms";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Chapters",
@@ -10,7 +13,8 @@ export const metadata: Metadata = {
     "Find a MediLink high school chapter. School listings appear when the board records them.",
 };
 
-export default function ChaptersPage() {
+export default async function ChaptersPage() {
+  const chapters = await loadPublicChapters();
   return (
     <>
       <PageHero
@@ -20,7 +24,7 @@ export default function ChaptersPage() {
       />
       <section className="band">
         <div className="container-ml">
-          <ChapterExplorer />
+          <ChapterExplorer chapters={chapters} />
         </div>
       </section>
       <section className="band band--paper">
