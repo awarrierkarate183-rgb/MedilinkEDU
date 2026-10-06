@@ -50,7 +50,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href as never}
                 className={cn(
-                  "text-base font-semibold transition-colors",
+                  "public-nav text-lg transition-colors",
                   active ? "text-gold" : "text-white/85 hover:text-white",
                 )}
               >
@@ -99,7 +99,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href as never}
-              className="block border-b border-white/10 py-3.5 text-base font-semibold text-white"
+              className="public-nav block border-b border-white/10 py-3.5 text-lg text-white"
             >
               {item.label}
             </Link>

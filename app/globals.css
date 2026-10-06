@@ -38,6 +38,7 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --font-sans: var(--font-plus-jakarta);
+  --font-display: var(--font-fraunces);
   --radius-ml: var(--radius);
 }
 
@@ -87,8 +88,25 @@ h3 {
 }
 
 .display {
+  font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(2.4rem, 5vw, 4.4rem);
   font-weight: 700;
+  font-style: italic;
+}
+
+.tab-heading {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+}
+
+.public-site h1,
+.public-site h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+.public-nav {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
 }
 
 .lead {
@@ -173,6 +191,28 @@ h3 {
   animation: pulse-node 4.8s ease-in-out infinite;
 }
 
+.news-photo {
+  transition: opacity 0.8s ease, transform 8s ease;
+}
+
+.news-photo--on {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.news-photo--off {
+  opacity: 0;
+  transform: scale(1);
+}
+
+.photo-callout-glow {
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 70%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 60%);
+  animation: pulse-node 5s ease-in-out infinite;
+}
+
 @keyframes click-here {
   0%,
   100% {
@@ -196,8 +236,13 @@ h3 {
   .reveal,
   .network-node,
   .hero-network line,
-  .click-here {
+  .click-here,
+  .news-photo,
+  .photo-callout-glow {
     animation: none !important;
     transition: none !important;
+  }
+  .news-photo--on {
+    transform: none;
   }
 }

@@ -331,15 +331,29 @@ export default async function HomePage() {
         <div className="container-ml">
           <div className="section-head">
             <p className="kicker">News</p>
-            <h2>News from MediLink is coming soon.</h2>
+            <h2>Send your chapter photos.</h2>
             <p>
-              This homepage does not invent chapter wins. Send what happened.
-              Leadership decides whether it runs here.
+              Lake Norman Charter High School is on the News page. This
+              homepage does not invent chapter wins. Send pictures of work
+              that happened. Leadership decides whether they run.
             </p>
           </div>
-          <ButtonLink href={actionHref("submitNews", "Submit News Chapter Highlight")} variant="outline">
-            Submit news
-          </ButtonLink>
+          <div className="mb-6 grid gap-3 md:grid-cols-3">
+            {["/news/lake-norman-welcome.png", "/news/lake-norman-table.png", "/news/lake-norman-review.png"].map((src) => (
+              <img
+                key={src}
+                src={src}
+                alt=""
+                className="h-40 w-full rounded-[var(--radius)] object-cover"
+              />
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <ButtonLink href="/news">Open News</ButtonLink>
+            <ButtonLink href={actionHref("submitNews", "Submit News Chapter Photos")} variant="outline">
+              Send photos
+            </ButtonLink>
+          </div>
         </div>
       </section>
 
