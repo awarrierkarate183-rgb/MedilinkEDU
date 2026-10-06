@@ -885,6 +885,99 @@ export const sectionArticles: SectionArticle[] = [
       },
     ],
   },
+  {
+    href: "/medilink-events/volunteer",
+    title: "Volunteer by region",
+    lead: "MediLink publishes volunteer openings by region. A region stays empty until a real listing is open.",
+    blocks: [
+      {
+        heading: "How this board works",
+        body: [
+          "Volunteer listings are grouped by region: National, Northeast, Southeast, Midwest, Southwest, and West. A card appears only when MediLink opens that seat.",
+          "This is not a public signup dump. If a region has no listing, nobody invented one to fill the page.",
+        ],
+      },
+      {
+        heading: "Who can volunteer",
+        body: [
+          "Members, advisors, and adults MediLink invites for a specific day or role. Mentors and judges back the student offices. They do not replace them.",
+        ],
+      },
+    ],
+    actions: [
+      { href: "/medilink-events", label: "All MediLink Events" },
+      { href: "/contact", label: "Write MediLink", variant: "outline" },
+    ],
+  },
+  {
+    href: "/medilink-events/events",
+    title: "MediLink events",
+    lead: "Workshops, program days, and other events MediLink hosts. Dates show when they are set.",
+    blocks: [
+      {
+        heading: "What belongs here",
+        body: [
+          "Events MediLink itself runs or officially hosts. Chapter meeting photos stay on News. Competition packets stay on Competitions.",
+        ],
+      },
+      {
+        heading: "What is listed now",
+        body: [
+          "No hosted event is published on this board yet. When one is, the date, region, and who may attend will be written here.",
+        ],
+      },
+    ],
+    actions: [
+      { href: "/medilink-events", label: "All MediLink Events" },
+      { href: "/competitions", label: "Competition catalog", variant: "outline" },
+    ],
+  },
+  {
+    href: "/medilink-events/internships",
+    title: "Internships",
+    lead: "Internships MediLink opens or passes through. Nothing is listed until a real seat exists.",
+    blocks: [
+      {
+        heading: "The rule",
+        body: [
+          "An internship card has to name the host, the work, and how a student applies. MediLink will not invent a hospital seat or a dollar amount to look busy.",
+        ],
+      },
+      {
+        heading: "What is listed now",
+        body: [
+          "No internship is open on this board yet. When MediLink gives one out, it will show here and in the member portal.",
+        ],
+      },
+    ],
+    actions: [
+      { href: "/medilink-events", label: "All MediLink Events" },
+      { href: "/portal", label: "Portal login", variant: "outline" },
+    ],
+  },
+  {
+    href: "/medilink-events/research",
+    title: "Research",
+    lead: "Research opportunities MediLink gives out. The board stays empty until a project is actually open.",
+    blocks: [
+      {
+        heading: "What this is",
+        body: [
+          "A research listing is a project MediLink sponsors or assigns, with a question, a mentor if one exists, and a way to ask in. It is not a journal homepage and not a fake paper mill.",
+        ],
+      },
+      {
+        heading: "What is listed now",
+        body: [
+          "No research seat is published yet. When one opens, members will see it here and on MediLink Events in the portal.",
+        ],
+      },
+    ],
+    actions: [
+      { href: "/medilink-events", label: "All MediLink Events" },
+      { href: "/contact", label: "Write MediLink", variant: "outline" },
+    ],
+  },
 ];
 
 export function getSectionArticle(href: string) {

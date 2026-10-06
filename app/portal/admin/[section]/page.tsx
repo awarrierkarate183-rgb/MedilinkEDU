@@ -19,7 +19,6 @@ const catalog: Record<string, { title: string; body: string }> = {
   news: { title: "News", body: "Student submissions must be reviewed before they publish." },
   sponsors: { title: "Sponsors", body: "Do not invent logos or benefits. Publish only approved records." },
   points: { title: "Points", body: "Administrators see all chapters. Public rankings stay off until the board decides." },
-  announcements: { title: "Announcements", body: "Audience can be all users, advisors, students, or a chapter." },
   reports: { title: "Reports", body: "Organization-level CSV exports when data exists." },
   audit: { title: "Audit log", body: "Sensitive actions only. Students never see this page." },
 };

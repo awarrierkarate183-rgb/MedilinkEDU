@@ -59,14 +59,14 @@ export default async function StudentDashboard() {
       <section>
         <div className="mb-3 flex items-end justify-between gap-3">
           <h2 className="text-lg font-semibold">Your competitions</h2>
-          <Link href="/portal/student/choose-event" className="text-sm font-semibold">
-            Choose Event
+          <Link href="/portal/student/competitions" className="text-sm font-semibold">
+            Competitions
           </Link>
         </div>
         {!assigned.assignments.length ? (
           <PortalEmpty
             title="No events assigned yet"
-            body="Open Choose Event to send your picks to your advisor. When they enter you, the event and rubric show here."
+            body="Open Competitions to send your picks to your advisor. When they enter you, the event and rubric show here, and Projects fills with the work you need before the competition date."
           />
         ) : (
           <ul className="space-y-2">
@@ -84,7 +84,7 @@ export default async function StudentDashboard() {
 
       <section>
         <div className="mb-3 flex items-end justify-between gap-3">
-          <h2 className="text-lg font-semibold">Advisor updates</h2>
+          <h2 className="text-lg font-semibold">Announcements</h2>
           <Link href="/portal/student/announcements" className="text-sm font-semibold">
             All updates
           </Link>
@@ -92,7 +92,7 @@ export default async function StudentDashboard() {
         {!data?.announcements.length ? (
           <PortalEmpty
             title="No advisor updates yet"
-            body="When your chapter advisor publishes an announcement, it will show here."
+            body="MediLink announcements and chapter advisor updates appear here. New members still see every administrator announcement."
           />
         ) : (
           <ul className="space-y-3">

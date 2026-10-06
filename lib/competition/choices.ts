@@ -252,8 +252,8 @@ export async function reviewEventChoice(
       choice.profile_id,
       "event_choice",
       "An event choice was not entered",
-      "Your advisor reviewed a choice and did not enter you in that event. Open Choose Event to send another request.",
-      "/portal/student/choose-event",
+      "Your advisor reviewed a choice and did not enter you in that event. Open Competitions to send another request.",
+      "/portal/student/competitions",
     );
     return { ok: true, status: "DECLINED" as const };
   }
@@ -320,8 +320,8 @@ export async function reviewEventChoice(
     `You were entered in ${event.name}`,
     event.tier === "LEGACY"
       ? "Your advisor saved this Legacy choice. If the four-person roster is set, the event is now official on Competitions."
-      : "Your advisor entered you. Open Competitions for the format, teammates, and rubric.",
-    "/portal/student/competitions",
+      : "Your advisor entered you. Open Competitions for the event and Projects for what to develop and submit.",
+    "/portal/student/projects",
   );
   await writeAudit(admin, actor.id, "competition.event_choice_approved", "catalog_event", event.id, {
     profile_id: choice.profile_id,

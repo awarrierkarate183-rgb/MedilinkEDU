@@ -3,11 +3,11 @@ import { PortalEmpty } from "@/components/portal/PortalEmpty";
 const catalog: Record<string, { title: string; body: string }> = {
   competitions: {
     title: "Open Competitions in the student menu.",
-    body: "Normal Event registration, Legacy roster status, and published rankings live on that page.",
+    body: "Ask for events, see assignments, and read published rankings on that page.",
   },
   projects: {
-    title: "No projects yet",
-    body: "Turn an Ideas Lab entry into a project when you are ready. Private files are never public.",
+    title: "Open Projects in the student menu.",
+    body: "After you are entered in an event, that page lists what to develop and submit before the competition date.",
   },
   announcements: {
     title: "No new chapter announcements.",

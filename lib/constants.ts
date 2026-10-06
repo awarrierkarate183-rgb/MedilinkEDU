@@ -15,6 +15,7 @@ export const PUBLIC_NAV = [
   { href: "/chapters", label: "Chapters" },
   { href: "/curriculum", label: "Curriculum" },
   { href: "/competitions", label: "Competitions" },
+  { href: "/medilink-events", label: "MediLink Events" },
   { href: "/get-involved", label: "Get Involved" },
   { href: "/news", label: "News" },
 ] as const;

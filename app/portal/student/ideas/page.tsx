@@ -1,89 +1,77 @@
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { IdeaLabForm } from "@/components/portal/IdeaLabForm";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
-import { IDEA_CATEGORIES } from "@/lib/constants";
-import { createIdeaAction } from "@/lib/ideas/actions";
-import { Button } from "@/components/ui/Button";
+
+function kindLabel(kind?: string | null) {
+  if (kind === "EVENT") return "Chapter event";
+  if (kind === "ACTIVITY") return "Activity";
+  if (kind === "OTHER") return "Other";
+  return "Idea";
+}
 
 export default async function IdeasPage() {
-  const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER", "CHAPTER_ADVISOR", "SUPER_ADMIN"]);
+  const { profile } = await requireRole(["STUDENT", "CHAPTER_OFFICER"]);
   const supabase = await createClient();
-  const { data: ideas } = supabase
-    ? await supabase.from("ideas").select("id, title, status, category").eq("owner_id", profile?.id)
-    : { data: [] };
+  let ideas: Array<{
+    id: string;
+    title: string;
+    status: string;
+    request_kind?: string | null;
+    problem?: string | null;
+    why_it_matters?: string | null;
+    advisor_feedback?: string | null;
+  }> = [];
+  if (supabase && profile?.id) {
+    const first = await supabase
+      .from("ideas")
+      .select("id, title, status, request_kind, problem, why_it_matters, advisor_feedback, created_at")
+      .eq("owner_id", profile.id)
+      .order("created_at", { ascending: false });
+    if (first.error && /request_kind/i.test(first.error.message)) {
+      const fallback = await supabase
+        .from("ideas")
+        .select("id, title, status, problem, why_it_matters, advisor_feedback, created_at")
+        .eq("owner_id", profile.id)
+        .order("created_at", { ascending: false });
+      ideas = fallback.data ?? [];
+    } else {
+      ideas = first.data ?? [];
+    }
+  }
 
   return (
     <div className="space-y-8">
-      <form
-        action={async (formData) => {
-          "use server";
-          await createIdeaAction(formData);
-          return;
-        }}
-        className="rounded-[var(--radius)] bg-white p-5"
-      >
-        <h2 className="font-semibold">New idea</h2>
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <label className="text-sm font-semibold">
-            Title
-            <input name="title" required className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-          <label className="text-sm font-semibold">
-            Category
-            <select name="category" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal">
-              {IDEA_CATEGORIES.map((item) => (
-                <option key={item}>{item}</option>
-              ))}
-            </select>
-          </label>
-          <label className="text-sm font-semibold md:col-span-2">
-            Problem
-            <textarea name="problem" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-          <label className="text-sm font-semibold">
-            Who is affected
-            <textarea name="who" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-          <label className="text-sm font-semibold">
-            Proposed solution
-            <textarea name="solution" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-          <label className="text-sm font-semibold">
-            Why it matters
-            <textarea name="why" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-          <label className="text-sm font-semibold">
-            Healthcare component
-            <textarea name="healthcare" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-          <label className="text-sm font-semibold">
-            Financial component
-            <textarea name="financial" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-          <label className="text-sm font-semibold">
-            Technology component
-            <textarea name="technology" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
-          </label>
-        </div>
-        <div className="mt-4">
-          <Button type="submit" size="sm">
-            Save draft
-          </Button>
-        </div>
-      </form>
-      {!ideas?.length ? (
+      <section className="rounded-[var(--radius)] bg-white p-5">
+        <h1 className="text-xl font-semibold">Ideas Lab</h1>
+        <p className="mt-2 text-sm text-muted">
+          Send an idea for an event or something the chapter can do. Your advisor sees it on Submissions.
+        </p>
+        {!profile?.chapter_id ? (
+          <p className="mt-3 text-sm text-muted">
+            Your account is not attached to a chapter yet, so an idea cannot reach an advisor.
+          </p>
+        ) : null}
+      </section>
+      {profile?.chapter_id ? <IdeaLabForm /> : null}
+      {!ideas.length ? (
         <PortalEmpty
-          title="Your Ideas Lab is empty"
-          body="Start with a problem you've noticed in healthcare."
+          title="No ideas sent yet"
+          body="Describe what you want the chapter to do. Your advisor will review it."
         />
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {ideas.map((idea) => (
-            <li key={idea.id} className="rounded-[var(--radius)] bg-white px-4 py-3">
-              <strong>{idea.title}</strong>
-              <span className="ml-2 text-sm text-muted">
-                {idea.status} · {idea.category}
-              </span>
+            <li key={idea.id} className="rounded-[var(--radius)] bg-white px-4 py-4">
+              <p className="text-sm text-muted">
+                {kindLabel(idea.request_kind)} · {idea.status.replaceAll("_", " ").toLowerCase()}
+              </p>
+              <h2 className="mt-1 font-semibold">{idea.title}</h2>
+              {idea.problem ? <p className="mt-2 whitespace-pre-wrap text-sm">{idea.problem}</p> : null}
+              {idea.why_it_matters ? <p className="mt-2 text-sm text-muted">Why: {idea.why_it_matters}</p> : null}
+              {idea.advisor_feedback ? (
+                <p className="mt-2 text-sm">Advisor note: {idea.advisor_feedback}</p>
+              ) : null}
             </li>
           ))}
         </ul>

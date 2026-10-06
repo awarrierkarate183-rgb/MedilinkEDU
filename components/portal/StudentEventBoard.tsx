@@ -70,9 +70,9 @@ export function StudentEventBoard({
         ))
       ) : (
         <div className="rounded-[var(--radius)] bg-white p-5 text-sm text-muted">
-          You are not entered in an event yet. Open Choose Event to send your
-          picks to your advisor. When they enter you, this page opens the official
-          rubric.
+          You are not entered in an event yet. Use the form on this page to send
+          your picks to your advisor. When they enter you, this page opens the
+          official rubric and Projects fills with prerequisite work.
         </div>
       )}
     </section>

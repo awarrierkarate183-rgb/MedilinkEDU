@@ -89,8 +89,9 @@ export function CompetitionDesk(props: Props) {
       <div>
         <h2 className="text-xl font-semibold">Season entries</h2>
         <p className="mt-1 text-sm text-muted">
-          Season {props.seasonLabel || "not opened"}. Submit regular Normal Events here. Set the
-          Legacy team of four, then enter that team in one, two, or all three Triad events.
+          {props.mode === "student"
+            ? `Season ${props.seasonLabel || "not opened"}. Ask for events with the form above. After your advisor enters you, Projects lists what to develop and submit.`
+            : `Season ${props.seasonLabel || "not opened"}. Submit regular Normal Events here. Set the Legacy team of four, then enter that team in one, two, or all three Triad events.`}
         </p>
       </div>
       {error ? <Alert title="Not saved" tone="danger">{error}</Alert> : null}
@@ -120,18 +121,16 @@ export function CompetitionDesk(props: Props) {
           You are in {props.myEventIds.length} of 6. Regional is required. Everyone
           who competes at Regional goes to State.
         </p>
+        {props.mode !== "student" ? (
         <form
           className="mt-4 grid gap-3 md:grid-cols-2"
           onSubmit={(event) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
             const teammates = data.getAll("teammates").map(String).filter(Boolean);
-            const self = props.mode === "student" ? [props.profileId] : [];
-            const profileIds = [...new Set([...self, ...teammates])];
-            if (props.mode !== "student") {
-              const lead = String(data.get("lead") || "");
-              if (lead) profileIds.unshift(lead);
-            }
+            const profileIds = [...new Set(teammates)];
+            const lead = String(data.get("lead") || "");
+            if (lead) profileIds.unshift(lead);
             run(
               "/api/competitions/register",
               {
@@ -156,21 +155,19 @@ export function CompetitionDesk(props: Props) {
               ))}
             </select>
           </label>
-          {props.mode !== "student" ? (
-            <label className="block text-sm font-semibold">
-              Student
-              <select name="lead" required className={field} defaultValue="">
-                <option value="" disabled>
-                  Choose a student
+          <label className="block text-sm font-semibold">
+            Student
+            <select name="lead" required className={field} defaultValue="">
+              <option value="" disabled>
+                Choose a student
+              </option>
+              {props.roster.map((row) => (
+                <option key={row.id} value={row.id}>
+                  {nameOf(row)}
                 </option>
-                {props.roster.map((row) => (
-                  <option key={row.id} value={row.id}>
-                    {nameOf(row)}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ) : null}
+              ))}
+            </select>
+          </label>
           <label className="block text-sm font-semibold md:col-span-2">
             Teammates if the event allows a team
             <select name="teammates" multiple className={`${field} min-h-32`}>
@@ -189,6 +186,7 @@ export function CompetitionDesk(props: Props) {
             </Button>
           </div>
         </form>
+        ) : null}
         {props.myEventIds.length ? (
           <ul className="mt-4 space-y-1 text-sm">
             {props.myEventIds.map((id) => (

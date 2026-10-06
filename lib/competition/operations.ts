@@ -22,6 +22,7 @@ import {
   type Round,
 } from "@/lib/competition/scoring";
 import { notify, writeAudit } from "@/lib/platform/operations";
+import { provisionEventPrep } from "@/lib/competition/prep";
 
 type Admin = SupabaseClient;
 
@@ -126,11 +127,17 @@ export async function registerForNormalEvent(
         profileId,
         "competition_assigned",
         `You were entered in ${event.name}`,
-        `Open Competitions to see the format, your teammates, and the rubric when MediLink publishes it.`,
-        "/portal/student/competitions",
+        `Open Competitions for the event. Projects now lists what you need to develop and submit before the competition date.`,
+        "/portal/student/projects",
       ),
     ),
   );
+  await provisionEventPrep(admin, {
+    seasonId: season.id,
+    chapterId,
+    eventId: input.eventId,
+    profileIds: input.profileIds,
+  });
   return { ok: true, eventId: input.eventId, eventName: event.name };
 }
 
@@ -306,11 +313,17 @@ export async function assignLegacyEvent(
         row.profile_id,
         "competition_assigned",
         `Your team was entered in ${event?.name || "a Legacy Event"}`,
-        `Open Competitions to see the format, your four-person team, and the 1,000-point rubric.`,
-        "/portal/student/competitions",
+        `Open Competitions for the event. Projects now lists what your team needs to develop and submit before the competition date.`,
+        "/portal/student/projects",
       ),
     ),
   );
+  await provisionEventPrep(admin, {
+    seasonId: season.id,
+    chapterId,
+    eventId: input.eventId,
+    profileIds: (members ?? []).map((row) => row.profile_id),
+  });
   return { ok: true };
 }
 

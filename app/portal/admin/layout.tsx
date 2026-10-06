@@ -7,6 +7,7 @@ const nav = [
   { href: "/portal/admin/users", label: "Users" },
   { href: "/portal/admin/events", label: "Events" },
   { href: "/portal/admin/competitions", label: "Competitions" },
+  { href: "/portal/admin/medilink-events", label: "MediLink Events" },
   { href: "/portal/admin/guides", label: "Guides" },
   { href: "/portal/admin/curriculum", label: "Curriculum" },
   { href: "/portal/admin/resources", label: "Resources" },

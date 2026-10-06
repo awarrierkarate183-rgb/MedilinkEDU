@@ -9,8 +9,8 @@ const catalog: Record<
     body: "Register students, set the Legacy roster, and assign Legacy events on that page.",
   },
   submissions: {
-    title: "No submissions waiting",
-    body: "Ideas, projects, and competition files from your chapter land here for review.",
+    title: "Open Submissions in the advisor menu.",
+    body: "Chapter ideas from Ideas Lab and prerequisite files from Projects land there.",
   },
   reports: {
     title: "Reports",

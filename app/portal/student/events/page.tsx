@@ -8,10 +8,10 @@ export default async function StudentEventsPage() {
     <div className="space-y-6">
       <CompetitionEventGuide audience="student" />
       <p className="text-sm">
-        <Link href="/portal/student/choose-event" className="font-semibold">
-          Choose Event
+        <Link href="/portal/student/competitions" className="font-semibold">
+          Competitions
         </Link>
-        <span className="text-muted"> to send your picks to your advisor.</span>
+        <span className="text-muted"> to send your picks and see assigned events.</span>
       </p>
     </div>
   );

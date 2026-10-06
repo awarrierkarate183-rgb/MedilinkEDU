@@ -77,7 +77,7 @@ export function CompetitionEventGuide({ audience }: { audience: "advisor" | "stu
           This page explains the catalog. It does not enter students. Rubrics and point systems live on
           Resources. {audience === "advisor"
             ? "Student choices, the Legacy team, and regular event submissions live on Competitions."
-            : "Use Choose Event to tell your advisor what you want. Assigned events and results live on Competitions."}
+            : "Use Competitions to tell your advisor what you want and to see assigned events. Projects fills after you are entered."}
         </p>
       </section>
 

@@ -7,6 +7,7 @@ const nav = [
   { href: "/portal/advisor/chapter", label: "Chapter" },
   { href: "/portal/advisor/events", label: "Competition Events" },
   { href: "/portal/advisor/competitions", label: "Competitions" },
+  { href: "/portal/advisor/medilink-events", label: "MediLink Events" },
   { href: "/portal/advisor/curriculum", label: "Curriculum" },
   { href: "/portal/advisor/resources", label: "Resources" },
   { href: "/portal/advisor/announcements", label: "Announcements" },

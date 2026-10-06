@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/States";
 
-export function AnnouncementForm() {
+export function AnnouncementForm({ variant = "advisor" }: { variant?: "advisor" | "admin" }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export function AnnouncementForm() {
         body: JSON.stringify({
           title: String(form.get("title") || ""),
           body: String(form.get("body") || ""),
-          audienceType: String(form.get("audienceType") || "chapter"),
+          audienceType: variant === "admin" ? "all" : String(form.get("audienceType") || "chapter"),
           priority: "normal",
           status: "published",
         }),
@@ -46,7 +46,9 @@ export function AnnouncementForm() {
 
   return (
     <form onSubmit={onSubmit} className="rounded-[var(--radius)] bg-white p-5">
-      <h2 className="font-semibold">Publish an announcement</h2>
+      <h2 className="font-semibold">
+        {variant === "admin" ? "Publish a MediLink announcement" : "Publish an announcement"}
+      </h2>
       {error ? (
         <div className="mt-3">
           <Alert title="Announcement not saved" tone="danger">
@@ -56,22 +58,32 @@ export function AnnouncementForm() {
       ) : null}
       {ok ? (
         <div className="mt-3">
-          <Alert title="Published">Your chapter can see this announcement.</Alert>
+          <Alert title="Published">
+            {variant === "admin"
+              ? "Every current member and every member who joins later can see this."
+              : "Your chapter can see this announcement."}
+          </Alert>
         </div>
       ) : null}
       <label className="mt-4 block text-sm font-semibold">
         Title
         <input name="title" required maxLength={160} className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />
       </label>
-      <label className="mt-3 block text-sm font-semibold">
-        Audience
-        <select name="audienceType" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal">
-          <option value="chapter">This chapter</option>
-          <option value="students">Students</option>
-          <option value="advisors">Advisors</option>
-          <option value="all">All members</option>
-        </select>
-      </label>
+      {variant === "admin" ? (
+        <p className="mt-3 text-sm text-muted">
+          This goes to every student and advisor. New members who join later still see it. It does not expire.
+        </p>
+      ) : (
+        <label className="mt-3 block text-sm font-semibold">
+          Audience
+          <select name="audienceType" className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal">
+            <option value="chapter">This chapter</option>
+            <option value="students">Students</option>
+            <option value="advisors">Advisors</option>
+            <option value="all">All members</option>
+          </select>
+        </label>
+      )}
       <label className="mt-3 block text-sm font-semibold">
         Message
         <textarea name="body" required rows={4} className="mt-1 w-full rounded-md border border-border px-3 py-2 font-normal" />

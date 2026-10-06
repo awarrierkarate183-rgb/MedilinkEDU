@@ -18,6 +18,16 @@ export default async function AdvisorDashboard() {
           (row) => row.status === "PENDING",
         ).length
       : 0;
+  const pendingIdeas =
+    admin && profile?.chapter_id
+      ? (
+          await admin
+            .from("ideas")
+            .select("id", { count: "exact", head: true })
+            .eq("chapter_id", profile.chapter_id)
+            .in("status", ["SUBMITTED", "UNDER_REVIEW"])
+        ).count ?? 0
+      : 0;
   const standing = admin ? await loadChapterStandings(admin, profile?.chapter_id ?? null) : null;
 
   if (result.error) return <ConnectionTrouble />;
@@ -37,7 +47,7 @@ export default async function AdvisorDashboard() {
       </div>
       <section>
         <h2 className="mb-3 text-lg font-semibold">Pending actions</h2>
-        {(data?.pending ?? 0) > 0 || pendingChoices > 0 ? (
+        {(data?.pending ?? 0) > 0 || pendingChoices > 0 || pendingIdeas > 0 ? (
           <div className="space-y-2">
             {(data?.pending ?? 0) > 0 ? (
               <Link href="/portal/advisor/members" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
@@ -49,11 +59,16 @@ export default async function AdvisorDashboard() {
                 {pendingChoices} student event {pendingChoices === 1 ? "choice" : "choices"} waiting to be entered
               </Link>
             ) : null}
+            {pendingIdeas > 0 ? (
+              <Link href="/portal/advisor/submissions" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+                {pendingIdeas} chapter {pendingIdeas === 1 ? "idea" : "ideas"} waiting on Submissions
+              </Link>
+            ) : null}
           </div>
         ) : (
           <PortalEmpty
             title="No pending actions"
-            body="Approvals, event choices, and reviews will land here from live chapter data."
+            body="Approvals, event choices, chapter ideas, and reviews will land here from live chapter data."
           />
         )}
       </section>

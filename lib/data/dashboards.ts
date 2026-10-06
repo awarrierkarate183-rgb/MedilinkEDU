@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { tracks } from "@/lib/content/curriculum";
+import { loadPortalAnnouncements } from "@/lib/data/announcements";
 
 type ProgressRow = { module_id: string; status: string; progress_percent: number };
 
@@ -49,16 +50,10 @@ export async function loadStudentDashboard(userId: string, chapterId: string | n
         .order("event_date", { ascending: true })
         .limit(5);
 
-  const announcementsQuery = supabase
-    .from("announcements")
-    .select("id, title, body, message, created_at, status, chapter_id, audience_type, audience")
-    .order("created_at", { ascending: false })
-    .limit(12);
-
   const [
     chapterRes,
     eventsRes,
-    announcementsRes,
+    announcementsFeed,
     competitionsRes,
     progressRes,
     ideasRes,
@@ -71,19 +66,7 @@ export async function loadStudentDashboard(userId: string, chapterId: string | n
         )
       : Promise.resolve({ data: null, count: 0 }),
     settled<Array<{ id: string; title: string; start_at: string | null; event_date: string | null; status: string }>>(eventsQuery),
-    settled<
-      Array<{
-        id: string;
-        title: string;
-        body: string | null;
-        message: string | null;
-        created_at: string;
-        status: string | null;
-        chapter_id: string | null;
-        audience_type: string | null;
-        audience: string | null;
-      }>
-    >(announcementsQuery),
+    loadPortalAnnouncements({ chapterId, viewer: "student" }),
     settled(supabase.from("competitions").select("id", { count: "exact", head: true }).in("status", ["UPCOMING", "REGISTRATION_OPEN", "IN_PROGRESS"])),
     settled<Array<{ status: string }>>(supabase.from("curriculum_progress").select("status").eq("profile_id", userId)),
     settled(supabase.from("ideas").select("id", { count: "exact", head: true }).eq("owner_id", userId)),
@@ -93,13 +76,9 @@ export async function loadStudentDashboard(userId: string, chapterId: string | n
     settled<Array<{ amount: number }>>(supabase.from("points_transactions").select("amount").eq("profile_id", userId)),
   ]);
 
-  const announcements = (announcementsRes.data || []).filter((row) => {
-    const status = (row.status || "").toLowerCase();
-    const audience = `${row.audience_type || ""} ${row.audience || ""}`.toLowerCase();
-    if (status && status !== "published" && status !== "publish") return false;
-    if (audience.includes("advisor")) return false;
-    return true;
-  });
+  const announcements = announcementsFeed.error
+    ? []
+    : [...announcementsFeed.organization, ...announcementsFeed.chapter];
 
   const completed = (progressRes.data || []).filter((row) => row.status === "COMPLETED").length;
   const totalModules = tracks.reduce((sum, track) => sum + track.modules.length, 0);

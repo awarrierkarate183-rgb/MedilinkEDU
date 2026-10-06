@@ -258,6 +258,25 @@ export const aiSettingsSchema = z.object({
   groqKey: z.string().trim().min(10).max(200).optional(),
 });
 
+export const createChapterIdeaSchema = z.object({
+  title: z.string().trim().min(1, "Give the idea a title.").max(160),
+  requestKind: z.enum(["EVENT", "ACTIVITY", "OTHER"]),
+  body: z.string().trim().min(1, "Describe what you want the chapter to do.").max(4000),
+  why: z.string().trim().max(2000).optional().default(""),
+});
+
+export const updatePrepItemSchema = z.object({
+  itemId: uuid,
+  notes: z.string().trim().max(4000).optional().default(""),
+  status: z.enum(["NOT_STARTED", "IN_PROGRESS", "SUBMITTED", "DONE"]).optional(),
+});
+
+export const reviewIdeaSchema = z.object({
+  ideaId: uuid,
+  status: z.enum(["UNDER_REVIEW", "APPROVED", "IN_DEVELOPMENT", "COMPLETED"]),
+  feedback: z.string().trim().max(2000).optional().default(""),
+});
+
 export const createAnnouncementSchema = z.object({
   title: z.string().min(1).max(160),
   body: z.string().min(1).max(8000),

@@ -135,6 +135,23 @@ export const publicNav: NavTab[] = [
     ],
   },
   {
+    href: "/medilink-events",
+    label: "MediLink Events",
+    kicker: "Openings",
+    blurb: "Volunteer by region, MediLink-hosted events, internships, and research seats MediLink publishes.",
+    items: [
+      { href: "/medilink-events/volunteer", label: "Volunteer by region", blurb: "Openings grouped by region when MediLink publishes them.", group: "Ways to help", icon: "volunteer" },
+      { href: "/medilink-events/events", label: "MediLink events", blurb: "Workshops and program days MediLink hosts.", group: "Ways to help", icon: "calendar" },
+      { href: "/medilink-events/internships", label: "Internships", blurb: "Internships MediLink opens or passes through.", group: "Seats we open", icon: "star" },
+      { href: "/medilink-events/research", label: "Research", blurb: "Research opportunities MediLink gives out.", group: "Seats we open", icon: "book" },
+    ],
+    resources: [
+      { href: "/medilink-events/volunteer", label: "Volunteer", icon: "volunteer" },
+      { href: "/portal", label: "Portal Login", icon: "portal" },
+      { href: "/contact", label: "Contact", icon: "contact" },
+    ],
+  },
+  {
     href: "/get-involved",
     label: "Get Involved",
     kicker: "Work with us",
