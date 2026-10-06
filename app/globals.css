@@ -148,9 +148,24 @@ h3 {
   color: #f0cf6a;
 }
 
-.public-site h1,
-.public-site h2 {
+.public-site h1 {
   font-family: var(--font-fraunces), Georgia, serif;
+}
+
+.public-site h2,
+.public-site h3 {
+  font-family: var(--font-plus-jakarta), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.story-title {
+  font-family: var(--font-plus-jakarta), ui-sans-serif, sans-serif;
+  font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
 }
 
 .public-nav {
@@ -229,8 +244,7 @@ h3 {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(7, 21, 37, 0.7) 0%, rgba(7, 21, 37, 0.32) 46%, rgba(7, 21, 37, 0.18) 100%),
-    linear-gradient(180deg, rgba(7, 21, 37, 0.2) 0%, rgba(7, 21, 37, 0.1) 38%, rgba(7, 21, 37, 0.78) 100%);
+    linear-gradient(180deg, rgba(7, 21, 37, 0.12) 0%, rgba(7, 21, 37, 0.08) 42%, rgba(7, 21, 37, 0.82) 100%);
 }
 
 .photo-hero:not(:has(.photo-hero__image)) .photo-hero__shade {
@@ -238,7 +252,78 @@ h3 {
 }
 
 .photo-hero--page {
-  min-height: 52vh;
+  min-height: 48vh;
+}
+
+.photo-hero--page .photo-hero__shade {
+  background: linear-gradient(180deg, rgba(7, 21, 37, 0.2) 0%, rgba(7, 21, 37, 0.55) 100%);
+}
+
+.gold-sheet {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.gold-sheet .kicker {
+  color: var(--navy) !important;
+}
+
+.meet-row {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .meet-row {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+  }
+}
+
+.meet-photo {
+  width: 100%;
+  min-height: 26rem;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 16px 16px 0 var(--gold);
+}
+
+.yearbook {
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 900px) {
+  .yearbook {
+    grid-template-columns: 1.35fr 1fr;
+    grid-template-rows: 17rem 17rem;
+  }
+  .yearbook > :first-child {
+    grid-row: span 2;
+    min-height: 34.85rem;
+  }
+}
+
+.path-grid {
+  display: grid;
+  gap: 2.25rem 3rem;
+}
+
+@media (min-width: 800px) {
+  .path-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.lens-grid {
+  display: grid;
+  gap: 2rem 2.5rem;
+}
+
+@media (min-width: 800px) {
+  .lens-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .quiet-links {

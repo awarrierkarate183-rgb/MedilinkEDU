@@ -1,6 +1,6 @@
 ﻿import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
-import { PhotoTile, QuietLinks, SplitFeature, StatStrip } from "@/components/public/widgets";
+import { PhotoTile } from "@/components/public/widgets";
 import { loadPublicChapters } from "@/lib/data/public-chapters";
 import { chapterPhotos } from "@/lib/content/news";
 import { actionHref } from "@/lib/content/forms";
@@ -21,146 +21,115 @@ export default async function HomePage() {
         />
         <div className="photo-hero__shade" />
         <div className="relative mx-auto flex min-h-[86vh] w-full max-w-[1500px] flex-col justify-end px-6 pb-16 pt-[calc(var(--header-h)+3rem)] lg:px-14">
-          <p className="kicker text-gold">Student-founded. High school only.</p>
-          <h1 className="hero-wordmark mt-3" aria-label="MediLink">
-            <span className="text-white">Medi</span>
-            <span className="text-gold">Link</span>
-          </h1>
-          <p className="hero-line mt-8 max-w-2xl">Healthcare is bigger than one discipline.</p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <ButtonLink href="/start-a-chapter" className="px-6 py-3">
+          <p className="kicker">Student-founded. High school only.</p>
+          <p className="hero-line mt-4 max-w-3xl">Healthcare is bigger than one discipline.</p>
+          <p className="mt-5 max-w-xl text-lg font-medium text-white">
+            A classroom chapter. Real students. Clinical, money, and tech in the same problem.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <ButtonLink href="/start-a-chapter" className="px-7 py-3 text-base">
               Start a Chapter
             </ButtonLink>
             <ButtonLink
               href="/about"
               variant="outline"
-              className="border-white/50 px-6 py-3 text-white hover:bg-white/10"
+              className="border-white px-7 py-3 text-base text-white hover:bg-white/10"
             >
-              Explore MediLink
-            </ButtonLink>
-            <ButtonLink
-              href="/portal"
-              variant="ghost"
-              className="px-1 py-2 text-white/80 hover:bg-transparent hover:text-white"
-            >
-              Portal Login
+              See how it works
             </ButtonLink>
           </div>
         </div>
       </section>
 
       <section className="band">
-        <div className="container-ml">
-          <StatStrip
-            items={[
-              { value: "20", label: "Normal Events" },
-              { value: "3", label: "Legacy Events" },
-              { value: "4", label: "Curriculum tracks" },
-              { value: "5", label: "Officer roles" },
-              { value: String(schools.length), label: "Accepted chapters" },
-            ]}
-          />
-        </div>
-      </section>
-
-      <section className="band band--paper">
-        <div className="container-ml space-y-6">
-          <SplitFeature
-            href="/chapters"
-            image="/news/lake-norman-welcome.png"
-            kicker="Chapters"
-            title="A school chapter. Not a public signup."
-            body="Students join through a high school chapter. The same five offices, the same syllabus, and the same calendar sit in every school MediLink accepts."
-            action="Open the map"
-          />
-          <SplitFeature
-            href="/competitions"
-            kicker="Compete"
-            title="Twenty Normal Events. Three Legacy Events."
-            body="You compete through your chapter. Normal Events are broad-access. Legacy is one team of four in the Legacy Triad."
-            action="See the events"
-            tone="navy"
-          />
-        </div>
-      </section>
-
-      <section className="band">
-        <div className="container-ml">
-          <div className="section-head">
-            <p className="kicker">How members think</p>
-            <h2>Three lenses. One problem.</h2>
-          </div>
-          <div className="grid gap-10 md:grid-cols-3">
-            <Link href="/about/lenses" className="block">
-              <p className="kicker">Clinical</p>
-              <h3 className="tab-heading text-2xl">Who is affected?</h3>
-              <p className="mt-3 text-muted">Name the condition, the people, and the gap in care.</p>
-            </Link>
-            <Link href="/about/lenses" className="block">
-              <p className="kicker">Financial</p>
-              <h3 className="tab-heading text-2xl">Who pays?</h3>
-              <p className="mt-3 text-muted">Cost, coverage, and whether the idea lasts.</p>
-            </Link>
-            <Link href="/about/lenses" className="block">
-              <p className="kicker">Technology</p>
-              <h3 className="tab-heading text-2xl">What changes access?</h3>
-              <p className="mt-3 text-muted">Records, tools, and infrastructure. Outcome over novelty.</p>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="band band--paper">
-        <div className="container-ml">
-          <div className="section-head">
-            <p className="kicker">The work</p>
-            <h2>Learn it. Build it. Compete.</h2>
-          </div>
-          <QuietLinks
-            items={[
-              { href: "/curriculum", label: "Four tracks", note: "Curriculum" },
-              { href: "/curriculum", label: "Twelve modules", note: "Syllabus" },
-              { href: "/competitions/normal", label: "Normal Events", note: "Compete" },
-              { href: "/competitions/legacy", label: "Legacy Triad", note: "Legacy" },
-              { href: "/portal", label: "Ideas Lab", note: "Portal" },
-              { href: "/start-a-chapter", label: "Start a chapter", note: "Apply" },
-            ]}
-          />
-        </div>
-      </section>
-
-      <section className="band" id="chapters">
-        <div className="container-ml grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="kicker">On the map</p>
-            <h2>{featured ? featured.school : "Chapters appear when they are accepted."}</h2>
-            <p className="mt-4 max-w-xl text-muted">
-              {featured
-                ? `${[featured.city, featured.state].filter(Boolean).join(", ")} is on the public map because MediLink accepted the request. This page does not invent school names.`
-                : "A school appears here after Start a Chapter and an administrator accept it."}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink href="/chapters">Chapter map</ButtonLink>
-              <ButtonLink href="/start-a-chapter" variant="outline">
-                Start a Chapter
-              </ButtonLink>
-            </div>
-          </div>
+        <div className="container-ml meet-row">
           <img
             src="/news/lake-norman-table.png"
             alt="Ravenwood High School MediLink members at a table"
-            className="h-72 w-full rounded-[var(--radius)] object-cover"
+            className="meet-photo"
           />
+          <div>
+            <p className="kicker">A chapter meeting</p>
+            <h2 className="story-title">This is what MediLink looks like.</h2>
+            <p className="mt-5 max-w-lg text-lg leading-8 text-muted">
+              Students sit down, name a healthcare problem, and work it from three sides.
+              Not a public signup. A high school chapter with five offices, a syllabus, and a
+              calendar. {featured ? `${featured.school} is on the map because MediLink accepted the request.` : "A school shows up on the map after Start a Chapter and an administrator accept it."}
+            </p>
+            <p className="mt-6 text-base font-semibold text-navy">
+              20 Normal Events. 3 Legacy Events. 4 tracks. 5 officer roles.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <ButtonLink href="/chapters">Find a chapter</ButtonLink>
+              <ButtonLink href="/start-a-chapter" variant="outline">
+                Bring it to your school
+              </ButtonLink>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="band band--paper" id="news">
-        <div className="container-ml">
-          <div className="section-head">
-            <p className="kicker">News</p>
-            <h2>Real chapter photos.</h2>
+      <section className="gold-sheet">
+        <div className="container-ml py-20">
+          <p className="kicker">How members think</p>
+          <h2 className="story-title max-w-3xl">Ask the problem out loud.</h2>
+          <div className="lens-grid mt-12">
+            <Link href="/about/lenses" className="block">
+              <p className="text-sm font-bold uppercase tracking-[0.14em]">Clinical</p>
+              <h3 className="mt-3 text-2xl">Who is affected?</h3>
+              <p className="mt-3 text-base leading-7 text-navy/80">
+                Name the condition, the people, and the gap in care.
+              </p>
+            </Link>
+            <Link href="/about/lenses" className="block">
+              <p className="text-sm font-bold uppercase tracking-[0.14em]">Financial</p>
+              <h3 className="mt-3 text-2xl">Who pays?</h3>
+              <p className="mt-3 text-base leading-7 text-navy/80">
+                Cost, coverage, and whether the idea lasts.
+              </p>
+            </Link>
+            <Link href="/about/lenses" className="block">
+              <p className="text-sm font-bold uppercase tracking-[0.14em]">Technology</p>
+              <h3 className="mt-3 text-2xl">What changes access?</h3>
+              <p className="mt-3 text-base leading-7 text-navy/80">
+                Records, tools, and infrastructure. Outcome over novelty.
+              </p>
+            </Link>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+        </div>
+      </section>
+
+      <section className="bg-navy py-20 text-white">
+        <div className="container-ml grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <div>
+            <p className="kicker">Compete</p>
+            <h2 className="story-title max-w-2xl text-white">Twenty Normal Events. Three Legacy Events.</h2>
+            <p className="mt-5 max-w-xl text-lg leading-8 text-white/90">
+              You compete through your chapter. Normal Events are broad-access. Legacy is one team of
+              four in the Legacy Triad. Regional is required. State top three can go to Nationals.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 lg:justify-end">
+            <ButtonLink href="/competitions/normal">Normal Events</ButtonLink>
+            <ButtonLink href="/competitions/legacy" variant="outline" className="border-white text-white hover:bg-white/10">
+              Legacy Triad
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      <section className="band" id="news">
+        <div className="container-ml">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="kicker">From the chapter</p>
+              <h2 className="story-title">Pictures from a real meeting.</h2>
+            </div>
+            <ButtonLink href={actionHref("submitNews", "Submit News Chapter Photos")} variant="outline">
+              Send yours
+            </ButtonLink>
+          </div>
+          <div className="yearbook">
             {chapterPhotos.map((item, index) => (
               <PhotoTile
                 key={item.src}
@@ -171,40 +140,52 @@ export default async function HomePage() {
               />
             ))}
           </div>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <ButtonLink href="/news">Open News</ButtonLink>
-            <ButtonLink href={actionHref("submitNews", "Submit News Chapter Photos")} variant="outline">
-              Send photos
-            </ButtonLink>
+        </div>
+      </section>
+
+      <section className="band band--paper">
+        <div className="container-ml">
+          <p className="kicker">Get in</p>
+          <h2 className="story-title max-w-2xl">Four doors. Pick the one that is yours.</h2>
+          <div className="path-grid mt-12">
+            <Link href="/start-a-chapter" className="block">
+              <h3 className="text-2xl">Start a chapter</h3>
+              <p className="mt-2 max-w-md text-muted">
+                A teacher or advisor requests the school. Tools open after an administrator accepts it.
+              </p>
+            </Link>
+            <Link href="/start-a-chapter/reactivate" className="block">
+              <h3 className="text-2xl">Reactivate</h3>
+              <p className="mt-2 max-w-md text-muted">
+                The school already had a chapter and it went quiet. Keep the history. Open the form.
+              </p>
+            </Link>
+            <Link href="/partner" className="block">
+              <h3 className="text-2xl">Partner</h3>
+              <p className="mt-2 max-w-md text-muted">
+                Hospitals, insurers, and health-tech sit in the same three-lens frame. Not a job board.
+              </p>
+            </Link>
+            <Link href="/portal" className="block">
+              <h3 className="text-2xl">Portal login</h3>
+              <p className="mt-2 max-w-md text-muted">
+                Advisors and students use the portal that matches their account.
+              </p>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="band">
+      <section className="bg-navy py-24 text-white">
         <div className="container-ml">
-          <div className="section-head">
-            <p className="kicker">Get involved</p>
-            <h2>Four ways in.</h2>
-          </div>
-          <QuietLinks
-            items={[
-              { href: "/start-a-chapter", label: "Start a chapter", note: "Schools" },
-              { href: "/start-a-chapter/reactivate", label: "Reactivate", note: "Return" },
-              { href: "/partner", label: "Partner", note: "Organizations" },
-              { href: "/portal", label: "Portal login", note: "Members" },
-            ]}
-          />
-        </div>
-      </section>
-
-      <section className="bg-navy py-20 text-white">
-        <div className="container-ml">
-          <p className="kicker">Next</p>
-          <h2 className="display max-w-3xl">Bring MediLink to your high school.</h2>
+          <h2 className="story-title max-w-3xl text-white">Bring MediLink to your high school.</h2>
+          <p className="mt-5 max-w-xl text-lg text-white/90">
+            Open the request. Choose a password. Wait for an administrator to accept the chapter.
+          </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/start-a-chapter">Start a Chapter</ButtonLink>
-            <ButtonLink href="/portal" variant="outline" className="border-white text-white hover:bg-white/10">
-              Enter the Portal
+            <ButtonLink href="/curriculum" variant="outline" className="border-white text-white hover:bg-white/10">
+              Read the curriculum
             </ButtonLink>
           </div>
         </div>
