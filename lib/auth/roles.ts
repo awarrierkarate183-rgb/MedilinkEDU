@@ -91,7 +91,7 @@ export function canApproveMembers(actor: Actor & { status?: string | null; advis
 }
 
 export function canAwardPoints(actor: Actor) {
-  return isAdvisorRole(actor.role);
+  return isAdminRole(actor.role);
 }
 
 export function canManageChapterCompetitions(actor: Actor) {

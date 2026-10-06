@@ -18,7 +18,7 @@
   --danger: #9b2c2c;
   --radius: 12px;
   --shadow: 0 10px 30px rgba(11, 31, 58, 0.08);
-  --header-h: 96px;
+  --header-h: 72px;
 }
 
 @theme inline {
@@ -115,7 +115,6 @@ h3 {
 }
 
 .public-nav {
-  font-family: var(--font-fraunces), Georgia, serif;
   font-weight: 600;
   letter-spacing: 0.01em;
   white-space: nowrap;

@@ -18,10 +18,6 @@ const catalog: Record<string, { title: string; body: string }> = {
     title: "Student resources",
     body: "Learn, compete, build, research, and lead. Files appear when published for members.",
   },
-  achievements: {
-    title: "No achievements recorded",
-    body: "Points and awards appear after results are entered. This page does not invent trophies.",
-  },
   announcements: {
     title: "No new chapter announcements.",
     body: "Advisor and national announcements for your chapter show here.",

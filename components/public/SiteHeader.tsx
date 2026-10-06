@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { publicNav } from "@/lib/content/public-nav";
+import { NavIcon } from "@/components/public/NavIcon";
+import { navGroups, publicNav } from "@/lib/content/public-nav";
 import { cn } from "@/lib/utils";
 
 function Wordmark() {
   return (
     <Link href="/" className="font-bold tracking-tight" aria-label="MediLink home">
       <span className="text-2xl md:text-[1.7rem]">
-        <span className="text-white">Medi</span>
+        <span className="text-navy">Medi</span>
         <span className="text-gold">Link</span>
       </span>
     </Link>
@@ -20,16 +21,8 @@ function Wordmark() {
 export function SiteHeader() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [solid, setSolid] = useState(false);
   const [openTab, setOpenTab] = useState<string | null>(null);
   const [mobileTab, setMobileTab] = useState<string | null>(null);
-
-  useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -42,8 +35,8 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors",
-        solid || mobileOpen || openTab ? "bg-navy shadow-lg" : "bg-navy/90 backdrop-blur-sm",
+        "fixed inset-x-0 top-0 z-50 border-b bg-white",
+        openTab || mobileOpen ? "border-border shadow-sm" : "border-transparent shadow-sm",
       )}
       onMouseLeave={() => setOpenTab(null)}
     >
@@ -51,65 +44,57 @@ export function SiteHeader() {
         <div className="shrink-0">
           <Wordmark />
         </div>
-        <div className="ml-auto hidden items-center gap-8 lg:flex">
-          <nav className="flex items-center gap-7" aria-label="Primary">
-            {publicNav.map((tab) => {
-              const active = pathname === tab.href || pathname.startsWith(`${tab.href}/`);
-              const isOpen = openTab === tab.href;
-              return (
-                <div
-                  key={tab.href}
-                  className="relative flex items-center"
-                  onMouseEnter={() => setOpenTab(tab.href)}
+        <nav className="ml-8 hidden h-full items-stretch gap-6 lg:flex" aria-label="Primary">
+          {publicNav.map((tab) => {
+            const active = pathname === tab.href || pathname.startsWith(`${tab.href}/`);
+            const isOpen = openTab === tab.href;
+            return (
+              <div
+                key={tab.href}
+                className="relative flex items-stretch"
+                onMouseEnter={() => setOpenTab(tab.href)}
+              >
+                <Link
+                  href={tab.href as never}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 border-b-2 text-[0.95rem] font-semibold leading-none transition-colors",
+                    active || isOpen ? "border-gold text-navy" : "border-transparent text-navy/75 hover:text-navy",
+                  )}
                 >
-                  <Link
-                    href={tab.href as never}
-                    className={cn(
-                      "public-nav inline-flex items-center gap-1.5 border-b-2 px-0.5 py-2 text-[1.05rem] leading-none transition-colors",
-                      active || isOpen ? "border-gold text-gold" : "border-transparent text-white/85 hover:text-white",
-                    )}
-                  >
-                    {tab.label}
-                    <span aria-hidden="true" className="text-[0.65rem]">
-                      ▾
-                    </span>
-                  </Link>
-                  <button
-                    type="button"
-                    className="sr-only"
-                    aria-expanded={isOpen}
-                    aria-haspopup="true"
-                    aria-label={`${tab.label} menu`}
-                    onClick={() => setOpenTab(isOpen ? null : tab.href)}
-                  >
-                    Open {tab.label} menu
-                  </button>
-                </div>
-              );
-            })}
-          </nav>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/start-a-chapter"
-              className="whitespace-nowrap rounded-md border border-white/35 px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-white hover:bg-white/10"
-            >
-              Start a Chapter
-            </Link>
-            <Link
-              href="/portal"
-              className="whitespace-nowrap rounded-md bg-gold px-5 py-2.5 text-sm font-semibold tracking-[0.04em] text-navy hover:bg-gold-hover"
-            >
-              Portal Login
-            </Link>
-          </div>
+                  {tab.label}
+                  <span aria-hidden="true" className="text-[0.6rem] text-gold">
+                    {isOpen ? "▴" : "▾"}
+                  </span>
+                </Link>
+                <button
+                  type="button"
+                  className="sr-only"
+                  aria-expanded={isOpen}
+                  aria-haspopup="true"
+                  aria-label={`${tab.label} menu`}
+                  onClick={() => setOpenTab(isOpen ? null : tab.href)}
+                >
+                  Open {tab.label} menu
+                </button>
+              </div>
+            );
+          })}
+        </nav>
+        <div className="ml-auto hidden items-center gap-6 lg:flex">
+          <Link href="/start-a-chapter" className="text-sm font-semibold text-navy hover:text-gold">
+            Start a Chapter
+          </Link>
+          <Link href="/portal" className="text-sm font-semibold text-navy hover:text-gold">
+            Portal Login
+          </Link>
         </div>
-        <div className="ml-auto flex items-center gap-2 lg:hidden">
-          <Link href="/portal" className="rounded-md bg-gold px-3.5 py-2.5 text-sm font-semibold text-navy">
+        <div className="ml-auto flex items-center gap-3 lg:hidden">
+          <Link href="/portal" className="text-sm font-semibold text-navy">
             Portal
           </Link>
           <button
             type="button"
-            className="rounded-md border border-white/20 px-3.5 py-2.5 text-sm font-semibold uppercase tracking-wider text-white"
+            className="text-sm font-semibold text-navy"
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
             onClick={() => setMobileOpen((value) => !value)}
@@ -120,39 +105,52 @@ export function SiteHeader() {
       </div>
 
       {activeTab ? (
-        <div className="hidden border-t border-white/10 bg-navy-deep lg:block">
-          <div className="mx-auto flex w-full max-w-[1680px] items-start gap-16 px-6 py-4 lg:px-12">
-            <div className="w-36 shrink-0 pt-1">
-              <p className="kicker">{activeTab.kicker}</p>
-              <p className="mt-1 text-base font-semibold text-white">{activeTab.label}</p>
-              <Link href={activeTab.href as never} className="mt-2 inline-block text-xs font-semibold text-gold">
-                Overview
-              </Link>
-            </div>
-            <div className="grid min-w-0 flex-1 grid-cols-3 gap-x-12 gap-y-1">
-              {activeTab.items.map((item, index) => (
-                <Link
-                  key={item.href}
-                  href={item.href as never}
-                  className="flex items-center gap-3 px-1 py-2 text-sm text-white/85 transition-colors hover:text-white"
-                >
-                  <span className="w-6 shrink-0 text-[0.65rem] font-semibold tracking-[0.14em] text-gold">
-                    0{index + 1}
-                  </span>
-                  <span>{item.label}</span>
-                </Link>
+        <div className="hidden border-t border-border bg-white lg:block">
+          <div className="mx-auto grid w-full max-w-[1680px] gap-12 px-6 py-10 lg:grid-cols-[1.4fr_0.7fr] lg:px-12">
+            <div className="space-y-8">
+              {navGroups(activeTab).map((group) => (
+                <div key={group.heading}>
+                  <p className="text-sm font-semibold text-navy">{group.heading}</p>
+                  <div className="mt-5 grid grid-cols-3 gap-x-8 gap-y-5">
+                    {group.items.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href as never}
+                        className="flex items-center gap-3 text-sm text-navy/80 transition-colors hover:text-navy"
+                      >
+                        <NavIcon name={item.icon} />
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
+            <aside className="border-l border-border pl-10">
+              <p className="text-sm font-semibold text-navy">Resources</p>
+              <div className="mt-5 space-y-4">
+                {activeTab.resources.map((item) => (
+                  <Link
+                    key={`${item.href}-${item.label}`}
+                    href={item.href as never}
+                    className="flex items-center gap-3 border-b border-border pb-4 text-sm text-navy/80 transition-colors hover:text-navy"
+                  >
+                    <NavIcon name={item.icon} />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </aside>
           </div>
         </div>
       ) : null}
 
       {mobileOpen ? (
-        <nav id="mobile-nav" className="border-t border-white/10 bg-navy px-4 pb-5 lg:hidden" aria-label="Mobile">
+        <nav id="mobile-nav" className="border-t border-border bg-white px-4 pb-5 lg:hidden" aria-label="Mobile">
           {publicNav.map((tab) => (
-            <div key={tab.href} className="border-b border-white/10">
+            <div key={tab.href} className="border-b border-border">
               <div className="flex items-center justify-between">
-                <Link href={tab.href as never} className="public-nav py-3.5 text-lg text-white">
+                <Link href={tab.href as never} className="py-3.5 text-base font-semibold text-navy">
                   {tab.label}
                 </Link>
                 <button
@@ -166,7 +164,7 @@ export function SiteHeader() {
               {mobileTab === tab.href ? (
                 <div className="space-y-2 pb-4">
                   {tab.items.map((item) => (
-                    <Link key={item.href} href={item.href as never} className="block pl-3 text-sm text-white/75">
+                    <Link key={item.href} href={item.href as never} className="block pl-3 text-sm text-navy/70">
                       {item.label}
                     </Link>
                   ))}

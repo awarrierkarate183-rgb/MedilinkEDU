@@ -6,6 +6,7 @@ import { requireRole } from "@/lib/auth/session";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { loadAdvisorDashboard } from "@/lib/data/dashboards";
 import { loadEventChoices } from "@/lib/competition/choices";
+import { loadChapterStandings } from "@/lib/data/chapter-standings";
 
 export default async function AdvisorDashboard() {
   const { profile } = await requireRole(["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"]);
@@ -17,6 +18,7 @@ export default async function AdvisorDashboard() {
           (row) => row.status === "PENDING",
         ).length
       : 0;
+  const standing = admin ? await loadChapterStandings(admin, profile?.chapter_id ?? null) : null;
 
   if (result.error) return <ConnectionTrouble />;
 
@@ -31,7 +33,7 @@ export default async function AdvisorDashboard() {
         <MetricCard label="Upcoming events" value={data?.events ?? 0} />
         <MetricCard label="Competition entries" value={data?.registrations ?? 0} />
         <MetricCard label="Pending approvals" value={data?.pending ?? 0} />
-        <MetricCard label="Cycle points" value={data?.points ?? 0} />
+        <MetricCard label="Chapter points" value={standing ? standing.weighted.toFixed(1) : "0"} />
       </div>
       <section>
         <h2 className="mb-3 text-lg font-semibold">Pending actions</h2>

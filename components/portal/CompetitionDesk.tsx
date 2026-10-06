@@ -499,11 +499,12 @@ function AdminTools({
       </section>
 
       <section className="rounded-[var(--radius)] bg-white p-5">
-        <h3 className="font-semibold">Enter a result</h3>
+        <h3 className="font-semibold">Enter the top 3</h3>
         <p className="mt-1 text-sm text-muted">
-          Normal Events still use placement. Legacy uses the raw 1,000-point score.
-          Regional keeps the top 3 in each pool. State advances the one highest
-          35 / 65 cumulative standing.
+          Administrators record which chapter placed first, second, and third in
+          each event. Normal Events use that placement. Legacy also needs the raw
+          1,000-point score. The ranking algorithm then writes each chapter total.
+          Advisors do not type points.
         </p>
         <form
           className="mt-4 grid gap-3 md:grid-cols-2"

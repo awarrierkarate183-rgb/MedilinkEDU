@@ -3,7 +3,7 @@ import { sendTransactionalEmail } from "@/lib/email";
 import { deliverInviteEmail } from "@/lib/email/deliver";
 import { studentInviteMessage } from "@/lib/email/student-invite";
 import { createInviteToken, hashToken, invitationIsUsable } from "@/lib/auth/tokens";
-import { canManageChapter, type Actor } from "@/lib/auth/roles";
+import { canManageChapter, isAdminRole, type Actor } from "@/lib/auth/roles";
 import { pointsForReason } from "@/lib/points/award";
 import { siteUrl } from "@/lib/env";
 
@@ -352,6 +352,9 @@ export async function awardPoints(opts: {
   profileId?: string;
   eventDate?: string;
 }) {
+  if (!isAdminRole(opts.actor.role)) {
+    return { error: "Chapter points come from published event results. Advisors cannot add points." };
+  }
   const amount = pointsForReason(opts.reasonCode);
   if (amount == null) return { error: "That point reason is not recognized." };
 
