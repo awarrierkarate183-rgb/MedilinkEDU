@@ -294,8 +294,8 @@ h3 {
 }
 
 .home-hero {
-  background: var(--cream);
-  color: var(--navy);
+  background: var(--navy);
+  color: #fff;
   padding: calc(var(--header-h) + 2.25rem) 0 4.25rem;
 }
 
@@ -303,12 +303,20 @@ h3 {
   width: min(1280px, calc(100% - 2.5rem));
 }
 
+.home-hero .kicker {
+  color: #f0cf6a;
+}
+
 .home-hero .hero-wordmark {
   filter: none;
 }
 
 .home-hero .hero-line {
-  color: var(--navy);
+  color: #fff;
+}
+
+.home-hero .home-caption {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .home-photo {

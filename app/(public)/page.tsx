@@ -17,11 +17,11 @@ export default async function HomePage() {
           <div>
             <p className="kicker">High school chapters</p>
             <h1 className="hero-wordmark mt-3" aria-label="MediLink">
-              <span className="text-navy">Medi</span>
+              <span className="text-white">Medi</span>
               <span className="text-gold">Link</span>
             </h1>
             <p className="hero-line mt-7 max-w-xl">Healthcare is bigger than one discipline.</p>
-            <p className="mt-5 max-w-md text-lg leading-8 text-muted">
+            <p className="mt-5 max-w-md text-lg leading-8 text-white/90">
               Students sit down with a healthcare problem and look at it three ways: the patient, the
               money, and the tools. That is a MediLink chapter. Not a lecture club. A room of high
               school students doing the work.
@@ -30,7 +30,7 @@ export default async function HomePage() {
               <ButtonLink href="/start-a-chapter" className="px-7 py-3 text-base">
                 Start a Chapter
               </ButtonLink>
-              <ButtonLink href="/about" variant="outline" className="px-7 py-3 text-base">
+              <ButtonLink href="/about" variant="outline" className="border-white px-7 py-3 text-base text-white hover:bg-white/10">
                 See how it works
               </ButtonLink>
             </div>
