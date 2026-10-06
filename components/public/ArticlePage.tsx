@@ -32,16 +32,6 @@ function linkContactEmail(text: string) {
   );
 }
 
-export type ArticleBlock = {
-  heading: string;
-  body: string[];
-};
-
-function heroFor(href: string) {
-  const root = `/${href.split("/").filter(Boolean)[0] || ""}`;
-  return root === "/news" ? chapterPhotos[0].src : undefined;
-}
-
 export function ArticlePage({
   href,
   title,
