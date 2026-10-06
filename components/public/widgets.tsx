@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { NavIcon } from "@/components/public/NavIcon";
-import type { NavIcon as NavIconName } from "@/lib/content/public-nav";
 import { cn } from "@/lib/utils";
 
 export function StatStrip({
@@ -29,21 +27,17 @@ const tones = {
 
 export type WidgetTone = keyof typeof tones;
 
-export function ColorWidgets({
+export function QuietLinks({
   items,
 }: {
-  items: Array<{ href: string; label: string; icon: NavIconName; tone: WidgetTone }>;
+  items: Array<{ href: string; label: string; note?: string }>;
 }) {
   return (
-    <div className="color-widgets">
+    <div className="quiet-links">
       {items.map((item) => (
-        <Link
-          key={item.href + item.label}
-          href={item.href as never}
-          className={cn("color-widget", tones[item.tone])}
-        >
-          <NavIcon name={item.icon} className="h-7 w-7 shrink-0" />
+        <Link key={item.href + item.label} href={item.href as never} className="quiet-link">
           <span>{item.label}</span>
+          {item.note ? <em>{item.note}</em> : <em>Open</em>}
         </Link>
       ))}
     </div>

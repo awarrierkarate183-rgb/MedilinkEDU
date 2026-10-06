@@ -1,5 +1,6 @@
-﻿import { ButtonLink } from "@/components/ui/Button";
-import { ColorWidgets, PhotoTile, SplitFeature, StatStrip } from "@/components/public/widgets";
+﻿import Link from "next/link";
+import { ButtonLink } from "@/components/ui/Button";
+import { PhotoTile, QuietLinks, SplitFeature, StatStrip } from "@/components/public/widgets";
 import { loadPublicChapters } from "@/lib/data/public-chapters";
 import { chapterPhotos } from "@/lib/content/news";
 import { actionHref } from "@/lib/content/forms";
@@ -48,17 +49,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <ColorWidgets
-        items={[
-          { href: "/about/lenses", label: "Clinical", icon: "lenses", tone: "navy" },
-          { href: "/about/lenses", label: "Financial", icon: "finance", tone: "gold" },
-          { href: "/about/lenses", label: "Technology", icon: "tech", tone: "soft" },
-          { href: "/curriculum", label: "Curriculum", icon: "book", tone: "cream" },
-          { href: "/competitions", label: "Competitions", icon: "trophy", tone: "navy" },
-          { href: "/chapters", label: "Chapters", icon: "map", tone: "gold" },
-        ]}
-      />
-
       <section className="band">
         <div className="container-ml">
           <StatStrip
@@ -100,49 +90,43 @@ export default async function HomePage() {
             <p className="kicker">How members think</p>
             <h2>Three lenses. One problem.</h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            <PhotoTile
-              href="/about/lenses"
-              tone="navy"
-              kicker="Clinical"
-              title="Who is affected?"
-              body="Name the condition, the people, and the gap in care."
-            />
-            <PhotoTile
-              href="/about/lenses"
-              tone="gold"
-              kicker="Financial"
-              title="Who pays?"
-              body="Cost, coverage, and whether the idea lasts."
-            />
-            <PhotoTile
-              href="/about/lenses"
-              tone="soft"
-              kicker="Technology"
-              title="What changes access?"
-              body="Records, tools, and infrastructure. Outcome over novelty."
-            />
+          <div className="grid gap-10 md:grid-cols-3">
+            <Link href="/about/lenses" className="block">
+              <p className="kicker">Clinical</p>
+              <h3 className="tab-heading text-2xl">Who is affected?</h3>
+              <p className="mt-3 text-muted">Name the condition, the people, and the gap in care.</p>
+            </Link>
+            <Link href="/about/lenses" className="block">
+              <p className="kicker">Financial</p>
+              <h3 className="tab-heading text-2xl">Who pays?</h3>
+              <p className="mt-3 text-muted">Cost, coverage, and whether the idea lasts.</p>
+            </Link>
+            <Link href="/about/lenses" className="block">
+              <p className="kicker">Technology</p>
+              <h3 className="tab-heading text-2xl">What changes access?</h3>
+              <p className="mt-3 text-muted">Records, tools, and infrastructure. Outcome over novelty.</p>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="band band--paper pb-0">
+      <section className="band band--paper">
         <div className="container-ml">
           <div className="section-head">
             <p className="kicker">The work</p>
             <h2>Learn it. Build it. Compete.</h2>
           </div>
+          <QuietLinks
+            items={[
+              { href: "/curriculum", label: "Four tracks", note: "Curriculum" },
+              { href: "/curriculum", label: "Twelve modules", note: "Syllabus" },
+              { href: "/competitions/normal", label: "Normal Events", note: "Compete" },
+              { href: "/competitions/legacy", label: "Legacy Triad", note: "Legacy" },
+              { href: "/portal", label: "Ideas Lab", note: "Portal" },
+              { href: "/start-a-chapter", label: "Start a chapter", note: "Apply" },
+            ]}
+          />
         </div>
-        <ColorWidgets
-          items={[
-            { href: "/curriculum", label: "Four tracks", icon: "track", tone: "navy" },
-            { href: "/curriculum", label: "Twelve modules", icon: "book", tone: "cream" },
-            { href: "/competitions/normal", label: "Normal Events", icon: "list", tone: "gold" },
-            { href: "/competitions/legacy", label: "Legacy Triad", icon: "legacy", tone: "navy" },
-            { href: "/portal", label: "Ideas Lab", icon: "star", tone: "soft" },
-            { href: "/start-a-chapter", label: "Start a chapter", icon: "start", tone: "gold" },
-          ]}
-        />
       </section>
 
       <section className="band" id="chapters">
@@ -202,12 +186,14 @@ export default async function HomePage() {
             <p className="kicker">Get involved</p>
             <h2>Four ways in.</h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <PhotoTile href="/start-a-chapter" tone="gold" kicker="Schools" title="Start a chapter" />
-            <PhotoTile href="/start-a-chapter/reactivate" tone="navy" kicker="Return" title="Reactivate" />
-            <PhotoTile href="/partner" tone="soft" kicker="Organizations" title="Partner" />
-            <PhotoTile href="/portal" tone="cream" kicker="Members" title="Portal login" />
-          </div>
+          <QuietLinks
+            items={[
+              { href: "/start-a-chapter", label: "Start a chapter", note: "Schools" },
+              { href: "/start-a-chapter/reactivate", label: "Reactivate", note: "Return" },
+              { href: "/partner", label: "Partner", note: "Organizations" },
+              { href: "/portal", label: "Portal login", note: "Members" },
+            ]}
+          />
         </div>
       </section>
 

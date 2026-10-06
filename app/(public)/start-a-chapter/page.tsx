@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/public/PageHero";
-import { ColorWidgets, PhotoTile } from "@/components/public/widgets";
+import { PhotoTile } from "@/components/public/widgets";
 import { OFFICER_ROLES } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -17,17 +17,6 @@ export default function StartChapterPage() {
         kicker="Chapters"
         title="Start a chapter"
         lead="Bring MediLink to your high school. Open the request form, choose a portal password, then wait for an administrator to accept the chapter."
-      />
-
-      <ColorWidgets
-        items={[
-          { href: "/start-a-chapter/apply", label: "Start a chapter", icon: "start", tone: "gold" },
-          { href: "/start-a-chapter/reactivate", label: "Reactivate", icon: "support", tone: "navy" },
-          { href: "/chapters", label: "Chapter map", icon: "map", tone: "soft" },
-          { href: "/chapter-support", label: "Advisor help", icon: "support", tone: "cream" },
-          { href: "/curriculum", label: "Curriculum", icon: "book", tone: "navy" },
-          { href: "/competitions", label: "Events", icon: "trophy", tone: "gold" },
-        ]}
       />
 
       <section className="band">

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { PageHero } from "@/components/public/PageHero";
-import { PhotoTile } from "@/components/public/widgets";
+import { PhotoTile, QuietLinks } from "@/components/public/widgets";
 import { ButtonLink } from "@/components/ui/Button";
 import { chapterPhotos } from "@/lib/content/news";
 import { navTabByHref, type NavTab } from "@/lib/content/public-nav";
@@ -10,8 +10,6 @@ export type ArticleBlock = {
   heading: string;
   body: string[];
 };
-
-const TILE_TONES = ["navy", "gold", "soft", "cream"] as const;
 
 function heroFor(href: string) {
   const root = `/${href.split("/").filter(Boolean)[0] || ""}`;
@@ -84,18 +82,29 @@ export function SectionHub({
       <section className="band">
         <div className="container-ml">
           <p className="kicker">In this section</p>
-          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {tab.items.map((item, index) => (
-              <PhotoTile
-                key={item.href}
-                href={item.href}
-                image={isNews ? chapterPhotos[index % chapterPhotos.length].src : undefined}
-                tone={TILE_TONES[index % TILE_TONES.length]}
-                kicker={`0${index + 1}`}
-                title={item.label}
+          {isNews ? (
+            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {tab.items.map((item, index) => (
+                <PhotoTile
+                  key={item.href}
+                  href={item.href}
+                  image={chapterPhotos[index % chapterPhotos.length].src}
+                  kicker={`0${index + 1}`}
+                  title={item.label}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-6">
+              <QuietLinks
+                items={tab.items.map((item, index) => ({
+                  href: item.href,
+                  label: item.label,
+                  note: `0${index + 1}`,
+                }))}
               />
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </>

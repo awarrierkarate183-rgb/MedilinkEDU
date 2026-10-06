@@ -1,22 +1,11 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/public/BrandMark";
-import { ColorWidgets } from "@/components/public/widgets";
 import { CONTACT_EMAIL, MISSION } from "@/lib/constants";
 import { publicNav } from "@/lib/content/public-nav";
 
 export function SiteFooter() {
   return (
     <footer className="bg-navy text-white">
-      <ColorWidgets
-        items={[
-          { href: "/start-a-chapter", label: "Start a chapter", icon: "start", tone: "gold" },
-          { href: "/start-a-chapter/reactivate", label: "Reactivate", icon: "support", tone: "navy" },
-          { href: "/chapters", label: "Chapter map", icon: "map", tone: "soft" },
-          { href: "/competitions", label: "Events", icon: "trophy", tone: "cream" },
-          { href: "/news", label: "News", icon: "photo", tone: "navy" },
-          { href: "/portal", label: "Portal login", icon: "portal", tone: "gold" },
-        ]}
-      />
       <div className="container-ml grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
           <BrandMark href="/" light size="sm" />
