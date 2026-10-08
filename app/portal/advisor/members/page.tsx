@@ -2,6 +2,7 @@ import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { AddStudentForm } from "@/components/portal/AddStudentForm";
+import { InviteAdvisorForm } from "@/components/portal/InviteAdvisorForm";
 import { RevokeButton } from "@/components/portal/InviteMemberForm";
 import { ApproveMemberButton } from "@/components/portal/ApproveMemberButton";
 import { PortalEmpty } from "@/components/portal/PortalEmpty";
@@ -40,12 +41,13 @@ export default async function MembersPage() {
     first_name?: string | null;
     last_name?: string | null;
     grade?: string | null;
+    intended_role?: string | null;
     expires_at: string;
   }> = [];
   if (db && (chapterId || canPickChapter)) {
     const detailed = db
       .from("invitations")
-      .select("id, email, first_name, last_name, grade, expires_at, revoked_at, used_at, use_count")
+      .select("id, email, first_name, last_name, grade, intended_role, expires_at, revoked_at, used_at, use_count")
       .is("revoked_at", null)
       .is("used_at", null);
     const first = chapterId ? await detailed.eq("chapter_id", chapterId) : await detailed;
@@ -69,6 +71,16 @@ export default async function MembersPage() {
           This admin account is not tied to one chapter. Choose a chapter when you add a student.
         </p>
       ) : null}
+      <InviteAdvisorForm
+        chapters={
+          !chapterId && canPickChapter
+            ? chapters.map((chapter) => ({
+                id: chapter.id,
+                label: chapter.school || chapter.name,
+              }))
+            : undefined
+        }
+      />
       <AddStudentForm
         chapters={
           !chapterId && canPickChapter
@@ -99,7 +111,8 @@ export default async function MembersPage() {
                   <span>
                     <strong>{person?.full_name || "Unnamed member"}</strong>
                     <span className="ml-2 text-sm text-muted">
-                      {person?.email || ""} {member.status}
+                      {person?.role === "CHAPTER_ADVISOR" ? "Advisor" : "Student"} · {person?.email || ""}{" "}
+                      {member.status}
                     </span>
                   </span>
                   <span className="flex items-center gap-3">
@@ -123,9 +136,9 @@ export default async function MembersPage() {
               return (
                 <li key={invite.id} className="flex items-center justify-between rounded-md bg-white px-4 py-3">
                   <span className="text-sm">
-                    <strong>{name || "Student"}</strong>
+                    <strong>{name || (invite.intended_role === "CHAPTER_ADVISOR" ? "Teacher advisor" : "Student")}</strong>
                     <span className="ml-2 text-muted">
-                      {invite.email}
+                      {invite.intended_role === "CHAPTER_ADVISOR" ? "Advisor invite" : "Student invite"} · {invite.email}
                       {invite.grade ? ` · Grade ${invite.grade}` : ""}
                       {` · expires ${new Date(invite.expires_at).toLocaleDateString()}`}
                     </span>

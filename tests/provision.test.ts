@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { generatePortalPassword, generatePublicCode, slugFromName } from "../lib/auth/passwords";
-import { addStudentSchema, reactivateChapterSchema, startChapterSchema } from "../lib/api/schemas";
+import { addStudentSchema, inviteAdvisorSchema, reactivateChapterSchema, startChapterSchema } from "../lib/api/schemas";
 import { studentInviteMessage } from "../lib/email/student-invite";
+import { advisorInviteMessage } from "../lib/email/advisor-invite";
 import { smtpFromEnv } from "../lib/email/config";
 
 describe("chapter automation helpers", () => {
@@ -26,7 +27,7 @@ describe("chapter automation helpers", () => {
       advisorLastName: "Advisor",
       advisorEmail: "ada.advisor@example.com",
       advisorPhone: "7045550100",
-      advisorTitle: "Teacher",
+      advisorTitle: "Student chapter lead",
       principalName: "Pat Principal",
       estimatedStudents: 18,
       statement: "Students asked for a healthcare problem-solving chapter.",
@@ -86,6 +87,34 @@ describe("chapter automation helpers", () => {
     expect(message.subject).toContain("student account");
     expect(message.text).toContain("https://medilink-edu.vercel.app/portal/invite/abc");
     expect(message.html).toContain("Create your student account");
+  });
+
+  it("builds a teacher advisor invite email", () => {
+    const message = advisorInviteMessage({
+      firstName: "Jordan",
+      inviteUrl: "https://medilink-edu.vercel.app/portal/invite/abc",
+      expiresAt: "2026-10-16T00:00:00.000Z",
+      schoolName: "Lincoln High School",
+    });
+    expect(message.subject).toContain("advisor account");
+    expect(message.text).toContain("share the advisor portal");
+    expect(message.html).toContain("Create your advisor account");
+  });
+
+  it("requires a teacher name and email to invite an advisor", () => {
+    expect(
+      inviteAdvisorSchema.safeParse({
+        firstName: "Jordan",
+        lastName: "Teacher",
+        email: "jordan.teacher@example.com",
+      }).success,
+    ).toBe(true);
+    expect(
+      inviteAdvisorSchema.safeParse({
+        firstName: "Jordan",
+        lastName: "Teacher",
+      }).success,
+    ).toBe(false);
   });
 
   it("requires a student name, email, and grade to invite", () => {

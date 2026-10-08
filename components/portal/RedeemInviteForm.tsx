@@ -11,12 +11,15 @@ export function RedeemInviteForm({
   email,
   firstName,
   lastName,
+  intendedRole = "STUDENT",
 }: {
   token: string;
   email: string;
   firstName: string;
   lastName: string;
+  intendedRole?: string;
 }) {
+  const advisor = intendedRole === "CHAPTER_ADVISOR";
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [ok, setOk] = useState(false);
@@ -42,9 +45,11 @@ export function RedeemInviteForm({
 
   if (ok) {
     return (
-      <Alert title="Student account ready">
-        Your login only works in the student portal.{" "}
-        <a href="/portal/login?role=student" className="font-semibold">
+      <Alert title={advisor ? "Advisor account ready" : "Student account ready"}>
+        {advisor
+          ? "Your login opens the advisor portal for this chapter."
+          : "Your login only works in the student portal."}{" "}
+        <a href={advisor ? "/portal/login?role=advisor" : "/portal/login?role=student"} className="font-semibold">
           Sign in
         </a>
       </Alert>
@@ -87,11 +92,11 @@ export function RedeemInviteForm({
         />
       </label>
       <p className="text-sm text-muted">
-        This account only opens the student portal. By creating it you agree to
-        use MediLink for chapter work only. Do not submit medical records or extra
-        personal data.
+        {advisor
+          ? "This account opens the advisor portal for the same chapter as the student lead. By creating it you agree to use MediLink for chapter work only."
+          : "This account only opens the student portal. By creating it you agree to use MediLink for chapter work only. Do not submit medical records or extra personal data."}
       </p>
-      <Button type="submit">Create student account</Button>
+      <Button type="submit">{advisor ? "Create advisor account" : "Create student account"}</Button>
     </form>
   );
 }

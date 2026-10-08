@@ -16,7 +16,7 @@ export default function StartChapterPage() {
       <PageHero
         kicker="Chapters"
         title="Start a chapter"
-        lead="Bring MediLink to your high school. Open the request form, choose a portal password, then wait for an administrator to accept the chapter."
+        lead="The student who will lead the chapter fills the request form, chooses a portal password, then waits for an administrator to accept the chapter."
       />
 
       <section className="band">
@@ -32,22 +32,30 @@ export default function StartChapterPage() {
                 Click here
               </Link>
               <p className="mt-5 max-w-sm text-sm text-white/80">
-                Open the full request form. School, advisor, and the password you will use to sign in.
+                Open the full request form. School, your name, and the password you will use to sign in.
+              </p>
+              <p className="mt-6 max-w-sm text-sm text-white/80">
+                If you have a chapter but no portal,{" "}
+                <Link href="/start-a-chapter/reactivate" className="font-semibold text-gold underline">
+                  click here
+                </Link>
+                .
               </p>
             </div>
           </div>
           <div className="relative min-h-[22rem] overflow-hidden rounded-[var(--radius)] bg-gold text-navy">
             <div className="relative flex h-full min-h-[22rem] flex-col items-center justify-center px-6 py-12 text-center">
               <p className="kicker text-navy">Existing school</p>
-              <h2 className="mt-3 max-w-sm text-3xl font-semibold">Reactivate a chapter</h2>
+              <h2 className="mt-3 max-w-sm text-3xl font-semibold">Have a chapter but no portal?</h2>
               <Link
                 href="/start-a-chapter/reactivate"
                 className="mt-8 inline-flex rounded-md bg-navy px-8 py-4 text-lg font-semibold text-white"
               >
-                Open reactivation form
+                Click here
               </Link>
               <p className="mt-5 max-w-sm text-sm text-navy/70">
-                Use this if the school already had a MediLink chapter and it went quiet.
+                Use this if the school already has a MediLink chapter and needs
+                a portal login, or if the chapter went quiet and should come back.
               </p>
             </div>
           </div>
@@ -111,11 +119,11 @@ export default function StartChapterPage() {
           />
           <div>
             <p className="kicker">How members join</p>
-            <h2>A chapter QR. Then an advisor invite.</h2>
+            <h2>A chapter lead login. Then a teacher invite.</h2>
             <p className="mt-4 max-w-2xl text-muted">
-              Each chapter receives a unique chapter identifier. The QR code
-              points to a chapter-specific join page. It never contains private
-              credentials. Advisors then invite students and approve the roster.
+              The student chapter lead gets the advisor portal. After MediLink
+              accepts the school, that lead can email a teacher an advisor
+              account. Both people see the same roster and chapter tools.
             </p>
           </div>
         </div>

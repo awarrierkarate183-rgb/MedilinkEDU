@@ -72,9 +72,9 @@ export const startChapterSchema = z
     schoolName: z.string().trim().min(3, "Enter the high school name.").max(160),
     city: z.string().trim().min(2, "Enter the city.").max(80),
     state: z.enum(US_STATES, { message: "Choose a state." }),
-    advisorFirstName: z.string().trim().min(1, "Enter the advisor first name.").max(80),
-    advisorLastName: z.string().trim().min(1, "Enter the advisor last name.").max(80),
-    advisorEmail: z.string().trim().email("Enter a real advisor email.").max(160),
+    advisorFirstName: z.string().trim().min(1, "Enter the chapter lead first name.").max(80),
+    advisorLastName: z.string().trim().min(1, "Enter the chapter lead last name.").max(80),
+    advisorEmail: z.string().trim().email("Enter a real chapter lead email.").max(160),
     advisorPhone: z.string().trim().max(40).optional().or(z.literal("")),
     advisorTitle: z.enum(ADVISOR_TITLES).optional(),
     principalName: z.string().trim().max(120).optional().or(z.literal("")),
@@ -100,14 +100,14 @@ export const reactivateChapterSchema = z
     city: z.string().trim().min(2, "Enter the city.").max(80),
     state: z.enum(US_STATES, { message: "Choose a state." }),
     chapterCode: z.string().trim().max(24).optional().or(z.literal("")),
-    advisorFirstName: z.string().trim().min(1, "Enter the advisor first name.").max(80),
-    advisorLastName: z.string().trim().min(1, "Enter the advisor last name.").max(80),
-    advisorEmail: z.string().trim().email("Enter a real advisor email.").max(160),
+    advisorFirstName: z.string().trim().min(1, "Enter the chapter lead first name.").max(80),
+    advisorLastName: z.string().trim().min(1, "Enter the chapter lead last name.").max(80),
+    advisorEmail: z.string().trim().email("Enter a real chapter lead email.").max(160),
     advisorPhone: z.string().trim().max(40).optional().or(z.literal("")),
     advisorTitle: z.enum(ADVISOR_TITLES).optional(),
     principalName: z.string().trim().max(120).optional().or(z.literal("")),
     estimatedStudents: z.coerce.number().int().min(1).max(500).optional(),
-    statement: z.string().trim().min(8, "Say why this chapter should come back.").max(1000),
+    statement: z.string().trim().min(8, "Say why this chapter needs a portal.").max(1000),
     password: z
       .string()
       .min(8, "Choose a password with at least 8 characters.")
@@ -128,6 +128,13 @@ export const emailSettingsSchema = z.object({
   port: z.coerce.number().int().min(1).max(65535).optional(),
   user: z.string().trim().email("Enter the Gmail address that will send invites."),
   pass: z.string().trim().min(8, "Enter the Gmail app password.").max(200),
+});
+
+export const inviteAdvisorSchema = z.object({
+  firstName: z.string().trim().min(1, "Enter the teacher first name.").max(80),
+  lastName: z.string().trim().min(1, "Enter the teacher last name.").max(80),
+  email: z.string().trim().email("Enter a real teacher email.").max(160),
+  chapterId: uuid.optional(),
 });
 
 export const addStudentSchema = z.object({

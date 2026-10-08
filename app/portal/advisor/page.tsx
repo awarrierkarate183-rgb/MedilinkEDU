@@ -47,30 +47,26 @@ export default async function AdvisorDashboard() {
       </div>
       <section>
         <h2 className="mb-3 text-lg font-semibold">Pending actions</h2>
-        {(data?.pending ?? 0) > 0 || pendingChoices > 0 || pendingIdeas > 0 ? (
-          <div className="space-y-2">
-            {(data?.pending ?? 0) > 0 ? (
-              <Link href="/portal/advisor/members" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
-                {data?.pending} student registrations awaiting approval
-              </Link>
-            ) : null}
-            {pendingChoices > 0 ? (
-              <Link href="/portal/advisor/competitions" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
-                {pendingChoices} student event {pendingChoices === 1 ? "choice" : "choices"} waiting to be entered
-              </Link>
-            ) : null}
-            {pendingIdeas > 0 ? (
-              <Link href="/portal/advisor/submissions" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
-                {pendingIdeas} chapter {pendingIdeas === 1 ? "idea" : "ideas"} waiting on Submissions
-              </Link>
-            ) : null}
-          </div>
-        ) : (
-          <PortalEmpty
-            title="No pending actions"
-            body="Approvals, event choices, chapter ideas, and reviews will land here from live chapter data."
-          />
-        )}
+        <div className="space-y-2">
+          <Link href="/portal/advisor/members" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+            Invite a teacher advisor or add students
+          </Link>
+          {(data?.pending ?? 0) > 0 ? (
+            <Link href="/portal/advisor/members" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+              {data?.pending} student registrations awaiting approval
+            </Link>
+          ) : null}
+          {pendingChoices > 0 ? (
+            <Link href="/portal/advisor/competitions" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+              {pendingChoices} student event {pendingChoices === 1 ? "choice" : "choices"} waiting to be entered
+            </Link>
+          ) : null}
+          {pendingIdeas > 0 ? (
+            <Link href="/portal/advisor/submissions" className="block rounded-[var(--radius)] bg-white p-4 font-semibold">
+              {pendingIdeas} chapter {pendingIdeas === 1 ? "idea" : "ideas"} waiting on Submissions
+            </Link>
+          ) : null}
+        </div>
       </section>
       <section>
         <div className="mb-3 flex items-end justify-between gap-3">

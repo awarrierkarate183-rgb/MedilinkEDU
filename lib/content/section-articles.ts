@@ -203,19 +203,19 @@ export const sectionArticles: SectionArticle[] = [
   {
     href: "/chapters/start",
     title: "Start a chapter",
-    lead: "An advisor fills the school, the city, the state, and a portal password. MediLink still has to accept the request.",
+    lead: "The student chapter lead fills the school, the city, the state, and a portal password. MediLink still has to accept the request.",
     blocks: [
       {
         heading: "What the form actually does",
         body: [
-          "Start a Chapter creates an advisor login and a pending chapter record. The advisor can sign in immediately. Advisor tools stay closed until an administrator accepts the school.",
-          "After accept, the chapter status becomes Founding, the school can appear on the public map, and the advisor can add students. Denied requests do not become pins.",
+          "Start a Chapter creates an advisor-portal login for the student who is leading the chapter, plus a pending chapter record. That student can sign in immediately. Chapter tools stay closed until an administrator accepts the school.",
+          "After accept, the chapter status becomes Founding, the school can appear on the public map, and the chapter lead can add students. They can also send a teacher an advisor account so both people can watch the same chapter. Denied requests do not become pins.",
         ],
       },
       {
         heading: "What you should have ready",
         body: [
-          "The high school name, city, and state. An advisor first name, last name, email, and a password you will remember. A short statement about why this school wants MediLink. This is high school only.",
+          "The high school name, city, and state. The student chapter lead first name, last name, email, and a password they will remember. A short statement about why this school wants MediLink. This is high school only.",
           "Do not invent a second campus or a college chapter on the form. Duplicate school-and-city records are blocked.",
         ],
       },
@@ -233,7 +233,7 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "What opens after accept",
         body: [
-          "Members. The advisor enters first name, last name, grade, and email. MediLink emails the student a link. The student chooses a password and lands in the student portal only.",
+          "Members. The chapter lead can invite a teacher as a second advisor so both people share the same portal. The same page is where they enter a student first name, last name, grade, and email. MediLink emails that student a link. The student chooses a password and lands in the student portal only.",
           "Competitions. The advisor types student names and submits the event. The student page then opens that event's instructions and rubric. Legacy uses one team of four that may enter one, two, or all three Triad events.",
           "Updates. Advisor announcements appear on the student dashboard. Public pages never show student emails, grades, login codes, or internal IDs.",
         ],
@@ -307,12 +307,12 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "Reactivation",
         body: [
-          "Reactivation keeps the name and history with new student leadership. Use it when the school already had a chapter and the roster went quiet. Do not file a brand-new school name if the old one still belongs to that campus.",
+          "If the school already has a MediLink chapter but no portal, use the existing-chapter form. The same form also brings back a paused chapter. Do not file a brand-new school name if the old one still belongs to that campus.",
         ],
       },
     ],
     actions: [
-      { href: "/start-a-chapter/reactivate", label: "Reactivate a chapter" },
+      { href: "/start-a-chapter/reactivate", label: "Get a chapter portal" },
       { href: "/chapter-support", label: "Chapter resources", variant: "outline" },
     ],
   },
@@ -406,7 +406,7 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "2.3 Medical Devices and Wearables",
         body: [
-          "How monitoring technology is changing care delivery. A device concept still has to name a user and a gap. Pitch Day and Seed Round later test that as a live pitch.",
+          "How monitoring technology is changing care delivery. A device concept still has to name a user and a gap. Solution Design and Healthcare Startup later test that as a live pitch.",
         ],
       },
       {
@@ -500,7 +500,7 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "The path",
         body: [
-          "A school uses Start a Chapter. MediLink accepts the request. The advisor adds the student. The student clicks the email, chooses a password, and signs into the student portal.",
+          "A school uses Start a Chapter. MediLink accepts the request. The chapter lead or teacher advisor adds the student. The student clicks the email, chooses a password, and signs into the student portal.",
           "Inside the portal, curriculum titles become lesson pages. Public visitors still see only this syllabus. That split is intentional.",
         ],
       },
@@ -621,27 +621,27 @@ export const sectionArticles: SectionArticle[] = [
   {
     href: "/get-involved/start-a-chapter",
     title: "Start a chapter",
-    lead: "A MediLink chapter is a school, an advisor, and a roster. The form is the start of that, not a shortcut around it.",
+    lead: "A MediLink chapter is a school, a student lead, and a roster. The form is the start of that, not a shortcut around it.",
     blocks: [
       {
         heading: "Who this path is for",
         body: [
-          "A teacher, counselor, or administrator who can stay with the chapter. A student officer can help gather names, but the application still needs an adult advisor and a real high school.",
+          "The student who will lead the MediLink chapter at a real high school. After MediLink accepts the school, that student can send their teacher an advisor account so both people can watch the same portal.",
           "This is high school only. There is no middle-school chapter and no college chapter. If the school is not ready to meet, compete, and keep a roster, wait. A paused idea is better than a ghost listing.",
         ],
       },
       {
         heading: "What happens after you submit",
         body: [
-          "You choose a password on the form and receive a login. That login does not unlock advisor tools until MediLink accepts the request. Until then, the account is a pending chapter, not a live chapter.",
-          "Accept is a board decision. After accept, the school can appear on the public map, the advisor can invite students, and the first meeting can use the shared syllabus.",
+          "You choose a password on the form and receive a login. That login does not unlock chapter tools until MediLink accepts the request. Until then, the account is a pending chapter, not a live chapter.",
+          "Accept is a board decision. After accept, the school can appear on the public map, the chapter lead can invite students and a teacher advisor, and the first meeting can use the shared syllabus.",
         ],
       },
       {
         heading: "What you will need on the form",
         body: [
-          "School name, city, state, advisor name and email, and the password you want for the advisor portal. Use the school name as it appears on official records. Do not invent a second campus to look larger.",
-          "The long form lives on its own page so an advisor can fill it without hunting through Get Involved.",
+          "School name, city, state, the student chapter lead name and email, and the password you want for the advisor portal. Use the school name as it appears on official records. Do not invent a second campus to look larger.",
+          "The long form lives on its own page so the chapter lead can fill it without hunting through Get Involved.",
         ],
       },
     ],

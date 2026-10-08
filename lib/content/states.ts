@@ -53,6 +53,7 @@ export const US_STATES = [
 ] as const;
 
 export const ADVISOR_TITLES = [
+  "Student chapter lead",
   "Teacher",
   "Counselor",
   "Administrator",

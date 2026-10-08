@@ -145,7 +145,7 @@ export function AdminGuideDesk() {
         <h2 className="font-semibold">Administration desk</h2>
         <p className="mt-1 text-sm text-muted">
           Examples: publish the handbook. List schools. Which events are missing
-          rubrics. Attach the new Chart Room packet.
+          rubrics. Attach the new Chart Audit packet.
         </p>
         <form onSubmit={askDesk} className="mt-4 space-y-3">
           <label className="block text-sm font-semibold">

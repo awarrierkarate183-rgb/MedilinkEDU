@@ -92,7 +92,7 @@ export function EventHandbook({
         </>
       ) : null}
       <div>
-        <p className="kicker">{rubricOverride?.title || (legacy ? "Championship rubric. 1,000 points." : "Event rubric. 100 points.")}</p>
+        <p className="kicker">{rubricOverride?.title || (legacy ? "Championship rubric. 1,000 points." : `${event.name} rubric. 100 points.`)}</p>
         <p className="mt-1 text-muted">{handbookScoring(event)}</p>
         {rubricOverride?.body && rubricOverride.body !== officialRubric ? (
           <p className="mt-2 whitespace-pre-wrap">{rubricOverride.body}</p>

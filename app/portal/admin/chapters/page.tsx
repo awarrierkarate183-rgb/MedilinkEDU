@@ -23,8 +23,8 @@ export default async function AdminChaptersPage() {
       <div>
         <h2 className="text-xl font-semibold">Chapters</h2>
         <p className="mt-1 text-sm text-muted">
-          New Start a Chapter and Reactivate a Chapter forms land here as
-          requests. Accept one to open the advisor portal and student roster
+          New Start a Chapter forms, portal claims, and reactivation requests
+          land here. Accept one to open the advisor portal and student roster
           tools for that school.
         </p>
       </div>
@@ -48,7 +48,11 @@ export default async function AdminChaptersPage() {
                   <div>
                     <p className="kicker">
                       {chapter.chapter_code}
-                      {application?.request_type === "REACTIVATE" ? " · Reactivation" : ""}
+                      {application?.request_type === "REACTIVATE"
+                        ? " · Reactivation"
+                        : application?.request_type === "PORTAL_CLAIM"
+                          ? " · Portal request"
+                          : ""}
                     </p>
                     <h3 className="text-lg font-semibold">{chapter.school}</h3>
                     <p className="text-sm text-muted">

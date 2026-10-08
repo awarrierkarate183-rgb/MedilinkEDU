@@ -79,7 +79,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "triage-protocol",
     number: 1,
-    name: "Triage Protocol",
+    name: "Medical Triage",
     domain: "CLINICAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "ADVANCED_RELEASE",
@@ -107,7 +107,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "the-chart-room",
     number: 2,
-    name: "The Chart Room",
+    name: "Chart Audit",
     domain: "CLINICAL",
     formatLabel: "Solo-only",
     releaseClass: "STANDARD",
@@ -135,7 +135,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "system-failure",
     number: 3,
-    name: "System Failure",
+    name: "Disease Pathway",
     domain: "CLINICAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "STANDARD",
@@ -163,7 +163,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "patient-zero",
     number: 4,
-    name: "Patient Zero",
+    name: "Outbreak Investigation",
     domain: "CLINICAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "ADVANCED_RELEASE",
@@ -192,7 +192,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "under-review",
     number: 5,
-    name: "Under Review",
+    name: "Research Review",
     domain: "CLINICAL",
     formatLabel: "Team-only, 2 to 5",
     releaseClass: "ADVANCED_RELEASE",
@@ -220,7 +220,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "the-gray-area",
     number: 6,
-    name: "The Gray Area",
+    name: "Medical Ethics",
     domain: "CLINICAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "STANDARD",
@@ -248,7 +248,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "the-floor",
     number: 7,
-    name: "The Floor",
+    name: "Health Policy Debate",
     domain: "SYSTEMS",
     formatLabel: "Team-only, 2 to 5",
     releaseClass: "ADVANCED_RELEASE",
@@ -277,7 +277,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "pitch-day",
     number: 8,
-    name: "Pitch Day",
+    name: "Solution Design",
     domain: "SYSTEMS",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "PREPARATION",
@@ -306,7 +306,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "the-ledger",
     number: 9,
-    name: "The Ledger",
+    name: "Healthcare Budgeting",
     domain: "FINANCIAL",
     formatLabel: "Solo-only",
     releaseClass: "STANDARD",
@@ -334,7 +334,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "market-call",
     number: 10,
-    name: "Market Call",
+    name: "Market Analysis",
     domain: "FINANCIAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "STANDARD",
@@ -365,7 +365,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "the-term-sheet",
     number: 11,
-    name: "The Term Sheet",
+    name: "Deal Negotiation",
     domain: "FINANCIAL",
     formatLabel: "Team-only, 2 to 5",
     releaseClass: "PREPARATION",
@@ -396,7 +396,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "scarcity",
     number: 12,
-    name: "Scarcity",
+    name: "Resource Allocation",
     domain: "FINANCIAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "STANDARD",
@@ -424,7 +424,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "operating-margin",
     number: 13,
-    name: "Operating Margin",
+    name: "Clinic Operations",
     domain: "FINANCIAL",
     formatLabel: "Team-only, 2 to 5",
     releaseClass: "PREPARATION",
@@ -433,7 +433,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
     action: "Optimize",
     mechanic: "Operations dashboard and constraint round",
     overview:
-      "Teams receive a defined hospital or clinic operational problem in advance, such as bottlenecks, staffing, denied claims, revenue leakage, avoidable utilization, quality costs, or service-line pressure. Unlike The Turnaround, this event targets one operating system and requires a measurable improvement plan.",
+      "Teams receive a defined hospital or clinic operational problem in advance, such as bottlenecks, staffing, denied claims, revenue leakage, avoidable utilization, quality costs, or service-line pressure. Unlike Hospital Recovery, this event targets one operating system and requires a measurable improvement plan.",
     preparation:
       "The organization packet, metrics, and decision question are released before competition. Teams build a focused plan supported by data, financial assumptions, workflow redesign, quality safeguards, and implementation metrics.",
     experience:
@@ -453,7 +453,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "the-pipeline",
     number: 14,
-    name: "The Pipeline",
+    name: "Biotech Review",
     domain: "FINANCIAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "PREPARATION",
@@ -484,7 +484,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "claim-denied",
     number: 15,
-    name: "Claim Denied",
+    name: "Insurance Appeals",
     domain: "FINANCIAL",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "STANDARD",
@@ -512,7 +512,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "the-turnaround",
     number: 16,
-    name: "The Turnaround",
+    name: "Hospital Recovery",
     domain: "SYSTEMS",
     formatLabel: "Team-only, 2 to 5",
     releaseClass: "PREPARATION",
@@ -541,7 +541,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "signal-vs-noise",
     number: 17,
-    name: "Signal vs. Noise",
+    name: "Digital Health Review",
     domain: "SYSTEMS",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "STANDARD",
@@ -569,7 +569,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "seed-round",
     number: 18,
-    name: "Seed Round",
+    name: "Healthcare Startup",
     domain: "SYSTEMS",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "PREPARATION",
@@ -578,7 +578,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
     action: "Found",
     mechanic: "Investor due-diligence gauntlet",
     overview:
-      "Competitors build an independent healthcare venture with a defined customer, unmet need, business model, revenue logic, funding ask, milestones, and responsible-growth plan. Unlike Pitch Day, Seed Round asks whether a new company deserves capital and can become sustainable.",
+      "Competitors build an independent healthcare venture with a defined customer, unmet need, business model, revenue logic, funding ask, milestones, and responsible-growth plan. Unlike Solution Design, Healthcare Startup asks whether a new company deserves capital and can become sustainable.",
     preparation:
       "The event prompt and submission rules release in advance. Teams validate the problem, develop the company model, build financial assumptions, identify competitors and risks, and submit venture materials before competition.",
     experience:
@@ -601,7 +601,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "borders-and-budgets",
     number: 19,
-    name: "Borders & Budgets",
+    name: "Global Health",
     domain: "SYSTEMS",
     formatLabel: "Solo or team, 1 to 5",
     releaseClass: "PREPARATION",
@@ -630,7 +630,7 @@ export const normalEventHandbook: NormalHandbookEntry[] = [
   {
     id: "on-record",
     number: 20,
-    name: "On Record",
+    name: "Crisis Communications",
     domain: "SYSTEMS",
     formatLabel: "Team-only, 2 to 5",
     releaseClass: "PREPARATION",
@@ -664,6 +664,7 @@ export function getNormalHandbook(id: string) {
 
 export function handbookInstructionsBody(event: NormalHandbookEntry) {
   return [
+    event.name,
     `Student role: ${event.role}`,
     `Primary action: ${event.action}`,
     `Signature mechanic: ${event.mechanic}`,
@@ -693,7 +694,7 @@ export function handbookInstructionsBody(event: NormalHandbookEntry) {
 export function handbookRubricBody(event: NormalHandbookEntry) {
   const rows = event.rubric.map((row) => `${row.criterion}: ${row.points} points`).join("\n");
   return [
-    `Event rubric. 100 points.`,
+    `${event.name} rubric. 100 points.`,
     universalScoring,
     "",
     rows,

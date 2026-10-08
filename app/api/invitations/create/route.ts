@@ -13,6 +13,9 @@ export async function POST(request: Request) {
 
   const body = parsed(createInvitationSchema, await readJson(request));
   if (body.error) return body.error;
+  if (body.data.role === "CHAPTER_ADVISOR" && session.actor.role !== "SUPER_ADMIN") {
+    return errors.forbidden();
+  }
 
   const result = await createInvitation({
     client: session.supabase,

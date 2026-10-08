@@ -69,8 +69,9 @@ export function StartChapterForm() {
         <div className="w-full max-w-xl rounded-[var(--radius)] bg-cream-card p-8 text-navy">
           <Alert title="Request received" tone="navy">
             {created.school} is waiting for an administrator to accept it. Sign
-            in with the email you chose. The advisor tools open only after
-            MediLink accepts the chapter.
+            in with the email you chose. After MediLink accepts the chapter, you
+            can add students and invite your teacher to share the advisor
+            portal.
           </Alert>
           <dl className="mt-6 space-y-3 text-sm">
             <div>
@@ -110,17 +111,25 @@ export function StartChapterForm() {
             Apply for a MediLink chapter
           </h1>
           <p className="mt-4 max-w-md text-white/75">
-            Fill every section on this page. Your email is the portal username.
-            Choose a password you will remember. An administrator still has to
-            accept the chapter before you can add students.
+            This form is for the student who will lead the chapter. Your email
+            is the advisor portal username. Choose a password you will remember.
+            After MediLink accepts the chapter, you can invite your teacher so
+            both of you can run the same portal.
           </p>
           <ol className="mt-8 space-y-3 text-sm text-white/80">
             <li>1. School</li>
-            <li>2. Advisor</li>
+            <li>2. Student chapter lead</li>
             <li>3. Portal password</li>
             <li>4. Why this chapter</li>
           </ol>
           <p className="mt-8 text-sm">
+            If you have a chapter but no portal,{" "}
+            <a href="/start-a-chapter/reactivate" className="font-semibold text-gold">
+              click here
+            </a>
+            .
+          </p>
+          <p className="mt-3 text-sm">
             <a href="/start-a-chapter" className="font-semibold text-gold">
               Back to Start a Chapter
             </a>
@@ -171,8 +180,13 @@ export function StartChapterForm() {
           </section>
 
           <section className="rounded-[var(--radius)] bg-cream-card p-6 text-navy md:p-8">
-            <p className="kicker">Advisor</p>
-            <h2 className="mt-2 text-2xl font-semibold">Who will run the chapter?</h2>
+            <p className="kicker">Student chapter lead</p>
+            <h2 className="mt-2 text-2xl font-semibold">Who is starting this chapter?</h2>
+            <p className="mt-2 text-sm text-muted">
+              Use your own name and email. You will get the advisor portal. You
+              can send your teacher an advisor account after the chapter is
+              accepted.
+            </p>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <label className="block text-sm font-semibold">
                 First name
@@ -191,8 +205,8 @@ export function StartChapterForm() {
                 <input name="advisorPhone" type="tel" className={field} />
               </label>
               <label className="block text-sm font-semibold md:col-span-2">
-                Role at the school
-                <select name="advisorTitle" defaultValue="Teacher" className={field}>
+                Your role
+                <select name="advisorTitle" defaultValue="Student chapter lead" className={field}>
                   {ADVISOR_TITLES.map((title) => (
                     <option key={title} value={title}>
                       {title}

@@ -153,7 +153,7 @@ export function ChapterExplorer({ chapters }: { chapters: PublicChapter[] }) {
                 variant="outline"
                 className="border-white text-white hover:bg-white/10"
               >
-                Reactivate
+                Have a chapter but no portal?
               </ButtonLink>
             </div>
           </div>

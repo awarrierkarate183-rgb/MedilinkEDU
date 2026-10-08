@@ -37,6 +37,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${plusJakarta.variable} ${fraunces.variable} h-full antialiased`}>
+      <head>
+        <link rel="icon" type="image/png" href="/brand/medilink-logo.png" />
+        <link rel="apple-touch-icon" href="/brand/medilink-logo.png" />
+      </head>
       <body className={`${plusJakarta.className} min-h-full bg-background font-sans text-text`}>
         {children}
       </body>

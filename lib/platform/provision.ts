@@ -163,7 +163,10 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
     .ilike("state", input.state.trim())
     .maybeSingle();
   if (existingSchool) {
-    return { error: "A MediLink chapter is already recorded for that school in that city." };
+    return {
+      error:
+        "A MediLink chapter is already recorded for that school in that city. If it has no portal, use the existing-chapter form.",
+    };
   }
 
   const codes = await uniqueChapterCodes(admin, input.schoolName);
@@ -263,7 +266,7 @@ export async function startChapter(admin: Admin, input: StartChapterInput) {
   await sendTransactionalEmail({
     to: email,
     subject: "Your MediLink chapter request",
-    text: `Your request for ${school} is in. Sign in at ${siteUrl()}/portal/login. An administrator still has to accept the chapter before you can add students.`,
+    text: `Your request for ${school} is in. Sign in at ${siteUrl()}/portal/login. An administrator still has to accept the chapter before you can add students or invite a teacher to share the advisor portal.`,
     template: "advisor_invitation",
   });
 
@@ -301,11 +304,6 @@ export async function reactivateChapter(admin: Admin, input: ReactivateChapterIn
   if (["PENDING_APPROVAL", "PROPOSED"].includes(chapter.status)) {
     return { error: "That school already has a request waiting for review." };
   }
-  if (chapter.status !== "INACTIVE") {
-    return {
-      error: "That chapter is already active. Sign in or write MediLink if you need advisor access.",
-    };
-  }
 
   const { data: pending } = await admin
     .from("chapter_applications")
@@ -314,7 +312,20 @@ export async function reactivateChapter(admin: Admin, input: ReactivateChapterIn
     .eq("review_status", "PENDING")
     .maybeSingle();
   if (pending) {
-    return { error: "That chapter already has a reactivation request waiting for review." };
+    return { error: "That chapter already has a portal request waiting for review." };
+  }
+
+  const { data: advisors } = await admin
+    .from("profiles")
+    .select("id, status, advisor_status")
+    .eq("chapter_id", chapter.id)
+    .eq("role", "CHAPTER_ADVISOR");
+  const hasPortal = (advisors ?? []).some(
+    (row) => row.status === "ACTIVE" && (row.advisor_status === "ACTIVE" || !row.advisor_status),
+  );
+  const portalClaim = chapter.status !== "INACTIVE";
+  if (portalClaim && hasPortal) {
+    return { error: "That chapter already has a portal. Sign in or write MediLink if you need access." };
   }
 
   const email = input.advisorEmail.trim().toLowerCase();
@@ -379,12 +390,17 @@ export async function reactivateChapter(admin: Admin, input: ReactivateChapterIn
     }
   }
 
-  await admin.from("chapters").update({
-    status: "PENDING_APPROVAL",
-    public_visibility: false,
-    advisor_id: advisorId,
-  }).eq("id", chapter.id);
+  if (!portalClaim) {
+    await admin.from("chapters").update({
+      status: "PENDING_APPROVAL",
+      public_visibility: false,
+      advisor_id: advisorId,
+    }).eq("id", chapter.id);
+  } else {
+    await admin.from("chapters").update({ advisor_id: advisorId }).eq("id", chapter.id);
+  }
 
+  const requestType = portalClaim ? "PORTAL_CLAIM" : "REACTIVATE";
   const { error: applicationError } = await admin.from("chapter_applications").insert({
     chapter_id: chapter.id,
     advisor_profile_id: advisorId,
@@ -400,27 +416,31 @@ export async function reactivateChapter(admin: Admin, input: ReactivateChapterIn
     estimated_students: input.estimatedStudents ?? null,
     statement: input.statement?.trim() || "",
     review_status: "PENDING",
-    request_type: "REACTIVATE",
+    request_type: requestType,
   });
   if (applicationError) {
-    await admin.from("chapters").update({ status: "INACTIVE", public_visibility: false }).eq("id", chapter.id);
-    return { error: "The reactivation request could not be stored. Try again." };
+    if (!portalClaim) {
+      await admin.from("chapters").update({ status: "INACTIVE", public_visibility: false }).eq("id", chapter.id);
+    }
+    return { error: "The chapter portal request could not be stored. Try again." };
   }
 
-  await writeAudit(admin, advisorId, "chapter.reactivation_requested", "chapter", chapter.id, {
+  await writeAudit(admin, advisorId, portalClaim ? "chapter.portal_claimed" : "chapter.reactivation_requested", "chapter", chapter.id, {
     school: chapter.school,
     chapter_code: chapter.chapter_code,
   });
   await notifyAdmins(
     admin,
-    "chapter_reactivation",
-    "Chapter reactivation request",
-    `${input.advisorFirstName.trim()} ${input.advisorLastName.trim()} asked to reactivate ${chapter.school}.`,
+    portalClaim ? "chapter_portal_claim" : "chapter_reactivation",
+    portalClaim ? "Chapter portal request" : "Chapter reactivation request",
+    `${input.advisorFirstName.trim()} ${input.advisorLastName.trim()} asked ${portalClaim ? "for a portal login" : "to reactivate"} at ${chapter.school}.`,
   );
   await sendTransactionalEmail({
     to: email,
-    subject: "Your MediLink chapter reactivation request",
-    text: `Your request to reactivate ${chapter.school} is in. Sign in at ${siteUrl()}/portal/login. An administrator still has to accept the chapter before you can add students.`,
+    subject: portalClaim ? "Your MediLink chapter portal request" : "Your MediLink chapter reactivation request",
+    text: portalClaim
+      ? `Your request for a portal login at ${chapter.school} is in. Sign in at ${siteUrl()}/portal/login. An administrator still has to accept it before the advisor tools open.`
+      : `Your request to reactivate ${chapter.school} is in. Sign in at ${siteUrl()}/portal/login. An administrator still has to accept the chapter before you can add students.`,
     template: "advisor_invitation",
   });
 
@@ -521,6 +541,95 @@ export async function inviteStudent(
   };
 }
 
+export type InviteAdvisorInput = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  chapterId?: string;
+};
+
+export async function inviteAdvisor(
+  admin: Admin,
+  actor: { id: string; chapterId: string | null; role: string; stateScope?: string | null },
+  input: InviteAdvisorInput,
+) {
+  if (!["CHAPTER_ADVISOR", "STATE_ADMIN", "SUPER_ADMIN"].includes(actor.role)) {
+    return { error: "Only a chapter advisor can invite a teacher to the advisor portal." };
+  }
+  const chapterId =
+    actor.role === "CHAPTER_ADVISOR" ? actor.chapterId : actor.chapterId || input.chapterId || null;
+  if (!chapterId) return { error: "Choose a chapter for this teacher." };
+
+  const { data: chapter } = await admin
+    .from("chapters")
+    .select("id, school, status")
+    .eq("id", chapterId)
+    .maybeSingle();
+  if (!chapter) return { error: "That chapter was not found." };
+  if (actor.role === "CHAPTER_ADVISOR" && ["PROPOSED", "PENDING_APPROVAL", "INACTIVE"].includes(chapter.status)) {
+    return { error: "An administrator still has to accept this chapter before you can invite a teacher." };
+  }
+
+  const email = input.email.trim().toLowerCase();
+  const firstName = input.firstName.trim();
+  const lastName = input.lastName.trim();
+  const { data: existing } = await admin.from("profiles").select("id, role, chapter_id").ilike("email", email).maybeSingle();
+  if (existing) {
+    if (existing.role === "CHAPTER_ADVISOR" && existing.chapter_id === chapterId) {
+      return { error: "That teacher already has an advisor account for this chapter." };
+    }
+    return { error: "That email already has a MediLink account." };
+  }
+
+  await admin
+    .from("invitations")
+    .update({ revoked_at: new Date().toISOString() })
+    .eq("chapter_id", chapterId)
+    .ilike("email", email)
+    .is("used_at", null)
+    .is("revoked_at", null);
+  await cancelPendingInviteMail(email);
+
+  const created = await createInvitation({
+    client: admin,
+    actor: {
+      id: actor.id,
+      role: actor.role as "CHAPTER_ADVISOR" | "STATE_ADMIN" | "SUPER_ADMIN",
+      chapterId,
+      stateScope: actor.stateScope,
+    },
+    email,
+    role: "CHAPTER_ADVISOR",
+    firstName,
+    lastName,
+    schoolName: chapter.school || undefined,
+  });
+  if ("error" in created && created.error) return { error: created.error };
+  if (!("token" in created) || !created.token) {
+    return { error: "The teacher invitation could not be created." };
+  }
+
+  if (!created.sent) {
+    await admin.from("invitations").delete().eq("id", created.id);
+    return {
+      error:
+        created.sendError ||
+        "The invite email could not be sent to that teacher. Check the MediLink Gmail Sent folder, then try again.",
+    };
+  }
+
+  await writeAudit(admin, actor.id, "advisor.invited", "invitation", created.id, {
+    chapter_id: chapterId,
+    email,
+  });
+
+  return {
+    email,
+    name: `${firstName} ${lastName}`.trim(),
+    sent: true,
+  };
+}
+
 export async function recordAdvisorSignInAttempt(admin: Admin, userId: string) {
   const { data: application } = await admin
     .from("chapter_applications")
@@ -555,7 +664,7 @@ export async function reviewChapterRequest(
 ) {
   const { data: application } = await admin
     .from("chapter_applications")
-    .select("id, advisor_profile_id, school_name, review_status")
+    .select("id, advisor_profile_id, school_name, review_status, request_type")
     .eq("chapter_id", chapterId)
     .order("created_at", { ascending: false })
     .limit(1)
@@ -566,6 +675,7 @@ export async function reviewChapterRequest(
   }
 
   const now = new Date().toISOString();
+  const portalClaim = application.request_type === "PORTAL_CLAIM";
   if (decision === "deny") {
     await admin
       .from("chapter_applications")
@@ -575,18 +685,24 @@ export async function reviewChapterRequest(
         reviewed_by: actorId,
       })
       .eq("id", application.id);
-    await admin.from("chapters").update({ status: "INACTIVE", public_visibility: false }).eq("id", chapterId);
+    if (!portalClaim) {
+      await admin.from("chapters").update({ status: "INACTIVE", public_visibility: false }).eq("id", chapterId);
+    }
     await admin
       .from("profiles")
       .update({ status: "INACTIVE", advisor_status: "INACTIVE" })
       .eq("id", application.advisor_profile_id);
-    await writeAudit(admin, actorId, "chapter.denied", "chapter", chapterId);
+    await writeAudit(admin, actorId, portalClaim ? "chapter.portal_denied" : "chapter.denied", "chapter", chapterId);
     await admin.from("notifications").insert({
       profile_id: application.advisor_profile_id,
       type: "chapter_denied",
-      title: "Chapter request not accepted",
-      body: `${application.school_name} was not accepted. Contact MediLink if this is a mistake.`,
-      message: `${application.school_name} was not accepted. Contact MediLink if this is a mistake.`,
+      title: portalClaim ? "Portal request not accepted" : "Chapter request not accepted",
+      body: portalClaim
+        ? `The portal request for ${application.school_name} was not accepted. Contact MediLink if this is a mistake.`
+        : `${application.school_name} was not accepted. Contact MediLink if this is a mistake.`,
+      message: portalClaim
+        ? `The portal request for ${application.school_name} was not accepted. Contact MediLink if this is a mistake.`
+        : `${application.school_name} was not accepted. Contact MediLink if this is a mistake.`,
       link: "/portal/pending",
     });
     return { ok: true, decision };
@@ -602,12 +718,16 @@ export async function reviewChapterRequest(
     .eq("id", application.id);
   await admin
     .from("chapters")
-    .update({
-      status: "FOUNDING",
-      founded_date: now.slice(0, 10),
-      advisor_id: application.advisor_profile_id,
-      public_visibility: true,
-    })
+    .update(
+      portalClaim
+        ? { advisor_id: application.advisor_profile_id }
+        : {
+            status: "FOUNDING",
+            founded_date: now.slice(0, 10),
+            advisor_id: application.advisor_profile_id,
+            public_visibility: true,
+          },
+    )
     .eq("id", chapterId);
   await admin
     .from("profiles")
@@ -622,13 +742,17 @@ export async function reviewChapterRequest(
     },
     { onConflict: "chapter_id,profile_id" },
   );
-  await writeAudit(admin, actorId, "chapter.approved", "chapter", chapterId);
+  await writeAudit(admin, actorId, portalClaim ? "chapter.portal_approved" : "chapter.approved", "chapter", chapterId);
   await admin.from("notifications").insert({
     profile_id: application.advisor_profile_id,
     type: "chapter_approved",
-    title: "Your chapter was accepted",
-    body: `${application.school_name} is now a founding MediLink chapter. You can add students.`,
-    message: `${application.school_name} is now a founding MediLink chapter. You can add students.`,
+    title: portalClaim ? "Your chapter portal is open" : "Your chapter was accepted",
+    body: portalClaim
+      ? `The advisor portal for ${application.school_name} is open. You can add students and invite a teacher.`
+      : `${application.school_name} is now a founding MediLink chapter. You can add students.`,
+    message: portalClaim
+      ? `The advisor portal for ${application.school_name} is open. You can add students and invite a teacher.`
+      : `${application.school_name} is now a founding MediLink chapter. You can add students.`,
     link: "/portal/advisor/members",
   });
   return { ok: true, decision };

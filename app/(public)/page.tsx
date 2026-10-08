@@ -147,13 +147,13 @@ export default async function HomePage() {
             <Link href="/start-a-chapter" className="block">
               <h3 className="text-2xl">Start a chapter</h3>
               <p className="mt-2 max-w-md text-muted">
-                A teacher or advisor requests the school. Tools open after an administrator accepts it.
+                A student chapter lead requests the school. Tools open after an administrator accepts it.
               </p>
             </Link>
             <Link href="/start-a-chapter/reactivate" className="block">
-              <h3 className="text-2xl">Reactivate</h3>
+              <h3 className="text-2xl">Have a chapter but no portal?</h3>
               <p className="mt-2 max-w-md text-muted">
-                The school already had a chapter and it went quiet. Keep the history. Open the form.
+                The school already has a MediLink chapter and needs a login, or the chapter went quiet. Open the form.
               </p>
             </Link>
             <Link href="/partner" className="block">
@@ -180,6 +180,9 @@ export default async function HomePage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/start-a-chapter">Start a Chapter</ButtonLink>
+            <ButtonLink href="/start-a-chapter/reactivate" variant="outline" className="border-white text-white hover:bg-white/10">
+              Have a chapter but no portal?
+            </ButtonLink>
             <ButtonLink href="/curriculum" variant="outline" className="border-white text-white hover:bg-white/10">
               Read the curriculum
             </ButtonLink>

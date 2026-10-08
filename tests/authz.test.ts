@@ -4,6 +4,7 @@ import {
   canAccessAdvisorPortal,
   canAccessStudentPortal,
   canApproveMembers,
+  canInviteChapterAdvisor,
   canManageChapter,
   canReadProfile,
   homeForRole,
@@ -43,6 +44,9 @@ describe("authorization helpers", () => {
   it("does not let students approve members or open admin", () => {
     expect(canApproveMembers(student)).toBe(false);
     expect(canApproveMembers(advisor)).toBe(true);
+    expect(canInviteChapterAdvisor(advisor)).toBe(true);
+    expect(canInviteChapterAdvisor(student)).toBe(false);
+    expect(canInviteChapterAdvisor(admin)).toBe(true);
     expect(canAccessAdminPortal("STUDENT")).toBe(false);
     expect(canAccessAdminPortal("SUPER_ADMIN")).toBe(true);
     expect(canManageChapter(admin, { id: "c9" })).toBe(true);

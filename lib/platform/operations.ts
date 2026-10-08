@@ -2,8 +2,9 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendTransactionalEmail } from "@/lib/email";
 import { deliverInviteEmail } from "@/lib/email/deliver";
 import { studentInviteMessage } from "@/lib/email/student-invite";
+import { advisorInviteMessage } from "@/lib/email/advisor-invite";
 import { createInviteToken, hashToken, invitationIsUsable } from "@/lib/auth/tokens";
-import { canManageChapter, isAdminRole, type Actor } from "@/lib/auth/roles";
+import { canInviteChapterAdvisor, canManageChapter, isAdminRole, type Actor } from "@/lib/auth/roles";
 import { pointsForReason } from "@/lib/points/award";
 import { siteUrl } from "@/lib/env";
 
@@ -55,12 +56,13 @@ export async function createInvitation(opts: {
   firstName?: string;
   lastName?: string;
   grade?: string;
+  schoolName?: string;
 }) {
   if (!opts.actor.chapterId && opts.actor.role !== "SUPER_ADMIN") {
     return { error: "Your advisor account is not attached to a chapter yet." };
   }
-  if (opts.role === "CHAPTER_ADVISOR" && opts.actor.role !== "SUPER_ADMIN") {
-    return { error: "Only an administrator can invite an advisor." };
+  if (opts.role === "CHAPTER_ADVISOR" && !canInviteChapterAdvisor(opts.actor)) {
+    return { error: "Only a chapter advisor can invite a teacher to the advisor portal." };
   }
   const token = createInviteToken();
   const expires = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
@@ -94,11 +96,12 @@ export async function createInvitation(opts: {
             inviteUrl,
             expiresAt: expires,
           })
-        : {
-            subject: "Your MediLink advisor invitation",
-            text: `Open this link to create your advisor account: ${inviteUrl}`,
-            html: undefined as string | undefined,
-          };
+        : advisorInviteMessage({
+            firstName: opts.firstName || "",
+            inviteUrl,
+            expiresAt: expires,
+            schoolName: opts.schoolName,
+          });
     if (opts.role === "STUDENT") {
       const delivered = await deliverInviteEmail({
         email: opts.email,
@@ -184,7 +187,9 @@ export async function redeemInvitation(opts: {
   if (!invite.email) return { error: "That invitation is missing an email address." };
 
   const email = String(invite.email).trim().toLowerCase();
-  const firstName = String(invite.first_name || "").trim() || "Student";
+  const firstName =
+    String(invite.first_name || "").trim() ||
+    (invite.intended_role === "CHAPTER_ADVISOR" ? "Advisor" : "Student");
   const lastName = String(invite.last_name || "").trim();
   const display = [firstName, lastName].filter(Boolean).join(" ");
   const role = invite.intended_role === "CHAPTER_ADVISOR" ? "CHAPTER_ADVISOR" : "STUDENT";

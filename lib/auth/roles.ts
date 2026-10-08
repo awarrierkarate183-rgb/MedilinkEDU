@@ -78,6 +78,10 @@ export function canManageChapter(
   return false;
 }
 
+export function canInviteChapterAdvisor(actor: Actor) {
+  return actor.role === "SUPER_ADMIN" || actor.role === "STATE_ADMIN" || actor.role === "CHAPTER_ADVISOR";
+}
+
 export function canApproveMembers(actor: Actor & { status?: string | null; advisorStatus?: string | null }) {
   if (actor.role === "CHAPTER_ADVISOR") {
     if (actor.status === "PENDING" || actor.status === "INACTIVE" || actor.status === "REMOVED") {

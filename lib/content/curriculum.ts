@@ -81,7 +81,7 @@ export const tracks = [
         code: "2.3",
         name: "Medical Devices and Wearables",
         description:
-          "How monitoring technology is changing care delivery. A device concept still has to name a user and a gap. Pitch Day and Seed Round later test that as a live pitch.",
+          "How monitoring technology is changing care delivery. A device concept still has to name a user and a gap. Solution Design and Healthcare Startup later test that as a live pitch.",
       },
     ],
   },

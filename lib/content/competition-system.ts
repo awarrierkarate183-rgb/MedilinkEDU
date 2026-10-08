@@ -43,7 +43,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "triage-protocol",
     number: 1,
-    name: "Triage Protocol",
+    name: "Medical Triage",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -56,7 +56,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "the-chart-room",
     number: 2,
-    name: "The Chart Room",
+    name: "Chart Audit",
     tier: "NORMAL",
     format: "SOLO_ONLY",
     minTeamSize: 1,
@@ -69,7 +69,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "system-failure",
     number: 3,
-    name: "System Failure",
+    name: "Disease Pathway",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -82,7 +82,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "patient-zero",
     number: 4,
-    name: "Patient Zero",
+    name: "Outbreak Investigation",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -95,7 +95,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "under-review",
     number: 5,
-    name: "Under Review",
+    name: "Research Review",
     tier: "NORMAL",
     format: "TEAM_ONLY",
     minTeamSize: 2,
@@ -108,7 +108,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "the-gray-area",
     number: 6,
-    name: "The Gray Area",
+    name: "Medical Ethics",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -121,7 +121,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "the-floor",
     number: 7,
-    name: "The Floor",
+    name: "Health Policy Debate",
     tier: "NORMAL",
     format: "TEAM_ONLY",
     minTeamSize: 2,
@@ -134,7 +134,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "pitch-day",
     number: 8,
-    name: "Pitch Day",
+    name: "Solution Design",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -147,7 +147,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "the-ledger",
     number: 9,
-    name: "The Ledger",
+    name: "Healthcare Budgeting",
     tier: "NORMAL",
     format: "SOLO_ONLY",
     minTeamSize: 1,
@@ -160,7 +160,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "market-call",
     number: 10,
-    name: "Market Call",
+    name: "Market Analysis",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -173,7 +173,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "the-term-sheet",
     number: 11,
-    name: "The Term Sheet",
+    name: "Deal Negotiation",
     tier: "NORMAL",
     format: "TEAM_ONLY",
     minTeamSize: 2,
@@ -186,7 +186,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "scarcity",
     number: 12,
-    name: "Scarcity",
+    name: "Resource Allocation",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -199,7 +199,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "operating-margin",
     number: 13,
-    name: "Operating Margin",
+    name: "Clinic Operations",
     tier: "NORMAL",
     format: "TEAM_ONLY",
     minTeamSize: 2,
@@ -212,7 +212,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "the-pipeline",
     number: 14,
-    name: "The Pipeline",
+    name: "Biotech Review",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -225,7 +225,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "claim-denied",
     number: 15,
-    name: "Claim Denied",
+    name: "Insurance Appeals",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -238,7 +238,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "the-turnaround",
     number: 16,
-    name: "The Turnaround",
+    name: "Hospital Recovery",
     tier: "NORMAL",
     format: "TEAM_ONLY",
     minTeamSize: 2,
@@ -251,7 +251,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "signal-vs-noise",
     number: 17,
-    name: "Signal vs. Noise",
+    name: "Digital Health Review",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -264,7 +264,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "seed-round",
     number: 18,
-    name: "Seed Round",
+    name: "Healthcare Startup",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -277,7 +277,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "borders-and-budgets",
     number: 19,
-    name: "Borders & Budgets",
+    name: "Global Health",
     tier: "NORMAL",
     format: "SOLO_OR_TEAM",
     minTeamSize: 1,
@@ -290,7 +290,7 @@ export const normalEvents: CatalogEvent[] = [
   {
     id: "on-record",
     number: 20,
-    name: "On Record",
+    name: "Crisis Communications",
     tier: "NORMAL",
     format: "TEAM_ONLY",
     minTeamSize: 2,

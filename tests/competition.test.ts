@@ -10,6 +10,7 @@ import {
   matchRosterNames,
 } from "../lib/competition/rules";
 import { normalEventHandbook } from "../lib/content/normal-event-handbook";
+import { normalEvents } from "../lib/content/competition-system";
 import { legacyEventHandbook } from "../lib/content/legacy-event-handbook";
 import {
   legacyAdvancesFromRegional,
@@ -127,6 +128,34 @@ describe("competition scoring", () => {
       expect(event.rubric.reduce((sum, row) => sum + row.points, 0)).toBe(100);
       expect(event.role).toBeTruthy();
       expect(event.mechanic).toBeTruthy();
+    }
+  });
+
+  it("uses the same Normal Event names on the catalog and the handbook", () => {
+    expect(normalEvents.map((event) => event.name)).toEqual([
+      "Medical Triage",
+      "Chart Audit",
+      "Disease Pathway",
+      "Outbreak Investigation",
+      "Research Review",
+      "Medical Ethics",
+      "Health Policy Debate",
+      "Solution Design",
+      "Healthcare Budgeting",
+      "Market Analysis",
+      "Deal Negotiation",
+      "Resource Allocation",
+      "Clinic Operations",
+      "Biotech Review",
+      "Insurance Appeals",
+      "Hospital Recovery",
+      "Digital Health Review",
+      "Healthcare Startup",
+      "Global Health",
+      "Crisis Communications",
+    ]);
+    for (const event of normalEvents) {
+      expect(normalEventHandbook.find((item) => item.id === event.id)?.name).toBe(event.name);
     }
   });
 

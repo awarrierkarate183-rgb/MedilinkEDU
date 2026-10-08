@@ -3,7 +3,7 @@ import { StartChapterForm } from "@/components/public/StartChapterForm";
 
 export const metadata: Metadata = {
   title: "Chapter request",
-  description: "Submit a MediLink high school chapter request and choose your portal password.",
+  description: "The student chapter lead submits a MediLink high school chapter request and chooses a portal password.",
 };
 
 export default function StartChapterApplyPage() {
