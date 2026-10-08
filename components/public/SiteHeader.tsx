@@ -32,7 +32,7 @@ export function SiteHeader() {
     >
       <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[1680px] items-center px-6 lg:px-12">
         <div className="shrink-0">
-          <BrandMark />
+          <BrandMark wordmark={false} />
         </div>
         <nav className="ml-8 hidden h-full items-stretch gap-6 lg:flex" aria-label="Primary">
           {publicNav.map((tab) => {

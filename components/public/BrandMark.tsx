@@ -5,30 +5,38 @@ export function BrandMark({
   href = "/",
   light = false,
   size = "md",
+  wordmark = true,
 }: {
   href?: string | null;
   light?: boolean;
   size?: "sm" | "md";
+  wordmark?: boolean;
 }) {
   const mark = (
     <>
-      <img
-        src="/brand/medilink-logo.png"
-        alt=""
-        className={cn(
-          "shrink-0 rounded-full bg-black object-cover",
-          size === "sm" ? "h-9 w-9" : "h-12 w-12",
-        )}
-      />
       <span
         className={cn(
-          "brand-wordmark",
-          size === "sm" ? "text-[1.35rem]" : "text-[1.75rem] md:text-[1.9rem]",
-          light ? "text-white" : "text-navy",
+          "inline-flex shrink-0 overflow-hidden rounded-full",
+          size === "sm" ? "h-9 w-9" : "h-12 w-12",
         )}
       >
-        Medi<span className="text-gold">Link</span>
+        <img
+          src="/brand/medilink-logo.png"
+          alt=""
+          className="h-full w-full object-cover"
+        />
       </span>
+      {wordmark ? (
+        <span
+          className={cn(
+            "brand-wordmark",
+            size === "sm" ? "text-[1.35rem]" : "text-[1.75rem] md:text-[1.9rem]",
+            light ? "text-white" : "text-navy",
+          )}
+        >
+          Medi<span className="text-gold">Link</span>
+        </span>
+      ) : null}
     </>
   );
 
