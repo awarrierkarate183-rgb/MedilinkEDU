@@ -1,9 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { getStateListings, publicStatusLabel, type PublicChapter } from "@/lib/content/chapters";
-import { MAP_HEIGHT, MAP_OFFSET, MAP_WIDTH, STATE_SHAPES, chapterPin } from "@/lib/content/us-geo";
+import { chapterLocation } from "@/lib/content/us-geo";
+
+const ChapterMap = dynamic(
+  () => import("@/components/public/ChapterMap").then((mod) => mod.ChapterMap),
+  {
+    ssr: false,
+    loading: () => <div className="chapter-map chapter-map--loading">Loading the map.</div>,
+  },
+);
 
 function statusKey(status: string) {
   return status.toLowerCase().replace(/_/g, "-");
@@ -14,6 +23,12 @@ export function ChapterExplorer({ chapters }: { chapters: PublicChapter[] }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
   const [selectedId, setSelectedId] = useState<string | null>(chapters[0]?.id ?? null);
+  const [focusNonce, setFocusNonce] = useState(0);
+
+  function selectChapter(id: string) {
+    setSelectedId(id);
+    setFocusNonce((n) => n + 1);
+  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -29,22 +44,16 @@ export function ChapterExplorer({ chapters }: { chapters: PublicChapter[] }) {
     const counts = new Map<string, number>();
     const seen = new Map<string, number>();
     for (const chapter of filtered) {
-      const key = chapter.state || "unknown";
+      const key = `${chapter.city || ""},${chapter.state || ""}`.toLowerCase();
       counts.set(key, (counts.get(key) || 0) + 1);
     }
-    return filtered.map((chapter) => {
-      const key = chapter.state || "unknown";
+    return filtered.flatMap((chapter) => {
+      const key = `${chapter.city || ""},${chapter.state || ""}`.toLowerCase();
       const index = seen.get(key) || 0;
       seen.set(key, index + 1);
-      return {
-        chapter,
-        pin: chapterPin(chapter.state, index, counts.get(key) || 1),
-      };
+      const point = chapterLocation(chapter.city, chapter.state, index, counts.get(key) || 1);
+      return point ? [{ chapter, lat: point.lat, lng: point.lng }] : [];
     });
-  }, [filtered]);
-
-  const activeStates = useMemo(() => {
-    return new Set(filtered.map((chapter) => chapter.state).filter(Boolean) as string[]);
   }, [filtered]);
 
   const selected = chapters.find((chapter) => chapter.id === selectedId) || null;
@@ -96,7 +105,7 @@ export function ChapterExplorer({ chapters }: { chapters: PublicChapter[] }) {
                   selectedId === chapter.id ? "border-navy bg-surface" : "border-border bg-cream-card"
                 }`}
               >
-                <button type="button" className="w-full text-left" onClick={() => setSelectedId(chapter.id)}>
+                <button type="button" className="w-full text-left" onClick={() => selectChapter(chapter.id)}>
                   <h3 className="font-semibold">{chapter.school}</h3>
                   <p className="text-sm text-muted">
                     {[chapter.city, chapter.state].filter(Boolean).join(", ")}
@@ -117,71 +126,14 @@ export function ChapterExplorer({ chapters }: { chapters: PublicChapter[] }) {
               <h2 className="text-2xl font-semibold md:text-3xl">Built chapter by chapter.</h2>
             </div>
             <p className="max-w-sm text-sm text-white/70">
-              Every state is drawn. A gold pin marks an accepted school in that
-              state, not a street address. This map does not invent school names
-              or locations.
+              Zoom and pan the real map. A gold pin marks an accepted school at its recorded city
+              when we have one, otherwise the recorded state. This map does not invent school names.
             </p>
           </div>
 
-          <svg
-            viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
-            className="mt-8 w-full"
-            role="img"
-            aria-label="United States map with accepted MediLink chapter pins"
-          >
-            <rect width={MAP_WIDTH} height={MAP_HEIGHT} fill="#071525" rx="12" />
-            <g transform={`translate(${MAP_OFFSET.x} ${MAP_OFFSET.y})`}>
-              {Object.entries(STATE_SHAPES).map(([name, shape]) => {
-                const active = activeStates.has(name);
-                return (
-                  <path
-                    key={name}
-                    d={shape.path}
-                    fill={active ? "#1a3a63" : "#102844"}
-                    stroke={active ? "#C9A227" : "#6f8198"}
-                    strokeWidth={active ? 1.5 : 0.75}
-                  >
-                    <title>{name}</title>
-                  </path>
-                );
-              })}
-              {Object.entries(STATE_SHAPES).map(([name, shape]) => (
-                <text
-                  key={`${name}-label`}
-                  x={shape.cx}
-                  y={shape.cy + 2}
-                  fill={activeStates.has(name) ? "#F6EFD8" : "rgba(255,255,255,0.55)"}
-                  fontSize={name === "North Carolina" || activeStates.has(name) ? 8.5 : 6.4}
-                  fontWeight={activeStates.has(name) ? 700 : 600}
-                  textAnchor="middle"
-                >
-                  {shape.abbr}
-                </text>
-              ))}
-              {pins.map(({ chapter, pin }) => {
-                if (!pin) return null;
-                const active = selectedId === chapter.id;
-                return (
-                  <g
-                    key={chapter.id}
-                    className="cursor-pointer"
-                    onClick={() => setSelectedId(chapter.id)}
-                  >
-                    <circle cx={pin.x} cy={pin.y} r={active ? 8 : 6} fill="#C9A227" />
-                    <circle
-                      cx={pin.x}
-                      cy={pin.y}
-                      r={active ? 13 : 10}
-                      fill="none"
-                      stroke="#C9A227"
-                      strokeOpacity="0.45"
-                    />
-                    <title>{`${chapter.school}, ${chapter.state || ""}`}</title>
-                  </g>
-                );
-              })}
-            </g>
-          </svg>
+          <div className="mt-6">
+            <ChapterMap pins={pins} selectedId={selectedId} focusNonce={focusNonce} onSelect={selectChapter} />
+          </div>
 
           <div className="mt-6 grid gap-4 border-t border-white/10 pt-5 md:grid-cols-[1fr_auto] md:items-center">
             <p className="text-sm text-white/80">

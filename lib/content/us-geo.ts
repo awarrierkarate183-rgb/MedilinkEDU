@@ -62,6 +62,39 @@ export function stateCenter(state: string | null | undefined) {
   return STATE_CENTERS[state] || null;
 }
 
+/** Recorded cities only. These are public city coordinates, not street addresses. */
+const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
+  "huntersville, north carolina": { lat: 35.4107, lng: -80.8429 },
+  "charlotte, north carolina": { lat: 35.2271, lng: -80.8431 },
+};
+
+function placeKey(city: string | null | undefined, state: string | null | undefined) {
+  return [city, state]
+    .filter(Boolean)
+    .join(", ")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function chapterLocation(
+  city: string | null | undefined,
+  state: string | null | undefined,
+  indexInPlace = 0,
+  placeCount = 1,
+) {
+  const key = placeKey(city, state);
+  const point = (key && CITY_CENTERS[key]) || stateCenter(state);
+  if (!point) return null;
+  if (placeCount <= 1) return point;
+  const angle = (indexInPlace / placeCount) * Math.PI * 2 - Math.PI / 2;
+  const radius = 0.035;
+  return {
+    lat: point.lat + Math.sin(angle) * radius,
+    lng: point.lng + Math.cos(angle) * radius,
+  };
+}
+
 export function projectState(lat: number, lng: number) {
   const minLng = -125;
   const maxLng = -66;

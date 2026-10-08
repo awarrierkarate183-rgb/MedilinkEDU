@@ -87,7 +87,7 @@ export const publicNav: NavTab[] = [
       { href: "/chapters/start", label: "Start a chapter", blurb: "How a form becomes a founding chapter and a map pin.", group: "Join a school", icon: "start" },
       { href: "/chapters/advisors", label: "Advisors and the portal", blurb: "Who runs the roster, the calendar, and student invites.", group: "Join a school", icon: "portal" },
       { href: "/chapters/status", label: "Founding to Flagship", blurb: "Status is earned. It is not a sticker you buy.", group: "How chapters grow", icon: "status" },
-      { href: "/chapters/listings", label: "What the public map shows", blurb: "Approved names only. Pins mark the recorded state.", group: "How chapters grow", icon: "list" },
+      { href: "/chapters/listings", label: "What the public map shows", blurb: "Approved names only. Zoom to see recorded cities.", group: "How chapters grow", icon: "list" },
       { href: "/chapters/support", label: "Support and reactivation", blurb: "Kits, coaching, and bringing a paused chapter back.", group: "How chapters grow", icon: "support" },
     ],
     resources: [

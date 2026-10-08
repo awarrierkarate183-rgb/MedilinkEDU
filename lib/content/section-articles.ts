@@ -184,7 +184,7 @@ export const sectionArticles: SectionArticle[] = [
       {
         heading: "How to read the map",
         body: [
-          "Open Find a chapter on the Chapters overview to search by school or state. A pin marks the state entered on the form, not a street address. Lake Norman Charter High School in Huntersville, North Carolina is on that map as a founding chapter because it was accepted.",
+          "Open Find a chapter on the Chapters overview to search by school or state. Zoom the map to see accepted schools. A pin marks the recorded city when we have one, otherwise the recorded state, not a street address. Lake Norman Charter High School in Huntersville, North Carolina is on that map as a founding chapter because it was accepted.",
           "If your school is not there, it has not been accepted yet, or it has not applied. Starting a chapter is the path. Searching harder will not invent a listing.",
         ],
       },
@@ -275,7 +275,7 @@ export const sectionArticles: SectionArticle[] = [
   {
     href: "/chapters/listings",
     title: "What the public map shows",
-    lead: "Approved names only. Pins mark the state from the Start a Chapter form, not a street address.",
+    lead: "Approved names only. Pins mark the recorded city when we have one, otherwise the recorded state, not a street address.",
     blocks: [
       {
         heading: "What is public",
